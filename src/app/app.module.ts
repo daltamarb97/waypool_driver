@@ -40,6 +40,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/da
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';
+import { Camera } from '@ionic-native/camera';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDYldaKvN7lRhAOYesOeWhl7Zs7WfTn9ak",
@@ -128,7 +129,8 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignUpService,
-    authenticationService
+    authenticationService,
+    Camera
   ]
 })
 export class AppModule {}
