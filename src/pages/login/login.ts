@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { NavController, AlertController, NavParams } from 'ionic-angular';
 
 import { SignupPage } from '../signup/signup';
@@ -10,11 +11,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { SignUpService } from '../../services/signup.service';
 
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
+
     email:string = '';
     password:string = null;
     auth = this.AngularFireAuth.auth;
@@ -23,10 +26,12 @@ export class LoginPage {
     
   constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private SignUpService: SignUpService ) {
 
+
   }
   
     signup(){
         this.navCtrl.push(SignupPage);
+
     };
 
     resetPassword(email:string){
@@ -98,6 +103,8 @@ export class LoginPage {
             console.log(error);
         });
         
+
     }
+    
 
 }

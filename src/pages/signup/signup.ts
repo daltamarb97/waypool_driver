@@ -1,8 +1,11 @@
+
 import { Component, ViewChild } from '@angular/core';
+
 import { NavController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { VerificationPage } from '../verification/verification';
+
 import { AngularFireDatabase } from '@angular/fire/database';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { authenticationService } from '../../services/driverauthentication.service';
@@ -12,11 +15,13 @@ import { Content } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
+
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
 export class SignupPage {
+
     @ViewChild(Content) content: Content;
     user:any ={};
     userId:any = null;
@@ -42,11 +47,13 @@ export class SignupPage {
         this.content.scrollTo(30, 0);
     };
 
+
     login(){
         this.navCtrl.push(LoginPage);
     }
      
     verification(){
+
           //creating user on firebase
           let userName = this.signupGroup.controls['name'].value;
           let userLastName = this.signupGroup.controls['lastname'].value;
@@ -89,6 +96,7 @@ export class SignupPage {
               alert.present();
         }
         // this.navCtrl.push(VerificationPage);
+
     }
 
 }
