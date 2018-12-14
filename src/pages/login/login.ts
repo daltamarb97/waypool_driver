@@ -55,8 +55,7 @@ export class LoginPage {
         this.receivedUser = this.navParams.data;
         if(!this.receivedUser.userId){
              this.receivedUser.userId = this.AngularFireAuth.auth.currentUser.uid; //verify this because sometimes it fails
-             console.log(this.receivedUser.userId);
-             debugger; //remember to delete this console.log for safety reasons
+             console.log(this.receivedUser.userId); //remember to delete this console.log for safety reasons
              this.SignUpService.saveUser(this.receivedUser);
             };
 
