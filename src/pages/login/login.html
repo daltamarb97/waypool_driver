@@ -24,7 +24,7 @@
             <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()">LOGIN</button>
             <ion-row style="padding-top: 8px;">
                 <ion-col (click)="signup()"><small>New user <strong class="text-theme">Sign up</strong></small></ion-col>
-                <ion-col text-right><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>
+                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>
             </ion-row>
             <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->
             <!-- <ion-row>

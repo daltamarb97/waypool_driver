@@ -9,6 +9,7 @@ import { authenticationService } from '../../services/driverauthentication.servi
 import { SignUpService } from '../../services/signup.service';
 import { AlertController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Component({
@@ -21,8 +22,9 @@ export class SignupPage {
     userId:any = null;
     isReadonly = true;
     private signupGroup: FormGroup;
+    userFirebase = this.AngularFireAuth.auth.currentUser;
 
-  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -45,6 +47,7 @@ export class SignupPage {
     }
      
     verification(){
+          //creating user on firebase
           let userName = this.signupGroup.controls['name'].value;
           let userLastName = this.signupGroup.controls['lastname'].value;
           let userEmail = this.signupGroup.controls['email'].value 
@@ -57,13 +60,26 @@ export class SignupPage {
           let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
           this.user = this.signupGroup.value;
           if(userPassword === userPasswordconf){
-            if(!this.user.userId){
-                this.user.userId = Date.now() ;
-                console.log(this.user.userId); 
-            }
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);
-            this.SignUpService.saveUser(this.user);
-            this.navCtrl.push(LoginPage);
+            this.navCtrl.push(LoginPage, this.user);
+            
+
+            // if(!this.user.userId){
+            //     this.user.userId = this.userFirebase.uid; //verify this because sometimes it fails
+            //     debugger;
+            //     console.log(this.user.userId); //remember to delete this console.log for safety reasons
+            //     this.SignUpService.saveUser(this.user);
+            
+            // };
+
+            //sending email verification and verifying weather email is verified or not
+                // if(this.userFirebase.emailVerified == false){
+                //     this.userFirebase.sendEmailVerification();
+                //     console.log("verification email has been sent");
+                // }else{ 
+                //     console.log("verification email has not been sent or the email is already verifyied");
+                // }
+               
         }else{
             const alert = this.alertCtrl.create({
                 title: 'Oops!',

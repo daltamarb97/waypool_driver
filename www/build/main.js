@@ -6,11 +6,11 @@ webpackJsonp([1],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myride_myride__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chats_chats__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__listride_listride__ = __webpack_require__(249);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__wallet_wallet__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__more_more__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myride_myride__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chats_chats__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__listride_listride__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__wallet_wallet__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__more_more__ = __webpack_require__(253);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -85,14 +85,20 @@ var ConfirmpopupPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 139:
+/***/ 134:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(492);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__findride_findride__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__car_registration_car_registration__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_signup_service__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -102,6 +108,141 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
+
+
+
+
+
+var LoginPage = /** @class */ (function () {
+    // userFirebase = this.AngularFireAuth.auth.currentUser;
+    function LoginPage(navCtrl, authenticationService, alertCtrl, AngularFireAuth, navParams, SignUpService) {
+        this.navCtrl = navCtrl;
+        this.authenticationService = authenticationService;
+        this.alertCtrl = alertCtrl;
+        this.AngularFireAuth = AngularFireAuth;
+        this.navParams = navParams;
+        this.SignUpService = SignUpService;
+        this.email = '';
+        this.password = null;
+        this.auth = this.AngularFireAuth.auth;
+    }
+    LoginPage.prototype.signup = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__signup_signup__["a" /* SignupPage */]);
+    };
+    ;
+    LoginPage.prototype.resetPassword = function (email) {
+        if (this.email == '') {
+            var alert = this.alertCtrl.create({
+                title: 'no hay ningun email',
+                subTitle: 'ingresa un email para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert.present();
+            console.log("reset password email hasn't been sent");
+        }
+        else {
+            this.auth.sendPasswordResetEmail(this.email);
+            var alert = this.alertCtrl.create({
+                title: 'revisa tu email',
+                subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert.present();
+            console.log("reset password email has been sent");
+        }
+        ;
+    };
+    ;
+    LoginPage.prototype.logIn = function () {
+        var _this = this;
+        this.receivedUser = this.navParams.data;
+        if (!this.receivedUser.userId) {
+            this.receivedUser.userId = this.AngularFireAuth.auth.currentUser.uid; //verify this because sometimes it fails
+            console.log(this.receivedUser.userId);
+            debugger; //remember to delete this console.log for safety reasons
+            this.SignUpService.saveUser(this.receivedUser);
+        }
+        ;
+        //sending email verification and verifying weather email is verified or not
+        if (this.AngularFireAuth.auth.currentUser.emailVerified == false) {
+            this.AngularFireAuth.auth.currentUser.sendEmailVerification();
+            console.log("verification email has been sent");
+        }
+        else {
+            console.log("verification email has not been sent or the email is already verifyied");
+        }
+        ;
+        this.authenticationService.loginWithEmail(this.email, this.password).then(function (data) {
+            // alert("loggeado correctamente");
+            console.log(data);
+            if (data.user.emailVerified == false) {
+                var alert = _this.alertCtrl.create({
+                    title: 'Oops!',
+                    subTitle: 'por favor verifica tu email',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }
+            else {
+                var metadata = _this.auth.currentUser.metadata;
+                if (metadata.creationTime == metadata.lastSignInTime) {
+                    console.log(metadata.creationTime);
+                    console.log(metadata.lastSignInTime);
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__car_registration_car_registration__["a" /* CarRegistrationPage */]);
+                }
+                else {
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__findride_findride__["a" /* FindridePage */]);
+                }
+                _this.authenticationService.getStatus;
+            }
+            ;
+        }).catch(function (error) {
+            var alert = _this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'El usuario o la contraseña están incorrectas',
+                buttons: ['OK']
+            });
+            alert.present();
+            console.log(error);
+        });
+    };
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/login/login.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n        <ion-title><span class="text-white">SIGN IN</span></ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n    <div class="logo">\n        <img src="assets/imgs/logo.png" alt="logo">\n    </div>\n\n    <div class="bg-white login">\n        <div class="">\n            <ion-list class="form">\n                <ion-item>\n                    <ion-label></ion-label>\n                    <ion-input type="email"  text-right [(ngModel)]="email" placeholder= "email universitario"  text-right></ion-input>\n                </ion-item>\n                <ion-item>\n                    <ion-label></ion-label>\n                    <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>\n                </ion-item>\n            </ion-list>\n            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()">LOGIN</button>\n            <ion-row style="padding-top: 8px;">\n                <ion-col (click)="signup()"><small>New user <strong class="text-theme">Sign up</strong></small></ion-col>\n                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>\n            </ion-row>\n            <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->\n            <!-- <ion-row>\n                <ion-col col-6><button ion-button full class="bg-blue text-white btn rounded small"><img src="assets/imgs/fb_white.png">\n                    <span>Facebook</span></button></ion-col>\n                <ion-col col-6><button ion-button full class="bg-white text-dark btn rounded small"><img src="assets/imgs/google.png">\n                    <span>Google&nbsp;&nbsp;</span></button></ion-col>\n            </ion-row> -->\n        </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/login/login.html"*/
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */]) === "function" && _f || Object])
+    ], LoginPage);
+    return LoginPage;
+    var _a, _b, _c, _d, _e, _f;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 140:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 
 var authenticationService = /** @class */ (function () {
@@ -120,6 +261,13 @@ var authenticationService = /** @class */ (function () {
     authenticationService.prototype.logOut = function () {
         return this.angularFireAuth.auth.signOut();
     };
+    authenticationService.prototype.resetPassword = function (email) {
+        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
+        return auth.sendPasswordResetEmail(email)
+            .then(function () { return console.log("email sent"); })
+            .catch(function (error) { return console.log(error); });
+    };
+    ;
     authenticationService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
@@ -131,16 +279,16 @@ var authenticationService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 163:
+/***/ 165:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarRegistrationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride_findride__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(503);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride_findride__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -234,17 +382,16 @@ var CarRegistrationPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>VERIFIY MY ID\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v2.png" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v3.png" (click)="changeNamePicture2()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v4.png" (click)="changeNamePicture3()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v4.png" (click)="changeNamePicture4()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/credit-card (1).png" (click)="changeNamePicture5()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="../../assets/imgs/credit-card (1).png" (click)="changeNamePicture6()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img src="assets/imgs/v1.png">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCamera()">Subir Foto</button></p>\n        </ion-col>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white rounded buttonLight" style="width: 80%;" (click)= "findRide()">Hacer después</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/car-registration/car-registration.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */]])
     ], CarRegistrationPage);
     return CarRegistrationPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=car-registration.js.map
 
 /***/ }),
 
-/***/ 202:
+/***/ 204:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -257,11 +404,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 202;
+webpackEmptyAsyncContext.id = 204;
 
 /***/ }),
 
-/***/ 243:
+/***/ 245:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -281,62 +428,21 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 243;
+webpackAsyncContext.id = 245;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 244:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindridePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tabs_tabs__ = __webpack_require__(132);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var FindridePage = /** @class */ (function () {
-    function FindridePage(navCtrl) {
-        this.navCtrl = navCtrl;
-        this.ride = "oneway";
-    }
-    FindridePage.prototype.tabs = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__tabs_tabs__["a" /* TabsPage */]);
-    };
-    FindridePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/findride/findride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title><span class="text-white">EDIT RIDE INFO</span></ion-title>\n    </ion-navbar>\n    <div padding-left padding-right>\n        <ion-segment [(ngModel)]="ride">\n            <ion-segment-button value="oneway">\n                One Way\n            </ion-segment-button>\n            <ion-segment-button value="Return">\n                Return\n            </ion-segment-button>\n        </ion-segment>\n    </div>\n</ion-header>\n\n<ion-content class="bg-background-img" padding>\n    <div [ngSwitch]="ride">\n        <ion-list *ngSwitchCase="\'oneway\'">\n            <ion-card class="search search-1">\n                <span class="dot bg-theme"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set Starting Location (Home)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Starting time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <ion-card class="search search-2">\n                <span class="dot bg-yellow"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set End Location (Office)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Reaching time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <p class="text-theme">Select usually travel days</p>\n            <br>\n            <div class="days text-white">\n                <ion-row>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Monday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Tuesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Wednesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Thursday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Friday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Saturday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Sunday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                </ion-row>\n            </div>\n            <br>\n            <p class="text-theme">Set Min. Fare ($)</p>\n            <div class="rate">\n                <ion-row>\n                    <ion-col col-6>\n                        <div class="seats-tag">\n                            <ion-icon name="remove-circle"></ion-icon>\n                            <strong>60 $</strong>\n                            <ion-icon name="add-circle"></ion-icon>\n                        </div>\n                    </ion-col>\n                    <ion-col col-6>\n                        <button (click)="tabs()" small class="btn rounded bg-theme text-white" style="width: 100%">Update Info</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-list>\n        <ion-list *ngSwitchCase="\'Return\'">\n\n            <ion-card class="search search-1">\n                <span class="dot bg-yellow"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set Starting Location (Office)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Starting time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <ion-card class="search search-2">\n                <span class="dot bg-theme"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set End Location (Home)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Reaching time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <p class="text-theme">Select usually travel days</p>\n            <br>\n            <div class="days text-white">\n                <ion-row>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Monday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Tuesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Wednesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Thursday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Friday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Saturday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Sunday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                </ion-row>\n            </div>\n            <br>\n            <p class="text-theme">Set Min. Fare ($)</p>\n            <div class="rate">\n                <ion-row>\n                    <ion-col col-6>\n                        <div class="seats-tag">\n                            <ion-icon name="remove-circle"></ion-icon>\n                            <strong>60 $</strong>\n                            <ion-icon name="add-circle"></ion-icon>\n                        </div>\n                    </ion-col>\n                    <ion-col col-6>\n                        <button (click)="tabs()" class="btn rounded bg-theme text-white" style="width: 100%" small>Update Info</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n        </ion-list>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/findride/findride.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
-    ], FindridePage);
-    return FindridePage;
-}());
-
-//# sourceMappingURL=findride.js.map
-
-/***/ }),
-
-/***/ 245:
+/***/ 246:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__raterider_raterider__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__raterider_raterider__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__chatting_chatting__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ridetoday_ridetoday__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ridetoday_ridetoday__ = __webpack_require__(248);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -378,7 +484,7 @@ var MyridePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 246:
+/***/ 247:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -413,7 +519,7 @@ var RateriderPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 247:
+/***/ 248:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -453,7 +559,7 @@ var RidetodayPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 248:
+/***/ 249:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -493,14 +599,14 @@ var ChatsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 249:
+/***/ 250:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__riderprofile_riderprofile__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__riderprofile_riderprofile__ = __webpack_require__(251);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -533,7 +639,7 @@ var ListridePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 250:
+/***/ 251:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -579,7 +685,7 @@ var RiderprofilePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 251:
+/***/ 252:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -614,22 +720,22 @@ var WalletPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 252:
+/***/ 253:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MorePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile_profile__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reviews_reviews__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__notification_notification__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__terms_terms__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__earn_earn__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ratevroom_ratevroom__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__help_help__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__upload_upload__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile_profile__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reviews_reviews__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__notification_notification__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__terms_terms__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__earn_earn__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ratevroom_ratevroom__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__help_help__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__upload_upload__ = __webpack_require__(276);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -694,7 +800,7 @@ var MorePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 253:
+/***/ 254:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -730,7 +836,7 @@ var ProfilePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 254:
+/***/ 255:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -765,7 +871,7 @@ var ReviewsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 255:
+/***/ 256:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -800,7 +906,7 @@ var NotificationPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 256:
+/***/ 257:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -835,7 +941,7 @@ var TermsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 257:
+/***/ 258:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -870,7 +976,7 @@ var EarnPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 258:
+/***/ 259:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -905,7 +1011,7 @@ var RatevroomPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 259:
+/***/ 260:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -940,18 +1046,20 @@ var HelpPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 260:
+/***/ 261:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_signup_service__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_signup_service__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_auth__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -970,17 +1078,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SignupPage = /** @class */ (function () {
-    function SignupPage(navCtrl, afDB, formBuilder, authenticationService, SignUpService, alertCtrl) {
+    function SignupPage(navCtrl, afDB, formBuilder, authenticationService, SignUpService, alertCtrl, AngularFireAuth) {
         this.navCtrl = navCtrl;
         this.afDB = afDB;
         this.formBuilder = formBuilder;
         this.authenticationService = authenticationService;
         this.SignUpService = SignUpService;
         this.alertCtrl = alertCtrl;
+        this.AngularFireAuth = AngularFireAuth;
         this.user = {};
         this.userId = null;
         this.isReadonly = true;
+        this.userFirebase = this.AngularFireAuth.auth.currentUser;
         this.signupGroup = this.formBuilder.group({
             name: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
             lastname: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
@@ -1001,6 +1112,7 @@ var SignupPage = /** @class */ (function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */]);
     };
     SignupPage.prototype.verification = function () {
+        //creating user on firebase
         var userName = this.signupGroup.controls['name'].value;
         var userLastName = this.signupGroup.controls['lastname'].value;
         var userEmail = this.signupGroup.controls['email'].value;
@@ -1013,47 +1125,56 @@ var SignupPage = /** @class */ (function () {
         var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
         this.user = this.signupGroup.value;
         if (userPassword === userPasswordconf) {
-            if (!this.user.userId) {
-                this.user.userId = Date.now();
-                console.log(this.user.userId);
-            }
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);
-            this.SignUpService.saveUser(this.user);
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */]);
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */], this.user);
+            // if(!this.user.userId){
+            //     this.user.userId = this.userFirebase.uid; //verify this because sometimes it fails
+            //     debugger;
+            //     console.log(this.user.userId); //remember to delete this console.log for safety reasons
+            //     this.SignUpService.saveUser(this.user);
+            // };
+            //sending email verification and verifying weather email is verified or not
+            // if(this.userFirebase.emailVerified == false){
+            //     this.userFirebase.sendEmailVerification();
+            //     console.log("verification email has been sent");
+            // }else{ 
+            //     console.log("verification email has not been sent or the email is already verifyied");
+            // }
         }
         else {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Oops!',
                 subTitle: 'las contraseñas no coinciden, intenta de nuevo',
                 buttons: ['OK']
             });
-            alert_1.present();
+            alert.present();
         }
         // this.navCtrl.push(VerificationPage);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
     ], SignupPage.prototype, "content", void 0);
     SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-signup',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/signup/signup.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n        <ion-title><span class="text-white">SIGN UP</span></ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n\n    <ion-content class="bg-background-img">\n        <div class="logo">\n            <img src="../../assets/imgs/logo waypool-01.png" alt="logo">\n        </div>\n        <form [formGroup]="signupGroup" (ngSubmit)="verification()">\n        <div class="bg-white login">\n            <div class="">\n                <ion-row>\n                    <ion-col class="click-img">\n                        <div class="form">\n                            <ion-icon name="camera"></ion-icon>\n                        </div>\n                    </ion-col>\n                    <ion-col class="name-fild">\n                        <ion-list class="form" style="margin-bottom: 0">\n                            <ion-item>\n                                <ion-label></ion-label>\n                                <ion-input  type="text"  text-right formControlName="name" placeholder= "Tú nombre"></ion-input>\n                            </ion-item>\n                            <ion-item>\n                                <ion-label></ion-label>\n                                <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>\n                            </ion-item>\n                        </ion-list>\n                    </ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col class="name-fild-2">\n                        <ion-list class="form">\n                            <ion-item class="editable-email">\n                                    <ion-label></ion-label>\n                                        <ion-input type="text" text-right formControlName="email" placeholder= "email"></ion-input>\n                                    </ion-item>\n                            </ion-list>\n                    </ion-col>\n                    <ion-col class="name-fild-2">\n                        <ion-list class="form">\n                            <ion-item class="nonEditable-email">\n                                    <ion-input type="email" value="@uninorte.edu.co"  text-right formControlName="fixedemail" [readonly]="isReadonly"></ion-input>\n                            </ion-item>\n                        </ion-list>\n                    </ion-col>\n                </ion-row>\n                <ion-list class="form" style="margin-bottom: 0">\n                    <ion-item>\n                        <ion-label floating>contraseña nueva <span style="font-weight: bold; color: red;">(minimo 6 caracteres)</span></ion-label>\n                        <ion-input type="password"  text-right formControlName="password"  minlength="6"></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label></ion-label>\n                        <ion-input type="password"  text-right formControlName="passwordconf" placeholder= "confirma tu contraseña" minlength="6"></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label></ion-label>\n                        <ion-input type="text" text-right formControlName="phone" placeholder= "Tú némero de celular"></ion-input>\n                    </ion-item>\n                    <ion-row>\n                        <ion-col class="name-fild-2">\n                            <ion-list class="form">\n                                <ion-item class="carModel">\n                                        <ion-label></ion-label>\n                                            <ion-input type="text" text-right formControlName="carModel" placeholder= "marca de carro"></ion-input>\n                                        </ion-item>\n                                </ion-list>\n                        </ion-col>\n                        <ion-col class="name-fild-2">\n                            <ion-list class="form">\n                                <ion-item class="plateNumber">\n                                        <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>\n                                </ion-item>\n                            </ion-list>\n                        </ion-col>\n                    </ion-row>\n                </ion-list>\n                        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>\n                        <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Sign in</strong></p>\n            </div>\n        </div>\n    </form>\n    </ion-content>\n    \n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/signup/signup.html"*/
+            selector: 'page-signup',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/signup/signup.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n        <ion-title><span class="text-white">SIGN UP</span></ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n\n    <ion-content class="bg-background-img">\n        <div class="logo">\n            <img src="../../assets/imgs/logo waypool-01.png" alt="logo">\n        </div>\n        <form [formGroup]="signupGroup" (ngSubmit)="verification()">\n        <div class="bg-white login">\n            <div class="">\n                <ion-row>\n                    <ion-col class="click-img">\n                        <div class="form">\n                            <ion-icon name="camera"></ion-icon>\n                        </div>\n                    </ion-col>\n                    <ion-col class="name-fild">\n                        <ion-list class="form" style="margin-bottom: 0">\n                            <ion-item>\n                                <ion-label></ion-label>\n                                <ion-input  type="text"  text-right formControlName="name" placeholder= "Tú nombre"></ion-input>\n                            </ion-item>\n                            <ion-item>\n                                <ion-label></ion-label>\n                                <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>\n                            </ion-item>\n                        </ion-list>\n                    </ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col class="name-fild-2">\n                        <ion-list class="form">\n                            <ion-item class="editable-email">\n                                    <ion-label></ion-label>\n                                        <ion-input type="text" text-right formControlName="email" placeholder= "email"></ion-input>\n                                    </ion-item>\n                            </ion-list>\n                    </ion-col>\n                    <ion-col class="name-fild-2">\n                        <ion-list class="form">\n                            <ion-item class="nonEditable-email">\n                                    <!-- <ion-input type="email" value="@uninorte.edu.co"  text-right formControlName="fixedemail" [readonly]="isReadonly"></ion-input> -->\n                                    <ion-select formControlName="fixedemail" type="email">\n                                            <ion-option value="@uninorte.edu.co">@uninorte.edu.co</ion-option>\n                                            <ion-option value="@uniautonoma.edu.co">@uniautonoma.edu.co</ion-option>\n                                            <ion-option value="@gmail.com">@gmail.com</ion-option>\n                                        </ion-select>\n                            </ion-item>\n                        </ion-list>\n                    </ion-col>\n                </ion-row>\n                <ion-list class="form" style="margin-bottom: 0">\n                    <ion-item>\n                        <ion-label floating>contraseña nueva <span style="font-weight: bold; color: red;">(minimo 6 caracteres)</span></ion-label>\n                        <ion-input type="password"  text-right formControlName="password"  minlength="6"></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label></ion-label>\n                        <ion-input type="password"  text-right formControlName="passwordconf" placeholder= "confirma tu contraseña" minlength="6"></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label></ion-label>\n                        <ion-input type="text" text-right formControlName="phone" placeholder= "Tú némero de celular"></ion-input>\n                    </ion-item>\n                    <ion-row>\n                        <ion-col class="name-fild-2">\n                            <ion-list class="form">\n                                <ion-item class="carModel">\n                                        <ion-label></ion-label>\n                                            <ion-input type="text" text-right formControlName="carModel" placeholder= "marca de carro"></ion-input>\n                                        </ion-item>\n                                </ion-list>\n                        </ion-col>\n                        <ion-col class="name-fild-2">\n                            <ion-list class="form">\n                                <ion-item class="plateNumber">\n                                        <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>\n                                </ion-item>\n                            </ion-list>\n                        </ion-col>\n                    </ion-row>\n                </ion-list>\n                        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>\n                        <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Sign in</strong></p>\n            </div>\n        </div>\n    </form>\n    </ion-content>\n    \n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/signup/signup.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7_angularfire2_auth__["AngularFireAuth"]) === "function" && _h || Object])
     ], SignupPage);
     return SignupPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
 //# sourceMappingURL=signup.js.map
 
 /***/ }),
 
-/***/ 273:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1084,7 +1205,7 @@ var SignUpService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 274:
+/***/ 276:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1119,7 +1240,7 @@ var UploadPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 318:
+/***/ 320:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1164,13 +1285,13 @@ var CodePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 319:
+/***/ 321:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(454);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1178,7 +1299,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 452:
+/***/ 454:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1189,41 +1310,41 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(526);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_myride_myride__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chats_chats__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_findride_findride__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_wallet_wallet__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_more_more__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_login_login__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_signup_signup__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_myride_myride__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chats_chats__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_findride_findride__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_wallet_wallet__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_more_more__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_login_login__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_signup_signup__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_password_password__ = __webpack_require__(527);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_verification_verification__ = __webpack_require__(528);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_code_code__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_listride_listride__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_code_code__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_listride_listride__ = __webpack_require__(250);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_filter_filter__ = __webpack_require__(529);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_riderprofile_riderprofile__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_riderprofile_riderprofile__ = __webpack_require__(251);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_confirmride_confirmride__ = __webpack_require__(530);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_confirmpopup_confirmpopup__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_raterider_raterider__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_raterider_raterider__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_chatting_chatting__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_profile_profile__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_reviews_reviews__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_notification_notification__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_terms_terms__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_earn_earn__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_ratevroom_ratevroom__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_help_help__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_ridetoday_ridetoday__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_upload_upload__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_car_registration_car_registration__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ionic_native_status_bar__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_splash_screen__ = __webpack_require__(317);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__angular_fire__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__angular_fire_database__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__angular_fire_auth__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__services_signup_service__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__services_driverauthentication_service__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__ionic_native_camera__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_profile_profile__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_reviews_reviews__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_notification_notification__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_terms_terms__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_earn_earn__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_ratevroom_ratevroom__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_help_help__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_ridetoday_ridetoday__ = __webpack_require__(248);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_upload_upload__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_car_registration_car_registration__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ionic_native_status_bar__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_splash_screen__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__angular_fire__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__angular_fire_database__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__angular_fire_auth__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__services_signup_service__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__services_driverauthentication_service__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__ionic_native_camera__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1383,9 +1504,9 @@ var AppModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(317);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_findride_findride__ = __webpack_require__(85);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1399,12 +1520,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//import { TabsPage } from '../pages/tabs/tabs';
-//import { AboutPage } from '../pages/about/about';
 
 var MyApp = /** @class */ (function () {
     function MyApp(platform, statusBar, splashScreen) {
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_login_login__["a" /* LoginPage */];
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_findride_findride__["a" /* FindridePage */];
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -1468,7 +1587,7 @@ var PasswordPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__code_code__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__code_code__ = __webpack_require__(320);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1620,12 +1739,10 @@ var ChattingPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__car_registration_car_registration__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tabs_tabs__ = __webpack_require__(132);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1638,48 +1755,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-var LoginPage = /** @class */ (function () {
-    function LoginPage(navCtrl, authenticationService, alertCtrl) {
+var FindridePage = /** @class */ (function () {
+    function FindridePage(navCtrl) {
         this.navCtrl = navCtrl;
-        this.authenticationService = authenticationService;
-        this.alertCtrl = alertCtrl;
-        this.email = null;
-        this.password = null;
+        this.ride = "oneway";
     }
-    LoginPage.prototype.signup = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__signup_signup__["a" /* SignupPage */]);
+    FindridePage.prototype.tabs = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__tabs_tabs__["a" /* TabsPage */]);
     };
-    LoginPage.prototype.logIn = function () {
-        var _this = this;
-        this.authenticationService.loginWithEmail(this.email, this.password).then(function (data) {
-            // alert("loggeado correctamente");
-            console.log(data);
-            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__car_registration_car_registration__["a" /* CarRegistrationPage */]);
-            _this.authenticationService.getStatus;
-        }).catch(function (error) {
-            var alert = _this.alertCtrl.create({
-                title: 'Oops!',
-                subTitle: 'El usuario o la contraseña están incorrectas',
-                buttons: ['OK']
-            });
-            alert.present();
-            console.log(error);
-        });
-    };
-    LoginPage = __decorate([
+    FindridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/login/login.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n        <ion-title><span class="text-white">SIGN IN</span></ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n    <div class="logo">\n        <img src="assets/imgs/logo.png" alt="logo">\n    </div>\n\n    <div class="bg-white login">\n        <div class="">\n            <ion-list class="form">\n                <ion-item>\n                    <ion-label></ion-label>\n                    <ion-input type="email"  text-right [(ngModel)]="email" placeholder= "email universitario"  text-right></ion-input>\n                </ion-item>\n                <ion-item>\n                    <ion-label></ion-label>\n                    <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>\n                </ion-item>\n            </ion-list>\n            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()">LOGIN</button>\n            <ion-row style="padding-top: 8px;">\n                <ion-col (click)="signup()"><small>New user <strong class="text-theme">Sign up</strong></small></ion-col>\n                <ion-col text-right><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>\n            </ion-row>\n            <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->\n            <!-- <ion-row>\n                <ion-col col-6><button ion-button full class="bg-blue text-white btn rounded small"><img src="assets/imgs/fb_white.png">\n                    <span>Facebook</span></button></ion-col>\n                <ion-col col-6><button ion-button full class="bg-white text-dark btn rounded small"><img src="assets/imgs/google.png">\n                    <span>Google&nbsp;&nbsp;</span></button></ion-col>\n            </ion-row> -->\n        </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/login/login.html"*/
+            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/findride/findride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title><span class="text-white">EDIT RIDE INFO</span></ion-title>\n    </ion-navbar>\n    <div padding-left padding-right>\n        <ion-segment [(ngModel)]="ride">\n            <ion-segment-button value="oneway">\n                Selecciona tu origen y destino\n            </ion-segment-button>\n            <!-- <ion-segment-button value="Return">\n                Return\n            </ion-segment-button> -->\n        </ion-segment>\n    </div>\n</ion-header>\n\n<ion-content class="bg-background-img" padding>\n    <div [ngSwitch]="ride">\n        <ion-list *ngSwitchCase="\'oneway\'">\n            <ion-card class="search search-1">\n                <span class="dot bg-theme"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set Starting Location (Home)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Starting time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <ion-card class="search search-2">\n                <span class="dot bg-yellow"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set End Location (Office)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Reaching time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <!-- <p class="text-theme">Select usually travel days</p>\n            <br> -->\n            <!-- <div class="days text-white">\n                <ion-row>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Monday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Tuesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Wednesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Thursday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Friday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Saturday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Sunday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                </ion-row>\n            </div> -->\n            <br>\n            <div class="rate">\n                <ion-row>\n                <p class="text-theme">recuerda que el precio que debes cobrar es:</p>\n                    <ion-col col-6>\n                        <div class="seats-tag">\n                            <!-- <ion-icon name="remove-circle"></ion-icon> -->\n                            <strong>COP 2.500</strong>\n                            <!-- <ion-icon name="add-circle"></ion-icon> -->\n                        </div>\n                    </ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col col-6>\n                        <button (click)="tabs()" small class="btn rounded bg-theme text-white" style="width: 100%">CONÉCTATE</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-list>\n        <!-- <ion-list *ngSwitchCase="\'Return\'">\n\n            <ion-card class="search search-1">\n                <span class="dot bg-yellow"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set Starting Location (Office)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Starting time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <ion-card class="search search-2">\n                <span class="dot bg-theme"></span>\n                <ion-card-content>\n                    <ion-searchbar (ionInput)="getItems($event)" placeholder="Set End Location (Home)"></ion-searchbar>\n                    <ion-searchbar class="nobdr" (ionInput)="getItems($event)" placeholder="Reaching time"></ion-searchbar>\n                </ion-card-content>\n            </ion-card>\n            <p class="text-theme">Select usually travel days</p>\n            <br>\n            <div class="days text-white">\n                <ion-row>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Monday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Tuesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Wednesday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Thursday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Friday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Saturday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                    <ion-col col-6>\n                        <ion-item>\n                            <ion-label>Sunday</ion-label>\n                            <ion-checkbox checked="true"></ion-checkbox>\n                        </ion-item>\n                    </ion-col>\n                </ion-row>\n            </div>\n            <br>\n            <p class="text-theme">Set Min. Fare ($)</p>\n            <div class="rate">\n                <ion-row>\n                    <ion-col col-6>\n                        <div class="seats-tag">\n                            <ion-icon name="remove-circle"></ion-icon>\n                            <strong>60 $</strong>\n                            <ion-icon name="add-circle"></ion-icon>\n                        </div>\n                    </ion-col>\n                    <ion-col col-6>\n                        <button (click)="tabs()" class="btn rounded bg-theme text-white" style="width: 100%" small>Update Info</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n        </ion-list> -->\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src/src/pages/findride/findride.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
-    ], LoginPage);
-    return LoginPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
+    ], FindridePage);
+    return FindridePage;
 }());
 
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=findride.js.map
 
 /***/ })
 
-},[319]);
+},[321]);
 //# sourceMappingURL=main.js.map

@@ -1,5 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 
 @Injectable()
@@ -11,6 +12,7 @@ export class authenticationService{
 
     loginWithEmail(email:string, password:string){
        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+       
     }
 
     registerWithEmail(email:string, password:string){
@@ -24,4 +26,12 @@ export class authenticationService{
     logOut(){
         return this.angularFireAuth.auth.signOut();
     } 
+    
+    resetPassword(email:string){
+        let auth = firebase.auth();
+        return auth.sendPasswordResetEmail(email)
+            .then(() => console.log("email sent"))
+            .catch((error) => console.log(error))
+    };
+   
 }

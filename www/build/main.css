@@ -26796,7 +26796,7 @@ page-findride .days .item .label {
 }
 
 page-findride .seats-tag {
-  padding: 12px 18px 12px 0px;
+  padding: 0px 18px 60px 0px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

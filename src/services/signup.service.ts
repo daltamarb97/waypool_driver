@@ -10,4 +10,5 @@ export class SignUpService {
     public saveUser(user){
         this.afDB.database.ref('drivers/'+ user.userId).set(user);
     }
+
 }
