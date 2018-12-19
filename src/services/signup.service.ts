@@ -1,14 +1,19 @@
 import { AngularFireDatabase } from "@angular/fire/database";
 import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "angularfire2/auth";
 
 @Injectable()
 export class SignUpService {
-    constructor(public afDB: AngularFireDatabase){
+    constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
 
     }
 
-    public saveUser(user){
-        this.afDB.database.ref('drivers/'+ user.userId).set(user);
+    public async saveUser(user){
+        this.afDB.database.ref('drivers/'+ user.userId).update(user);
+        this.afDB.database.ref('users/'+ user.userId).update(user);
+
     }
+
+    
 
 }

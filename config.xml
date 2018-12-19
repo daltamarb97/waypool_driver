@@ -77,9 +77,10 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <engine name="android" spec="7.0.0" />
-<<<<<<< HEAD
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <engine name="ios" spec="~4.5.5" />
-=======
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+    <plugin name="cordova-plugin-geofence" spec="^0.7.0">
+        <variable name="GEOFENCE_ALWAYS_USAGE_DESCRIPTION" value="${EXECUTABLE_NAME} Would Like to Use Your Current Location Even In Background." />
+        <variable name="GEOFENCE_IN_USE_USAGE_DESCRIPTION" value="${EXECUTABLE_NAME} Would Like to Use Your Current Location When In Use." />
+    </plugin>
 </widget>

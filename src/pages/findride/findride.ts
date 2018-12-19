@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
+import { Geofence } from '@ionic-native/geofence';
 
 
 @Component({
@@ -16,6 +17,8 @@ ride: string = "oneway";
   }
   
  tabs(){
+
+
     this.navCtrl.push(TabsPage);
  }
  

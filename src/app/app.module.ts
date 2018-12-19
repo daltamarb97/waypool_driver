@@ -30,21 +30,19 @@ import { RatevroomPage } from '../pages/ratevroom/ratevroom';
 import { HelpPage } from '../pages/help/help';
 import { RidetodayPage } from '../pages/ridetoday/ridetoday';
 import { UploadPage } from '../pages/upload/upload';
-<<<<<<< HEAD
 import { CarRegistrationPage } from '../pages/car-registration/car-registration';
-=======
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-<<<<<<< HEAD
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';
 import { Camera } from '@ionic-native/camera';
+import { Geofence } from '@ionic-native/geofence';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDYldaKvN7lRhAOYesOeWhl7Zs7WfTn9ak",
@@ -54,8 +52,7 @@ export const firebaseConfig = {
   storageBucket: "waypoolapp-f1349.appspot.com",
   messagingSenderId: "729494621596"
 };
-=======
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+
 
 @NgModule({
   declarations: [
@@ -87,7 +84,7 @@ export const firebaseConfig = {
     RatevroomPage,
     HelpPage,
     RidetodayPage,
-<<<<<<< HEAD
+
     UploadPage,
     CarRegistrationPage
   ],
@@ -97,13 +94,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
-=======
-    UploadPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -135,24 +126,19 @@ export const firebaseConfig = {
     RatevroomPage,
     HelpPage,
     RidetodayPage,
-<<<<<<< HEAD
     UploadPage,
     CarRegistrationPage
-=======
-    UploadPage
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
-<<<<<<< HEAD
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignUpService,
     authenticationService,
-    Camera
-=======
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+    Camera,
+    Geofence
+
   ]
 })
 export class AppModule {}

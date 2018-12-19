@@ -63,6 +63,28 @@ module.exports = [
     "clobbers": [
       "window.Keyboard"
     ]
+  },
+  {
+    "id": "es6-promise-plugin.Promise",
+    "file": "plugins/es6-promise-plugin/www/promise.js",
+    "pluginId": "es6-promise-plugin",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-geofence.TransitionType",
+    "file": "plugins/cordova-plugin-geofence/www/TransitionType.js",
+    "pluginId": "cordova-plugin-geofence",
+    "clobbers": [
+      "TransitionType"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geofence.geofence",
+    "file": "plugins/cordova-plugin-geofence/www/geofence.js",
+    "pluginId": "cordova-plugin-geofence",
+    "clobbers": [
+      "geofence"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -73,7 +95,11 @@ module.exports.metadata =
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-ionic-webview": "1.2.1",
-  "cordova-plugin-ionic-keyboard": "2.1.3"
+  "cordova-plugin-ionic-keyboard": "2.1.3",
+  "cordova-plugin-add-swift-support": "1.6.0",
+  "cordova-plugin-compat": "1.2.0",
+  "es6-promise-plugin": "4.2.2",
+  "cordova-plugin-geofence": "0.7.0"
 };
 // BOTTOM OF METADATA
 });

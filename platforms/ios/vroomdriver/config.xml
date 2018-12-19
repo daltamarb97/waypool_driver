@@ -105,4 +105,7 @@
     <preference name="SplashScreenDelay" value="2000" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="orientation" value="portrait" />
+    <feature name="GeofencePlugin">
+        <param name="ios-package" value="HWPGeofencePlugin" />
+    </feature>
 </widget>

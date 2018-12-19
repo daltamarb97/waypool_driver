@@ -1,16 +1,9 @@
 {
   "name": "vroomdriver",
-<<<<<<< HEAD
+
   "integrations": {
     "cordova": {}
   },
   "type": "ionic-angular"
 }
-=======
-  "app_id": "",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-}
->>>>>>> 02e06de45b81de5a30d16be9dae81ab80bd0a7e1
+

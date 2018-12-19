@@ -44,6 +44,10 @@
 		394F1F6D2A2646528950D6FE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8944FB889C4858A6B196C4 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A174C0F90E7E434A9FC27F2A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD054A46D0E498982B6E8F1 /* libz.tbd */; };
 		77151CFB6F9741C1848433AC /* CDVIonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A8E3B0BED54F89962D8D40 /* CDVIonicKeyboard.m */; };
+		0765774D3D8A4B049EDC8945 /* GeofencePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C825A681085B4304BFF3CF5E /* GeofencePlugin.swift */; };
+		AFC0E8F0211044C399CB5BEB /* SwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1951485F9D9649FB870E3289 /* SwiftData.swift */; };
+		8729B4156C864CA1858D707F /* SwiftyJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9110E87FD14C4B6884B342C3 /* SwiftyJson.swift */; };
+		CEE4E4FEB5264D769BAE4578 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B4E55235594E8E88FD6D85 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +142,11 @@
 		9AD054A46D0E498982B6E8F1 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 		25A8E3B0BED54F89962D8D40 /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.m"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		AD0FC79A9DBD4C5CB09446A8 /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.h"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C825A681085B4304BFF3CF5E /* GeofencePlugin.swift */ = {isa = PBXFileReference; name = "GeofencePlugin.swift"; path = "cordova-plugin-geofence/GeofencePlugin.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		1951485F9D9649FB870E3289 /* SwiftData.swift */ = {isa = PBXFileReference; name = "SwiftData.swift"; path = "cordova-plugin-geofence/SwiftData.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		9110E87FD14C4B6884B342C3 /* SwiftyJson.swift */ = {isa = PBXFileReference; name = "SwiftyJson.swift"; path = "cordova-plugin-geofence/SwiftyJson.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		2610C52E3CB84BD2BFA16535 /* Geofence-Plugin-Bridging-Header.h */ = {isa = PBXFileReference; name = "Geofence-Plugin-Bridging-Header.h"; path = "cordova-plugin-geofence/Geofence-Plugin-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		87B4E55235594E8E88FD6D85 /* libsqlite3.dylib */ = {isa = PBXFileReference; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +160,7 @@
 				59F6DC8777EF45C689558187 /* AVFoundation.framework in Frameworks */,
 				394F1F6D2A2646528950D6FE /* WebKit.framework in Frameworks */,
 				A174C0F90E7E434A9FC27F2A /* libz.tbd in Frameworks */,
+				CEE4E4FEB5264D769BAE4578 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +236,7 @@
 				8FB44474B1A143C885F7373E /* AVFoundation.framework */,
 				EC8944FB889C4858A6B196C4 /* WebKit.framework */,
 				9AD054A46D0E498982B6E8F1 /* libz.tbd */,
+				87B4E55235594E8E88FD6D85 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -300,6 +311,10 @@
 				66DDD2FBDC1647E9A414848F /* GCDWebServerStreamedResponse.h */,
 				25A8E3B0BED54F89962D8D40 /* CDVIonicKeyboard.m */,
 				AD0FC79A9DBD4C5CB09446A8 /* CDVIonicKeyboard.h */,
+				C825A681085B4304BFF3CF5E /* GeofencePlugin.swift */,
+				1951485F9D9649FB870E3289 /* SwiftData.swift */,
+				9110E87FD14C4B6884B342C3 /* SwiftyJson.swift */,
+				2610C52E3CB84BD2BFA16535 /* Geofence-Plugin-Bridging-Header.h */,
 			);
 			name = Plugins;
 			path = "vroomdriver/Plugins";
@@ -435,6 +450,9 @@
 				19E950A90BE54DC58AA59F21 /* GCDWebServerFileResponse.m in Sources */,
 				1D3D8AB6845840EF9CAD10BC /* GCDWebServerStreamedResponse.m in Sources */,
 				77151CFB6F9741C1848433AC /* CDVIonicKeyboard.m in Sources */,
+				0765774D3D8A4B049EDC8945 /* GeofencePlugin.swift in Sources */,
+				AFC0E8F0211044C399CB5BEB /* SwiftData.swift in Sources */,
+				8729B4156C864CA1858D707F /* SwiftyJson.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
