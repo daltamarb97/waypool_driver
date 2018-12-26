@@ -1,11 +1,12 @@
 import { Injectable, NgModule } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 @Injectable()
 export class authenticationService{
 
-    constructor(private angularFireAuth: AngularFireAuth){
+    constructor(private angularFireAuth: AngularFireAuth,public afDB: AngularFireDatabase){
 
     }
 
@@ -20,7 +21,7 @@ export class authenticationService{
      getStatus(){
          return  this.angularFireAuth.authState;
      }
-
+   
     logOut(){
         return this.angularFireAuth.auth.signOut();
     } 

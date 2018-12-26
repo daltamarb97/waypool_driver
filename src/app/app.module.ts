@@ -40,6 +40,9 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/da
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';
+import { Geolocation } from '@ionic-native/geolocation';
+import { sendCoordsService } from '../services/sendCoords.service';
+import { sendUsersService } from '../services/sendUsers.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDYldaKvN7lRhAOYesOeWhl7Zs7WfTn9ak",
@@ -85,7 +88,8 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{tabsHideOnSubPages:false,
+      }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -128,7 +132,10 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignUpService,
-    authenticationService
+    authenticationService,
+    Geolocation,
+    sendCoordsService,
+    sendUsersService
   ]
 })
 export class AppModule {}

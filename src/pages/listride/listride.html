@@ -1,21 +1,34 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title>FIND A RIDE
-            <span style="margin-left: auto;float: right;"><ion-icon name="md-car" class="text-white"></ion-icon>&nbsp;&nbsp;Edit Ride</span>
+        <ion-title class="Title">DRIVER
         </ion-title>
     </ion-navbar>
 </ion-header>
 
-<ion-content class="bg-light">
-    <ion-card>
+<ion-content class="bg-light" class="hideLongText">
+    <ion-row class="center-align bg-white flow-ride">
+        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>
+            <h2>Origen</h2> {{origin}}
+
+        </ion-col>
+        <ion-col col-2 text-center>
+            <img src="assets/imgs/arrow.jpg">
+        </ion-col>
+        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>
+            <h2>Destino</h2> {{destination}}
+        </ion-col>
+
+    </ion-row>
+    <ion-card *ngFor = "let user of usersAvailable" >
         <ion-item>
             <ion-avatar item-start>
                 <img src="assets/imgs/face-1.jpg">
             </ion-avatar>
             <div class="name">
-                <h2>David Johnson
+                <h2>{{user.name}} {{user.lastname}}
+                    <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>
                 </h2>
-                <p>Honda Cvic | White</p>
+                <p>gujnju | unjuj</p>
             </div>
             <div class="more">
                 <h2 class="text-light">
@@ -30,115 +43,24 @@
         </ion-item>
         <ion-card-content>
             <div class="ride-detail">
-                <p>
-                    <span class="icon-location bg-theme"></span>Washington sq.park New York</p>
-                <p>
-                    <span class="icon-location bg-yellow"></span>Harison, east sq.park New York</p>
+                <p  >
+                    <span class="icon-location bg-theme"></span><span class="time">Origen:</span>{{user.trips.origin}}</p>
+                <p > 
+                    <span class="icon-location bg-yellow"></span><span class="time">Destino:</span>{{user.trips.destination}}</p>
             </div>
             <ion-row class="center-align">
-                <ion-col col-3 class="detail-text text-theme">
-                    25<sup>th</sup> Feb, 12:12pm
+                <!-- <ion-col col-3 class="detail-text text-theme">
+                    3 seats
+                </ion-col> -->
+                <ion-col col-2 class="detail-text text-theme">
+                    <span class="detail-text text-light">Pago:</span> Tarjeta
                 </ion-col>
-                <ion-col col-3 class="detail-text text-theme" text-center>
-                    2 Seats
-                </ion-col>
-                <ion-col col-2 class="detail-text" style="color: #f00;" text-center>
-                    Reject
+                <ion-col col-4 class="detail-text text-theme">
+                    <span class="detail-text text-light">Vuelto: </span>$10.000
                 </ion-col>
                 <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                    <button class="btn bg-theme rounded full text-white" (click)="riderprofile()">Accept</button>
+                    <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user)>Request Ride</button>
                 </ion-col>
             </ion-row>
         </ion-card-content>
     </ion-card>
-
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/man2.png">
-            </ion-avatar>
-            <div class="name">
-                <h2>David Johnson
-                </h2>
-                <p>Honda Cvic | White</p>
-            </div>
-            <div class="more">
-                <h2 class="text-light">
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </h2>
-                <p class="text-light">(34 Reviews)</p>
-            </div>
-        </ion-item>
-        <ion-card-content>
-            <div class="ride-detail">
-                <p>
-                    <span class="icon-location bg-theme"></span>Washington sq.park New York</p>
-                <p>
-                    <span class="icon-location bg-yellow"></span>Harison, east sq.park New York</p>
-            </div>
-            <ion-row class="center-align">
-                <ion-col col-3 class="detail-text text-theme">
-                    25<sup>th</sup> Feb, 12:12pm
-                </ion-col>
-                <ion-col col-3 class="detail-text text-theme" text-center>
-                    2 Seats
-                </ion-col>
-                <ion-col col-2 class="detail-text" style="color: #f00;" text-center>
-                    Reject
-                </ion-col>
-                <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                    <button class="btn bg-theme rounded full text-white" (click)="riderprofile()">Accept</button>
-                </ion-col>
-            </ion-row>
-        </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/man1.png">
-            </ion-avatar>
-            <div class="name">
-                <h2>David Johnson
-                </h2>
-                <p>Honda Cvic | White</p>
-            </div>
-            <div class="more">
-                <h2 class="text-light">
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star" class="text-yellow"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </h2>
-                <p class="text-light">(34 Reviews)</p>
-            </div>
-        </ion-item>
-        <ion-card-content>
-            <div class="ride-detail">
-                <p>
-                    <span class="icon-location bg-theme"></span>Washington sq.park New York</p>
-                <p>
-                    <span class="icon-location bg-yellow"></span>Harison, east sq.park New York</p>
-            </div>
-            <ion-row class="center-align">
-                <ion-col col-3 class="detail-text text-theme">
-                    25<sup>th</sup> Feb, 12:12pm
-                </ion-col>
-                <ion-col col-3 class="detail-text text-theme" text-center>
-                    2 Seats
-                </ion-col>
-                <ion-col col-2 class="detail-text" style="color: #f00;" text-center>
-                    Reject
-                </ion-col>
-                <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                    <button class="btn bg-theme rounded full text-white" (click)="riderprofile()">Accept</button>
-                </ion-col>
-            </ion-row>
-        </ion-card-content>
-    </ion-card>
-</ion-content>

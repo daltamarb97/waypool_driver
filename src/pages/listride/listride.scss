@@ -48,7 +48,7 @@ page-listride {
             margin-bottom: 1rem;
             p {
                 font-size: 1.2rem;
-                padding-left: 43px;
+                padding-left: 10px;
                 position: relative;
                 color: #777;
                 white-space: nowrap;
@@ -88,21 +88,23 @@ page-listride {
         }
         .col,
         .detail-text {
-            font-size: .95rem;
+            font-size: 1.15rem;
             text-transform: none;
             font-weight: 500;
             padding-left: 0;
             padding-right: 0;
-            white-space: nowrap;
         }
         .full.btn {
+            width: 100%;
             text-transform: capitalize;
             letter-spacing: 0px;
             font-weight: 400;
-            height: 32px;
-            font-size: 1.1rem;
-            padding-right: 1.8rem;
-            padding-left: 1.8rem;
+            height: 35px;
+            font-size: 1.2rem;
+        }
+        .ride-detail{
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
     }
     .center-align {
@@ -126,5 +128,12 @@ page-listride {
         img {
             width: 18px;
         }
+    }
+    .hideLongText{
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+    .title{
+        overflow: visible;
     }
 }
