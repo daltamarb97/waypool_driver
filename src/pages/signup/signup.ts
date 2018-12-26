@@ -112,7 +112,7 @@ export class SignupPage {
               });
               alert.present();
         }
-        // this.navCtrl.push(VerificationPage);
+        
 
     }
 

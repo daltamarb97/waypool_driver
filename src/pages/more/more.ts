@@ -13,6 +13,8 @@ import { LoginPage } from '../login/login';
 import { UploadPage } from '../upload/upload';
 import { authenticationService } from '../../services/driverauthentication.service';
 import * as firebase from 'firebase';
+import { CarRegistrationPage } from '../car-registration/car-registration';
+
 
 @Component({
   selector: 'page-more',
@@ -51,7 +53,7 @@ export class MorePage {
     this.navCtrl.push(LoginPage);
     }
          upload(){
-    this.navCtrl.push(UploadPage);
+    this.navCtrl.push(CarRegistrationPage);
     }
 
 }
