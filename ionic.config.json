@@ -1,7 +1,9 @@
 {
   "name": "vroomdriver",
+
   "integrations": {
     "cordova": {}
   },
   "type": "ionic-angular"
 }
+

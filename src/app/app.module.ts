@@ -33,6 +33,7 @@ import { UploadPage } from '../pages/upload/upload';
 import { CarRegistrationPage } from '../pages/car-registration/car-registration';
 
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from '@angular/fire';
@@ -43,6 +44,9 @@ import { authenticationService } from '../services/driverauthentication.service'
 import { Geolocation } from '@ionic-native/geolocation';
 import { sendCoordsService } from '../services/sendCoords.service';
 import { sendUsersService } from '../services/sendUsers.service';
+import { Camera } from '@ionic-native/camera';
+import { Geofence } from '@ionic-native/geofence';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDYldaKvN7lRhAOYesOeWhl7Zs7WfTn9ak",
@@ -52,6 +56,7 @@ export const firebaseConfig = {
   storageBucket: "waypoolapp-f1349.appspot.com",
   messagingSenderId: "729494621596"
 };
+
 
 @NgModule({
   declarations: [
@@ -83,6 +88,7 @@ export const firebaseConfig = {
     RatevroomPage,
     HelpPage,
     RidetodayPage,
+
     UploadPage,
     CarRegistrationPage
   ],
@@ -93,6 +99,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -126,6 +133,7 @@ export const firebaseConfig = {
     RidetodayPage,
     UploadPage,
     CarRegistrationPage
+
   ],
   providers: [
     StatusBar,
@@ -133,9 +141,13 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignUpService,
     authenticationService,
+
     Geolocation,
     sendCoordsService,
-    sendUsersService
+    sendUsersService,
+    Camera,
+    Geofence
+
   ]
 })
 export class AppModule {}

@@ -1,7 +1,8 @@
+
 import { Component, ViewChild } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
 
+import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { VerificationPage } from '../verification/verification';
 
@@ -12,6 +13,8 @@ import { SignUpService } from '../../services/signup.service';
 import { AlertController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+
 
 
 
@@ -23,12 +26,14 @@ export class SignupPage {
 
     @ViewChild(Content) content: Content;
     user:any ={};
-    userId:any = null;
+    tokenId:any = '';
+    userId:any = '';
     isReadonly = true;
     private signupGroup: FormGroup;
-    userFirebase = this.AngularFireAuth.auth.currentUser;
 
-  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth) {
+    // userFirebase = this.AngularFireAuth.auth.currentUser;
+
+  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -68,23 +73,39 @@ export class SignupPage {
           if(userPassword === userPasswordconf){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);
             this.navCtrl.push(LoginPage, this.user);
-            
-
-            // if(!this.user.userId){
-            //     this.user.userId = this.userFirebase.uid; //verify this because sometimes it fails
-            //     debugger;
-            //     console.log(this.user.userId); //remember to delete this console.log for safety reasons
-            //     this.SignUpService.saveUser(this.user);
-            
-            // };
+        
+            if(!this.user.userId){
+                this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                    if(user){
+                               user.getIdToken().then((token)=>{
+                               this.user.tokenId = token;
+                               console.log(this.user.tokenId);
+                            })
+                         if(!this.user.userId){
+                            this.user.userId = user.uid;
+                            console.log(this.user.userId); //remember to delete this console.log for safety reasons
+                        }
+                        this.SignUpService.saveUser(this.user);
+                    }else{
+                        console.log('there is no user');
+                    }
+                })
+            };
 
             // sending email verification and verifying weather email is verified or not
-                // if(this.userFirebase.emailVerified == false){
-                //     this.userFirebase.sendEmailVerification();
-                //     console.log("verification email has been sent");
-                // }else{ 
-                //     console.log("verification email has not been sent or the email is already verifyied");
-                // }
+            this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                if(user){
+                    if(user.emailVerified == false){
+                        user.sendEmailVerification();
+                    console.log("verification email has been sent");
+                    }else{
+                        console.log("verification email has not been sent or the email is already verifyied");
+                    }
+                }else{
+                    console.log('there is no user');
+                }
+            })  
+
                
         }else{
             const alert = this.alertCtrl.create({
@@ -94,7 +115,7 @@ export class SignupPage {
               });
               alert.present();
         }
-        // this.navCtrl.push(VerificationPage);
+
 
     }
 

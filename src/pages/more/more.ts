@@ -11,6 +11,10 @@ import { RatevroomPage } from '../ratevroom/ratevroom';
 import { HelpPage } from '../help/help';
 import { LoginPage } from '../login/login';
 import { UploadPage } from '../upload/upload';
+import { authenticationService } from '../../services/driverauthentication.service';
+import * as firebase from 'firebase';
+import { CarRegistrationPage } from '../car-registration/car-registration';
+
 
 @Component({
   selector: 'page-more',
@@ -18,7 +22,7 @@ import { UploadPage } from '../upload/upload';
 })
 export class MorePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private AuthenticationService: authenticationService) {
 
   }
   
@@ -43,11 +47,13 @@ export class MorePage {
          help(){
     this.navCtrl.push(HelpPage);
     }
-         login(){
+         logout(){
+          this.AuthenticationService.logOut();
+          console.log(firebase.auth().currentUser);
     this.navCtrl.push(LoginPage);
     }
          upload(){
-    this.navCtrl.push(UploadPage);
+    this.navCtrl.push(CarRegistrationPage);
     }
 
 }

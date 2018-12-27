@@ -2,6 +2,7 @@
     <ion-navbar>
         <ion-title><span class="text-white">PIDE TU VIAJE</span></ion-title>
     </ion-navbar>
+
 </ion-header>
 
 <ion-content class="bg-background-img" padding>
@@ -23,6 +24,7 @@
             <span class="dot bg-yellow"></span>           
            <ion-searchbar required [(ngModel)]="autocompleteMyDest.input" (ionInput)="updateSearchResultsMyDest()" placeholder="Tu destino"></ion-searchbar>
 
+
             <ion-list   [hidden]="autocompleteItems2.length == 0">
             <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">
               {{ item.description }}
@@ -42,3 +44,4 @@
 
 
 </ion-content>
+

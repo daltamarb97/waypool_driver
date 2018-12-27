@@ -13,24 +13,27 @@
 </ion-header>
 
 <ion-content padding-right padding-left>
-    <p text-center padding-top margin-top>Upload good quality photo of your</p>
-    <h2 text-center>Licence</h2>
+    <p text-center padding-top margin-top>{{description}}</p>
+    <h2 text-center>{{namePicture}}</h2>
 
     <ion-row>
         <ion-col col-4 text-center>
-            <img src="assets/imgs/v2.png">
+            <img  src="assets/imgs/v2.png" (click)="changeNamePicture1()">
         </ion-col>
         <ion-col col-4 text-center>
-            <img src="assets/imgs/v3.png">
+            <img  src="assets/imgs/v3.png" (click)="changeNamePicture2()">
         </ion-col>
         <ion-col col-4 text-center>
-            <img src="assets/imgs/v4.png">
+            <img  src="assets/imgs/v4.png" (click)="changeNamePicture3()">
         </ion-col>
         <ion-col col-4 text-center>
-            <img src="assets/imgs/credit-card (1).png">
+            <img  src="assets/imgs/v4.png" (click)="changeNamePicture4()">
         </ion-col>
         <ion-col col-4 text-center>
-            <img src="assets/imgs/v4.png">
+            <img  src="assets/imgs/credit-card (1).png" (click)="changeNamePicture5()">
+        </ion-col>
+        <ion-col col-4 text-center>
+            <img  src="../../assets/imgs/credit-card (1).png" (click)="changeNamePicture6()">
         </ion-col>
     </ion-row>
 
@@ -39,10 +42,11 @@
     </div>
     <ion-row>
         <ion-col>
-            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;">Subir Foto</button></p>
+            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCamera()">Subir Foto</button></p>
         </ion-col>
         <ion-col>
             <p padding-top class="btn-box"><button class="btn text-white rounded buttonLight" style="width: 80%;" (click)= "findRide()">Hacer después</button></p>
         </ion-col>
     </ion-row>
 </ion-content>
+

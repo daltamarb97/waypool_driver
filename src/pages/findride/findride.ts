@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
 
+
 import { ListridePage } from '../listride/listride';
-
-
-
+import { TabsPage } from '../tabs/tabs';
+import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NavController, Platform, ViewController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -22,6 +22,7 @@ declare var google;
   templateUrl: 'findride.html'
 })
 export class FindridePage {
+
   @ViewChild('map') mapElement: ElementRef;
   
   map: any;
@@ -147,6 +148,7 @@ export class FindridePage {
     
   }
   
+
 
 //autocomplete of myPosition searchbar
 updateSearchResultsMyPos(){

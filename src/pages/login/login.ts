@@ -55,26 +55,9 @@ export class LoginPage {
          }; 
     };
     
-    logIn(){
-
+    logIn(){      
         this.receivedUser = this.navParams.data;
-        if(!this.receivedUser.userId){
-             this.receivedUser.userId = this.AngularFireAuth.auth.currentUser.uid; //verify this because sometimes it fails
-             console.log(this.receivedUser.userId); //remember to delete this console.log for safety reasons
-           
-
-            };
-
-            //sending email verification and verifying weather email is verified or not
-                if(this.AngularFireAuth.auth.currentUser.emailVerified == false){
-                   this.AngularFireAuth.auth.currentUser.sendEmailVerification();
-                   console.log("verification email has been sent");
-                }else{ 
-                   console.log("verification email has not been sent or the email is already verifyied");
-                };
-
         this.authenticationService.loginWithEmail(this.email, this.password).then((data) => {
-            // alert("loggeado correctamente");
             console.log(data);
             if(data.user.emailVerified == false){
                 const alert = this.alertCtrl.create({
@@ -88,12 +71,10 @@ export class LoginPage {
                 if(metadata.creationTime == metadata.lastSignInTime){
                     console.log(metadata.creationTime);
                     console.log(metadata.lastSignInTime);
-                    // this.navCtrl.push(CarRegistrationPage);
-                    this.navCtrl.push(TabsPage);
+
+                    this.navCtrl.push(CarRegistrationPage);
                 }else{
                     this.navCtrl.push(TabsPage);
-                    
-
                 }
                 this.authenticationService.getStatus;  
             };
@@ -106,9 +87,5 @@ export class LoginPage {
               alert.present();
             console.log(error);
         });
-        
-
     }
-    
-
 }

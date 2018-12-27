@@ -13,6 +13,7 @@
         <div class="">
             <ion-list class="form">
                 <ion-item>
+
                     <ion-label></ion-label>
                     <ion-input type="email"  text-right [(ngModel)]="email" placeholder= "email universitario"  text-right></ion-input>
                 </ion-item>
@@ -21,18 +22,21 @@
                     <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>
                 </ion-item>
             </ion-list>
-            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()">LOGIN</button>
+            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn(user)">LOGIN</button>
             <ion-row style="padding-top: 8px;">
                 <ion-col (click)="signup()"><small>New user <strong class="text-theme">Sign up</strong></small></ion-col>
-                <ion-col text-right><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>
+                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>
             </ion-row>
             <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->
             <!-- <ion-row>
+
                 <ion-col col-6><button ion-button full class="bg-blue text-white btn rounded small"><img src="assets/imgs/fb_white.png">
                     <span>Facebook</span></button></ion-col>
                 <ion-col col-6><button ion-button full class="bg-white text-dark btn rounded small"><img src="assets/imgs/google.png">
                     <span>Google&nbsp;&nbsp;</span></button></ion-col>
+
             </ion-row> -->
+
         </div>
     </div>
 </ion-content>

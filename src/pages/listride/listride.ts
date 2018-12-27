@@ -12,16 +12,18 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { sendUsersService } from '../../services/sendUsers.service';
 
+
 @Component({
   selector: 'page-listride',
   templateUrl: 'listride.html'
 })
 export class ListridePage {
-  usersAvailable:any = [];
   locationOrigin:any =[];
   locationDestination:any =[];
   user=this.AngularFireAuth.auth.currentUser.uid;
-
+  usersTotal:any = [];
+  usersFindingTrip:any = [];
+  accptedUsers:any = [];
   constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth ) {
    //get origin from driver
     this.sendCoordsService.getOrigin(this.user)
@@ -39,15 +41,26 @@ export class ListridePage {
         })
 
     this.SignUpService.getUsers()
-      .subscribe( user => {
-        this.usersAvailable = user;
-        console.log(this.usersAvailable);        
+      .subscribe(users =>{
+        this.usersTotal = users;
+        this.usersTotal.forEach(user => {
+            if(user.findingTrip == true){
+              debugger;
+                if(this.usersFindingTrip.length < 4){
+                  this.usersFindingTrip.push(user);
+                }else{
+                  console.log('there is more than 4 users');
+                }
+            }else if(user.findingTrip == false && user.findingTrip == null){
+              this.usersFindingTrip.pop(user);
+            } 
+        });
       });
 
-     
-  };
-
-
+  
+    
+  }
+    
 
  filter(){
     this.navCtrl.push(FilterPage);
@@ -59,5 +72,17 @@ export class ListridePage {
     let modal = this.modalCtrl.create(ConfirmpopupPage,{user});
     modal.present();
     console.log(user)
+    this.usersFindingTrip.forEach(function(valor, indice ){
+      console.log(valor);
+    })
+    // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
+    this.accptedUsers.push();
   }
+
 }
+
+
+
+
+
+
