@@ -3,8 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { RateriderPage } from '../raterider/raterider';
 import { ChattingPage } from '../chatting/chatting';
-import { RidetodayPage } from '../ridetoday/ridetoday';
-import { TabsPage } from '../tabs/tabs';
+// import { RidetodayPage } from '../ridetoday/ridetoday';
+// import { TabsPage } from '../tabs/tabs';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendUsersService } from '../../services/sendUsers.service';

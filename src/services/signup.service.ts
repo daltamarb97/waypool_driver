@@ -33,22 +33,6 @@ export class SignUpService {
         
      }
 
-     public acceptedByDriver(user){
-        
-        firebase.database().ref('users/' + user ).update({
-            findingTrip: false,
-            acceptedByDriver: true
-        }, function (error) {
-            if(error){
-                console.log(error);
-            }else{
-                console.log("everything succesful");
-            }
-        }); 
-        
-     }
-
-
 
      public getUsers(){
         return this.afDB.list('/users').valueChanges();

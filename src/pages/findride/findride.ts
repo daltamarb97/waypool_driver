@@ -2,14 +2,14 @@ import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
 
 
 import { ListridePage } from '../listride/listride';
-import { TabsPage } from '../tabs/tabs';
+// import { TabsPage } from '../tabs/tabs';
 import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, Platform, ViewController, AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
-import * as firebase from 'firebase';
-import { authenticationService } from '../../services/driverauthentication.service';
+
+// import { authenticationService } from '../../services/driverauthentication.service';
 import { SignUpService } from '../../services/signup.service';
 
 
@@ -55,9 +55,13 @@ export class FindridePage {
 
   user=this.AngularFireAuth.auth.currentUser.uid;
 
+  //variables of geofence
+  latitudeCode:any;
+  longitudeCode:any;
+  fence:any = {};
 
 
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofence: Geofence) {
 
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -77,6 +81,10 @@ export class FindridePage {
     this.markers = [];
     //meter datos por el id del firebase
  
+    geofence.initialize().then(
+      ()=>console.log('geofence plugin ready'),
+      (err)=>console.log(err)
+    )
   }
  
   ionViewDidLoad(){
@@ -198,10 +206,10 @@ selectSearchResultMyPos(item){
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
       
-      let position = {
-          lat: results[0].geometry.location.lat,
-          lng: results[0].geometry.location.lng
-      };
+      // let position = {
+      //     lat: results[0].geometry.location.lat,
+      //     lng: results[0].geometry.location.lng
+      // };
        let marker = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
@@ -225,10 +233,10 @@ selectSearchResultMyDest(item){
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
 
-      let position = {
-        latitude: results[0].geometry.location.lat,
-        longitude: results[0].geometry.location.lng
-      };
+      // let position = {
+      //   latitude: results[0].geometry.location.lat,
+      //   longitude: results[0].geometry.location.lng
+      // };
         // let position = new google.maps.LatLng( results[0].geometry.location.lat,
         //  results[0].geometry.location.lng)
 
@@ -293,12 +301,11 @@ geocodeLatLng(latLng,inputName) {
 //      NO PERMITIR VIAJE , ES UNA IDEA PERO NO ESTOY 100% DE ACUERDO
     //}
     
+  
     try {
       this.orFirebase=this.autocompleteMyPos.input
       this.desFirebase=this.autocompleteMyDest.input   
-
-   
-   
+  
     if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
           this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
           this.clearMarkers();
@@ -308,14 +315,41 @@ geocodeLatLng(latLng,inputName) {
          } else {
           this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
           //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-          this.navCtrl.push(ListridePage);
-        //   if(!this.user.userId){
-        //     this.user.userId =this.userFirebase;
-        //     this.userFirebase =  firebase.auth().currentUser.uid;
-
-        //     console.log(this.user.userId); 
-        // }
-
+          this.geocoder.geocode( { 'address': this.orFirebase[0]}, function(results, status) {
+            if (status == 'OK') {
+              if(results[0]){
+                this.latitudeCode = results[0].geometry.location.lat();
+                this.longitudeCode = results[0].geometry.location.lng();
+                            
+              }else{
+                console.log('no results found');
+              }   
+                } else{
+                  console.log('geocoder failed because of ' + status);
+                }
+            }); 
+    
+            // ADDING GEOFENCE CHARACTERISTICS
+                //options describing geofence
+                this.fence= {
+                  id: Date.now(), //any unique ID
+                  latitude:       this.latitudeCode, //center of geofence radius
+                  longitude:      this.longitudeCode,
+                  radius:         100, //radius to edge of geofence in meters
+                  transitionType: 3, //see 'Transition Types' below
+                  notification: { //notification settings
+                        id:             1, //any unique ID
+                        title:          'You crossed a fence', //notification title
+                        text:           'You just arrived to Gliwice city center.', //notification body
+                        openAppOnClick: true //open app when notification is tapped
+                        }
+                      };
+    
+            
+          this.SignUpService.turnFindingUsers(this.user);
+          this.navCtrl.push(ListridePage, {
+            data: this.fence
+          });
        
          
          }
@@ -324,7 +358,11 @@ geocodeLatLng(latLng,inputName) {
     catch {
       this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
       }
+
+      
+
     }
+
     presentAlert(title,text,button) {
       let alert = this.alertCtrl.create({
         title: title,
@@ -333,6 +371,9 @@ geocodeLatLng(latLng,inputName) {
       });
       alert.present();
     }
+
+    
+    
    
   }
   

@@ -4,16 +4,16 @@ import { Component, ViewChild } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { VerificationPage } from '../verification/verification';
+// import { VerificationPage } from '../verification/verification';
 
-import { AngularFireDatabase } from '@angular/fire/database';
+// import { AngularFireDatabase } from '@angular/fire/database';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { SignUpService } from '../../services/signup.service';
 import { AlertController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 
 
@@ -33,7 +33,7 @@ export class SignupPage {
 
     // userFirebase = this.AngularFireAuth.auth.currentUser;
 
-  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -59,16 +59,16 @@ export class SignupPage {
     verification(){
 
           //creating user on firebase
-          let userName = this.signupGroup.controls['name'].value;
-          let userLastName = this.signupGroup.controls['lastname'].value;
+        //   let userName = this.signupGroup.controls['name'].value;
+        //   let userLastName = this.signupGroup.controls['lastname'].value;
           let userEmail = this.signupGroup.controls['email'].value 
           let userFixedemail = this.signupGroup.controls['fixedemail'].value;
           let userEmailComplete = userEmail + userFixedemail;
           let userPassword = this.signupGroup.controls['password'].value;
           let userPasswordconf = this.signupGroup.controls['passwordconf'].value;
-          let userPhone = this.signupGroup.controls['phone'].value;
-          let userCarModel = this.signupGroup.controls['carModel'].value;
-          let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+        //   let userPhone = this.signupGroup.controls['phone'].value;
+        //   let userCarModel = this.signupGroup.controls['carModel'].value;
+        //   let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
           this.user = this.signupGroup.value;
           if(userPassword === userPasswordconf){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);

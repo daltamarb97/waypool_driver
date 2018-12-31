@@ -37,7 +37,7 @@ import { CarRegistrationPage } from '../pages/car-registration/car-registration'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';

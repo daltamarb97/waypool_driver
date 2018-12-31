@@ -46,14 +46,6 @@
     <true/>
     <key>NSAppTransportSecurity</key>
     <dict>
-      <key>NSExceptionDomains</key>
-      <dict>
-        <key>localhost</key>
-        <dict>
-          <key>NSExceptionAllowsInsecureHTTPLoads</key>
-          <true/>
-        </dict>
-      </dict>
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
@@ -63,13 +55,5 @@
     </array>
     <key>UILaunchStoryboardName</key>
     <string>CDVLaunchScreen</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location Even In Background.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location When In Use.</string>
-    <key>UIBackgroundModes</key>
-    <array>
-      <string>remote-notification</string>
-    </array>
   </dict>
 </plist>

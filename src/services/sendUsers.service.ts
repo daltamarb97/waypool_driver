@@ -1,14 +1,14 @@
 import { AngularFireDatabase } from "@angular/fire/database";
 import { Injectable } from "@angular/core";
-import { UrlSerializer } from "ionic-angular";
-import { useAnimation } from "@angular/core/src/animation/dsl";
-import * as firebase from 'firebase';
-import { AngularFireAuth } from "angularfire2/auth";
+// import { UrlSerializer } from "ionic-angular";
+// import { useAnimation } from "@angular/core/src/animation/dsl";
+// import * as firebase from 'firebase';
+// import { AngularFireAuth } from "angularfire2/auth";
 
 @Injectable()
 export class sendUsersService {
 
-constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
+constructor(public afDB: AngularFireDatabase){
               
     }
     

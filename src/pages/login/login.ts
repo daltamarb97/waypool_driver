@@ -4,12 +4,12 @@ import { NavController, AlertController, NavParams } from 'ionic-angular';
 
 import { SignupPage } from '../signup/signup';
 import { TabsPage } from '../tabs/tabs';
-import { FindridePage } from '../findride/findride';
+// import { FindridePage } from '../findride/findride';
 import {CarRegistrationPage } from '../car-registration/car-registration';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
-import { SignUpService } from '../../services/signup.service';
+// import * as firebase from 'firebase';
+// import { SignUpService } from '../../services/signup.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class LoginPage {
     receivedUser;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
-  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private SignUpService: SignUpService ) {
+  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
 
 
   }
