@@ -1,19 +1,19 @@
 {
-  "_from": "cordova-plugin-geofence",
+  "_from": "cordova-plugin-geofence@^0.7.0",
   "_id": "cordova-plugin-geofence@0.7.0",
   "_inBundle": false,
   "_integrity": "sha1-vz7XCkpYLR41eWWc82Xi43iJDyU=",
   "_location": "/cordova-plugin-geofence",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-geofence",
+    "raw": "cordova-plugin-geofence@^0.7.0",
     "name": "cordova-plugin-geofence",
     "escapedName": "cordova-plugin-geofence",
-    "rawSpec": "",
+    "rawSpec": "^0.7.0",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^0.7.0"
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +21,8 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-geofence/-/cordova-plugin-geofence-0.7.0.tgz",
   "_shasum": "bf3ed70a4a582d1e3579659cf365e2e378890f25",
-  "_spec": "cordova-plugin-geofence",
-  "_where": "/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/vroom_driver_src",
+  "_spec": "cordova-plugin-geofence@^0.7.0",
+  "_where": "/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver",
   "author": {
     "name": "Cowbell Labs"
   },
