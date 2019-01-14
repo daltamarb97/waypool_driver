@@ -1,17 +1,17 @@
 import { AngularFireDatabase } from "@angular/fire/database";
-import { Injectable } from "@angular/core";
+import { Injectable, keyframes } from "@angular/core";
 import * as GeoFire from 'geofire';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AngularFireAuth } from "angularfire2/auth";
+
 
 @Injectable()
 export class geofireService {
 
 dbRef:any;
 geoFire:any;
-
-
-
+geoquery:any;
+hits = [];
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
 
@@ -20,21 +20,37 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 }
 
 
-setGeofire( radius:number, lat, lng){ 
-  this.geoFire.query({
+
+setGeofire( radius:number, lat, lng):void{ 
+  
+  this.geoquery = this.geoFire.query({
     center: [lat, lng],
     radius: radius
   })
-  .on("key_entered", function(key) {
-    console.log('these key entered: ' + key)
-  })
+  
+  this.geoquery
+  .on("key_entered", function(key){
+    this.hits.push(key);
+  }.bind(this))
+
+  this.geoquery
+  .on("key_exited", function(key){
+    this.hits.pop(key);
+  }.bind(this))
+
+  
 }
 
 
+   
+  
+public getUsers(){
+  return this.afDB.list('users/').valueChanges();
+}
 
-// public getUsersGeofire(){
-//   return this.afDB.list('/geofire').valueChanges();
-// }
+public getUsersGeofire(key){
+  return this.afDB.list('users/' + key).valueChanges();
+}
 
 
 

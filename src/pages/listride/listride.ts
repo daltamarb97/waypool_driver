@@ -12,6 +12,7 @@ import { geofireService } from '../../services/geofire.services';
 // import * as firebase from 'firebase';
 // import { sendUsersService } from '../../services/sendUsers.service';
 // import { Geofence } from '@ionic-native/geofence';
+import * as _ from 'underscore';
 
 
 @Component({
@@ -23,11 +24,12 @@ export class ListridePage {
   locationDestination:any =[];
   user=this.AngularFireAuth.auth.currentUser.uid;
   usersTotal:any = [];
-  usersFindingTrip:any = [];
-  accptedUsers:any = [];
+  usersFindingTrip =[];
+
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService ) {
     
+    localStorage.removeItem('firebase:previous_websocket_failure');
 
     //get origin from driver
     this.sendCoordsService.getOrigin(this.user)
@@ -45,19 +47,25 @@ export class ListridePage {
         })
 
 
-    // this.geofireService.getUsersGeofire()
-    //   .subscribe(users =>{
-    //     this.usersTotal = users;
-    //     this.usersTotal.forEach(user => {
-    //           if(this.usersFindingTrip.length < 4){
-    //               this.usersFindingTrip.push(user);
-  
-    //         }
-    //       });
-    //   });
 
-  
     
+  }
+
+  ionViewDidEnter(){
+    this.usersTotal = this.geofireService.hits;
+    this.usersTotal.forEach(userKey=>{
+      if(userKey){
+        this.geofireService.getUsersGeofire(userKey)
+        .subscribe(user =>{
+          if(this.usersFindingTrip.length < 4){
+            this.usersFindingTrip.push(user);
+            console.log(this.usersFindingTrip);
+          }
+        })
+      }else{
+        console.log('no key detected');
+      }
+        })
   }
   
 
@@ -73,6 +81,8 @@ export class ListridePage {
     // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
     
   }
+
+
 
 }
 

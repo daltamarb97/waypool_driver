@@ -17,6 +17,7 @@ import * as GeoFire from 'geofire';
 import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
 
 
+
  
 declare var google;
 
@@ -57,8 +58,11 @@ export class FindridePage {
   orFirebase:any;
 
   user=this.AngularFireAuth.auth.currentUser.uid;
-  keyFire;
-
+  //geofire variables
+  dbRef:any;
+  geoFire:any;
+  key;
+  // hits = new BehaviorSubject([])
 
   constructor(public navCtrl: NavController,public SignUpService:SignUpService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase) {
 
@@ -82,7 +86,9 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
- 
+  
+    this.dbRef = this.afDB.database.ref('geofire/' );
+    this.geoFire = new GeoFire(this.dbRef); 
     
   }
  
@@ -318,9 +324,10 @@ geocodeLatLng(latLng,inputName) {
         //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
                           
           this.SignUpService.turnFindingUsers(this.user);
+          //geofire active and push to list ride
+          this.geofireService.setGeofire(0.01, this.myLatLng.lat, this.myLatLng.lng);
           this.navCtrl.push(ListridePage);
-          //geofire active
-          this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng)
+          
        
          
          }

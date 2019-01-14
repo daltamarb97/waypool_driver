@@ -20,6 +20,7 @@ export class MyApp {
 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    localStorage.removeItem('firebase:previous_websocket_failure');
     this.rootPage = LoginPage;
     
   }
