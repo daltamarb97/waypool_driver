@@ -325,7 +325,7 @@ geocodeLatLng(latLng,inputName) {
                           
           this.SignUpService.turnFindingUsers(this.user);
           //geofire active and push to list ride
-          this.geofireService.setGeofire(0.01, this.myLatLng.lat, this.myLatLng.lng);
+          this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng);
           this.navCtrl.push(ListridePage);
           
        

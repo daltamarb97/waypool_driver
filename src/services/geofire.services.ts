@@ -27,29 +27,35 @@ setGeofire( radius:number, lat, lng):void{
     center: [lat, lng],
     radius: radius
   })
-  
-  this.geoquery
-  .on("key_entered", function(key){
-    this.hits.push(key);
-  }.bind(this))
 
-  this.geoquery
-  .on("key_exited", function(key){
-    this.hits.pop(key);
-  }.bind(this))
-
-  
+  this.keyEntered();
+  this.keyExited();
 }
 
+keyEntered(){
+  this.geoquery.on("key_entered", function(key){
+    this.hits.push(key);
+    console.log(this.hits);
+  }.bind(this))
+}
 
+keyExited(){
+  this.geoquery.on("key_exited", function(key){
+    let i = this.hits.indexOf(key);
+    if(i !== -1){
+      this.hits.splice(i, 1);
+    }
+    console.log(this.hits);
+  }.bind(this))
+}
    
   
 public getUsers(){
-  return this.afDB.list('users/').valueChanges();
+  return this.afDB.list('/users').valueChanges();
 }
 
 public getUsersGeofire(key){
-  return this.afDB.list('users/' + key).valueChanges();
+  return this.afDB.list('/users/' + key).valueChanges();
 }
 
 

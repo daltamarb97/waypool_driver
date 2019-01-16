@@ -21,6 +21,7 @@
 
     </ion-row>
     <ion-card *ngFor = "let user of usersFindingTrip">
+        
         <ion-item>
             <ion-avatar item-start>
                 <img src="assets/imgs/face-1.jpg">
@@ -46,9 +47,9 @@
         <ion-card-content>
             <div class="ride-detail">
                 <p  >
-                    <span class="icon-location bg-theme"></span><span class="time">Origen:</span>{{user.origin}}</p>
+                    <span class="icon-location bg-theme"></span><span class="time">Origen:</span>origin</p>
                 <p > 
-                    <span class="icon-location bg-yellow"></span><span class="time">Destino:</span>{{user.destination}}</p>
+                    <span class="icon-location bg-yellow"></span><span class="time">Destino:</span>destination</p>
             </div>
             <ion-row class="center-align">
                 <!-- <ion-col col-3 class="detail-text text-theme">
@@ -65,7 +66,7 @@
                 </ion-col>
             </ion-row>
         </ion-card-content>
-        
+   
     </ion-card>
 
     

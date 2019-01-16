@@ -761,7 +761,7 @@ var FindridePage = /** @class */ (function () {
                 //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
                 this.SignUpService.turnFindingUsers(this.user);
                 //geofire active and push to list ride
-                this.geofireService.setGeofire(0.01, this.myLatLng.lat, this.myLatLng.lng);
+                this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng);
                 this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_1__listride_listride__["a" /* ListridePage */]);
             }
         }
@@ -780,16 +780,15 @@ var FindridePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], FindridePage.prototype, "mapElement", void 0);
     FindridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n        <ion-title><span class="text-white">PIDE TU VIAJE</span></ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n<ion-content class="bg-background-img" padding>\n    <div class="findRideText"><span class="text-white">¡Estás a un paso de viajar con tus compañeros de la Universidad!</span></div>\n    <ion-card class="search">\n          \n        <ion-card-content>\n            <span class="dot bg-theme"></span>\n            <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Tu origen"></ion-searchbar>\n          \n            <ion-list   [hidden]="autocompleteItems.length == 0">\n                <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                  {{ item.description }}\n                </ion-item>\n              </ion-list>\n              <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n        </ion-card-content>\n        <ion-card-content>\n            <span class="dot bg-yellow"></span>           \n           <ion-searchbar required [(ngModel)]="autocompleteMyDest.input" (ionInput)="updateSearchResultsMyDest()" placeholder="Tu destino"></ion-searchbar>\n\n\n            <ion-list   [hidden]="autocompleteItems2.length == 0">\n            <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n              {{ item.description }}\n            </ion-item>\n          </ion-list>\n            <!-- <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span> -->\n\n        </ion-card-content>\n        \n    </ion-card>\n  \n <div #map id="map"></div>  \n    \n    \n    \n    <button (click)="listride()" class="btn rounded bg-white text-theme" style="width: 100%">Pedir</button>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/findride/findride.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_9__angular_fire_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__angular_fire_database__["a" /* AngularFireDatabase */]) === "function" && _k || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_6__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_9__angular_fire_database__["a" /* AngularFireDatabase */]])
     ], FindridePage);
     return FindridePage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 }());
 
 //# sourceMappingURL=findride.js.map
@@ -833,20 +832,29 @@ var geofireService = /** @class */ (function () {
             center: [lat, lng],
             radius: radius
         });
-        this.geoquery
-            .on("key_entered", function (key) {
+        this.keyEntered();
+        this.keyExited();
+    };
+    geofireService.prototype.keyEntered = function () {
+        this.geoquery.on("key_entered", function (key) {
             this.hits.push(key);
+            console.log(this.hits);
         }.bind(this));
-        this.geoquery
-            .on("key_exited", function (key) {
-            this.hits.pop(key);
+    };
+    geofireService.prototype.keyExited = function () {
+        this.geoquery.on("key_exited", function (key) {
+            var i = this.hits.indexOf(key);
+            if (i !== -1) {
+                this.hits.splice(i, 1);
+            }
+            console.log(this.hits);
         }.bind(this));
     };
     geofireService.prototype.getUsers = function () {
-        return this.afDB.list('users/').valueChanges();
+        return this.afDB.list('/users').valueChanges();
     };
     geofireService.prototype.getUsersGeofire = function (key) {
-        return this.afDB.list('users/' + key).valueChanges();
+        return this.afDB.list('/users/' + key).valueChanges();
     };
     geofireService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
@@ -1570,6 +1578,7 @@ var HelpPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs__ = __webpack_require__(22);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1590,8 +1599,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ListridePage = /** @class */ (function () {
-    function ListridePage(navCtrl, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, navParams, alertCtrl, geofireService) {
+    function ListridePage(navCtrl, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, navParams, alertCtrl, geofireService, differs, cd) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.SignUpService = SignUpService;
@@ -1601,12 +1611,20 @@ var ListridePage = /** @class */ (function () {
         this.navParams = navParams;
         this.alertCtrl = alertCtrl;
         this.geofireService = geofireService;
+        this.differs = differs;
+        this.cd = cd;
         this.locationOrigin = [];
         this.locationDestination = [];
         this.user = this.AngularFireAuth.auth.currentUser.uid;
-        this.usersTotal = [];
+        this.usersKeys = [];
         this.usersFindingTrip = [];
+        this.userTotal = [];
         localStorage.removeItem('firebase:previous_websocket_failure');
+        setTimeout(function () {
+            _this.cd.detectChanges();
+        }, 500);
+        this.differ = differs.find([]).create(null);
+        this.usersFindingTrip$ = new __WEBPACK_IMPORTED_MODULE_8_rxjs__["BehaviorSubject"](this.usersFindingTrip);
         //get origin from driver
         this.sendCoordsService.getOrigin(this.user)
             .subscribe(function (origin) {
@@ -1619,24 +1637,35 @@ var ListridePage = /** @class */ (function () {
             _this.locationDestination = destination;
             console.log(destination);
         });
+        this.usersKeys = this.geofireService.hits;
     }
-    ListridePage.prototype.ionViewDidEnter = function () {
+    ListridePage.prototype.ngDoCheck = function () {
         var _this = this;
-        this.usersTotal = this.geofireService.hits;
-        this.usersTotal.forEach(function (userKey) {
-            if (userKey) {
-                _this.geofireService.getUsersGeofire(userKey)
+        var change = this.differ.diff(this.usersKeys);
+        if (change) {
+            change.forEachAddedItem(function (r) {
+                _this.geofireService.getUsersGeofire(r.item)
                     .subscribe(function (user) {
                     if (_this.usersFindingTrip.length < 4) {
                         _this.usersFindingTrip.push(user);
+                        _this.usersFindingTrip$.next(_this.usersFindingTrip);
                         console.log(_this.usersFindingTrip);
                     }
                 });
-            }
-            else {
-                console.log('no key detected');
-            }
-        });
+            });
+            change.forEachRemovedItem(function (r) {
+                _this.usersFindingTrip.forEach(function (user) {
+                    if (user[9] == r.item) {
+                        var i = _this.usersFindingTrip.indexOf(user);
+                        if (i !== -1) {
+                            _this.usersFindingTrip.splice(i, 1);
+                            _this.usersFindingTrip$.next(_this.usersFindingTrip);
+                            console.log(_this.usersFindingTrip);
+                        }
+                    }
+                });
+            });
+        }
     };
     ListridePage.prototype.filter = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__filter_filter__["a" /* FilterPage */]);
@@ -1649,12 +1678,12 @@ var ListridePage = /** @class */ (function () {
     };
     ListridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-listride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/listride/listride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="Title">DRIVER\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content class="bg-light" class="hideLongText">\n    <ion-row class="center-align bg-white flow-ride">\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n            <h2>Origen</h2> {{origin}}\n\n        </ion-col>\n        <ion-col col-2 text-center>\n            <img src="assets/imgs/arrow.jpg">\n        </ion-col>\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n            <h2>Destino</h2> {{destination}}\n        </ion-col>\n\n    </ion-row>\n    <ion-card *ngFor = "let user of usersFindingTrip">\n        <ion-item>\n            <ion-avatar item-start>\n                <img src="assets/imgs/face-1.jpg">\n            </ion-avatar>\n            <div class="name">\n                <h2>{{user.name}} {{user.lastname}}\n\n                    <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n                </h2>\n                <p>Honda Cvic | White</p>\n            </div>\n            <div class="more">\n                <h2 class="text-light">\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star"></ion-icon>\n                </h2>\n                <p class="text-light">(34 Reviews)</p>\n            </div>\n        </ion-item>\n        <ion-card-content>\n            <div class="ride-detail">\n                <p  >\n                    <span class="icon-location bg-theme"></span><span class="time">Origen:</span>{{user.origin}}</p>\n                <p > \n                    <span class="icon-location bg-yellow"></span><span class="time">Destino:</span>{{user.destination}}</p>\n            </div>\n            <ion-row class="center-align">\n                <!-- <ion-col col-3 class="detail-text text-theme">\n                    3 seats\n                </ion-col> -->\n                <ion-col col-2 class="detail-text text-theme">\n                    <span class="detail-text text-light">Pago:</span> Tarjeta\n                </ion-col>\n                <ion-col col-4 class="detail-text text-theme">\n                    <span class="detail-text text-light">Vuelto: </span>$10.000\n                </ion-col>\n                <ion-col center text-center col-4 text-right style="margin-left: auto;">\n                    <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user)>Request Ride</button>\n                </ion-col>\n            </ion-row>\n        </ion-card-content>\n        \n    </ion-card>\n\n    \n '/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/listride/listride.html"*/
+            selector: 'page-listride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/listride/listride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="Title">DRIVER\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content class="bg-light" class="hideLongText">\n    <ion-row class="center-align bg-white flow-ride">\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n            <h2>Origen</h2> {{origin}}\n\n        </ion-col>\n        <ion-col col-2 text-center>\n            <img src="assets/imgs/arrow.jpg">\n        </ion-col>\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n            <h2>Destino</h2> {{destination}}\n        </ion-col>\n\n    </ion-row>\n    <ion-card *ngFor = "let user of usersFindingTrip">\n        \n        <ion-item>\n            <ion-avatar item-start>\n                <img src="assets/imgs/face-1.jpg">\n            </ion-avatar>\n            <div class="name">\n                <h2>{{user.name}} {{user.lastname}}\n\n                    <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n                </h2>\n                <p>Honda Cvic | White</p>\n            </div>\n            <div class="more">\n                <h2 class="text-light">\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star" class="text-yellow"></ion-icon>\n                    <ion-icon name="star"></ion-icon>\n                </h2>\n                <p class="text-light">(34 Reviews)</p>\n            </div>\n        </ion-item>\n        <ion-card-content>\n            <div class="ride-detail">\n                <p  >\n                    <span class="icon-location bg-theme"></span><span class="time">Origen:</span>origin</p>\n                <p > \n                    <span class="icon-location bg-yellow"></span><span class="time">Destino:</span>destination</p>\n            </div>\n            <ion-row class="center-align">\n                <!-- <ion-col col-3 class="detail-text text-theme">\n                    3 seats\n                </ion-col> -->\n                <ion-col col-2 class="detail-text text-theme">\n                    <span class="detail-text text-light">Pago:</span> Tarjeta\n                </ion-col>\n                <ion-col col-4 class="detail-text text-theme">\n                    <span class="detail-text text-light">Vuelto: </span>$10.000\n                </ion-col>\n                <ion-col center text-center col-4 text-right style="margin-left: auto;">\n                    <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user)>Request Ride</button>\n                </ion-col>\n            </ion-row>\n        </ion-card-content>\n   \n    </ion-card>\n\n    \n '/*ion-inline-end:"/Users/juandavidjaramillo/Documents/codecanyon-21673171-car-pooling-ionic-app-templete-vroom/waypool_driver/src/pages/listride/listride.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]) === "function" && _h || Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* IterableDiffers */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* IterableDiffers */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectorRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectorRef */]) === "function" && _k || Object])
     ], ListridePage);
     return ListridePage;
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 }());
 
 //# sourceMappingURL=listride.js.map

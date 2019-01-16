@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, IterableDiffers, DoCheck, ChangeDetectorRef } from '@angular/core';
 import { NavController, ModalController, NavParams, AlertController } from 'ionic-angular';
 import { FilterPage } from '../filter/filter';
 // import { RiderprofilePage } from '../riderprofile/riderprofile';
@@ -13,23 +13,37 @@ import { geofireService } from '../../services/geofire.services';
 // import { sendUsersService } from '../../services/sendUsers.service';
 // import { Geofence } from '@ionic-native/geofence';
 import * as _ from 'underscore';
+import { copyFile } from 'fs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Component({
   selector: 'page-listride',
   templateUrl: 'listride.html'
 })
-export class ListridePage {
+export class ListridePage implements DoCheck{
   locationOrigin:any =[];
   locationDestination:any =[];
   user=this.AngularFireAuth.auth.currentUser.uid;
-  usersTotal:any = [];
-  usersFindingTrip =[];
+  usersKeys:any = [];
+  usersFindingTrip = [];
+  usersFindingTrip$: BehaviorSubject<Array<string>>;
+  userTotal:any =[];
+  differ:any;
 
 
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService ) {
+
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService, public differs: IterableDiffers , private cd: ChangeDetectorRef) {
     
     localStorage.removeItem('firebase:previous_websocket_failure');
+
+    setTimeout(()=>{
+      this.cd.detectChanges();
+    }, 500)
+
+    this.differ = differs.find([]).create(null);
+
+    this.usersFindingTrip$ = new BehaviorSubject<Array<string>>(this.usersFindingTrip);
 
     //get origin from driver
     this.sendCoordsService.getOrigin(this.user)
@@ -46,27 +60,47 @@ export class ListridePage {
           console.log(destination);
         })
 
+        this.usersKeys = this.geofireService.hits;
+        
+        
 
-
+      
     
   }
 
-  ionViewDidEnter(){
-    this.usersTotal = this.geofireService.hits;
-    this.usersTotal.forEach(userKey=>{
-      if(userKey){
-        this.geofireService.getUsersGeofire(userKey)
-        .subscribe(user =>{
-          if(this.usersFindingTrip.length < 4){
-            this.usersFindingTrip.push(user);
-            console.log(this.usersFindingTrip);
+  ngDoCheck(){
+    const change = this.differ.diff(this.usersKeys);
+    if(change){
+      change.forEachAddedItem(r => {
+        this.geofireService.getUsersGeofire(r.item)
+        .subscribe(user => {
+            if(this.usersFindingTrip.length < 4){
+              this.usersFindingTrip.push(user);
+              this.usersFindingTrip$.next(this.usersFindingTrip);
+              console.log(this.usersFindingTrip)
+            }
+          
+        })
+      })
+      change.forEachRemovedItem(r => {
+        this.usersFindingTrip.forEach(user=>{
+          if(user[9] == r.item){
+            let i = this.usersFindingTrip.indexOf(user);
+            if(i !== -1){
+              this.usersFindingTrip.splice(i, 1);
+              this.usersFindingTrip$.next(this.usersFindingTrip);
+              console.log(this.usersFindingTrip);
+            }
           }
         })
-      }else{
-        console.log('no key detected');
-      }
-        })
+
+      })
+    }
+
   }
+   
+  
+  
   
 
  filter(){
