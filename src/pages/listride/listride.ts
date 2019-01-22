@@ -21,15 +21,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
   selector: 'page-listride',
   templateUrl: 'listride.html'
 })
-export class ListridePage implements DoCheck{
+export class ListridePage{
   locationOrigin:any =[];
   locationDestination:any =[];
-  user=this.AngularFireAuth.auth.currentUser.uid;
-  usersKeys:any = [];
-  usersFindingTrip = [];
-  usersFindingTrip$: BehaviorSubject<Array<string>>;
-  userTotal:any =[];
-  differ:any;
+  driver=this.AngularFireAuth.auth.currentUser.uid;
+  usersFindingTrip : any = [];
+ 
 
 
 
@@ -41,12 +38,12 @@ export class ListridePage implements DoCheck{
       this.cd.detectChanges();
     }, 500)
 
-    this.differ = differs.find([]).create(null);
+    
 
-    this.usersFindingTrip$ = new BehaviorSubject<Array<string>>(this.usersFindingTrip);
+    // this.usersFindingTrip$ = new BehaviorSubject<Array<string>>(this.usersFindingTrip);
 
     //get origin from driver
-    this.sendCoordsService.getOrigin(this.user)
+    this.sendCoordsService.getOrigin(this.driver)
         .subscribe( origin => {
           this.locationOrigin = origin;
           console.log(this.locationOrigin[0]);
@@ -54,50 +51,23 @@ export class ListridePage implements DoCheck{
 
   
         //get destination from driver
-      this.sendCoordsService.getDestination(this.user)
+      this.sendCoordsService.getDestination(this.driver)
         .subscribe( destination => {
           this.locationDestination = destination;
           console.log(destination);
         })
 
-        this.usersKeys = this.geofireService.hits;
         
-        
-
-      
-    
-  }
-
-  ngDoCheck(){
-    const change = this.differ.diff(this.usersKeys);
-    if(change){
-      change.forEachAddedItem(r => {
-        this.geofireService.getUsersGeofire(r.item)
-        .subscribe(user => {
-            if(this.usersFindingTrip.length < 4){
-              this.usersFindingTrip.push(user);
-              this.usersFindingTrip$.next(this.usersFindingTrip);
-              console.log(this.usersFindingTrip)
-            }
+      this.geofireService.getUsersListRide().subscribe(user=>{
+        if(user){
           
-        })
+          this.usersFindingTrip = user;
+          console.log(this.usersFindingTrip);
+        }
       })
-      change.forEachRemovedItem(r => {
-        this.usersFindingTrip.forEach(user=>{
-          if(user[9] == r.item){
-            let i = this.usersFindingTrip.indexOf(user);
-            if(i !== -1){
-              this.usersFindingTrip.splice(i, 1);
-              this.usersFindingTrip$.next(this.usersFindingTrip);
-              console.log(this.usersFindingTrip);
-            }
-          }
-        })
-
-      })
-    }
-
   }
+
+
    
   
   

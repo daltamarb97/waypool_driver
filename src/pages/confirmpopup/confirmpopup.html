@@ -7,17 +7,17 @@
                 <img src="assets/imgs/face-1.jpg">
             </ion-avatar>
             <div  class="name">
-                <h2 >{{user.name}} {{user.lastname}}</h2>
+                <h2 >{{user[4]}} {{user[3]}}</h2>
                 
             </div>
         </ion-item>
         <ion-card-content>
             <div class="ride-detail">
                 <p><small>Origen</small>
-                    <span  class="icon-location bg-theme"></span>{{user.trips.origin}}</p>
+                    <span  class="icon-location bg-theme"></span>{{user[8].origin}}</p>
                 <p>
                     <small>Destino</small>
-                    <span  class="icon-location bg-yellow"></span>{{user.trips.destination}}</p>
+                    <span  class="icon-location bg-yellow"></span>{{user[9].destination}}</p>
             </div>
         </ion-card-content>
 

@@ -22,9 +22,11 @@ export class ConfirmpopupPage {
   locationOrigin:any =[];
   locationDestination:any =[];
   userDriverUid=this.AngularFireAuth.auth.currentUser.uid
+  
   constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams) {
       //we get the info of the users with navParams
       this.user= this.navParams.get('user') 
+      console.log(this.user)
   
          //get origin from driver
       this.sendCoordsService.getOrigin(this.userDriverUid)
