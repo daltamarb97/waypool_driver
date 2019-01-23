@@ -160,13 +160,13 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------- -->
 
         <ion-list *ngSwitchCase="'today'">
-            <ion-card *ngFor = "let user of usersAvailable">
+            <ion-card *ngFor = "let user of usersOnTrip">
                 <ion-item>
                     <ion-avatar item-start>
                         <img src="assets/imgs/face-1.jpg">
                     </ion-avatar>
                     <div class="name">
-                        <h2>{{user.name}} {{user.lastname}}
+                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
                         </h2>
                         <p>Bonitos y | Gorditos muchachos</p>
                     </div>
@@ -179,9 +179,9 @@
                 <ion-card-content>
                     <div class="ride-detail">
                         <p>
-                            <span class="icon-location bg-theme"></span>{{user.trips.origin}}</p>
+                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>
                         <p>
-                            <span class="icon-location bg-yellow"></span>{{user.trips.destination}}</p>
+                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
                     </div>
                     <ion-row>
                         <ion-col class="detail-text">
@@ -195,8 +195,8 @@
                             </div>
                         </ion-col>
                         <ion-col col-5>
-                            <button class="btn bg-theme rounded full text-white" (click)="ridetoday()">Recoger</button>
-                            <button class="btn bg-yellow rounded full text-white"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
+                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger</button>
+                            <button class="btn bg-yellow rounded full text-white"(click)="callUser(this.user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>

@@ -72,7 +72,8 @@ export class LoginPage {
                     console.log(metadata.creationTime);
                     console.log(metadata.lastSignInTime);
 
-                    this.navCtrl.push(CarRegistrationPage);
+                    this.navCtrl.push(TabsPage);//aqui va registration car, no tabspge
+
                 }else{
                     this.navCtrl.push(TabsPage);
                 }

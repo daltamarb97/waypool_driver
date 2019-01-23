@@ -5,12 +5,13 @@ import { ListridePage } from '../listride/listride';
 import { TabsPage } from '../tabs/tabs';
 import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, Platform, ViewController, AlertController } from 'ionic-angular';
+import { NavController, Platform, ViewController, AlertController, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import * as firebase from 'firebase';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { SignUpService } from '../../services/signup.service';
+import { ConfirmpricePage } from '../confirmprice/confirmprice';
 
 
 
@@ -57,8 +58,13 @@ export class FindridePage {
 
 
 
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofence: Geofence) {
 
+    this.geofence.initialize().then(
+      ()=>console.log('geofence plugin ready'),
+      (err)=>console.log(err)
+    )
+    
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -95,7 +101,13 @@ export class FindridePage {
       let mapOptions = {
           center: latLng,
           zoom: 17,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          zoomControl: false,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: true,
+            rotateControl: false,
+            fullscreenControl: false
         }
     //creates the map and give options
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
@@ -308,7 +320,17 @@ geocodeLatLng(latLng,inputName) {
          } else {
           this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
           //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-          this.navCtrl.push(ListridePage);
+          this.addGeofence(this.myLatLng.lat, this.myLatLng.lng);
+          this.confirmPrice()
+       
+            // this.navCtrl.push(ConfirmpopupPage)
+          
+            
+            
+            
+            // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
+            
+          
         //   if(!this.user.userId){
         //     this.user.userId =this.userFirebase;
         //     this.userFirebase =  firebase.auth().currentUser.uid;
@@ -325,6 +347,7 @@ geocodeLatLng(latLng,inputName) {
       this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
       }
     }
+
     presentAlert(title,text,button) {
       let alert = this.alertCtrl.create({
         title: title,
@@ -333,6 +356,37 @@ geocodeLatLng(latLng,inputName) {
       });
       alert.present();
     }
+
+    addGeofence(lat, lng) {
+      //options describing geofence
+      let fence = {
+        id: Date.now(), //any unique ID
+        latitude:       lat, //center of geofence radius
+        longitude:      lng,
+        radius:         100, //radius to edge of geofence in meters
+        transitionType: 3, //see 'Transition Types' below
+        notification: { //notification settings
+            id:             1, //any unique ID
+            title:          'You crossed a fence', //notification title
+            text:           'You just arrived to Gliwice city center.', //notification body
+            openAppOnClick: true //open app when notification is tapped
+        }
+      }
+    
+      this.geofence.addOrUpdate(fence).then(
+         () => console.log('Geofence added'),
+         (err) => console.log('Geofence failed to add')
+       )
+      }
+   confirmPrice(){
+      let modal = this.modalCtrl.create(ConfirmpricePage);
+      modal.onDidDismiss(accepted => {
+        if(accepted){
+          this.navCtrl.push(ListridePage);
+      }
+      })
+   modal.present();
+   }
    
   }
   

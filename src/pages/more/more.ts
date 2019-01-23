@@ -50,7 +50,7 @@ export class MorePage {
          logout(){
           this.AuthenticationService.logOut();
           console.log(firebase.auth().currentUser);
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.setRoot(LoginPage);
     }
          upload(){
     this.navCtrl.push(CarRegistrationPage);

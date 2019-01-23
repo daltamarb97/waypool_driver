@@ -1,59 +1,61 @@
 <ion-content>
     <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
     <ion-card>
-        <h6 class="text-theme">Detalles del Viaje</h6>
-        <ion-item >
-            <ion-avatar item-start>
-                <img src="assets/imgs/face-1.jpg">
-            </ion-avatar>
-            <div  class="name">
-                <h2 >{{user.name}} {{user.lastname}}</h2>
-                
-            </div>
-        </ion-item>
-        <ion-card-content>
-            <div class="ride-detail">
-                <p><small>Origen</small>
-                    <span  class="icon-location bg-theme"></span>{{user.trips.origin}}</p>
-                <p>
-                    <small>Destino</small>
-                    <span  class="icon-location bg-yellow"></span>{{user.trips.destination}}</p>
-            </div>
-        </ion-card-content>
-
-        <ion-card-content>
-            <div class="ride-detail no-before">
-                <p><small>Date</small>
-                    <ion-icon name="md-calendar" class="icon-location"></ion-icon>
-                    22<sup>nd</sup> Feb, 2018 </p>
-                <p>
-                    <small>Vuelto</small>
-                    <ion-icon name="md-time" class="icon-location"></ion-icon>
-                    No necesita vuelto</p>
-            </div>
-        </ion-card-content>
-
-        <ion-card-content>
-            <div class="seats">
-                <ion-row>
-                    <ion-col col-4 class="rate">
-                        <small>Precio</small> $ 2500
-                    </ion-col>
-                    <ion-col col-5 class="rate">
-                        <small>Seat Request</small> 2 Seats
-                    </ion-col>
-                </ion-row>
-                <ion-row style="margin-top: 14px;">
-                    <ion-col col-4>
-                        <button class="btn bg-white text-theme rounded" style="width: 100%;"><ion-icon name="md-calendar" class="icon-location"></ion-icon></button>
-                    </ion-col>
-                    <ion-col col-8>
-                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="goToRide()">Aceptar Viaje</button>
-                    </ion-col>
-                </ion-row>
-
-
-            </div>
-        </ion-card-content>
+       <h6 class="text-theme">Detalles del Viaje</h6>
+       <ion-item >
+          <ion-avatar item-start>
+             <img src="assets/imgs/face-1.jpg">
+          </ion-avatar>
+          <div  class="name">
+             <h2 >{{user.name |titlecase}} {{user.lastname  |titlecase | slice:0:1}}.</h2>
+          </div>
+       </ion-item>
+       <ion-card-content>
+          <div class="ride-detail">
+             <p><small>Origen</small>
+                <span  class="icon-location bg-theme"></span>{{user.trips.origin}}
+             </p>
+             <p>
+                <small>Destino</small>
+                <span  class="icon-location bg-yellow"></span>{{user.trips.destination}}
+             </p>
+          </div>
+       </ion-card-content>
+       <ion-card-content>
+          <div class="ride-detail no-before">
+             <p>
+                <small>Date</small>
+                <ion-icon name="md-calendar" class="icon-location"></ion-icon>
+                22<sup>nd</sup> Feb, 2018 
+             </p>
+             <p>
+                <small>Vuelto</small>
+                <ion-icon name="md-time" class="icon-location"></ion-icon>
+                No necesita vuelto
+             </p>
+          </div>
+       </ion-card-content>
+       <ion-card-content>
+          <div class="seats">
+             <ion-row>
+                <ion-col col-4 class="rate">
+                   <small>Precio</small> $ 2500
+                </ion-col>
+                <ion-col col-5 class="rate">
+                   <small>Seat Request</small> 2 Seats
+                </ion-col>
+             </ion-row>
+             <ion-row style="margin-top: 14px;">
+                <ion-col col-4>
+                   <button class="btn bg-white text-theme rounded" style="width: 100%;">
+                      <ion-icon name="md-calendar" class="icon-location"></ion-icon>
+                   </button>
+                </ion-col>
+                <ion-col col-8>
+                   <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="acceptUser()">Aceptar Viaje</button>
+                </ion-col>
+             </ion-row>
+          </div>
+       </ion-card-content>
     </ion-card>
-</ion-content>
+ </ion-content>

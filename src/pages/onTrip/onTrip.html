@@ -1,0 +1,30 @@
+<ion-header class="bg-theme">
+    <ion-navbar>
+        <ion-title>Escoger Compañero
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-light">
+        <ion-card class="cardOnTrip">
+                
+                <ion-card-content>
+                    <div class="ride-detail">
+                        <p>
+                            <span class="icon-location bg-theme"></span>{{addressOrigin}}</p>
+                        <p>
+                            <span class="icon-location bg-yellow"></span>{{destinationOnTrip}}</p>
+                    </div>
+                    <ion-row>
+                        
+                        
+                        <ion-col col-5>
+                            <button class="btn bg-theme rounded full text-white" (click)="endTrip()">Finalizar viaje</button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+               
+            </ion-card>
+    <div #map id="map"></div>  
+   
+</ion-content>

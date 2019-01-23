@@ -21,17 +21,24 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
     
    public pushcoordinatesDrivers(user , dest, or){
      
-    this.afDB.database.ref('/drivers/'+ user+'/trips').update({
+    this.afDB.database.ref('drivers/'+ user+'/trips').update({
         origin: or,
         destination: dest,
         
         });
              
-            this.afDB.database.ref('/drivers/'+ user+'/trips/recordTrips').push({
-                origin: or,
-                destination: dest,
-                
-            });
+            
         }
+    public updateGeolocationOrigin(user,origin){
+        this.afDB.database.ref('drivers/' + user+'/trips').update({
+            origin:origin
+        })
+    }
+    public endTrip(user){
+        this.afDB.database.ref('drivers/' + user+'/trips').remove()
+    }
+    public pickUp(user){
+       //eliminate instance of picking up
+    }
 }
 

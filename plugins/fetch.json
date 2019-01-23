@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "cordova-plugin-geolocation": {
     "source": {
       "type": "registry",
@@ -9,7 +8,7 @@
     "variables": {
       "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
     }
-=======
+  },
   "cordova-plugin-camera": {
     "source": {
       "type": "registry",
@@ -92,6 +91,13 @@
     },
     "is_top_level": false,
     "variables": {}
->>>>>>> 0e57df4195368fb8f5b80e54673d219603fbe4ae
+  },
+  "mx.ferreyra.callnumber": {
+    "source": {
+      "type": "registry",
+      "id": "call-number@1.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -20,13 +20,15 @@ import { sendUsersService } from '../../services/sendUsers.service';
 export class ListridePage {
   locationOrigin:any =[];
   locationDestination:any =[];
-  user=this.AngularFireAuth.auth.currentUser.uid;
-  usersTotal:any = [];
-  usersFindingTrip:any = [];
-  accptedUsers:any = [];
-  constructor(public navCtrl: NavController, private afDB: AngularFireDatabase, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth ) {
+  userUid=this.AngularFireAuth.auth.currentUser.uid;
+  // usersTotal:any = [];
+  // usersFindingTrip:any = [];
+  // accptedUsers:any = [];
+
+  usersOnListRide:any=[];
+  constructor(public navCtrl: NavController,public sendUsersService:sendUsersService,  private afDB: AngularFireDatabase, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth ) {
    //get origin from driver
-    this.sendCoordsService.getOrigin(this.user)
+    this.sendCoordsService.getOrigin(this.userUid)
         .subscribe( origin => {
           this.locationOrigin = origin;
           console.log(origin);
@@ -34,28 +36,32 @@ export class ListridePage {
 
   
         //get destination from driver
-      this.sendCoordsService.getDestination(this.user)
+      this.sendCoordsService.getDestination(this.userUid)
         .subscribe( destination => {
           this.locationDestination = destination;
           console.log(destination);
         })
-
-    this.SignUpService.getUsers()
-      .subscribe(users =>{
-        this.usersTotal = users;
-        this.usersTotal.forEach(user => {
-            if(user.findingTrip == true){
-              debugger;
-                if(this.usersFindingTrip.length < 4){
-                  this.usersFindingTrip.push(user);
-                }else{
-                  console.log('there is more than 4 users');
-                }
-            }else if(user.findingTrip == false && user.findingTrip == null){
-              this.usersFindingTrip.pop(user);
-            } 
+        this.sendUsersService.getUsersOnListRide(this.userUid) 
+        .subscribe( user => {
+          this.usersOnListRide = user;
+          console.log(this.usersOnListRide);
+          
         });
-      });
+    // this.SignUpService.getUsers()
+    //   .subscribe(users =>{
+    //     this.usersTotal = users;
+    //     this.usersTotal.forEach(user => {
+    //         if(user.findingTrip == true){
+    //             if(this.usersFindingTrip.length < 4){
+    //               this.usersFindingTrip.push(user);
+    //             }else{
+    //               console.log('there is more than 4 users');
+    //             }
+    //         }else if(user.findingTrip == false && user.findingTrip == null){
+    //           this.usersFindingTrip.pop(user);
+    //         } 
+    //     });
+    //   });
 
   
     
@@ -71,12 +77,12 @@ export class ListridePage {
     // this.navCtrl.push(ConfirmpopupPage)
     let modal = this.modalCtrl.create(ConfirmpopupPage,{user});
     modal.present();
-    console.log(user)
-    this.usersFindingTrip.forEach(function(valor, indice ){
-      console.log(valor);
-    })
+   
+    // this.usersFindingTrip.forEach(function(valor, indice ){
+    //   console.log(valor);
+    // })
     // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
-    this.accptedUsers.push();
+    // this.accptedUsers.push();
   }
 
 }

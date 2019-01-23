@@ -11,12 +11,19 @@ export class sendUsersService {
 constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
               
     }
-    
+    public getUsersOnListRide(userUid){
+        // Get all the students from the usersListRide
+         return  this.afDB.list('/drivers/'+ userUid +'/trips/usersListRide').valueChanges();
+     } 
     public getUsersOnTrip(userUid){
         // Get all the students the driver acepts in myListRidePage to be send to the students
          return  this.afDB.list('/drivers/'+ userUid +'/trips/usersOnTrip').valueChanges();
      }   
-     
+     public removeUsersOnListRide(userUid,userId ){
+        //send the information of every student the driver acepts in myRide
+           this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/'+ userId).remove();
+               
+           }
     public pushUsersOnTripOnDrivers(userUid,userId ,origin,destination,name,lastname,phone){
      //send the information of every student the driver acepts in myRide
         this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersOnTrip/'+ userId).update(
@@ -30,10 +37,11 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
             
             }
             );
+
         }
-        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,carModel,plateNumber){
+        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,carModel,plateNumber,price){
             //send the driver information to the students
-            this.afDB.database.ref('/users/'+ userId +'/trips/usersOnTrip/Driver/'+ userUid).update(
+            this.afDB.database.ref('/users/'+ userId +'/trips/usersOnTrip/driver/'+ userUid).update(
                 {
                  origin: origin,
                  destination: destination,
@@ -42,7 +50,8 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
                  phone: phone,
                  userId:userUid,
                  carModel:carModel,
-                 plateNumber:plateNumber         
+                 plateNumber:plateNumber,    
+                 price:price    
                 }
                 );
             }
@@ -50,19 +59,6 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
     
     
 
-    public pushcoordinatesDrivers(user , dest, or){
-     
-    this.afDB.database.ref('/drivers/'+ user+'/trips').update({
-        origin: or,
-        destination: dest,
-        
-        });    
-     
-            this.afDB.database.ref('/drivers/'+ user+'/trips/recordTrips').push({
-                origin: or,
-                destination: dest,
-                
-            });
-        }
+   
 }
 
