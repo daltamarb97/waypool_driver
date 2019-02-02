@@ -7,17 +7,17 @@
                 <img src="assets/imgs/face-1.jpg">
             </ion-avatar>
             <div  class="name">
-                <h2 >{{user[4]}} {{user[3]}}</h2>
+                <h2 >{{user.name}} {{user.lastname}}</h2>
                 
             </div>
         </ion-item>
         <ion-card-content>
             <div class="ride-detail">
                 <p><small>Origen</small>
-                    <span  class="icon-location bg-theme"></span>{{user[8].origin}}</p>
+                    <span  class="icon-location bg-theme"></span>{{user.origin}}</p>
                 <p>
                     <small>Destino</small>
-                    <span  class="icon-location bg-yellow"></span>{{user[9].destination}}</p>
+                    <span  class="icon-location bg-yellow"></span>{{user.destination}}</p>
             </div>
         </ion-card-content>
 
@@ -48,7 +48,7 @@
                         <button class="btn bg-white text-theme rounded" style="width: 100%;"><ion-icon name="md-calendar" class="icon-location"></ion-icon></button>
                     </ion-col>
                     <ion-col col-8>
-                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="goToRide()">Aceptar Viaje</button>
+                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="goToRide()">Aceptar user</button>
                     </ion-col>
                 </ion-row>
 

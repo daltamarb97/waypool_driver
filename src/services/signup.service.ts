@@ -10,7 +10,7 @@ export class SignUpService {
     }
 
    public getMyInfo(userId){
-    return this.afDB.object('drivers/'+userId).valueChanges();
+    return this.afDB.database.ref('drivers/'+userId).once('value');
     }
 
     public async saveUser(user){
@@ -18,19 +18,9 @@ export class SignUpService {
 
     }
 
-    public turnFindingUsers(user){
-        
-        firebase.database().ref('drivers/' + user ).update({
-            findingUsers: true
-        }, function (error) {
-            if(error){
-                console.log(error);
-            }else{
-                console.log("everything succesful");
-            }
-        }); 
-        
-     }
+   
+
+    
 
 
      

@@ -48,6 +48,7 @@ import { Camera } from '@ionic-native/camera';
 import { Geofence } from '@ionic-native/geofence';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { geofireService } from '../services/geofire.services';
+import { instancesService } from '../services/instances.service';
 
 
 
@@ -148,6 +149,7 @@ export const firebaseConfig = {
     Geolocation,
     sendCoordsService,
     sendUsersService,
+    instancesService,
     Camera,
     Geofence,
     NativeGeocoder

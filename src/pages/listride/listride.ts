@@ -14,7 +14,9 @@ import { geofireService } from '../../services/geofire.services';
 // import { Geofence } from '@ionic-native/geofence';
 import * as _ from 'underscore';
 import { copyFile } from 'fs';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { instancesService } from '../../services/instances.service';
 
 
 @Component({
@@ -26,17 +28,16 @@ export class ListridePage{
   locationDestination:any =[];
   driver=this.AngularFireAuth.auth.currentUser.uid;
   usersFindingTrip : any = [];
- 
+  user:any = [];
+  subscribe:Subscription;
 
 
 
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService, public differs: IterableDiffers , private cd: ChangeDetectorRef) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService, public differs: IterableDiffers , private cd: ChangeDetectorRef, public afDB: AngularFireDatabase, public instances: instancesService) {
     
-    localStorage.removeItem('firebase:previous_websocket_failure');
+    // localStorage.removeItem('firebase:previous_websocket_failure');
 
-    setTimeout(()=>{
-      this.cd.detectChanges();
-    }, 500)
+    
 
     
 
@@ -56,21 +57,41 @@ export class ListridePage{
           this.locationDestination = destination;
           console.log(destination);
         })
+        
+        // this.afDB.list('/drivers/' + this.driver + '/trips/usersListRide').valueChanges()
+        // .subscribe(user => {
+        //   this.user = user;
+        //   console.log(this.user);
+        //   this.afDB.database.ref('/drivers/' + this.driver + '/trips/usersListRide').on('child_added', ()=>{
+        //       if(this.user.showDriver == true){
+        //         this.usersFindingTrip = this.user;
+        //         console.log(this.usersFindingTrip);
+        //       }else{
+        //         console.log('no se ejecuto');
+        //       }
+        //   }) 
+        // })  
+        
+        
+
+        // this.afDB.database.ref('/drivers/' + this.driver + '/trips/usersListRide').orderByChild('onTrip')
+        // .equalTo(true).on("value", (snapshot)=>{
+        //   snapshot.forEach((childSnapshot)=>{
+        //     childSnapshot.ref.remove();
+        //     console.log('hola eliminado');
+        //   })
+        // })
+        
+        this.subscribe = this.geofireService.getUsersListRide()
+        .subscribe(user=>{
+          this.usersFindingTrip = user;
+        })
+
+     
 
         
-      this.geofireService.getUsersListRide().subscribe(user=>{
-        if(user){
-          
-          this.usersFindingTrip = user;
-          console.log(this.usersFindingTrip);
-        }
-      })
   }
 
-
-   
-  
-  
   
 
  filter(){
@@ -79,10 +100,12 @@ export class ListridePage{
  
   confirmpopup(user){
        
-    // this.navCtrl.push(ConfirmpopupPage)
+        
     let modal = this.modalCtrl.create(ConfirmpopupPage,{user});
     modal.present();
-    // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
+    this.usersFindingTrip.pop();
+    this.subscribe.unsubscribe();
+
     
   }
 

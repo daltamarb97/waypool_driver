@@ -62,6 +62,8 @@ export class FindridePage {
   dbRef:any;
   geoFire:any;
   key;
+  driver;
+  driverInfo:any = {};
   // hits = new BehaviorSubject([])
 
   constructor(public navCtrl: NavController,public SignUpService:SignUpService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase) {
@@ -312,7 +314,7 @@ geocodeLatLng(latLng,inputName) {
     try {
       this.orFirebase=this.autocompleteMyPos.input
       this.desFirebase=this.autocompleteMyDest.input   
-  
+      console.log(this.orFirebase);
     if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
           this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
           this.clearMarkers();
@@ -323,21 +325,39 @@ geocodeLatLng(latLng,inputName) {
           this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
         //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
                           
-          this.SignUpService.turnFindingUsers(this.user);
+          this.SignUpService.getMyInfo(this.user).then(driver=>{
+            this.driver = driver.val();
+            this.driverInfo.origin = this.driver.trips.origin
+            this.driverInfo.destination = this.driver.trips.destination
+            this.driverInfo.name = this.driver.name
+            this.driverInfo.lastname = this.driver.lastname
+            this.driverInfo.phone = this.driver.phone
+            this.driverInfo.userId = this.driver.userId
+            this.driverInfo.carModel = this.driver.carModel
+            this.driverInfo.plateNumbe  = this.driver.plateNumber
+
+       })
           //geofire active and push to list ride
-          this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng);
-          this.navCtrl.push(ListridePage);
+          this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);
+          
+          this.navCtrl.push(ListridePage).then(()=>{
+            let index = 0;
+            this.navCtrl.remove(index);
+          })
+
           
        
          
          }
       
        }
+       
     catch(error) {
       console.log(error)
       this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
       }
 
+      console.log(this.orFirebase);
       
 
     }

@@ -13,7 +13,16 @@ dbRef:any;
 geoFire:any;
 geoquery:any;
 
-driver;
+driverUid:any;
+driver:any;
+
+origin:any;
+destination:any;
+name:any;
+lastname:any;
+phone:any;
+carModel:any;
+plateNumber:any;
 
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
@@ -21,47 +30,42 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
   this.dbRef = this.afDB.database.ref('geofire/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
-  this.driver = this.AngularFireAuth.auth.currentUser.uid;
+  this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
+ 
 
 }
 
 
 
-setGeofire( radius:number, lat, lng):void{ 
+setGeofire( radius:number, lat, lng, driverInfor):void{ 
   
   this.geoquery = this.geoFire.query({
     center: [lat, lng],
     radius: radius
   })
 
-  this.keyEntered();
+  this.keyEntered(driverInfor);
   this.keyExited();
 }
 
-keyEntered(){
-  
-  this.geoquery.on("key_entered", function(key){
-    // this.hits.push(key);
-    // console.log(this.hits);
-    
-    this.afDB.object('/drivers/' + this.driver).valueChanges().subscribe(driver=>{
-    
-          this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driver).set({
 
-            origin: driver.trips.origin,
-             destination: driver.trips.destination,
-             name: driver.name,
-             lastname: driver.lastname,
-             phone: driver.phone,
-             userId: driver.userId,
-             carModel: driver.carModel,
-             plateNumber: driver.plateNumber
 
-          });
-        }
-      )
-        
-   
+keyEntered(driverInfo){
+   this.geoquery.on("key_entered", function(key){
+    console.log(key);
+    setTimeout(()=>{
+      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
+      origin:driverInfo.origin,
+       destination:driverInfo.destination,
+       name: driverInfo.name,
+       lastname: driverInfo.lastname,
+       phone: driverInfo.phone,
+       userId: driverInfo.userId,
+       carModel: driverInfo.carModel
+       
+      })
+    }, 2000)
+    
     
   }.bind(this))
 }
@@ -69,22 +73,61 @@ keyEntered(){
 keyExited(){
   
   this.geoquery.on("key_exited", function(key){
-    // let i = this.hits.indexOf(key);
-    // if(i !== -1){
-    //   this.hits.splice(i, 1);
-    // }
-    // console.log(this.hits);
-    this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.user).remove()
+    this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).remove()
   }.bind(this))
 }
+
    
+// public setInfoDriver(key){
+
+//   this.getMyInfo(this.driverUid).subscribe(driver=>{
+//     this.driver = driver
+//     console.log(this.driver)
+    
+//   })
+//   console.log(this.driver)
+
+//   if(this.driver ){
+//     this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
+            
+//       origin:this.driver.trips.origin,
+//        destination:this.driver.trips.destination,
+//        name: this.driver.name,
+//        lastname: this.driver.lastname,
+//        phone: this.driver.phone,
+//        userId: this.driver.userId,
+//        carModel: this.driver.carModel,
+//        plateNumber: this.driver.plateNumber
   
+//     });
+//   }else{
+//     console.log('lukanima');
+//   }
+  
+// }  
+
+public  getMyInfo(userId){
+  return this.afDB.object('drivers/'+userId).valueChanges();
+  }
+
 public getUsersListRide(){
-  return this.afDB.list('/drivers/' + this.driver + '/trips/usersListRide').valueChanges();
+  
+  return this.afDB.list('/drivers/' + this.driverUid + '/trips/usersListRide').valueChanges();
 }
 
+
 public getUsersGeofire(){
-  return this.afDB.list('/drivers/'+ this.driver + '/trips/usersListRide/').valueChanges();
+  return this.afDB.list('/drivers/'+ this.driverUid + '/trips/usersListRide/').valueChanges();
+}
+
+public deleteUserListRide(driverId, userId){
+  this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
+}
+
+public onTripUserListRide(driverId, userId){
+  this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + userId).update({
+    onTrip: true
+  });
 }
 
 
