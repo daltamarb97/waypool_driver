@@ -1,0 +1,54 @@
+<ion-header class="bg-theme">
+    <ion-navbar>
+        <ion-title>Escoger Compañero
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-light">
+        <ion-card class="cardOnTrip">
+                <ion-item>
+                    <ion-avatar item-start>
+                        <img src="assets/imgs/face-1.jpg">
+                    </ion-avatar>
+                    <div class="name">
+                        <h2>{{user.name |titlecase}} {{user.lastname |titlecase | slice:0:1}}.
+                        </h2>
+                       
+                    </div>
+                    <div class="more">
+                        <h2 class="text-theme">
+                            <ion-icon name="md-more"></ion-icon>
+                        </h2>
+                    </div>
+                </ion-item>
+                <ion-card-content>
+                    <div class="ride-detail">
+                        <p>
+                            <span class="icon-location bg-theme"></span>{{addressOrigin}}</p>
+                        <p>
+                            <span class="icon-location bg-yellow"></span>{{user.origin}}</p>
+                    </div>
+                    <ion-row>
+                        <ion-col class="detail-text">
+                            <div text-left>
+                                <button class="btn bg-theme rounded full text-white" (click)="notifyDriver()">Ya Llegué</button>
+                                
+                            </div>
+                        </ion-col>
+                        <ion-col class="detail-text">
+                            
+                                <button class="btn bg-yellow rounded full text-white"><ion-icon name="chatboxes" class="text-white"></ion-icon></button>
+                            
+                        </ion-col>
+                        <ion-col col-5>
+                            <button navPop class="btn bg-theme rounded full text-white" (click)="PickUp()">Recoger</button>
+                            <button (click)="callUser()" class="btn bg-yellow rounded full text-white"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+               
+            </ion-card>
+    <div #map id="map"></div>  
+   
+</ion-content>

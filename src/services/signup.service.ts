@@ -13,6 +13,10 @@ export class SignUpService {
     return this.afDB.database.ref('drivers/'+userId).once('value');
     }
 
+    public getMyInfoDriver(userId){
+        return this.afDB.object('drivers/' + userId).valueChanges();
+    }
+
     public async saveUser(user){
         this.afDB.database.ref('drivers/'+ user.userId).update(user);
 

@@ -28,7 +28,6 @@ import { TermsPage } from '../pages/terms/terms';
 import { EarnPage } from '../pages/earn/earn';
 import { RatevroomPage } from '../pages/ratevroom/ratevroom';
 import { HelpPage } from '../pages/help/help';
-import { RidetodayPage } from '../pages/ridetoday/ridetoday';
 import { UploadPage } from '../pages/upload/upload';
 import { CarRegistrationPage } from '../pages/car-registration/car-registration';
 
@@ -46,10 +45,15 @@ import { sendCoordsService } from '../services/sendCoords.service';
 import { sendUsersService } from '../services/sendUsers.service';
 import { Camera } from '@ionic-native/camera';
 import { Geofence } from '@ionic-native/geofence';
-import { NativeGeocoder } from '@ionic-native/native-geocoder';
+
 import { geofireService } from '../services/geofire.services';
 import { instancesService } from '../services/instances.service';
 
+import { OnTripPage } from '../pages/onTrip/onTrip';
+import { CallNumber } from '@ionic-native/call-number';
+import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
+import { priceService } from '../services/price.service';
+import { PickupPage } from '../pages/pickup/pickup';
 
 
 export const firebaseConfig = {
@@ -78,8 +82,10 @@ export const firebaseConfig = {
     CodePage,
     ListridePage,
     FilterPage,
+    PickupPage,
     RiderprofilePage,
     ConfirmridePage,
+    ConfirmpricePage,
     ConfirmpopupPage,
     RateriderPage,
     ChattingPage,
@@ -91,8 +97,7 @@ export const firebaseConfig = {
     RatevroomPage,
     RatevroomPage,
     HelpPage,
-    RidetodayPage,
-
+    OnTripPage,
     UploadPage,
     CarRegistrationPage
   ],
@@ -114,9 +119,11 @@ export const firebaseConfig = {
     FindridePage,
     WalletPage,
     MorePage,
+    PickupPage,
     LoginPage,
     PasswordPage,
     SignupPage,
+    ConfirmpricePage,
     VerificationPage,
     CodePage,
     ListridePage,
@@ -134,7 +141,7 @@ export const firebaseConfig = {
     RatevroomPage,
     RatevroomPage,
     HelpPage,
-    RidetodayPage,
+    OnTripPage,
     UploadPage,
     CarRegistrationPage
 
@@ -152,7 +159,9 @@ export const firebaseConfig = {
     instancesService,
     Camera,
     Geofence,
-    NativeGeocoder
+    priceService,
+    Geofence,
+    CallNumber
 
   ]
 })

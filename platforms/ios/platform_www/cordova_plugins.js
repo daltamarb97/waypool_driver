@@ -125,6 +125,14 @@ module.exports = [
     "clobbers": [
       "window.StatusBar"
     ]
+  },
+  {
+    "id": "mx.ferreyra.callnumber.CallNumber",
+    "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
+    "pluginId": "mx.ferreyra.callnumber",
+    "clobbers": [
+      "call"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -136,12 +144,16 @@ module.exports.metadata =
   "cordova-plugin-device": "2.0.2",
   "es6-promise-plugin": "4.2.2",
   "cordova-plugin-geofence": "0.7.0",
+<<<<<<< HEAD
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-ionic-keyboard": "2.1.3",
   "cordova-plugin-ionic-webview": "1.2.1",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-whitelist": "1.3.3"
+=======
+  "mx.ferreyra.callnumber": "0.0.2"
+>>>>>>> origin/juandavid
 };
 // BOTTOM OF METADATA
 });

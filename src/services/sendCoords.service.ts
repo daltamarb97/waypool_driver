@@ -21,7 +21,7 @@ constructor(public afDB: AngularFireDatabase){
     
    public pushcoordinatesDrivers(user , dest, or){
      
-    this.afDB.database.ref('/drivers/'+ user + '/trips').update({
+    this.afDB.database.ref('drivers/'+ user+'/trips').update({
         origin: or,
         destination: dest,
         
@@ -33,5 +33,16 @@ constructor(public afDB: AngularFireDatabase){
                 
             });
         }
+    public updateGeolocationOrigin(user,origin){
+        this.afDB.database.ref('drivers/' + user+'/trips').update({
+            origin:origin
+        })
+    }
+    public endTrip(user){
+        this.afDB.database.ref('drivers/' + user+'/trips').remove()
+    }
+    public pickUp(user){
+       //eliminate instance of picking up
+    }
 }
 

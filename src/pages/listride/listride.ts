@@ -12,8 +12,7 @@ import { geofireService } from '../../services/geofire.services';
 // import * as firebase from 'firebase';
 // import { sendUsersService } from '../../services/sendUsers.service';
 // import { Geofence } from '@ionic-native/geofence';
-import * as _ from 'underscore';
-import { copyFile } from 'fs';
+
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { instancesService } from '../../services/instances.service';
@@ -30,19 +29,12 @@ export class ListridePage{
   usersFindingTrip : any = [];
   user:any = [];
   subscribe:Subscription;
+  usersOnListRide:any=[];
 
 
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService, public differs: IterableDiffers , private cd: ChangeDetectorRef, public afDB: AngularFireDatabase, public instances: instancesService) {
     
-    // localStorage.removeItem('firebase:previous_websocket_failure');
-
-    
-
-    
-
-    // this.usersFindingTrip$ = new BehaviorSubject<Array<string>>(this.usersFindingTrip);
-
     //get origin from driver
     this.sendCoordsService.getOrigin(this.driver)
         .subscribe( origin => {
@@ -58,29 +50,6 @@ export class ListridePage{
           console.log(destination);
         })
         
-        // this.afDB.list('/drivers/' + this.driver + '/trips/usersListRide').valueChanges()
-        // .subscribe(user => {
-        //   this.user = user;
-        //   console.log(this.user);
-        //   this.afDB.database.ref('/drivers/' + this.driver + '/trips/usersListRide').on('child_added', ()=>{
-        //       if(this.user.showDriver == true){
-        //         this.usersFindingTrip = this.user;
-        //         console.log(this.usersFindingTrip);
-        //       }else{
-        //         console.log('no se ejecuto');
-        //       }
-        //   }) 
-        // })  
-        
-        
-
-        // this.afDB.database.ref('/drivers/' + this.driver + '/trips/usersListRide').orderByChild('onTrip')
-        // .equalTo(true).on("value", (snapshot)=>{
-        //   snapshot.forEach((childSnapshot)=>{
-        //     childSnapshot.ref.remove();
-        //     console.log('hola eliminado');
-        //   })
-        // })
         
         this.subscribe = this.geofireService.getUsersListRide()
         .subscribe(user=>{
