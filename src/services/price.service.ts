@@ -11,11 +11,11 @@ export class priceService {
 
     
 
-    public setPriceAndNote(user,price,nota){
+    public setPriceAndNote(user,price,note){
         
         firebase.database().ref('drivers/' + user+'/trips').update({
            price:price ,
-           nota:nota
+           note:note
         })
    }    
     public setPrice(user,price){

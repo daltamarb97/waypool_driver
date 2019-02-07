@@ -198,9 +198,11 @@ export class PickupPage {
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top')
     }
     PickUp(){
-      this.sendCoordsService.pickUp(this.useruid)
+      this.sendCoordsService.eliminatePickingUsers(this.useruid,this.user.userId);
+      this.sendCoordsService.pickUp(this.useruid,this.user.userId,this.user)
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top')
     }
+    
     callUser(){
     
       this.callNumber.isCallSupported()
@@ -230,6 +232,15 @@ export class PickupPage {
         buttons: [button]
       });
       alert.present();
+    }
+    help(){
+      const toast = this.toastCtrl.create({
+        message: 'En esta página podrás ver mejor la dirección que de tu compañer@s a través de un mapa, cuando hayas llegado al lugar donde está tu compañer@, cada vez que presiones el botón "Ya llegué" se le enviará una notificación al estudiante de que ya llegaste. ¡Que disfruten el viaje!',
+        showCloseButton:true,
+        closeButtonText: 'OK',
+        position:'top'
+           });
+      toast.present();
     }
   }
     

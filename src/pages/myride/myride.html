@@ -1,166 +1,20 @@
 <ion-header class="bg-theme">
     <ion-navbar>
         <ion-title class="text-center">MY RIDE
-            <ion-icon name="md-locate" class="text-white" style="margin-left: auto;float: right;"></ion-icon>
+           
+            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> 
+            <ion-icon name="md-locate" class="text-white" ></ion-icon>
         </ion-title>
 
     </ion-navbar>
-    <div padding-left padding-right>
-        <ion-segment [(ngModel)]="ride">
-            <ion-segment-button value="past">
-                Historial de Viaje  
-            </ion-segment-button>
-            <ion-segment-button value="today">
-                Viaje Actual
-            </ion-segment-button>            
-        </ion-segment>
-    </div>
+    
 </ion-header>
 
-<ion-content class="bg-light">
-    <div [ngSwitch]="ride">
-        <ion-list *ngSwitchCase="'past'">
-            <ion-card>
-                <ion-item>
-                    <ion-avatar item-start>
-                        <img src="assets/imgs/face-1.jpg">
-                    </ion-avatar>
-                    <div class="name">
-                        <h2>David Johnson
-                        </h2>
-                        <p>Honda Cvic | White</p>
-                    </div>
-                    <div class="more">
-                        <h2 class="text-theme">$ 120
-                            <ion-icon name="md-more"></ion-icon>
-                        </h2>
-                    </div>
-                </ion-item>
-                <ion-card-content>
-                    <div class="ride-detail">
-                        <p>
-                            <span class="icon-location bg-theme"></span>Washington sq.park New York</p>
-                        <p>
-                            <span class="icon-location bg-yellow"></span>Harison, east sq.park New York</p>
-                    </div>
-                    <ion-row>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>Today: 12:15</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>2 Seats</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col col-4 text-right style="max-width: 100px;">
-                            <button class="btn bg-yellow rounded full text-white" (click)="raterider()" style="width: 100%;">Rate Now</button>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
+<ion-content class="bg-light"> 
+        
 
-            <!-- repilica -->
-            <ion-card>
-                <ion-item>
-                    <ion-avatar item-start>
-                        <img src="assets/imgs/face-1.jpg">
-                    </ion-avatar>
-                    <div class="name">
-                        <h2>David Johnson
-                                <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>
-                        </h2>
-                        <p>Aqui puede ir  | algo interesante</p>
-                    </div>
-                    <div class="more">
-                        <h2 class="text-theme">$ GRATIS
-                            <ion-icon name="md-more"></ion-icon>
-                        </h2>
-                    </div>
-                </ion-item>
-                <ion-card-content>
-                    <div class="ride-detail">
-                        <p>
-                            <span class="icon-location bg-theme"></span><span class="time">12:00 am</span>Washington sq.park New York</p>
-                        <p>
-                            <span class="icon-location bg-yellow"></span><span class="time">12:50 am</span>Washington sq.park New York</p>
-                    </div>
-                    <ion-row>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>Today: 12:15</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>2 Seats</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col col-4 class="detail-text" text-right style="max-width: 100px;">
-                            <div text-left>Rated
-                                <div style="margin-top: 5px;">
-                                    <ion-icon name="ios-star" class="text-yellow"></ion-icon>
-                                    <ion-icon name="ios-star" class="text-yellow"></ion-icon>
-                                    <ion-icon name="ios-star" class="text-yellow"></ion-icon>
-                                    <ion-icon name="ios-star" class="text-yellow"></ion-icon>
-                                    <ion-icon name="ios-star" class="text-yellow"></ion-icon>
-                                </div>
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-            <ion-card>
-                <ion-item>
-                    <ion-avatar item-start>
-                        <img src="assets/imgs/face-1.jpg">
-                    </ion-avatar>
-                    <div class="name">
-                        <h2>David Johnson
-                        </h2>
-                        <p>Honda Cvic | White</p>
-                    </div>
-                    <div class="more">
-                        <h2 class="text-theme">$ 120
-                            <ion-icon name="md-more"></ion-icon>
-                        </h2>
-                    </div>
-                </ion-item>
-                <ion-card-content>
-                    <div class="ride-detail">
-                        <p>
-                            <span class="icon-location bg-theme"></span><span class="time">12:00 am</span>Washington sq.park New York</p>
-                        <p>
-                            <span class="icon-location bg-yellow"></span><span class="time">12:50 am</span>Harison, east sq.park New York</p>
-                    </div>
-                    <ion-row>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>Today: 12:15</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>2 Seats</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col col-4 class="detail-text" text-right style="max-width: 100px;">
-                            <div text-left>Cancled Ride
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-        </ion-list>
-<!-- -------------------------------------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------- TODAY ----------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------------------------------------- -->
-
-        <ion-list *ngSwitchCase="'today'">
-            <ion-card *ngFor = "let user of usersOnTrip">
+        <ion-list >
+            <ion-card *ngFor = "let user of pickingUsers">
                 <ion-item>
                     <ion-avatar item-start>
                         <img src="assets/imgs/face-1.jpg">
@@ -168,48 +22,68 @@
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
                         </h2>
-                        <p>Bonitos y | Gorditos muchachos</p>
                     </div>
                     <div class="more">
-                        <h2 class="text-theme">$ 120
-                            <ion-icon name="md-more"></ion-icon>
-                        </h2>
+                        <ion-icon name="close-circle" (click)="deleteUser(user.userId,user.name)"></ion-icon>
                     </div>
                 </ion-item>
                 <ion-card-content>
                     <div class="ride-detail">
-                        <p>
+                        <p><small>Origen:</small>
                             <span class="icon-location bg-theme"></span>{{user.origin}}</p>
-                        <p>
+                        <p><small>Destino:</small>
                             <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
                     </div>
                     <ion-row>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>Today: 12:15</h2>
-                            </div>
-                        </ion-col>
-                        <ion-col class="detail-text">
-                            <div text-left>
-                                <h2>2 Seats</h2>
-                            </div>
-                        </ion-col>
+                          
+                                <ion-col class="detail-text">
+                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
+            
+                                    </ion-col>
                         <ion-col col-5>
-                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger</button>
-                            <button class="btn bg-yellow rounded full text-white"(click)="callUser(this.user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
+                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>
                         </ion-col>
                     </ion-row>
-                </ion-card-content>
-            </ion-card>
+                </ion-card-content>         
 
-           
+                
+            </ion-card>
             
             
             
+            <ion-card *ngFor = "let user of pickedUpUsers">
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <img src="assets/imgs/face-1.jpg">
+                        </ion-avatar>
+                        <div class="name">
+                            <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
+                            </h2>
+                      
+                        </div>
+                        <div class="more">                       
+                                <ion-badge color="secondary" class="badge">RECOGIDO</ion-badge>                                  
+                                    
+                        </div>
+                    </ion-item>
+                    <ion-card-content>
+                        <div class="ride-detail">
+                            <p>
+                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>
+                            <p>
+                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
+                        </div>
+                       
+                    </ion-card-content>
+                   
+        
+                    
+                </ion-card> 
+                <button class="btn bg-theme text-white rounded" (click)="goToMyDestination()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Ir a mi destino</button>
+
         </ion-list>
        
 
             
             
-    </div>
 </ion-content>

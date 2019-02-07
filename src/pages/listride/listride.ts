@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, AlertController, ToastController } from 'ionic-angular';
 
 import { FilterPage } from '../filter/filter';
 import { RiderprofilePage } from '../riderprofile/riderprofile';
@@ -26,7 +26,7 @@ export class ListridePage {
   // accptedUsers:any = [];
 
   usersOnListRide:any=[];
-  constructor(public navCtrl: NavController,public sendUsersService:sendUsersService,  private afDB: AngularFireDatabase, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth ) {
+  constructor(public navCtrl: NavController,public toastCtrl: ToastController,private alertCtrl: AlertController,public sendUsersService:sendUsersService,  private afDB: AngularFireDatabase, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth ) {
    //get origin from driver
     this.sendCoordsService.getOrigin(this.userUid)
         .subscribe( origin => {
@@ -67,6 +67,31 @@ export class ListridePage {
     
   }
     
+  deleteUser(userId,nameUser){
+  
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar Usuario',
+      message: `¿Estas que deseas eliminar a este a ${nameUser} de tus posibles compañeros de viaje?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('holi');
+          }
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            console.log('user eliminado');
+            this.sendUsersService.removeUsersOnListRide(this.userUid,userId);
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
  filter(){
     this.navCtrl.push(FilterPage);
@@ -84,7 +109,15 @@ export class ListridePage {
     // this.SignUpServices.acceptedByDriver(this.usersFindingTrip)
     // this.accptedUsers.push();
   }
-
+  help(){
+    const toast = this.toastCtrl.create({
+      message: 'En esta página podrás ver que estudiantes te han pedido compartir un viaje contigo, sólo tendrás máximo 4 estudiantes debido a que es el máximo numero permitido en colombia para carros particulares, si tienes un carro con más asientos, escríbenos para darte acceso a más',
+      showCloseButton:true,
+      closeButtonText: 'OK',
+      position:'top'
+         });
+    toast.present();
+  }
 }
 
 

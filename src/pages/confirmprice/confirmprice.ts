@@ -20,7 +20,7 @@ export class ConfirmpricePage {
   accepted: boolean;
 
   precio:string;
-  nota:string;
+  note:string;
   userDriverUid=this.AngularFireAuth.auth.currentUser.uid
   constructor(public navCtrl: NavController,      public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams) {
       
@@ -34,13 +34,13 @@ export class ConfirmpricePage {
             buttons: ['OK']
           });
           alert.present();
-    }else if(this.nota == null || this.nota == null){
+    }else if(this.note == null || this.note == null){
         this.PriceService.setPrice(this.userDriverUid,this.precio)
         this.accepted = true;
         this.dismiss();
         
       } else {
-        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.nota)
+        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)
         this.accepted = true;
         this.dismiss();
       

@@ -9,6 +9,7 @@ import { authenticationService } from '../../services/driverauthentication.servi
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
+import { RatetripPage } from '../ratetrip/ratetrip';
 
 declare var google; 
 @Component({
@@ -47,12 +48,12 @@ export class OnTripPage {
   
   ionViewDidLoad(){
     
-    this.loadMap();
+    
     this.sendCoordsService.getDestination(this.useruid)
     .subscribe( destination => {
       this.destinationOnTrip = destination;
-      this.geocodeAddress(this.destinationOnTrip)
-
+      console.log(this.destinationOnTrip)
+      this.loadMap();
     });
     
   }
@@ -83,7 +84,7 @@ export class OnTripPage {
     //creates the map and give options
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.geocodeLatLng(latLng)
-
+      this.geocodeAddress(this.destinationOnTrip)
       let marker = new google.maps.Marker({
         map: this.map,
         animation: google.maps.Animation.DROP,
@@ -212,9 +213,11 @@ export class OnTripPage {
     endTrip(){
       this.sendCoordsService.endTrip(this.useruid)
       // push viaje al historial
-      this.navCtrl.pop();
+      
+      this.navCtrl.push(RatetripPage)
       this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!','OK')
-    }
+    
+          }
    
     presentToast(message:string,duration,position:string) {     
       const toast = this.toastCtrl.create({
@@ -231,6 +234,15 @@ export class OnTripPage {
         buttons: [button]
       });
       alert.present();
+    }
+    help(){
+      const toast = this.toastCtrl.create({
+        message: 'En esta página podrás dirigirte hacia la universidad y ver en el mapa el camino que puedes tomar, cuando hayas llegado presiona el botón finalizar viaje y cuentanos tu experiencia con Waypool.',
+        showCloseButton:true,
+        closeButtonText: 'OK',
+        position:'top'
+           });
+      toast.present();
     }
   }
     

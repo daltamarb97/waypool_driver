@@ -1,0 +1,34 @@
+<ion-header class="bg-theme">
+    <ion-navbar>
+        <ion-title>RATE VROOM</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-light">
+    <ion-card class="slip">
+        <div text-center>
+            <h4 class="text-dark">¡Esperamos que hayas tenido un excelente viaje!</h4>
+            <p class="text-light">{{today | date}}
+
+        </p>
+            <h1 class="text-theme">$ 3000</h1>
+            <h4 class="text-dark">Podrás ver tu pago en el ícono<br>Ganancias</h4>
+        </div>
+    </ion-card>
+    <ion-card class="rate">
+        <div text-center>
+            <p>Cuéntanos como ha sido la experiencia con Waypool</p>
+            <div class="driver">
+                
+                <div class="form">
+                    <ion-list no-lines>
+                        <ion-item>
+                            <ion-textarea type="text" value="Déjanos tu sugerencia"></ion-textarea>
+                        </ion-item>
+                    </ion-list>
+                </div>
+                <p padding-top><button class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>
+            </div>
+        </div>
+    </ion-card>
+</ion-content>

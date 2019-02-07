@@ -69,7 +69,7 @@ export class ConfirmpopupPage {
 	}
 
 	acceptUser() {
-		this.sendUsersService.pushUsersOnTripOnDrivers(this.userDriverUid, this.user.userId, this.user.trips.origin, this.user.trips.destination, this.user.name, this.user.lastname, this.user.phone);
+		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.trips.origin, this.user.trips.destination, this.user.name, this.user.lastname, this.user.phone);
 		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
 		this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 		this.accepted = true;

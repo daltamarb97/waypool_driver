@@ -17,16 +17,20 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
      } 
     public getUsersOnTrip(userUid){
         // Get all the students the driver acepts in myListRidePage to be send to the students
-         return  this.afDB.list('/drivers/'+ userUid +'/trips/usersOnTrip').valueChanges();
+         return  this.afDB.list('/drivers/'+ userUid +'/trips/pickingUsers').valueChanges();
      }   
+     public getPickUpUsers(userUid){
+         //get all the users from the pickUpUsers []
+        return  this.afDB.list('/drivers/'+ userUid +'/trips/pickedUpUsers').valueChanges();
+     }
      public removeUsersOnListRide(userUid,userId ){
         //send the information of every student the driver acepts in myRide
            this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/'+ userId).remove();
                
            }
-    public pushUsersOnTripOnDrivers(userUid,userId ,origin,destination,name,lastname,phone){
+    public pushPickingUpUsersOnDrivers(userUid,userId ,origin,destination,name,lastname,phone){
      //send the information of every student the driver acepts in myRide
-        this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersOnTrip/'+ userId).update(
+        this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).update(
             {
              origin: origin,
              destination: destination,
@@ -41,7 +45,7 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
         }
         public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,carModel,plateNumber,price){
             //send the driver information to the students
-            this.afDB.database.ref('/users/'+ userId +'/trips/usersOnTrip/driver/'+ userUid).update(
+            this.afDB.database.ref('/users/'+ userId +'/trips/pickingUsers/driver/'+ userUid).update(
                 {
                  origin: origin,
                  destination: destination,
@@ -56,8 +60,10 @@ constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth){
                 );
             }
     
-    
-    
+    public pushTripOnRecordDriver(userUid){
+        //historial
+        this.afDB.database.ref('/drivers/'+ userUid +'/trips').push();
+    }
 
    
 }
