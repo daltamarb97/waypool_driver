@@ -100,9 +100,8 @@ export class ListridePage{
     modal.present();
     this.usersFindingTrip.pop();
     this.subscribe.unsubscribe();
-
-    
   }
+  
   help(){
     const toast = this.toastCtrl.create({
       message: 'En esta página podrás ver que estudiantes te han pedido compartir un viaje contigo, sólo tendrás máximo 4 estudiantes debido a que es el máximo numero permitido en colombia para carros particulares, si tienes un carro con más asientos, escríbenos para darte acceso a más',

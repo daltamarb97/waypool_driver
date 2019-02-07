@@ -45,10 +45,30 @@ export class ConfirmpricePage {
             buttons: ['OK']
           });
           alert.present();
-    }else if(this.note == null || this.note == null){
+    }else if(this.note == null ){
         this.PriceService.setPrice(this.userDriverUid,this.precio)
         this.accepted = true;
         this.dismiss();
+
+
+        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+          this.driver = driver;
+          console.log(this.driver.trips.origin)
+          this.driverInfo.origin = this.driver.trips.origin
+          this.driverInfo.destination = this.driver.trips.destination
+          this.driverInfo.name = this.driver.name
+          this.driverInfo.lastname = this.driver.lastname
+          this.driverInfo.phone = this.driver.phone
+          this.driverInfo.userId = this.driver.userId
+          this.driverInfo.carModel = this.driver.carModel
+          this.driverInfo.plateNumber  = this.driver.plateNumber
+          this.driverInfo.price = this.driver.trips.price
+          
+          console.log(this.driverInfo);
+
+          this.geofireService.setGeofire(1, this.geoInfo.lat, this.geoInfo.lng, this.driverInfo);
+
+     })
         
       } else {
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)

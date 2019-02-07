@@ -37,7 +37,8 @@ constructor(public afDB: AngularFireDatabase){
              name:name,
              lastname:lastname,
              phone: phone,
-             userId:userId
+             userId:userId,
+             
             
             }
             );
