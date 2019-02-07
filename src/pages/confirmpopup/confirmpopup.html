@@ -12,11 +12,11 @@
        </ion-item>
        <ion-card-content>
           <div class="ride-detail">
-             <p><small>Origen</small>
+             <p><small>Origen:</small>
                 <span  class="icon-location bg-theme"></span>{{user.origin}}
              </p>
              <p>
-                <small>Destino</small>
+                <small>Destino:</small>
                 <span  class="icon-location bg-yellow"></span>{{user.destination}}
              </p>
           </div>
@@ -26,31 +26,17 @@
              <p>
                 <small>Date</small>
                 <ion-icon name="md-calendar" class="icon-location"></ion-icon>
-                22<sup>nd</sup> Feb, 2018 
+                {{user.note}}
              </p>
-             <p>
-                <small>Vuelto</small>
-                <ion-icon name="md-time" class="icon-location"></ion-icon>
-                No necesita vuelto
-             </p>
+             
           </div>
        </ion-card-content>
        <ion-card-content>
           <div class="seats">
-             <ion-row>
-                <ion-col col-4 class="rate">
-                   <small>Precio</small> $ 2500
-                </ion-col>
-                <ion-col col-5 class="rate">
-                   <small>Seat Request</small> 2 Seats
-                </ion-col>
-             </ion-row>
-             <ion-row style="margin-top: 14px;">
-                <ion-col col-4>
-                   <button class="btn bg-white text-theme rounded" style="width: 100%;">
-                      <ion-icon name="md-calendar" class="icon-location"></ion-icon>
-                   </button>
-                </ion-col>
+             
+             <ion-row style="margin-top: 14px;   display: flex;
+             justify-content: center">
+                
                 <ion-col col-8>
                    <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="acceptUser()">Aceptar Viaje</button>
                 </ion-col>

@@ -6,6 +6,7 @@ page-myride {
         }
     }
     .card {
+
         margin-left: 0;
         margin-right: 0;
         width: 100%;
@@ -24,6 +25,11 @@ page-myride {
                 }
             }
             .more {
+                .badge{
+                    position: absolute;
+                    right: 21px;
+                    top: 19px;
+                }
                 width: 65px;
                 display: inline-block;
                 h2 {
@@ -44,6 +50,7 @@ page-myride {
                 color: #777;
                 font-weight: 400;
             }
+            
         }
     }
     ion-card-content {
@@ -127,5 +134,13 @@ page-myride {
     .col {
         padding-left: 0;
         padding-right: 0;
+    }
+    .lineWithText{
+        display: flex;
+        justify-content: center;
+        height: 4.5rem;
+        font-size: 1rem;
+        color: #bfbfbf;
+        text-transform: none;
     }
 }

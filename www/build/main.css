@@ -26437,7 +26437,7 @@ page-confirmprice ion-card-content .ride-detail p {
   padding-left: 10px;
   position: relative;
   color: #252525;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
@@ -27009,8 +27009,12 @@ page-listride ion-card-content .ride-detail {
 }
 
 page-listride ion-card-content .ride-detail p {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 1.2rem;
-  padding-left: 10px;
+  padding-left: 26px;
   position: relative;
   color: #777;
   white-space: nowrap;
@@ -27110,6 +27114,10 @@ page-listride .hideLongText {
 
 page-listride .title {
   overflow: visible;
+}
+
+page-listride .text {
+  font-weight: bold;
 }
 
 page-login .option-login {
@@ -27288,6 +27296,12 @@ page-myride .card ion-item .more {
   display: inline-block;
 }
 
+page-myride .card ion-item .more .badge {
+  position: absolute;
+  right: 21px;
+  top: 19px;
+}
+
 page-myride .card ion-item .more h2 {
   font-size: 1.4rem;
   font-weight: 600;
@@ -27403,6 +27417,21 @@ page-myride ion-card-content .status img {
 page-myride .col {
   padding-left: 0;
   padding-right: 0;
+}
+
+page-myride .lineWithText {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 4.5rem;
+  font-size: 1rem;
+  color: #bfbfbf;
+  text-transform: none;
 }
 
 page-notification .item {
@@ -28273,6 +28302,94 @@ page-raterider .card.rate .driver ion-textarea {
 
 page-raterider .card.rate .driver ion-textarea .text-input {
   height: 10rem;
+}
+
+page-ratetrip .card {
+  margin-top: 0px;
+  padding: 30px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position: relative;
+  overflow: visible;
+}
+
+page-ratetrip .card h1 {
+  font-size: 4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #0fc874;
+  font-weight: 600;
+}
+
+page-ratetrip .card h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+page-ratetrip .card p {
+  font-size: 1.1rem;
+  color: #bfbfbf;
+}
+
+page-ratetrip .card.slip {
+  margin-bottom: 20px;
+}
+
+page-ratetrip .card.slip::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 12px;
+  background: url(../assets/imgs/border-down.jpg);
+  background-repeat: repeat-x;
+  background-size: 15px;
+  left: 0;
+  bottom: -10px;
+}
+
+page-ratetrip .card.rate {
+  padding-top: 10px;
+}
+
+page-ratetrip .card.rate::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 12px;
+  background: url(../assets/imgs/border-up.jpg);
+  background-repeat: repeat-x;
+  background-size: 15px;
+  left: 0;
+  top: -6px;
+}
+
+page-ratetrip .card.rate .driver ion-item.item {
+  width: 220px;
+  margin: auto;
+}
+
+page-ratetrip .card.rate .driver ion-item.item .item-inner h2 {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+page-ratetrip .card.rate .driver p.icons {
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
+}
+
+page-ratetrip .card.rate .driver p.icons ion-icon {
+  font-size: 3.5rem;
+  margin-left: 4px;
+}
+
+page-ratetrip .card.rate .driver ion-textarea {
+  height: 10rem;
+  color: #bfbfbf;
+  font-size: 1.3rem;
 }
 
 page-ratevroom .card {

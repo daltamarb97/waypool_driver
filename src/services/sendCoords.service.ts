@@ -38,11 +38,19 @@ constructor(public afDB: AngularFireDatabase){
             origin:origin
         })
     }
-    public endTrip(user){
-        this.afDB.database.ref('drivers/' + user+'/trips').remove()
+    public endTrip(DriverUid){
+        this.afDB.database.ref('drivers/' + DriverUid+'/trips').remove()
     }
-    public pickUp(user){
-       //eliminate instance of picking up
+    public pickUp(DriverUid,userId,user){
+       
+
+       // add the driver to pickedUpUsers 
+       this.afDB.database.ref('/drivers/'+ DriverUid +'/trips/pickedUpUsers/'+ userId).update(user);
+
+    }
+    public eliminatePickingUsers(DriverUid,userId){
+               //eliminate the user from pickingUsers
+        this.afDB.database.ref('/drivers/'+ DriverUid +'/trips/pickingUsers/'+ userId).remove();
     }
 }
 

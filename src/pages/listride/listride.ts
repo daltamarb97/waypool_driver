@@ -1,5 +1,6 @@
-import { Component, IterableDiffers, DoCheck, ChangeDetectorRef } from '@angular/core';
-import { NavController, ModalController, NavParams, AlertController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, ModalController, AlertController, ToastController } from 'ionic-angular';
+
 import { FilterPage } from '../filter/filter';
 // import { RiderprofilePage } from '../riderprofile/riderprofile';
 // import { Observable } from 'rxjs';
@@ -16,6 +17,7 @@ import { geofireService } from '../../services/geofire.services';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { instancesService } from '../../services/instances.service';
+import { sendUsersService } from '../../services/sendUsers.service';
 
 
 @Component({
@@ -33,7 +35,7 @@ export class ListridePage{
 
 
 
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth,  public navParams: NavParams, public alertCtrl: AlertController, private geofireService: geofireService, public differs: IterableDiffers , private cd: ChangeDetectorRef, public afDB: AngularFireDatabase, public instances: instancesService) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController) {
     
     //get origin from driver
     this.sendCoordsService.getOrigin(this.driver)
@@ -60,8 +62,32 @@ export class ListridePage{
 
         
   }
-
+    
+  deleteUser(userId,nameUser){
   
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar Usuario',
+      message: `¿Estas que deseas eliminar a este a ${nameUser} de tus posibles compañeros de viaje?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('holi');
+          }
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            console.log('user eliminado');
+            this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
  filter(){
     this.navCtrl.push(FilterPage);
@@ -77,9 +103,15 @@ export class ListridePage{
 
     
   }
-
-
-
+  help(){
+    const toast = this.toastCtrl.create({
+      message: 'En esta página podrás ver que estudiantes te han pedido compartir un viaje contigo, sólo tendrás máximo 4 estudiantes debido a que es el máximo numero permitido en colombia para carros particulares, si tienes un carro con más asientos, escríbenos para darte acceso a más',
+      showCloseButton:true,
+      closeButtonText: 'OK',
+      position:'top'
+         });
+    toast.present();
+  }
 }
 
 

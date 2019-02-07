@@ -5,7 +5,7 @@ import { ListridePage } from '../listride/listride';
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, Platform, ViewController, AlertController, ModalController } from 'ionic-angular';
+import { NavController, Platform, ViewController, AlertController, ModalController, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 
@@ -70,7 +70,7 @@ export class FindridePage {
   geoInfo:any = {};
   // hits = new BehaviorSubject([])
 
-  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofence: Geofence) {
+  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
 
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -390,7 +390,15 @@ geocodeLatLng(latLng,inputName) {
       })
    modal.present();
    }
-   
+   help(){
+    const toast = this.toastCtrl.create({
+      message: 'En esta página podrás conectarte con compañeros de tu misma universidad que quieran compartir un viaje contigo.',
+     showCloseButton:true,
+      closeButtonText: 'OK',
+              position:'top'
+         });
+    toast.present();
+  }
   }
   
 

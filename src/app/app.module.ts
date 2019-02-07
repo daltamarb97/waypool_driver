@@ -54,6 +54,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';
 import { PickupPage } from '../pages/pickup/pickup';
+import { RatetripPage } from '../pages/ratetrip/ratetrip';
 
 
 export const firebaseConfig = {
@@ -97,6 +98,7 @@ export const firebaseConfig = {
     RatevroomPage,
     RatevroomPage,
     HelpPage,
+    RatetripPage,
     OnTripPage,
     UploadPage,
     CarRegistrationPage
@@ -139,7 +141,7 @@ export const firebaseConfig = {
     TermsPage,
     EarnPage,
     RatevroomPage,
-    RatevroomPage,
+    RatetripPage,
     HelpPage,
     OnTripPage,
     UploadPage,

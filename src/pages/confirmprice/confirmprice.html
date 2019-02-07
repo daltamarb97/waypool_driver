@@ -7,13 +7,13 @@
             <div class="ride-detail">
                 <ion-item class="form">
                     <ion-label floating>Precio</ion-label>
-                    <ion-input type="text" [(ngModel)]="precio"></ion-input>
+                    <ion-input type="number" [(ngModel)]="precio"></ion-input>
                   </ion-item>
                   <ion-item>
                     <div class="form">
                         <ion-list no-lines>
                             <ion-item>
-                                <ion-textarea [(ngModel)]="nota" type="text"  ></ion-textarea>
+                                <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota para tus compañeros (Opcional)" ></ion-textarea>
                             </ion-item>
                         </ion-list>
                     </div>
@@ -23,30 +23,20 @@
 
         <ion-card-content>
             <div class="ride-detail no-before">
-                <p><small>Date</small>
+                <p><small>Recuerda:</small>
                     <ion-icon name="md-calendar" class="icon-location"></ion-icon>
-                    22<sup>nd</sup> Feb, 2018 </p>
-                <p>
-                    <small>Vuelto</small>
-                    <ion-icon name="md-time" class="icon-location"></ion-icon>
-                    No necesita vuelto</p>
+                  - Precio Recomendado: 2500 </p>
+        
+                <p>- Tus compañeros te pagarán en efectivo, evita colocar precios que requieran mucho vuelto, lleva dinero suficiente para dar vueltas.</p>
             </div>
         </ion-card-content>
 
         <ion-card-content>
             <div class="seats">
-                <ion-row>
-                    <ion-col col-4 class="rate">
-                        <small>Precio</small> $ 2500
-                    </ion-col>
-                    <ion-col col-5 class="rate">
-                        <small>Seat Request</small> 2 Seats
-                    </ion-col>
-                </ion-row>
-                <ion-row style="margin-top: 14px;">
-                    <ion-col col-4>
-                        <button class="btn bg-white text-theme rounded" style="width: 100%;"><ion-icon name="md-calendar" class="icon-location"></ion-icon></button>
-                    </ion-col>
+                
+                <ion-row style="margin-top: 14px;    display: flex;
+                justify-content: center">
+                   
                     <ion-col col-8>
                         <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="setPriceDriver()">Aceptar Viaje</button>
                     </ion-col>
