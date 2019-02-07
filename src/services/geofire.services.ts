@@ -61,7 +61,10 @@ keyEntered(driverInfo){
        lastname: driverInfo.lastname,
        phone: driverInfo.phone,
        userId: driverInfo.userId,
-       carModel: driverInfo.carModel
+       carModel: driverInfo.carModel,
+       plateNumber: driverInfo.plateNumber,
+       price: driverInfo.price,
+       note: driverInfo.note
        
       })
     }, 2000)

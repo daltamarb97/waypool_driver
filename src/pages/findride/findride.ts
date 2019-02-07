@@ -67,16 +67,11 @@ export class FindridePage {
   key;
   driver;
   driverInfo:any = {};
+  geoInfo:any = {};
   // hits = new BehaviorSubject([])
 
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofence: Geofence) {
 
-  
-    this.geofence.initialize().then(
-      ()=>console.log('geofence plugin ready'),
-      (err)=>console.log(err)
-    )
-    
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -337,26 +332,30 @@ geocodeLatLng(latLng,inputName) {
           this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
         //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
                           
-          this.SignUpService.getMyInfo(this.user).then(driver=>{
-            this.driver = driver.val();
-            this.driverInfo.origin = this.driver.trips.origin
-            this.driverInfo.destination = this.driver.trips.destination
-            this.driverInfo.name = this.driver.name
-            this.driverInfo.lastname = this.driver.lastname
-            this.driverInfo.phone = this.driver.phone
-            this.driverInfo.userId = this.driver.userId
-            this.driverInfo.carModel = this.driver.carModel
-            this.driverInfo.plateNumbe  = this.driver.plateNumber
+      //     this.SignUpService.getMyInfo(this.user).subscribe(driver=>{
+      //       this.driver = driver;
+      //       this.driverInfo.origin = this.driver.trips.origin
+      //       this.driverInfo.destination = this.driver.trips.destination
+      //       this.driverInfo.name = this.driver.name
+      //       this.driverInfo.lastname = this.driver.lastname
+      //       this.driverInfo.phone = this.driver.phone
+      //       this.driverInfo.userId = this.driver.userId
+      //       this.driverInfo.carModel = this.driver.carModel
+      //       this.driverInfo.plateNumber  = this.driver.plateNumber
+      //       this.driverInfo.price = this.driver.trips.price
+      //       this.driverInfo.note = this.driver.trips.nota
+      //       console.log(this.driverInfo);
+      //  })
 
-       })
           //geofire active and push to list ride
-          this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);
+ 
+          this.geoInfo = this.myLatLng;
+          console.log(this.geoInfo);
           
-          this.navCtrl.push(ListridePage).then(()=>{
-            let index = 0;
-            this.navCtrl.remove(index);
-          })
-          this.confirmPrice()
+          // this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);
+          
+         
+          this.confirmPrice(this.geoInfo);
                 
          }
       
@@ -381,29 +380,9 @@ geocodeLatLng(latLng,inputName) {
       alert.present();
     }
 
-    addGeofence(lat, lng) {
-      //options describing geofence
-      let fence = {
-        id: Date.now(), //any unique ID
-        latitude:       lat, //center of geofence radius
-        longitude:      lng,
-        radius:         100, //radius to edge of geofence in meters
-        transitionType: 3, //see 'Transition Types' below
-        notification: { //notification settings
-            id:             1, //any unique ID
-            title:          'You crossed a fence', //notification title
-            text:           'You just arrived to Gliwice city center.', //notification body
-            openAppOnClick: true //open app when notification is tapped
-        }
-      }
-    
-      this.geofence.addOrUpdate(fence).then(
-         () => console.log('Geofence added'),
-         (err) => console.log('Geofence failed to add')
-       )
-      }
-   confirmPrice(){
-      let modal = this.modalCtrl.create(ConfirmpricePage);
+  
+   confirmPrice(geoInfo){
+      let modal = this.modalCtrl.create(ConfirmpricePage, {geoInfo});
       modal.onDidDismiss(accepted => {
         if(accepted){
           this.navCtrl.push(ListridePage);

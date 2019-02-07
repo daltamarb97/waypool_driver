@@ -10,7 +10,7 @@ export class SignUpService {
     }
 
    public getMyInfo(userId){
-    return this.afDB.database.ref('drivers/'+userId).once('value');
+    return this.afDB.object('drivers/'+userId).valueChanges();
     }
 
     public getMyInfoDriver(userId){
