@@ -11,7 +11,9 @@ export class geofireService {
 
 dbRef:any;
 geoFire:any;
-geoquery:any;
+geoquery1:any;
+geoquery2:any;
+
 
 driverUid:any;
 driver:any;
@@ -27,8 +29,7 @@ plateNumber:any;
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
 
-  this.dbRef = this.afDB.database.ref('geofire/' );
-  this.geoFire = new GeoFire(this.dbRef); 
+ 
 
   this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
  
@@ -37,21 +38,47 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 
 
 
-setGeofire( radius:number, lat, lng, driverInfor):void{ 
+setGeofireDest( radius:number, lat, lng, driverInfor):void{ 
   
-  this.geoquery = this.geoFire.query({
+  this.dbRef = this.afDB.database.ref('geofireDest/' );
+  this.geoFire = new GeoFire(this.dbRef); 
+
+  this.geoquery1 = this.geoFire.query({
     center: [lat, lng],
     radius: radius
   })
 
-  this.keyEntered(driverInfor);
-  this.keyExited();
+  this.keyEnteredDest(driverInfor);
+  this.keyExitedDest();
+
+if(this.geoquery2){
+  this.geoquery2.cancel();
+}
+}
+
+setGeofireOr( radius:number, lat, lng, driverInfor):void{ 
+  
+  this.dbRef = this.afDB.database.ref('geofireOr/' );
+  this.geoFire = new GeoFire(this.dbRef); 
+
+  this.geoquery2 = this.geoFire.query({
+    center: [lat, lng],
+    radius: radius
+  })
+
+  this.keyEnteredOr(driverInfor);
+  this.keyExitedOr();
+
+  if(this.geoquery1){
+    this.geoquery1.cancel();
+  }
+
 }
 
 
 
-keyEntered(driverInfo){
-   this.geoquery.on("key_entered", function(key){
+keyEnteredDest(driverInfo){
+   this.geoquery1.on("key_entered", function(key){
     console.log(key);
     setTimeout(()=>{
       this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
@@ -73,41 +100,44 @@ keyEntered(driverInfo){
   }.bind(this))
 }
 
-keyExited(){
+keyExitedDest(){
   
-  this.geoquery.on("key_exited", function(key){
+  this.geoquery1.on("key_exited", function(key){
     this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).remove()
   }.bind(this))
 }
 
+keyEnteredOr(driverInfo){
+  this.geoquery2.on("key_entered", function(key){
+   console.log(key);
+   setTimeout(()=>{
+     this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
+     origin: driverInfo.origin,
+      destination:driverInfo.destination,
+      name: driverInfo.name,
+      lastname: driverInfo.lastname,
+      phone: driverInfo.phone,
+      userId: driverInfo.userId,
+      carModel: driverInfo.carModel,
+      plateNumber: driverInfo.plateNumber,
+      price: driverInfo.price,
+      note: driverInfo.note
+      
+     })
+   }, 2000)
    
-// public setInfoDriver(key){
+   
+ }.bind(this))
+}
 
-//   this.getMyInfo(this.driverUid).subscribe(driver=>{
-//     this.driver = driver
-//     console.log(this.driver)
-    
-//   })
-//   console.log(this.driver)
+keyExitedOr(){
+ 
+ this.geoquery2.on("key_exited", function(key){
+   this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).remove()
+ }.bind(this))
+}
 
-//   if(this.driver ){
-//     this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
-            
-//       origin:this.driver.trips.origin,
-//        destination:this.driver.trips.destination,
-//        name: this.driver.name,
-//        lastname: this.driver.lastname,
-//        phone: this.driver.phone,
-//        userId: this.driver.userId,
-//        carModel: this.driver.carModel,
-//        plateNumber: this.driver.plateNumber
-  
-//     });
-//   }else{
-//     console.log('lukanima');
-//   }
-  
-// }  
+   
 
 public  getMyInfo(userId){
   return this.afDB.object('drivers/'+userId).valueChanges();

@@ -1,0 +1,47 @@
+<ion-content>
+    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
+    <ion-card>
+       <h6 class="text-theme">Detalles del Viaje</h6>
+       <ion-item >
+          <ion-avatar item-start>
+             <img src="assets/imgs/face-1.jpg">
+          </ion-avatar>
+          <div  class="name">
+             <h2 >{{user.name |titlecase}} {{user.lastname  |titlecase | slice:0:1}}.</h2>
+          </div>
+       </ion-item>
+       <ion-card-content>
+          <div class="ride-detail">
+             <p><small>Origen:</small>
+                <span  class="icon-location bg-theme"></span>{{user.origin}}
+             </p>
+             <p>
+                <small>Destino:</small>
+                <span  class="icon-location bg-yellow"></span>{{user.destination}}
+             </p>
+          </div>
+       </ion-card-content>
+       <ion-card-content>
+          <div class="ride-detail no-before">
+             <p>
+                <small>Date</small>
+                <ion-icon name="md-calendar" class="icon-location"></ion-icon>
+                {{user.note}}
+             </p>
+             
+          </div>
+       </ion-card-content>
+       <ion-card-content>
+          <div class="seats">
+             
+             <ion-row style="margin-top: 14px;   display: flex;
+             justify-content: center">
+                
+                <ion-col col-8>
+                   <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;"(click)="acceptUser()">Aceptar Viaje</button>
+                </ion-col>
+             </ion-row>
+          </div>
+       </ion-card-content>
+    </ion-card>
+ </ion-content>

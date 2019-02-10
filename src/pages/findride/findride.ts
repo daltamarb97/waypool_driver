@@ -51,6 +51,7 @@ export class FindridePage {
   myLatLng: any=[];
   waypoints: any[];
   myLatLngDest:any;
+  
   //¿Adonde vas? 
   destinationSelect: any;
   //firebase 
@@ -67,7 +68,8 @@ export class FindridePage {
   key;
   driver;
   driverInfo:any = {};
-  geoInfo:any = {};
+  geoInfo1:any = {};
+  geoInfo2:any = {};
   // hits = new BehaviorSubject([])
 
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
@@ -247,12 +249,16 @@ selectSearchResultMyDest(item){
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
 
-      // let position = {
-      //   latitude: results[0].geometry.location.lat,
-      //   longitude: results[0].geometry.location.lng
-      // };
-        // let position = new google.maps.LatLng( results[0].geometry.location.lat,
-        //  results[0].geometry.location.lng)
+      
+        this.myLatLngDest = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+
+         
+        
+
+      
 
         let marker = new google.maps.Marker({
         position: results[0].geometry.location,
@@ -331,31 +337,17 @@ geocodeLatLng(latLng,inputName) {
          } else {
           this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
         //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-                          
-      //     this.SignUpService.getMyInfo(this.user).subscribe(driver=>{
-      //       this.driver = driver;
-      //       this.driverInfo.origin = this.driver.trips.origin
-      //       this.driverInfo.destination = this.driver.trips.destination
-      //       this.driverInfo.name = this.driver.name
-      //       this.driverInfo.lastname = this.driver.lastname
-      //       this.driverInfo.phone = this.driver.phone
-      //       this.driverInfo.userId = this.driver.userId
-      //       this.driverInfo.carModel = this.driver.carModel
-      //       this.driverInfo.plateNumber  = this.driver.plateNumber
-      //       this.driverInfo.price = this.driver.trips.price
-      //       this.driverInfo.note = this.driver.trips.nota
-      //       console.log(this.driverInfo);
-      //  })
-
-          //geofire active and push to list ride
  
-          this.geoInfo = this.myLatLng;
-          console.log(this.geoInfo);
+          this.geoInfo1 = this.myLatLng;
+          console.log(this.geoInfo1);
+
+          this.geoInfo2 = this.myLatLngDest;
+          console.log(this.geoInfo2);
           
           // this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);
           
          
-          this.confirmPrice(this.geoInfo);
+          this.confirmPrice(this.geoInfo1, this.geoInfo2);
                 
          }
       
@@ -381,8 +373,8 @@ geocodeLatLng(latLng,inputName) {
     }
 
   
-   confirmPrice(geoInfo){
-      let modal = this.modalCtrl.create(ConfirmpricePage, {geoInfo});
+   confirmPrice(geoInfo1, geoInfo2){
+      let modal = this.modalCtrl.create(ConfirmpricePage, {geoInfo1, geoInfo2});
       modal.onDidDismiss(accepted => {
         if(accepted){
           this.navCtrl.push(ListridePage);

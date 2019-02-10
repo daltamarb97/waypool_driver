@@ -27,13 +27,35 @@ export class ConfirmpricePage {
   driverInfo:any ={};
   lat;
   lng;
-  geoInfo;
+  geoInfo1;
+  geoInfo2;
   geocoder;
   location;
+  buttonColor:string = '#0fc874';
+  buttonColor2:string = '#0fc874';
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
-    this.geoInfo = this.navParams.get('geoInfo')
-    console.log(this.geoInfo)
+    this.geoInfo1 = this.navParams.get('geoInfo1')
+    console.log(this.geoInfo1)
+
+    this.geoInfo2 = this.navParams.get('geoInfo2')
+    console.log(this.geoInfo2)
+
+    this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+      this.driver = driver;
+      console.log(this.driver.origin)
+      this.driverInfo.origin = this.driver.origin
+      this.driverInfo.destination = this.driver.destination
+      this.driverInfo.name = this.driver.name
+      this.driverInfo.lastname = this.driver.lastname
+      this.driverInfo.phone = this.driver.phone
+      this.driverInfo.userId = this.driver.userId
+      this.driverInfo.carModel = this.driver.carModel
+      this.driverInfo.plateNumber  = this.driver.plateNumber
+      this.driverInfo.price = this.driver.trips.price
+      this.driverInfo.note = this.driver.trips.note
+      console.log(this.driverInfo);
+ })
   }
   
     setPriceDriver(){
@@ -49,59 +71,31 @@ export class ConfirmpricePage {
         this.PriceService.setPrice(this.userDriverUid,this.precio)
         this.accepted = true;
         this.dismiss();
-
-
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
-          this.driver = driver;
-          console.log(this.driver.trips.origin)
-          this.driverInfo.origin = this.driver.trips.origin
-          this.driverInfo.destination = this.driver.trips.destination
-          this.driverInfo.name = this.driver.name
-          this.driverInfo.lastname = this.driver.lastname
-          this.driverInfo.phone = this.driver.phone
-          this.driverInfo.userId = this.driver.userId
-          this.driverInfo.carModel = this.driver.carModel
-          this.driverInfo.plateNumber  = this.driver.plateNumber
-          this.driverInfo.price = this.driver.trips.price
-          
-          console.log(this.driverInfo);
-
-          this.geofireService.setGeofire(1, this.geoInfo.lat, this.geoInfo.lng, this.driverInfo);
-
-     })
         
       } else {
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)
         this.accepted = true;
         this.dismiss();
-      
-
-
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
-          this.driver = driver;
-          console.log(this.driver.trips.origin)
-          this.driverInfo.origin = this.driver.trips.origin
-          this.driverInfo.destination = this.driver.trips.destination
-          this.driverInfo.name = this.driver.name
-          this.driverInfo.lastname = this.driver.lastname
-          this.driverInfo.phone = this.driver.phone
-          this.driverInfo.userId = this.driver.userId
-          this.driverInfo.carModel = this.driver.carModel
-          this.driverInfo.plateNumber  = this.driver.plateNumber
-          this.driverInfo.price = this.driver.trips.price
-          this.driverInfo.note = this.driver.trips.nota
-          console.log(this.driverInfo);
-
-          this.geofireService.setGeofire(1, this.geoInfo.lat, this.geoInfo.lng, this.driverInfo);
-
-     })
-  
-        
+              
       }
         
       }; 
+
       
+
       
+  setGeoFireOrigin(){
+    this.geofireService.setGeofireOr(1, this.geoInfo1.lat, this.geoInfo1.lng, this.driverInfo);
+    this.buttonColor2 = '#1AA3E8';
+    this.buttonColor = '#0fc874';
+
+      } 
+
+  setGeoFireDestination(){
+    this.geofireService.setGeofireDest(1, this.geoInfo2.lat, this.geoInfo2.lng, this.driverInfo);
+    this.buttonColor = '#1AA3E8';
+    this.buttonColor2 = '#0fc874';
+      }
         
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);
