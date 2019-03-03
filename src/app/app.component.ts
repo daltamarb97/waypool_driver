@@ -17,7 +17,7 @@ import { FindridePage } from '../pages/findride/findride';
 })
 export class MyApp {
   rootPage:any;
-
+ 
 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

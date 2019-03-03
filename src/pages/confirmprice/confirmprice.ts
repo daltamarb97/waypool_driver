@@ -10,6 +10,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { priceService } from '../../services/price.service';
 import { ListridePage } from '../listride/listride';
 import { geofireService } from '../../services/geofire.services';
+import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
 
 
 @Component({
@@ -41,21 +42,7 @@ export class ConfirmpricePage {
     this.geoInfo2 = this.navParams.get('geoInfo2')
     console.log(this.geoInfo2)
 
-    this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
-      this.driver = driver;
-      console.log(this.driver.origin)
-      this.driverInfo.origin = this.driver.origin
-      this.driverInfo.destination = this.driver.destination
-      this.driverInfo.name = this.driver.name
-      this.driverInfo.lastname = this.driver.lastname
-      this.driverInfo.phone = this.driver.phone
-      this.driverInfo.userId = this.driver.userId
-      this.driverInfo.carModel = this.driver.carModel
-      this.driverInfo.plateNumber  = this.driver.plateNumber
-      this.driverInfo.price = this.driver.trips.price
-      this.driverInfo.note = this.driver.trips.note
-      console.log(this.driverInfo);
- })
+   
   }
   
     setPriceDriver(){
@@ -71,31 +58,57 @@ export class ConfirmpricePage {
         this.PriceService.setPrice(this.userDriverUid,this.precio)
         this.accepted = true;
         this.dismiss();
+        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+          this.driver = driver;
+          console.log(this.driver.trips.origin)
+          this.driverInfo.origin = this.driver.trips.origin
+          this.driverInfo.destination = this.driver.trips.destination
+          this.driverInfo.name = this.driver.name
+          this.driverInfo.lastname = this.driver.lastname
+          this.driverInfo.phone = this.driver.phone
+          this.driverInfo.userId = this.driver.userId
+          this.driverInfo.carModel = this.driver.carModel
+          this.driverInfo.plateNumber  = this.driver.plateNumber
+          this.driverInfo.price = this.driver.trips.price
+          this.driverInfo.note = 'no hay nota'
+          console.log(this.driverInfo);
+     })
+        
         
       } else {
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)
         this.accepted = true;
         this.dismiss();
+        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+          this.driver = driver;
+          console.log(this.driver.trips.origin)
+          this.driverInfo.origin = this.driver.trips.origin
+          this.driverInfo.destination = this.driver.trips.destination
+          this.driverInfo.name = this.driver.name
+          this.driverInfo.lastname = this.driver.lastname
+          this.driverInfo.phone = this.driver.phone
+          this.driverInfo.userId = this.driver.userId
+          this.driverInfo.carModel = this.driver.carModel
+          this.driverInfo.plateNumber  = this.driver.plateNumber
+          this.driverInfo.price = this.driver.trips.price
+          this.driverInfo.note = this.driver.trips.note
+          console.log(this.driverInfo);
+     })
+        
+
               
       }
-        
+
+      this.confirmDirection(this.geoInfo1, this.geoInfo2, this.driverInfo);
+       
       }; 
 
+      confirmDirection(geoInfo1, geoInfo2, driverInfo){
+        let modal = this.modalCtrl.create(ConfirmdirectionPage, {geoInfo1, geoInfo2, driverInfo});
+     modal.present();
+     }
       
-
-      
-  setGeoFireOrigin(){
-    this.geofireService.setGeofireOr(1, this.geoInfo1.lat, this.geoInfo1.lng, this.driverInfo);
-    this.buttonColor2 = '#1AA3E8';
-    this.buttonColor = '#0fc874';
-
-      } 
-
-  setGeoFireDestination(){
-    this.geofireService.setGeofireDest(1, this.geoInfo2.lat, this.geoInfo2.lng, this.driverInfo);
-    this.buttonColor = '#1AA3E8';
-    this.buttonColor2 = '#0fc874';
-      }
+    
         
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);

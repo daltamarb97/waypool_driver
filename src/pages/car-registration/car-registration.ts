@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { FindridePage } from '../findride/findride';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 
@@ -19,14 +20,12 @@ import { storage } from 'firebase';
   templateUrl: 'car-registration.html',
 })
 export class CarRegistrationPage {
+  driver;
   namePicture:any = "Licencia" ;
   description:any = "Sube una foto clara de tu" ;
   img1 = "Licencia";
   img2 = "Cédula";
-  img3 = "SOAT del vehículo";
-  img4 = "Revisión Técnico Mecánica";
-  img5 = "Tarjeta de Crédito";
-  img6 = "Cuenta de Ahorros";
+  
   des1 = "Sube una foto clara de tu";
   des2 = "Necesitamos la información de tu";
   options:CameraOptions = {
@@ -35,7 +34,8 @@ export class CarRegistrationPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth) {
+    this.driver =  this.AngularFireauth.auth.currentUser.uid;
   }
 
   usageCamera(){
@@ -43,7 +43,7 @@ export class CarRegistrationPage {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref('documentsDrivers/licencias');
+      const picturesDrivers = storage().ref('documentsDrivers/' + this.driver + 'picture');
       picturesDrivers.putString(base64Image, 'data_url');
 
      }, (err) => {
@@ -61,25 +61,7 @@ export class CarRegistrationPage {
     this.description = this.des1;
   };
 
-  changeNamePicture3(){
-    this.namePicture = this.img3;
-    this.description = this.des1;
-  };
 
-  changeNamePicture4(){
-    this.namePicture = this.img4;
-    this.description = this.des1;
-  };
-
-  changeNamePicture5(){
-    this.namePicture = this.img5;
-    this.description = this.des2;
-  };
-
-  changeNamePicture6(){
-    this.namePicture = this.img6;
-    this.description = this.des2;
-  };
 
   findRide(){
     this.navCtrl.push(FindridePage);

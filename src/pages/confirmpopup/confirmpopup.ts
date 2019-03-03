@@ -27,7 +27,7 @@ export class ConfirmpopupPage {
   locationDestination:any =[];
   userDriverUid=this.AngularFireAuth.auth.currentUser.uid
   accepted: any;
-  
+  infoUser:any = {};
   constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController ) {
       //we get the info of the users with navParams
       this.user= this.navParams.get('user') 
@@ -56,8 +56,16 @@ export class ConfirmpopupPage {
 	acceptUser() {
 		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
 		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
-			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
-			this.instances.turnOntripUsers(this.user.userId);
+		this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+		this.instances.turnOntripUsers(this.user.userId);
+		this.geoFireService.getInfoUser(this.user.userId).subscribe(user=>{
+			this.infoUser = user
+		})
+		if(this.infoUser.geofireDest = true){
+			this.geoFireService.deleteUserGeofireDest(this.user.userId);
+		}else if(this.infoUser.geofireOr = true){
+			this.geoFireService.deleteUserGeofireOr(this.user.userId);
+		}
 	//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 	  this.instances.turnOntripUsers(this.user.userId);
 	  this.accepted = true;

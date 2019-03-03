@@ -163,6 +163,29 @@ public onTripUserListRide(driverId, userId){
   });
 }
 
+deleteUserGeofireDest(userId){
+  this.afDB.database.ref('geofireDest/' + userId).remove().then(()=>{
+      console.log("succesfully removed");
+  }).catch(error =>{
+      console.log(error);
+  })
+  
+  
+}
+
+deleteUserGeofireOr(userId){
+  this.afDB.database.ref('geofireOr/' + userId).remove().then(()=>{
+      console.log("succesfully removed");
+  }).catch(error =>{
+      console.log(error);
+  })
+  
+  
+}
+
+public getInfoUser(userId){
+ return this.afDB.object('users/' + userId).valueChanges();
+}
 
 
 }

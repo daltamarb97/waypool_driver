@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
+  <ion-card>
+      <h6 class="text-theme">¿para donde vas?</h6>
+      <ion-card-content>
+          <div class="ride-detail">
+            <button class="btn bg-theme text-white rounded" (click)="setGeoFireDestination()" [ngStyle]="{'background-color': buttonColor}">
+                Casa
+              <ion-icon name="home"></ion-icon>
+            </button>
+            <button class="btn bg-theme text-white rounded" (click)="setGeoFireOrigin()" [ngStyle]="{'background-color': buttonColor2}">
+                  Universidad
+                <ion-icon name="book"></ion-icon>
+              </button>
+          </div>
+      </ion-card-content>
+
+      <ion-card-content>
+          <div class="seats">
+              
+              <ion-row style="margin-top: 14px;justify-content: center">
+                  
+                  <ion-col col-8>
+                      <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="acceptTrip()">Aceptar Viaje</button>
+                  </ion-col>
+              </ion-row>
+
+
+          </div>
+      </ion-card-content>
+  </ion-card>
+</ion-content>

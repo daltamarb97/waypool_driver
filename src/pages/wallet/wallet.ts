@@ -6,7 +6,7 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'wallet.html'
 })
 export class WalletPage {
-
+  price;
   constructor(public navCtrl: NavController) {
 
   }

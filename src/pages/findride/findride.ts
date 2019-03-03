@@ -18,6 +18,7 @@ import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
 import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
+import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
 
 
 
@@ -82,7 +83,7 @@ export class FindridePage {
 
     this.autocompleteItems = [];
     this.autocompleteItems2=[];
-
+    
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer({
       suppressMarkers: true,
@@ -378,7 +379,7 @@ geocodeLatLng(latLng,inputName) {
       modal.onDidDismiss(accepted => {
         if(accepted){
           this.navCtrl.push(ListridePage);
-      }
+        }
       })
    modal.present();
    }

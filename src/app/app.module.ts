@@ -55,6 +55,10 @@ import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';
 import { PickupPage } from '../pages/pickup/pickup';
 import { RatetripPage } from '../pages/ratetrip/ratetrip';
+import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 
 
 export const firebaseConfig = {
@@ -65,6 +69,8 @@ export const firebaseConfig = {
   storageBucket: "waypoolapp-f1349.appspot.com",
   messagingSenderId: "729494621596"
 };
+
+
 
 
 @NgModule({
@@ -99,9 +105,11 @@ export const firebaseConfig = {
     RatevroomPage,
     HelpPage,
     RatetripPage,
+    ConfirmdirectionPage,
     OnTripPage,
     UploadPage,
-    CarRegistrationPage
+    CarRegistrationPage,
+    ConfirmdirectionPage
   ],
   imports: [
     BrowserModule,
@@ -109,8 +117,9 @@ export const firebaseConfig = {
       }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
-
+    AngularFireAuthModule,
+    HttpClientModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -126,6 +135,7 @@ export const firebaseConfig = {
     PasswordPage,
     SignupPage,
     ConfirmpricePage,
+    ConfirmdirectionPage,
     VerificationPage,
     CodePage,
     ListridePage,
@@ -145,7 +155,8 @@ export const firebaseConfig = {
     HelpPage,
     OnTripPage,
     UploadPage,
-    CarRegistrationPage
+    CarRegistrationPage,
+    ConfirmdirectionPage
 
   ],
   providers: [
@@ -163,7 +174,8 @@ export const firebaseConfig = {
     Geofence,
     priceService,
     Geofence,
-    CallNumber
+    CallNumber,
+    MyApp
 
   ]
 })
