@@ -26,6 +26,7 @@ export class SignupPage {
 
     @ViewChild(Content) content: Content;
     user:any ={};
+    car:any={};
     tokenId:any = '';
     userId:any = '';
     isReadonly = true;
@@ -43,8 +44,9 @@ export class SignupPage {
         passwordconf: ["", Validators.required],
         phone: ["", Validators.required],
         carModel: ["", Validators.required],
-        plateNumber: ["", Validators.required]
-        
+        plateNumber: ["", Validators.required],
+        color: ["", Validators.required]
+
     })
   }
     scrolling(){
@@ -67,9 +69,16 @@ export class SignupPage {
           let userPassword = this.signupGroup.controls['password'].value;
           let userPasswordconf = this.signupGroup.controls['passwordconf'].value;
         //   let userPhone = this.signupGroup.controls['phone'].value;
-        //   let userCarModel = this.signupGroup.controls['carModel'].value;
-        //   let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+          let userCarModel = this.signupGroup.controls['carModel'].value;
+          let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+          let usercarColor = this.signupGroup.controls['color'].value;
+
           this.user = this.signupGroup.value;
+        this.car = {
+          carModel: userCarModel,
+          plateNumber:userPlateNumber,
+          color:usercarColor
+        }
           if(userPassword === userPasswordconf){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);
             this.navCtrl.push(LoginPage, this.user);
@@ -83,9 +92,9 @@ export class SignupPage {
                             })
                          if(!this.user.userId){
                             this.user.userId = user.uid;
-                            console.log(this.user.userId); //remember to delete this console.log for safety reasons
                         }
                         this.SignUpService.saveUser(this.user);
+                        this.SignUpService.addCarProfile(this.user.userId,this.car);
                     }else{
                         console.log('there is no user');
                     }

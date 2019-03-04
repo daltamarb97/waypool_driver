@@ -10,6 +10,8 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { OnTripPage } from '../onTrip/onTrip';
 import { PickupPage } from '../pickup/pickup';
 import { CallNumber } from '@ionic-native/call-number';
+import { SignUpService } from '../../services/signup.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-myride',
@@ -21,8 +23,10 @@ export class MyridePage {
 
 ride: string = "today";
 userUid=this.AngularFireAuth.auth.currentUser.uid;
+userDriver:any;
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService) {
+
     this.sendUsersService.getUsersOnTrip(this.userUid)
     .subscribe( user => {
       
@@ -39,7 +43,11 @@ userUid=this.AngularFireAuth.auth.currentUser.uid;
       console.log(this.pickedUpUsers);
       
     });
-
+    this.SignUpService.getMyInfoDriver(this.userUid)
+		.subscribe(userDriver => {
+			this.userDriver = userDriver;
+			console.log(this.userDriver);
+		});
    
   }
 raterider(){
@@ -67,7 +75,39 @@ else {
     }
     goToMyDestination(){
       if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
-        this.navCtrl.push(OnTripPage);
+        let alert = this.alertCtrl.create({
+          title: 'Ir a mi destino',
+          message: `¿Estas seguro que deseas ir a tu destino?, no podrás recoger a ningun otro estudiante en este viaje`,
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              handler: () => {
+             
+              }
+            },
+            { 
+              text: 'Si',
+              handler: () => {
+
+                  moment.locale('es'); //to make the date be in spanish  
+
+                 let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
+                 this.sendCoordsService.timeOfDestinationDriver(this.userUid,today)
+
+                this.pickedUpUsers.forEach(user => {
+                 
+
+                  this.sendCoordsService.timeOfDestinationUser(user.userId,today)
+                });        
+
+                this.navCtrl.push(OnTripPage);
+              }
+            }
+          ]
+        });
+        alert.present();
+        
         
       } else {
         this.presentAlert('Viaje Incompleto','Por favor termina de recoger a todos los usuarios o cancélalos','Ok');
@@ -112,8 +152,9 @@ else {
             text: 'Eliminar',
             handler: () => {
               console.log('user eliminado');
+              this.sendCoordsService.eliminateOnTrip(userId);
               this.sendCoordsService.eliminatePickingUsers(this.userUid,userId);
-              this.presentToast(`Haz eliminado a ${name} de tu viaje`,4000,'bottom')
+              this.presentToast(`Haz eliminado a ${name} de tu viaje`,3000,'bottom')
   
             }
           }

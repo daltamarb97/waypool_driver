@@ -25703,7 +25703,7 @@ li,
 }
 
 .text-theme {
-  color: #0fc874;
+  color: #3fb1df;
 }
 
 .text-dark {
@@ -25719,7 +25719,7 @@ li,
 }
 
 .bg-theme {
-  background: #0fc874;
+  background: #3fb1df;
 }
 
 .bg-light {
@@ -25734,14 +25734,18 @@ li,
   background: #fff;
 }
 
+.bg-red {
+  background: #a71717;
+}
+
 .tabs-md .tab-button {
   border-top: 2px solid #fff;
 }
 
 .tab-button[aria-selected=true],
 .tab-button[aria-selected=true] .tab-button-icon {
-  color: #0fc874 !important;
-  border-color: #0fc874 !important;
+  color: #3fb1df !important;
+  border-color: #3fb1df !important;
 }
 
 .tabbar {
@@ -25865,7 +25869,7 @@ li,
 }
 
 .header.bg-theme .toolbar-background {
-  background: #0fc874 !important;
+  background: #3fb1df !important;
 }
 
 .header.bg-theme .text-center {
@@ -27237,7 +27241,7 @@ page-more ion-item .more p {
 
 page-more ion-item p {
   font-size: 1rem !important;
-  color: #0fc874 !important;
+  color: #3fb1df !important;
   font-weight: 400;
 }
 
@@ -27261,7 +27265,19 @@ page-more button ion-avatar ion-icon {
   right: 0;
   bottom: 0;
   margin: auto;
-  color: #0fc874;
+  color: #3fb1df;
+}
+
+page-more .love {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #4d5853;
 }
 
 page-myride p.text-light {
@@ -27432,6 +27448,22 @@ page-myride .lineWithText {
   font-size: 1rem;
   color: #bfbfbf;
   text-transform: none;
+}
+
+page-myride deleteIcon {
+  font-weight: 900;
+}
+
+page-myride .love {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #4d5853;
 }
 
 page-notification .item {
@@ -27674,6 +27706,17 @@ page-ontrip .dot.drop {
 page-ontrip .dot.pickup {
   top: 46%;
   left: 40%;
+}
+
+page-ontrip .endTripButton {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 page-pickup #map {
@@ -28317,7 +28360,7 @@ page-ratetrip .card h1 {
   font-size: 4rem;
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
-  color: #0fc874;
+  color: #3fb1df;
   font-weight: 600;
 }
 
@@ -28387,94 +28430,6 @@ page-ratetrip .card.rate .driver p.icons ion-icon {
 }
 
 page-ratetrip .card.rate .driver ion-textarea {
-  height: 10rem;
-  color: #bfbfbf;
-  font-size: 1.3rem;
-}
-
-page-ratevroom .card {
-  margin-top: 0px;
-  padding: 30px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  position: relative;
-  overflow: visible;
-}
-
-page-ratevroom .card h1 {
-  font-size: 4rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: #0fc874;
-  font-weight: 600;
-}
-
-page-ratevroom .card h4 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-page-ratevroom .card p {
-  font-size: 1.1rem;
-  color: #bfbfbf;
-}
-
-page-ratevroom .card.slip {
-  margin-bottom: 20px;
-}
-
-page-ratevroom .card.slip::after {
-  content: '';
-  display: block;
-  width: 100%;
-  position: absolute;
-  height: 12px;
-  background: url(../assets/imgs/border-down.jpg);
-  background-repeat: repeat-x;
-  background-size: 15px;
-  left: 0;
-  bottom: -10px;
-}
-
-page-ratevroom .card.rate {
-  padding-top: 10px;
-}
-
-page-ratevroom .card.rate::after {
-  content: '';
-  display: block;
-  width: 100%;
-  position: absolute;
-  height: 12px;
-  background: url(../assets/imgs/border-up.jpg);
-  background-repeat: repeat-x;
-  background-size: 15px;
-  left: 0;
-  top: -6px;
-}
-
-page-ratevroom .card.rate .driver ion-item.item {
-  width: 220px;
-  margin: auto;
-}
-
-page-ratevroom .card.rate .driver ion-item.item .item-inner h2 {
-  font-weight: 500;
-  font-size: 1.3rem;
-}
-
-page-ratevroom .card.rate .driver p.icons {
-  margin-bottom: 2.5rem;
-  margin-top: 1rem;
-}
-
-page-ratevroom .card.rate .driver p.icons ion-icon {
-  font-size: 3.5rem;
-  margin-left: 4px;
-}
-
-page-ratevroom .card.rate .driver ion-textarea {
   height: 10rem;
   color: #bfbfbf;
   font-size: 1.3rem;
@@ -28913,6 +28868,215 @@ page-riderprofile .about.info .item .label {
   color: #bfbfbf;
 }
 
+page-showinfocar .close-icon {
+  font-size: 3rem;
+  right: 10px;
+  top: 10px;
+  position: absolute;
+}
+
+page-showinfocar .card-content {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 26px !important;
+  padding-right: 26px !important;
+}
+
+page-showinfocar .content {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+page-showinfocar .card {
+  width: 80%;
+  margin: auto;
+  height: 465px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 8px;
+}
+
+page-showinfocar .card h6 {
+  color: #3fb1df;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+page-showinfocar .card ion-item .name {
+  width: calc(100% - 90px);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+page-showinfocar .card ion-item .name h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+page-showinfocar .card ion-item .name h2 ion-icon {
+  margin-left: 5px;
+}
+
+page-showinfocar .card ion-item p {
+  font-size: 1.1rem;
+  color: #777;
+  font-weight: 400;
+}
+
+page-showinfocar ion-card-content {
+  padding-left: 30px !important;
+  position: relative;
+}
+
+page-showinfocar ion-card-content .ride-detail {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+page-showinfocar ion-card-content .ride-detail p {
+  font-size: 1.2rem;
+  padding-left: 10px;
+  position: relative;
+  color: #252525;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding-left: 45px;
+}
+
+page-showinfocar ion-card-content .ride-detail p small {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  font-size: 1.1rem;
+  color: #9E9E9E;
+}
+
+page-showinfocar ion-card-content .ride-detail p small ion-icon {
+  float: right;
+  font-size: 1.3rem;
+  margin-right: 5px;
+}
+
+page-showinfocar ion-card-content .ride-detail p .icon-location {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  bottom: 0;
+  margin: auto;
+  color: #9E9E9E;
+}
+
+page-showinfocar ion-card-content .ride-detail::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: #555;
+  position: absolute;
+  left: 5px;
+  bottom: 25px;
+}
+
+page-showinfocar ion-card-content .ride-detail.no-before::before {
+  display: none;
+}
+
+page-showinfocar ion-card-content .detail-text {
+  font-size: 1.23rem;
+  text-transform: none;
+  font-weight: 500;
+}
+
+page-showinfocar ion-card-content .full.btn {
+  width: 100%;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+  font-weight: 400;
+  height: 35px;
+}
+
+page-showinfocar .seats .rate {
+  font-weight: 700;
+  color: #3fb1df;
+}
+
+page-showinfocar .seats .rate small {
+  font-weight: 300;
+  color: #9E9E9E;
+  display: block;
+}
+
+page-showinfocar .seats .seats-tag {
+  padding: 12px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #3fb1df;
+  border-radius: 10px;
+  color: #3fb1df;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+page-showinfocar .seats .seats-tag ion-icon {
+  font-size: 2rem;
+}
+
+page-showinfocar .seats .seats-tag strong {
+  margin: auto;
+  color: #000;
+}
+
+page-showinfocar .form {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+page-showinfocar .form ion-icon {
+  position: absolute;
+  font-size: 3rem;
+  color: #888;
+  width: 3rem;
+  height: 3rem;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+page-showinfocar .form .name-fild {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+page-showinfocar .form .input {
+  width: 100% !important;
+}
+
 page-signup .login {
   position: fixed;
   bottom: 0px;
@@ -28982,6 +29146,94 @@ page-signup .col {
 
 page-signup .login {
   padding: 7px;
+}
+
+page-support .card {
+  margin-top: 0px;
+  padding: 30px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position: relative;
+  overflow: visible;
+}
+
+page-support .card h1 {
+  font-size: 4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #3fb1df;
+  font-weight: 600;
+}
+
+page-support .card h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+page-support .card p {
+  font-size: 1.1rem;
+  color: #bfbfbf;
+}
+
+page-support .card.slip {
+  margin-bottom: 20px;
+}
+
+page-support .card.slip::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 12px;
+  background: url(../assets/imgs/border-down.jpg);
+  background-repeat: repeat-x;
+  background-size: 15px;
+  left: 0;
+  bottom: -10px;
+}
+
+page-support .card.rate {
+  padding-top: 10px;
+}
+
+page-support .card.rate::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 12px;
+  background: url(../assets/imgs/border-up.jpg);
+  background-repeat: repeat-x;
+  background-size: 15px;
+  left: 0;
+  top: -6px;
+}
+
+page-support .card.rate .driver ion-item.item {
+  width: 220px;
+  margin: auto;
+}
+
+page-support .card.rate .driver ion-item.item .item-inner h2 {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+page-support .card.rate .driver p.icons {
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
+}
+
+page-support .card.rate .driver p.icons ion-icon {
+  font-size: 3.5rem;
+  margin-left: 4px;
+}
+
+page-support .card.rate .driver ion-textarea {
+  height: 10rem;
+  color: #bfbfbf;
+  font-size: 1.3rem;
 }
 
 page-terms .bg-background-img {
@@ -29129,13 +29381,12 @@ page-wallet .card {
   margin-left: 0;
   margin-right: 0;
   width: 100%;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  margin-top: 6px;
   margin-bottom: 5px;
 }
 
 page-wallet .card ion-item .name {
-  width: calc(100% - 90px);
+  width: calc(100% - 70px);
   display: inline-block;
 }
 
@@ -29144,30 +29395,87 @@ page-wallet .card ion-item .name h2 {
   font-weight: 600;
 }
 
-page-wallet .card ion-item .name h2 small {
+page-wallet .card ion-item .name h2 ion-icon {
   margin-left: 5px;
-  color: #dfdfdf;
 }
 
 page-wallet .card ion-item .more {
-  width: 80px;
+  width: 65px;
   display: inline-block;
+}
+
+page-wallet .card ion-item .more .badge {
+  position: absolute;
+  right: 21px;
+  top: 19px;
+  background-color: #3fb1df;
 }
 
 page-wallet .card ion-item .more h2 {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #0fc874;
+  color: #3fb1df;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-page-wallet .card ion-item .more p {
-  font-size: 1rem;
-  color: #4c4c4c;
-  font-weight: 500;
+page-wallet .card ion-item .more h2 ion-icon {
+  margin-left: 5px;
+  font-size: 2rem;
+  margin-left: auto;
+  color: #222;
 }
 
 page-wallet .card ion-item p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #777;
   font-weight: 400;
+}
+
+page-wallet ion-card-content {
+  padding-left: 30px !important;
+  position: relative;
+}
+
+page-wallet ion-card-content .ride-detail {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+page-wallet ion-card-content .ride-detail p {
+  font-size: 1.2rem;
+  padding-left: 43px;
+  position: relative;
+  color: #777;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+page-wallet ion-card-content .ride-detail p .icon-location {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  bottom: 0;
+  margin: auto;
+}
+
+page-wallet ion-card-content .ride-detail::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 20px;
+  background: #555;
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }

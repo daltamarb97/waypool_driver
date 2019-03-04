@@ -23,30 +23,39 @@ export class ConfirmpricePage {
   precio:string;
   note:string;
   userDriverUid=this.AngularFireAuth.auth.currentUser.uid
-  driver;
+  driver:any ={};
   driverInfo:any ={};
   lat;
   lng;
   geoInfo;
+
   geocoder;
   location;
-
+  carModelList:any=[];
+  car:string;
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     this.geoInfo = this.navParams.get('geoInfo')
     console.log(this.geoInfo)
+    this.SignUpService.getCar(this.userDriverUid)
+    .subscribe( car => {
+      this.carModelList = car;
+      console.log(this.carModelList)
+
+    });
+   
   }
-  
     setPriceDriver(){
-    
-      if(this.precio == null || this.precio == ''){
+      console.log(this.car)
+      
+      if(this.precio == null || this.precio == '' || this.car == null || this.car==''){
         const alert = this.alertCtrl.create({
             title: 'Informacion Incompleta',
-            subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu carro',
+            subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu carro o no haz especificado en que carro te moverás',
             buttons: ['OK']
           });
           alert.present();
-    }else if(this.note == null ){
-        this.PriceService.setPrice(this.userDriverUid,this.precio)
+    }else if(this.note == null || this.note == '' ){
+        this.PriceService.setPrice(this.userDriverUid,this.precio,this.car)
         this.accepted = true;
         this.dismiss();
 
@@ -60,10 +69,9 @@ export class ConfirmpricePage {
           this.driverInfo.lastname = this.driver.lastname
           this.driverInfo.phone = this.driver.phone
           this.driverInfo.userId = this.driver.userId
-          this.driverInfo.carModel = this.driver.carModel
-          this.driverInfo.plateNumber  = this.driver.plateNumber
+          this.driverInfo.car = this.driver.trips.car
           this.driverInfo.price = this.driver.trips.price
-          
+          this.driverInfo.note = 'No hay nota.'
           console.log(this.driverInfo);
 
           this.geofireService.setGeofire(1, this.geoInfo.lat, this.geoInfo.lng, this.driverInfo);
@@ -71,7 +79,7 @@ export class ConfirmpricePage {
      })
         
       } else {
-        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)
+        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car)
         this.accepted = true;
         this.dismiss();
       
@@ -79,17 +87,17 @@ export class ConfirmpricePage {
 
         this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
           this.driver = driver;
-          console.log(this.driver.trips.origin)
+       
           this.driverInfo.origin = this.driver.trips.origin
           this.driverInfo.destination = this.driver.trips.destination
           this.driverInfo.name = this.driver.name
           this.driverInfo.lastname = this.driver.lastname
           this.driverInfo.phone = this.driver.phone
           this.driverInfo.userId = this.driver.userId
-          this.driverInfo.carModel = this.driver.carModel
-          this.driverInfo.plateNumber  = this.driver.plateNumber
+          this.driverInfo.car = this.car
           this.driverInfo.price = this.driver.trips.price
-          this.driverInfo.note = this.driver.trips.nota
+          this.driverInfo.note = this.driver.trips.note
+
           console.log(this.driverInfo);
 
           this.geofireService.setGeofire(1, this.geoInfo.lat, this.geoInfo.lng, this.driverInfo);

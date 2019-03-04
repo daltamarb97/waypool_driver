@@ -12,10 +12,8 @@ export class geofireService {
 dbRef:any;
 geoFire:any;
 geoquery:any;
-
 driverUid:any;
 driver:any;
-
 origin:any;
 destination:any;
 name:any;
@@ -54,15 +52,14 @@ keyEntered(driverInfo){
    this.geoquery.on("key_entered", function(key){
     console.log(key);
     setTimeout(()=>{
-      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
+      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).update({
       origin:driverInfo.origin,
        destination:driverInfo.destination,
        name: driverInfo.name,
        lastname: driverInfo.lastname,
        phone: driverInfo.phone,
        userId: driverInfo.userId,
-       carModel: driverInfo.carModel,
-       plateNumber: driverInfo.plateNumber,
+       car:driverInfo.car,      
        price: driverInfo.price,
        note: driverInfo.note
        
@@ -81,33 +78,6 @@ keyExited(){
 }
 
    
-// public setInfoDriver(key){
-
-//   this.getMyInfo(this.driverUid).subscribe(driver=>{
-//     this.driver = driver
-//     console.log(this.driver)
-    
-//   })
-//   console.log(this.driver)
-
-//   if(this.driver ){
-//     this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
-            
-//       origin:this.driver.trips.origin,
-//        destination:this.driver.trips.destination,
-//        name: this.driver.name,
-//        lastname: this.driver.lastname,
-//        phone: this.driver.phone,
-//        userId: this.driver.userId,
-//        carModel: this.driver.carModel,
-//        plateNumber: this.driver.plateNumber
-  
-//     });
-//   }else{
-//     console.log('lukanima');
-//   }
-  
-// }  
 
 public  getMyInfo(userId){
   return this.afDB.object('drivers/'+userId).valueChanges();

@@ -1,0 +1,47 @@
+<ion-content>
+    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
+    <ion-card>
+        <h6 class="text-theme">Mis vehículos</h6>
+        <ion-item>
+            <div class="name" *ngFor="let car of carList">
+                <h2><ion-icon name="car" class="icon-location"></ion-icon>{{car.carModel}}</h2>
+                <p>{{car.plateNumber}} | {{car.color}}</p>
+            </div>
+       
+        </ion-item>
+        
+
+    
+        <ion-row>
+            <ion-col class="name-fild-2">
+                <ion-list class="form">
+                    <ion-item class="carModel">
+                            <ion-label></ion-label>
+                                <ion-input class="input" [(ngModel)]="carModel"type="text" text-right  placeholder= "ej: Mazda"></ion-input>
+                            </ion-item>
+                    </ion-list>
+            </ion-col>
+            <ion-col class="name-fild-2">
+                <ion-list class="form">
+                    <ion-item class="plateNumber">
+                            <ion-input type="text" [(ngModel)]="plateNumber" text-right  placeholder= "placa de carro" ></ion-input>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+          
+                <ion-list class="form">
+                    <ion-item class="plateNumber">
+                            <ion-input type="text" [(ngModel)]="color" text-right  placeholder= "Color" ></ion-input>
+                    </ion-item>
+                </ion-list>
+           
+        </ion-row>
+
+        <ion-card-content>
+            <div class="seats">
+                
+                <button class="btn bg-theme text-white rounded" (click)="addCar()" style="width: 100%;margin-top: 14px;"> AGREGAR VEHÍCULO </button>
+            </div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

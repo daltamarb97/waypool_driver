@@ -55,8 +55,10 @@ export class ConfirmpopupPage {
 
 	acceptUser() {
 		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
+		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
 			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+
 			this.instances.turnOntripUsers(this.user.userId);
 	//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 	  this.instances.turnOntripUsers(this.user.userId);
@@ -68,7 +70,7 @@ export class ConfirmpopupPage {
 			position: 'middle'
 		});
 		toast.present();
-        
+
       }
   
 

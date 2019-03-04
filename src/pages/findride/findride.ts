@@ -71,7 +71,7 @@ export class FindridePage {
   // hits = new BehaviorSubject([])
 
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
-
+    
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -98,6 +98,7 @@ export class FindridePage {
   ionViewDidLoad(){
     
     this.loadMap();
+    
   }
  
   loadMap(){
@@ -251,17 +252,19 @@ selectSearchResultMyDest(item){
       //   latitude: results[0].geometry.location.lat,
       //   longitude: results[0].geometry.location.lng
       // };
-        // let position = new google.maps.LatLng( results[0].geometry.location.lat,
-        //  results[0].geometry.location.lng)
-
+        let position = new google.maps.LatLng( results[0].geometry.location.lat,
+         results[0].geometry.location.lng)
+          console.log(position)
         let marker = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
         draggable:true       
       });
+      console.log(position)
       this.map.fitBounds(this.bounds);     
       this.markers.push(marker);
       this.map.setCenter(results[0].geometry.location);
+      console.log(results[0].geometry.location)
       this.autocompleteMyDest.input=[item.description]
       this.dragMarker(marker,this.autocompleteMyDest)
       this.directionsDisplay.setMap(this.map);

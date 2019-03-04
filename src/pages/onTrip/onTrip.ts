@@ -10,6 +10,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
 import { RatetripPage } from '../ratetrip/ratetrip';
+import { sendUsersService } from '../../services/sendUsers.service';
+
 
 declare var google; 
 @Component({
@@ -29,9 +31,11 @@ export class OnTripPage {
   geocoder:any;
   addressOrigin:any;
   updatelocation:any;
+  pickedUpUsers:any = [];
+
   useruid=this.AngularFireAuth.auth.currentUser.uid;
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public SignupService:SignUpService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public sendUsersService: sendUsersService,public SignupService:SignUpService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
     
     this.markers = [];
     //we get the info of the users with navParams
@@ -43,19 +47,28 @@ export class OnTripPage {
   });
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
-   
+    this.sendUsersService.getPickUpUsers(this.useruid)
+    .subscribe( user => {
+    
+      this.pickedUpUsers = user;
+      console.log(this.pickedUpUsers);
+      
+    });
+    this.SignUpService.getMyInfoDriver(this.useruid)
+		.subscribe(userDriver => {
+			this.driver = userDriver;
+			console.log(this.driver);
+    });    
   }
   
-  ionViewDidLoad(){
-    
-    
+  ionViewDidLoad(){ 
     this.sendCoordsService.getDestination(this.useruid)
     .subscribe( destination => {
       this.destinationOnTrip = destination;
       console.log(this.destinationOnTrip)
       this.loadMap();
     });
-    
+   
   }
  
   loadMap(){
@@ -204,17 +217,24 @@ export class OnTripPage {
       this.clearMarkers();
       this.markers = [];
     }
-     chatting(){
-    this.navCtrl.push(ChattingPage);
-    }
-    notifyDriver(){
-      this.presentToast('Se le ha notificado a tu compañero que ya llegaste',3000,'top')
-    }
+
+    
     endTrip(){
+
+      this.navCtrl.pop();
+      this.navCtrl.push(RatetripPage,{user:this.driver})
+
+      this.pickedUpUsers.forEach(user => {
+      // save trip in every record of users
+      this.sendCoordsService.recordTripOnUser(user.userId,user);  
+      this.sendCoordsService.endTripUser(user.userId)
+       })
+      this.sendCoordsService.recordTripOnWaypool(this.driver.trips);
+      this.sendCoordsService.recordTripOnDriver(this.useruid,this.driver.trips);        
+
       this.sendCoordsService.endTrip(this.useruid)
-      // push viaje al historial
+      //let user rate the trip
       
-      this.navCtrl.push(RatetripPage)
       this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!','OK')
     
           }

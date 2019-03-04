@@ -1,6 +1,6 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title>MY PROFILE</ion-title>
+        <ion-title>MI PERFIL</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -10,129 +10,56 @@
             <img src="assets/imgs/man3.png">
         </ion-avatar>
         <div class="name">
-            <h2>David Johnson
+            <h2>{{user.name |titlecase}} {{user.lastname |titlecase}}
             </h2>
-            <p>Edit Profile</p>
+            
         </div>
-        <div class="more">
-            <h2>
-                <ion-icon name="ios-star"></ion-icon>
-                <ion-icon name="ios-star"></ion-icon>
-                <ion-icon name="ios-star"></ion-icon>
-                <ion-icon name="ios-star"></ion-icon>
-                <ion-icon name="ios-star"></ion-icon>
-            </h2>
-            <p>(53 Reviews)</p>
-        </div>
+        
     </ion-item>
-    <div class="tabs bg-white">
-        <ion-segment [(ngModel)]="myprofile">
-            <ion-segment-button value="about">
-                About
-            </ion-segment-button>
-            <ion-segment-button value="reviews">
-                Reviews
-            </ion-segment-button>
-        </ion-segment>
-    </div>
+    
     <div [ngSwitch]="myprofile">
         <ion-list *ngSwitchCase="'about'">
-            <div class="bg-white about address">
-                <p class="text-theme heading">Address<span float-right>Edit</span></p>
-                <div class="ride-detail">
-                    <p><small>Home</small>
-                        <span class="icon-location bg-theme"></span>140 central Building near hdfc bank Washington sq.park New York</p>
-                    <p>
-                        <small>Office</small>
-                        <span class="icon-location bg-yellow"></span>Harison, central Building near hdfc bank east sq.park New York</p>
-                </div>
-            </div>
-            <div class="bg-white about info">
-                <p class="text-theme heading">Personal Info<span float-right>Edit</span></p>
-                <ion-list no-lines class="form-list">
-                    <ion-item>
-                        <ion-label floating>User Name</ion-label>
-                        <ion-input type="text" value="Johan Bitoda" readonly></ion-input>
-                    </ion-item>
-                </ion-list>
-            </div>
-            <div class="bg-white about info">
-                <p class="text-theme heading">Verification<span float-right>Save</span></p>
-                <ion-list no-lines class="form-list">
-                    <ion-item>
+              
+                     
+            <div class="bg-white" padding>
+                    <p>Sólo podrás cambiar la información de tu número telefónico.</p>
 
-                        <ion-label floating>Phone Verification</ion-label>
-                        <ion-input type="text" value="+91 964 148 6000" readonly></ion-input>
+                <ion-list no-lines class="form-list">
+                    <ion-item>
+                        <ion-label floating >Nombre</ion-label>
+                        <ion-input type="text" [(ngModel)]="user.name" readonly></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-icon name="ios-checkmark-circle" class="text-theme check"></ion-icon>
-                        <ion-label floating>Email Verification</ion-label>
-                        <ion-input type="text" value="johanbittoda@email.com" readonly></ion-input>
+                        <ion-label floating >Apellido</ion-label>
+                        <ion-input type="text" [(ngModel)]="user.lastname" readonly></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-icon name="ios-checkmark-circle" class="text-theme check"></ion-icon>
-                        <ion-label floating>Goverment ID Verification</ion-label>
-                        <ion-input type="text" value="Senior Architechat Alex Designs." readonly></ion-input>
-
+                        <ion-label floating>Número Telefónico</ion-label>
+                        <ion-input type="text" [(ngModel)]="user.phone"></ion-input>
                     </ion-item>
+                    <ion-item>
+                        <ion-label floating>Email</ion-label>
+                        <ion-input type="text"  [(ngModel)]="user.email"  readonly></ion-input>
+                    </ion-item>
+                    <div padding-top padding-left padding-right text-center>
+                        <p>
+                            <button class="btn text-white rounded bg-theme" style="width: 100%;margin-bottom: 8px;" (click)="showInfoCars()">Ver Carros</button>
+  
+                      
+                        </p>
+        
+                    </div>
                 </ion-list>
             </div>
-            <div class="bg-white about info">
-                <p class="text-theme heading">Car Info<span float-right>Save</span></p>
-                <ion-list no-lines class="form-list">
-                    <ion-row>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Car Brand</ion-label>
-                                <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                                    <ion-option selected value="Honda">Honda</ion-option>
-                                    <ion-option value="Audi">Audi</ion-option>
-                                    <ion-option value="BMW">BMW</ion-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Car Model</ion-label>
-                                <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                                    <ion-option selected value="Civik">Civik</ion-option>
-                                    <ion-option value="Luxary">Luxary</ion-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Seat for Passanger</ion-label>
-                                <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                                    <ion-option value="1">1 Seat</ion-option>
-                                    <ion-option value="2">2 Seats</ion-option>
-                                    <ion-option selected value="2">3 Seat</ion-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Air Conditioner availibility</ion-label>
-                                <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                                    <ion-option selected value="yes">AC Availible</ion-option>
-                                    <ion-option value="no">Not Availible</ion-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Car Number</ion-label>
-                                <ion-input type="text" value="D3 34 45D" readonly></ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label floating>Car Color</ion-label>
-                                <ion-input type="text" value="White" readonly></ion-input>
-                            </ion-item>
-                        </ion-col>
-                    </ion-row>
-                </ion-list>
+            <div padding-top padding-left padding-right text-center>
+                <p>
+                    <button class="btn text-white rounded bg-theme" style="width: 100%;margin-bottom: 8px;" (click)="saveChanges()">Guardar Cambios</button>
+
+                    <button class="btn text-theme rounded bg-white" style="width: 100%;    margin-bottom: 8px;">Cambiar Contraseña</button>
+                    <button class="btn text-white rounded bg-red" style="width: 100%;    margin-bottom: 8px;" (click)="deleteAccount()">Eliminar Cuenta</button>
+              
+                </p>
+
             </div>
         </ion-list>
         <ion-list *ngSwitchCase="'reviews'">

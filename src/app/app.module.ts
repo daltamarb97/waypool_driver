@@ -26,7 +26,6 @@ import { ReviewsPage } from '../pages/reviews/reviews';
 import { NotificationPage } from '../pages/notification/notification';
 import { TermsPage } from '../pages/terms/terms';
 import { EarnPage } from '../pages/earn/earn';
-import { RatevroomPage } from '../pages/ratevroom/ratevroom';
 import { HelpPage } from '../pages/help/help';
 import { UploadPage } from '../pages/upload/upload';
 import { CarRegistrationPage } from '../pages/car-registration/car-registration';
@@ -55,6 +54,9 @@ import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';
 import { PickupPage } from '../pages/pickup/pickup';
 import { RatetripPage } from '../pages/ratetrip/ratetrip';
+import { ShowInfoCarPage } from '../pages/showinfocar/showinfocar';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { SupportPage } from '../pages/support/support';
 
 
 export const firebaseConfig = {
@@ -81,6 +83,7 @@ export const firebaseConfig = {
     SignupPage,
     VerificationPage,
     CodePage,
+    ShowInfoCarPage,
     ListridePage,
     FilterPage,
     PickupPage,
@@ -95,8 +98,7 @@ export const firebaseConfig = {
     NotificationPage,
     TermsPage,
     EarnPage,
-    RatevroomPage,
-    RatevroomPage,
+    SupportPage,
     HelpPage,
     RatetripPage,
     OnTripPage,
@@ -124,10 +126,12 @@ export const firebaseConfig = {
     PickupPage,
     LoginPage,
     PasswordPage,
+    ShowInfoCarPage,
     SignupPage,
     ConfirmpricePage,
     VerificationPage,
     CodePage,
+    SupportPage,
     ListridePage,
     FilterPage,
     RiderprofilePage,
@@ -140,7 +144,7 @@ export const firebaseConfig = {
     NotificationPage,
     TermsPage,
     EarnPage,
-    RatevroomPage,
+    
     RatetripPage,
     HelpPage,
     OnTripPage,
@@ -156,6 +160,7 @@ export const firebaseConfig = {
     authenticationService,
     geofireService,
     Geolocation,
+    EmailComposer,
     sendCoordsService,
     sendUsersService,
     instancesService,

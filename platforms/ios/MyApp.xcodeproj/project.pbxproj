@@ -50,6 +50,9 @@
 		2D47ABFF21F94567A3C325FE /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = BA92DF9ED70D47B6B054947B /* CDVSplashScreen.m */; };
 		6EEB6BDEACED4CADBD6C3E3E /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE6E4D33A246318D98329D /* CDVViewController+SplashScreen.m */; };
 		E018BBBE8A094BC5BE1F96D1 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 06268554E2CD4D2BB1979FB9 /* CDVStatusBar.m */; };
+		BF9FFA581BB04110BCFE8A2B /* APPEmailComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C080E5B2F40DBA8EA3099 /* APPEmailComposer.m */; };
+		9A885A1C8E914479907EDC03 /* APPEmailComposerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D3801B7CF3440987E9A9BB /* APPEmailComposerImpl.m */; };
+		16D8475FCA4E43E3887F92BA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5998CE84C7994B9D8EE684D2 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +156,11 @@
 		A99DB575AED844E2B8BEE8E2 /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		06268554E2CD4D2BB1979FB9 /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		F2131E1998CE4396B5284092 /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		0F2C080E5B2F40DBA8EA3099 /* APPEmailComposer.m */ = {isa = PBXFileReference; name = "APPEmailComposer.m"; path = "cordova-plugin-email-composer/APPEmailComposer.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B2D3801B7CF3440987E9A9BB /* APPEmailComposerImpl.m */ = {isa = PBXFileReference; name = "APPEmailComposerImpl.m"; path = "cordova-plugin-email-composer/APPEmailComposerImpl.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		A05D0988FEBE48CF9A4BDDD6 /* APPEmailComposer.h */ = {isa = PBXFileReference; name = "APPEmailComposer.h"; path = "cordova-plugin-email-composer/APPEmailComposer.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		30BE668E7CE1420EB10B0342 /* APPEmailComposerImpl.h */ = {isa = PBXFileReference; name = "APPEmailComposerImpl.h"; path = "cordova-plugin-email-composer/APPEmailComposerImpl.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5998CE84C7994B9D8EE684D2 /* MessageUI.framework */ = {isa = PBXFileReference; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +175,7 @@
 				74CD3994615347C8B49A13AB /* libsqlite3.dylib in Frameworks */,
 				29A264266649499899C6A34B /* WebKit.framework in Frameworks */,
 				9D46B5ED03C74C7C81A23BF6 /* libz.tbd in Frameworks */,
+				16D8475FCA4E43E3887F92BA /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +252,7 @@
 				58DB6991D6C647AB8D374BF1 /* libsqlite3.dylib */,
 				77E11EA4B9CC42CAA6F959D2 /* WebKit.framework */,
 				884DC0EEFB6B4222980FD5DD /* libz.tbd */,
+				5998CE84C7994B9D8EE684D2 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -325,6 +335,10 @@
 				A99DB575AED844E2B8BEE8E2 /* CDVViewController+SplashScreen.h */,
 				06268554E2CD4D2BB1979FB9 /* CDVStatusBar.m */,
 				F2131E1998CE4396B5284092 /* CDVStatusBar.h */,
+				0F2C080E5B2F40DBA8EA3099 /* APPEmailComposer.m */,
+				B2D3801B7CF3440987E9A9BB /* APPEmailComposerImpl.m */,
+				A05D0988FEBE48CF9A4BDDD6 /* APPEmailComposer.h */,
+				30BE668E7CE1420EB10B0342 /* APPEmailComposerImpl.h */,
 			);
 			name = Plugins;
 			path = "MyApp/Plugins";
@@ -465,6 +479,8 @@
 				2D47ABFF21F94567A3C325FE /* CDVSplashScreen.m in Sources */,
 				6EEB6BDEACED4CADBD6C3E3E /* CDVViewController+SplashScreen.m in Sources */,
 				E018BBBE8A094BC5BE1F96D1 /* CDVStatusBar.m in Sources */,
+				BF9FFA581BB04110BCFE8A2B /* APPEmailComposer.m in Sources */,
+				9A885A1C8E914479907EDC03 /* APPEmailComposerImpl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

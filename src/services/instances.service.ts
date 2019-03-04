@@ -9,7 +9,7 @@ constructor(public afDB: AngularFireDatabase){
     }
     
 public turnOntripUsers(user){
-    this.afDB.database.ref('users/' + user).update({
+    this.afDB.database.ref('users/'+user+'/trips').update({
         onTrip: true
     }, (error)=>{
         if(error){
