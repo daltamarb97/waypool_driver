@@ -10,6 +10,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { OnTripPage } from '../onTrip/onTrip';
 import { PickupPage } from '../pickup/pickup';
 import { CallNumber } from '@ionic-native/call-number';
+import { geofireService } from '../../services/geofire.services';
 
 @Component({
   selector: 'page-myride',
@@ -20,10 +21,11 @@ export class MyridePage {
  pickedUpUsers:any = [];
 
 ride: string = "today";
-userUid=this.AngularFireAuth.auth.currentUser.uid;
+driverUid=this.AngularFireAuth.auth.currentUser.uid;
+userInfo;
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService) {
-    this.sendUsersService.getUsersOnTrip(this.userUid)
+  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+    this.sendUsersService.getUsersOnTrip(this.driverUid)
     .subscribe( user => {
       
         this.pickingUsers = user;
@@ -32,7 +34,7 @@ userUid=this.AngularFireAuth.auth.currentUser.uid;
       
      
     });
-    this.sendUsersService.getPickUpUsers(this.userUid)
+    this.sendUsersService.getPickUpUsers(this.driverUid)
     .subscribe( user => {
     
       this.pickedUpUsers = user;
@@ -66,14 +68,24 @@ else {
     this.navCtrl.push(PickupPage,{user});
     }
     goToMyDestination(){
+      this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).subscribe(user=>{
+        this.userInfo = user;
+        if(this.userInfo.geofireOr == true){
+          this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
+          this.geofireServices.cancelGeoqueryOr()
+        }else{
+          this.geofireServices.deleteUserGeofireDest(this.userInfo.userId);
+          this.geofireServices.cancelGeoqueryDest()
+        }
+      })
       if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
         this.navCtrl.push(OnTripPage);
         
       } else {
         this.presentAlert('Viaje Incompleto','Por favor termina de recoger a todos los usuarios o cancélalos','Ok');
       }
-            
-
+      
+      
 
     }
     DisplayUserNote(note){
@@ -112,7 +124,7 @@ else {
             text: 'Eliminar',
             handler: () => {
               console.log('user eliminado');
-              this.sendCoordsService.eliminatePickingUsers(this.userUid,userId);
+              this.sendCoordsService.eliminatePickingUsers(this.driverUid,userId);
               this.presentToast(`Haz eliminado a ${name} de tu viaje`,4000,'bottom')
   
             }

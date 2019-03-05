@@ -157,6 +157,10 @@ public deleteUserListRide(driverId, userId){
   this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
 }
 
+public deleteUserListRideTotal(driverId){
+  this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/').remove();
+}
+
 public onTripUserListRide(driverId, userId){
   this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + userId).update({
     onTrip: true
@@ -185,6 +189,24 @@ deleteUserGeofireOr(userId){
 
 public getInfoUser(userId){
  return this.afDB.object('users/' + userId).valueChanges();
+}
+
+cancelGeoqueryDest(){
+  if(this.geoquery1){
+    this.geoquery1.cancel()
+  }else{
+    console.log('dont dest query')
+  }
+  
+}
+
+cancelGeoqueryOr(){
+  if(this.geoquery2){
+    this.geoquery2.cancel()
+  }else{
+    console.log('dont or query')
+  }
+  
 }
 
 

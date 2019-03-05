@@ -32,10 +32,12 @@ export class ListridePage{
   user:any = [];
   subscribe:Subscription;
   usersOnListRide:any=[];
+  text = 'Aceptar viaje';
+  userDriver;
+  
 
 
-
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     
     //get origin from driver
     this.sendCoordsService.getOrigin(this.driver)
@@ -51,16 +53,22 @@ export class ListridePage{
           this.locationDestination = destination;
           console.log(destination);
         })
-        
-        
-        this.subscribe = this.geofireService.getUsersListRide()
-        .subscribe(user=>{
-          this.usersFindingTrip = user;
-        })
 
-     
-
+        this.SignUpService.getMyInfoDriver(this.driver)
+		.subscribe(userDriver => {
+			this.userDriver = userDriver;
+			console.log(this.userDriver);
+		});
         
+        
+        
+  }
+
+  ionViewDidLoad(){
+    this.subscribe = this.geofireService.getUsersListRide()
+    .subscribe(user=>{
+      this.usersFindingTrip = user;
+    })
   }
     
   deleteUser(userId,nameUser){
@@ -80,14 +88,19 @@ export class ListridePage{
           text: 'Eliminar',
           handler: () => {
             console.log('user eliminado');
-            this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-
+            setTimeout(()=>{
+              //REVISAR
+              this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+              this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
+            }, 600)
           }
         }
       ]
     });
     alert.present();
   }
+
+  
 
  filter(){
     this.navCtrl.push(FilterPage);
@@ -98,8 +111,9 @@ export class ListridePage{
         
     let modal = this.modalCtrl.create(ConfirmpopupPage,{user});
     modal.present();
-    this.usersFindingTrip.pop();
-    this.subscribe.unsubscribe();
+    // this.usersFindingTrip.pop();
+    
+    // this.subscribe.unsubscribe();
   }
   
   help(){

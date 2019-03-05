@@ -28,6 +28,16 @@ constructor(public afDB: AngularFireDatabase){
            this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/'+ userId).remove();
                
            }
+
+           public removeUsersOnPickingUsers(userUid,userId ){
+            //send the information of every student the driver acepts in myRide
+               this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).remove();
+               this.afDB.database.ref('/users/'+ userId +'/trips/pickingUsers/driver/' + userUid).remove();
+               }
+
+    
+
+
     public pushPickingUpUsersOnDrivers(userUid,userId ,origin,destination,name,lastname,phone){
      //send the information of every student the driver acepts in myRide
         this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).update(

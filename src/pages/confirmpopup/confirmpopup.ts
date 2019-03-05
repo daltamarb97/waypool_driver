@@ -54,18 +54,22 @@ export class ConfirmpopupPage {
     }
 
 	acceptUser() {
+		//REVISAR
+		setTimeout(()=>{
+			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+
+		}, 600)
+		
+		setTimeout(()=>{
+			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+
+		}, 1000)
+
 		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
 		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
-		this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+		
 		this.instances.turnOntripUsers(this.user.userId);
-		this.geoFireService.getInfoUser(this.user.userId).subscribe(user=>{
-			this.infoUser = user
-		})
-		if(this.infoUser.geofireDest = true){
-			this.geoFireService.deleteUserGeofireDest(this.user.userId);
-		}else if(this.infoUser.geofireOr = true){
-			this.geoFireService.deleteUserGeofireOr(this.user.userId);
-		}
+
 	//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 	  this.instances.turnOntripUsers(this.user.userId);
 	  this.accepted = true;
@@ -81,6 +85,7 @@ export class ConfirmpopupPage {
   
 
 	dismiss() {
+		this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 		this.viewCtrl.dismiss(this.accepted);
 	}
 }
