@@ -1,25 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, ModalController, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { FilterPage } from '../filter/filter';
 // import { RiderprofilePage } from '../riderprofile/riderprofile';
 // import { Observable } from 'rxjs';
 // import { AngularFireDatabase} from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
 import { sendCoordsService } from '../../services/sendCoords.service';
-import { ConfirmpopupPage } from '../confirmpopup/confirmpopup';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { geofireService } from '../../services/geofire.services';
 // import * as firebase from 'firebase';
 // import { sendUsersService } from '../../services/sendUsers.service';
 // import { Geofence } from '@ionic-native/geofence';
 
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { instancesService } from '../../services/instances.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 
-
+@IonicPage()
 @Component({
   selector: 'page-listride',
   templateUrl: 'listride.html'
@@ -89,14 +87,12 @@ export class ListridePage{
     alert.present();
   }
 
- filter(){
-    this.navCtrl.push(FilterPage);
- }
+
  
   confirmpopup(user){
        
         
-    let modal = this.modalCtrl.create(ConfirmpopupPage,{user});
+    let modal = this.modalCtrl.create('ConfirmpopupPage',{user});
     modal.present();
     this.usersFindingTrip.pop();
     this.subscribe.unsubscribe();

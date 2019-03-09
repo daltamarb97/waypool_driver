@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, ToastController} from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
@@ -13,6 +13,7 @@ import { instancesService } from '../../services/instances.service';
 import { ListridePage } from '../listride/listride';
 
 
+@IonicPage()
 
 @Component({
 	selector: 'page-confirmpopup',

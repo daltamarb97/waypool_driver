@@ -2,7 +2,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 // import { VerificationPage } from '../verification/verification';
 
@@ -17,7 +17,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 
 
-
+@IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -55,7 +55,7 @@ export class SignupPage {
 
 
     login(){
-        this.navCtrl.push(LoginPage);
+        this.navCtrl.push('LoginPage');
     }
      
     verification(){
@@ -81,7 +81,7 @@ export class SignupPage {
         }
           if(userPassword === userPasswordconf){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword);
-            this.navCtrl.push(LoginPage, this.user);
+            this.navCtrl.push('LoginPage', this.user);
         
             if(!this.user.userId){
                 this.AngularFireAuth.auth.onAuthStateChanged((user)=>{

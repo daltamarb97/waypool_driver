@@ -1,16 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, Tabs, AlertController, App } from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, Tabs, AlertController, App, IonicPage } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
 import { sendCoordsService } from '../../services/sendCoords.service';
-import { MyridePage } from '../myride/myride';
-import { TabsPage } from '../tabs/tabs';
+
 import { sendUsersService } from '../../services/sendUsers.service';
 import { priceService } from '../../services/price.service';
-import { ListridePage } from '../listride/listride';
 import { geofireService } from '../../services/geofire.services';
 
+@IonicPage()
 
 @Component({
   selector: 'page-confirmprice',

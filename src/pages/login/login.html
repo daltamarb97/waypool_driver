@@ -1,12 +1,12 @@
 <ion-header class="transparent">
     <ion-navbar>
-        <ion-title><span class="text-white">SIGN IN</span></ion-title>
+
     </ion-navbar>
 </ion-header>
 
-<ion-content class="bg-background-img">
+<ion-content >
     <div class="logo">
-        <img src="assets/imgs/logo.png" alt="logo">
+        <img src="../../assets/imgs/logo waypool-01 (1).png" alt="logo">
     </div>
 
     <div class="bg-white login">
@@ -22,10 +22,10 @@
                     <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>
                 </ion-item>
             </ion-list>
-            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn(user)">LOGIN</button>
+            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn(user)">Iniciar Sésion</button>
             <ion-row style="padding-top: 8px;">
-                <ion-col (click)="signup()"><small>New user <strong class="text-theme">Sign up</strong></small></ion-col>
-                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Password?</strong></small></ion-col>
+                <ion-col (click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>
+                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Olvidaste tu Contraseña??</strong></small></ion-col>
             </ion-row>
             <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->
             <!-- <ion-row>
@@ -38,5 +38,8 @@
             </ion-row> -->
 
         </div>
+
     </div>
+    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> 
+
 </ion-content>

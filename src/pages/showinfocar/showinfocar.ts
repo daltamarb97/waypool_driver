@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController, ModalController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ViewController, ModalController, ToastController, NavParams, IonicPage } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 
+@IonicPage()
 
 @Component({
   selector: 'page-showinfocar',
@@ -29,7 +30,7 @@ color:string;
   addCar(){
 this.SignUpService.addCar(this.userUid,this.carModel,this.plateNumber,this.color)    
   }
- AQUI
+ 
   dismiss() {
     this.viewCtrl.dismiss();
   }  

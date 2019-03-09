@@ -1,7 +1,6 @@
 import { Component, NgZone, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { ChattingPage } from '../chatting/chatting';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
@@ -12,6 +11,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import * as moment from 'moment';
 
 declare var google; 
+@IonicPage()
 @Component({
   selector: 'page-pickup',
   templateUrl: 'pickup.html'
@@ -73,9 +73,21 @@ export class PickupPage {
             zoomControl: false,
             mapTypeControl: false,
             scaleControl: false,
-            streetViewControl: true,
+            streetViewControl: false,
             rotateControl: false,
-            fullscreenControl: false
+            fullscreenControl: false,
+           
+            styles: [
+              {
+                featureType: 'poi',
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off'
+                  }
+                ]
+              }
+            ]
           
         }
 
@@ -198,9 +210,7 @@ export class PickupPage {
       this.clearMarkers();
       this.markers = [];
     }
-     chatting(){
-    this.navCtrl.push(ChattingPage);
-    }
+    
     notifyDriver(){
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }

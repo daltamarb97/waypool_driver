@@ -13,7 +13,7 @@ import { storage } from 'firebase';
  * Ionic pages and navigation.
  */
 
-
+@IonicPage()
 @Component({
   selector: 'page-car-registration',
   templateUrl: 'car-registration.html',

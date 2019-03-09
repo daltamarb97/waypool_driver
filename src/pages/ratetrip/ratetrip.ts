@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { NavController, ModalController, NavParams, IonicPage } from 'ionic-angular';
 import { SignUpService } from '../../services/signup.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+@IonicPage()
 
 @Component({
   selector: 'page-ratetrip',

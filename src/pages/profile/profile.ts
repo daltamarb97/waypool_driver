@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController, ModalController } from 'ionic-angular';
+import { NavController, AlertController, ToastController, ModalController, IonicPage } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -7,6 +7,7 @@ import { LoginPage } from '../login/login';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { ShowInfoCarPage } from '../showinfocar/showinfocar';
 
+@IonicPage()
 
 @Component({
   selector: 'page-profile',

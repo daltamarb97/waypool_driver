@@ -89,11 +89,27 @@ constructor(public afDB: AngularFireDatabase){
         })
 
     }
-    public endTrip(DriverUid){
-        this.afDB.database.ref('drivers/' + DriverUid+'/trips').remove()
+    public endTripDriverPickingUsers(DriverUid){
+        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickingUsers').remove()
     }
-    public endTripUser(userUid){
-        this.afDB.database.ref('users/' + userUid+'/trips').remove()
+    public endTripDriverPickedUpUsers(DriverUid){
+        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
+    }
+    
+    public endTripUserPickingUsers(userUid){
+        this.afDB.database.ref('users/' + userUid+'/trips/pickingUsers').remove()
+    }
+    public endTripUserPickedUpUsers(userUid){
+        this.afDB.database.ref('users/' + userUid+'/trips/pickedUpUsers').remove()
+    }
+    public endTripUserOnTripInstance(userUid){
+        this.afDB.database.ref('users/' + userUid+'/trips/onTrip').remove()
+    }
+    public endTripUserPickupInstance(userUid){
+        this.afDB.database.ref('users/' + userUid+'/trips/pickedUp').remove()
+    }
+    public endTripUserDriverListRide(userUid){
+        this.afDB.database.ref('users/' + userUid+'/trips/driverListRide').remove()
     }
     public pickUp(DriverUid,userId,user){
        
@@ -121,6 +137,10 @@ constructor(public afDB: AngularFireDatabase){
                //eliminate the user from pickingUsers
         this.afDB.database.ref('/drivers/'+ DriverUid +'/trips/pickingUsers/'+ userId).remove();
     }
+    sumTotal(trip,total){
+      total = total + trip;
+    
+      }
  
 }
 

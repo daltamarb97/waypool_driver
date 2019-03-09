@@ -1,7 +1,6 @@
 import { Component, NgZone, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { ChattingPage } from '../chatting/chatting';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
@@ -14,6 +13,8 @@ import { sendUsersService } from '../../services/sendUsers.service';
 
 
 declare var google; 
+@IonicPage()
+
 @Component({
   selector: 'page-ontrip',
   templateUrl: 'onTrip.html'
@@ -89,7 +90,18 @@ export class OnTripPage {
             scaleControl: false,
             streetViewControl: true,
             rotateControl: false,
-            fullscreenControl: false
+            fullscreenControl: false, 
+            styles: [
+              {
+                featureType: 'poi',
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off'
+                  }
+                ]
+              }
+            ]
           
         }
 
@@ -221,19 +233,29 @@ export class OnTripPage {
     
     endTrip(){
 
-      this.navCtrl.pop();
-      this.navCtrl.push(RatetripPage,{user:this.driver})
+      //let user rate the trip
+      this.navCtrl.push('RatetripPage',{user:this.driver})
 
       this.pickedUpUsers.forEach(user => {
-      // save trip in every record of users
+      // save trip in every record of every users
       this.sendCoordsService.recordTripOnUser(user.userId,user);  
-      this.sendCoordsService.endTripUser(user.userId)
+      this.sendCoordsService.endTripUserPickingUsers(user.userId);
+      this.sendCoordsService.endTripUserPickedUpUsers(user.userId)
+       this.sendCoordsService.endTripUserOnTripInstance(user.userId)
+       this.sendCoordsService.endTripUserPickupInstance(user.userId)
+
+       this.sendCoordsService.endTripUserDriverListRide(user.userId)
+
+
        })
+       //Save trip into RecordTrip on User & Driver
       this.sendCoordsService.recordTripOnWaypool(this.driver.trips);
       this.sendCoordsService.recordTripOnDriver(this.useruid,this.driver.trips);        
+       //End trip into RecordTrip on User & Driver
+      this.sendCoordsService.endTripDriverPickingUsers(this.useruid)
+      this.sendCoordsService.endTripDriverPickedUpUsers(this.useruid)
 
-      this.sendCoordsService.endTrip(this.useruid)
-      //let user rate the trip
+      
       
       this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!','OK')
     

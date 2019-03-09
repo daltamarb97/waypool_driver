@@ -1,4 +1,8 @@
 page-login {
+    .love{
+        display: flex;
+        justify-content: center;
+    } 
     .option-login {
         font-size: 1.1rem;
         font-weight: 500;
@@ -36,8 +40,7 @@ page-login {
         position: relative;
         img {
             position: absolute;
-            width: 144px;
-            height: 144px;
+            
             margin: auto;
             top: 0;
             left: 0;

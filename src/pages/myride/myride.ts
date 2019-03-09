@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { RateriderPage } from '../raterider/raterider';
-import { ChattingPage } from '../chatting/chatting';
+
 import { TabsPage } from '../tabs/tabs';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendUsersService } from '../../services/sendUsers.service';
-import { OnTripPage } from '../onTrip/onTrip';
-import { PickupPage } from '../pickup/pickup';
+
+
 import { CallNumber } from '@ionic-native/call-number';
 import { SignUpService } from '../../services/signup.service';
 import * as moment from 'moment';
 
+@IonicPage()
 @Component({
   selector: 'page-myride',
   templateUrl: 'myride.html'
@@ -50,9 +50,7 @@ userDriver:any;
 		});
    
   }
-raterider(){
-this.navCtrl.push(RateriderPage);
-}
+
 callUser(number){
     console.log(number)
   this.callNumber.isCallSupported()
@@ -67,11 +65,9 @@ else {
       }
   });
 }
-      chatting(){
-    this.navCtrl.push(ChattingPage);
-    }
+     
           goToRide(user){
-    this.navCtrl.push(PickupPage,{user});
+    this.navCtrl.push('PickupPage',{user});
     }
     goToMyDestination(){
       if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
@@ -101,7 +97,7 @@ else {
                   this.sendCoordsService.timeOfDestinationUser(user.userId,today)
                 });        
 
-                this.navCtrl.push(OnTripPage);
+                this.navCtrl.push('OnTripPage');
               }
             }
           ]

@@ -1,25 +1,22 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title class="text-center">MY WALLET</ion-title>
+        <ion-title class="text-center">Mis Ganancias</ion-title>
         <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> 
 
     </ion-navbar>
-    <div text-center padding>
-        <p><small class="text-white">Total Balance</small></p>
-        <h1 class="text-white">$ 120</h1>
+    <div text-center >
+        <p><small class="text-white">Ganancias Totales:</small></p>
+        <h1 class="text-white">$ {{total}}</h1>
         <ion-row>
-            <ion-col>
-                <button class="btn text-white bg-yellow rounded">ADD MONEY</button>
-            </ion-col>
-            <ion-col>
-                <button class="btn text-theme bg-white rounded">SEND TO BANK</button>
-            </ion-col>
+           
         </ion-row>
     </div>
 
 </ion-header>
-
+ 
 <ion-content class="bg-light">
+        <p class="love">Historial de viajes</p> 
+
     <ion-list>
             <ion-card *ngFor = "let user of recordTrips">
                     <ion-item>
@@ -45,7 +42,7 @@
                         </div>
                        
                     </ion-card-content>       
-                    
+
                 </ion-card>  
     </ion-list>
    
