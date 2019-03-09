@@ -88,11 +88,14 @@ export class ListridePage{
           text: 'Eliminar',
           handler: () => {
             console.log('user eliminado');
-            setTimeout(()=>{
-              //REVISAR
-              this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-              this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
-            }, 600)
+            // setTimeout(()=>{
+            //   //REVISAR
+            //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+            //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
+            // }, 600)
+            this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+            console.log('remove on list')
+            this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
           }
         }
       ]

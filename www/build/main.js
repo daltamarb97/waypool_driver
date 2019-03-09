@@ -131,6 +131,7 @@ var LoginPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -152,6 +153,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ConfirmpopupPage = /** @class */ (function () {
     function ConfirmpopupPage(navCtrl, sendUsersService, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geoFireService, instances, toastCtrl) {
         var _this = this;
@@ -170,34 +172,38 @@ var ConfirmpopupPage = /** @class */ (function () {
         this.locationDestination = [];
         this.userDriverUid = this.AngularFireAuth.auth.currentUser.uid;
         this.infoUser = {};
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_8_rxjs__["Subject"];
         //we get the info of the users with navParams
         this.user = this.navParams.get('user');
         console.log(this.user);
         //get origin from driver
-        this.sendCoordsService.getOrigin(this.userDriverUid)
+        this.sendCoordsService.getOrigin(this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (origin) {
             _this.locationOrigin = origin;
         });
         //get destination from driver
-        this.sendCoordsService.getDestination(this.userDriverUid)
+        this.sendCoordsService.getDestination(this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (destination) {
             _this.locationDestination = destination;
         });
-        this.SignUpService.getMyInfoDriver(this.userDriverUid)
+        this.SignUpService.getMyInfoDriver(this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (userDriver) {
             _this.userDriver = userDriver;
             console.log(_this.userDriver);
         });
+        console.log('a');
     }
     ConfirmpopupPage.prototype.acceptUser = function () {
-        var _this = this;
         //REVISAR
-        setTimeout(function () {
-            _this.sendUsersService.removeUsersOnListRide(_this.userDriverUid, _this.user.userId);
-        }, 600);
-        setTimeout(function () {
-            _this.sendUsersService.removeUsersOnListRide(_this.userDriverUid, _this.user.userId);
-        }, 1000);
+        // setTimeout(()=>{
+        // 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+        // }, 600)
+        // setTimeout(()=>{
+        // 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+        // }, 1100)
+        console.log('before delete');
+        this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+        console.log('after delete');
         this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
         this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber, this.userDriver.trips.price);
         this.instances.turnOntripUsers(this.user.userId);
@@ -214,7 +220,10 @@ var ConfirmpopupPage = /** @class */ (function () {
     };
     ConfirmpopupPage.prototype.dismiss = function () {
         this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+        console.log('deleted on click');
         this.viewCtrl.dismiss(this.accepted);
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     };
     ConfirmpopupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -1023,10 +1032,9 @@ var MyridePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-myride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/myride/myride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">MY RIDE\n           \n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n            <ion-icon name="md-locate" class="text-white" ></ion-icon>\n        </ion-title>\n\n    </ion-navbar>\n    \n</ion-header>\n\n<ion-content class="bg-light"> \n        \n\n        <ion-list >\n            <ion-card *ngFor = "let user of pickingUsers">\n                <ion-item>\n                    <ion-avatar item-start>\n                        <img src="assets/imgs/face-1.jpg">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                        </h2>\n                    </div>\n                    <div class="more">\n                        <ion-icon name="close-circle" (click)="deleteUser(user.userId,user.name)"></ion-icon>\n                    </div>\n                </ion-item>\n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p><small>Origen:</small>\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                        <p><small>Destino:</small>\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                    </div>\n                    <ion-row>\n                          \n                                <ion-col class="detail-text">\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n            \n                                    </ion-col>\n                        <ion-col col-5>\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>         \n\n                \n            </ion-card>\n            \n            \n            \n            <ion-card *ngFor = "let user of pickedUpUsers">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/face-1.jpg">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                            </h2>\n                      \n                        </div>\n                        <div class="more">                       \n                                <ion-badge color="secondary" class="badge">RECOGIDO</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>\n                   \n        \n                    \n                </ion-card> \n                <button class="btn bg-theme text-white rounded" (click)="goToMyDestination()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Ir a mi destino</button>\n\n        </ion-list>\n       \n\n            \n            \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/myride/myride.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_call_number__["a" /* CallNumber */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_call_number__["a" /* CallNumber */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_10__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__services_geofire_services__["a" /* geofireService */]) === "function" && _j || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_10__services_geofire_services__["a" /* geofireService */]])
     ], MyridePage);
     return MyridePage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=myride.js.map
@@ -2052,18 +2060,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var CarRegistrationPage = /** @class */ (function () {
-    function CarRegistrationPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth) {
+    function CarRegistrationPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.viewCtrl = viewCtrl;
         this.camera = camera;
         this.AngularFireauth = AngularFireauth;
+        this.alertCtrl = alertCtrl;
         this.namePicture = "Licencia";
         this.description = "Sube una foto clara de tu";
         this.img1 = "Licencia";
         this.img2 = "Cédula";
         this.des1 = "Sube una foto clara de tu";
-        this.des2 = "Necesitamos la información de tu";
+        this.picToView = "assets/imgs/v2.png";
+        this.picToViewLicense = "assets/imgs/v2.png";
+        this.picToViewId = "assets/imgs/v3.png";
         this.options = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -2078,20 +2089,38 @@ var CarRegistrationPage = /** @class */ (function () {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_4_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + 'picture');
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_4_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url');
+            var alert = _this.alertCtrl.create({
+                title: '¡HECHO!',
+                subTitle: 'ya tenemos tu documento',
+                buttons: ['OK']
+            });
+            alert.present();
         }, function (err) {
             console.log(err);
+            var alert = _this.alertCtrl.create({
+                title: 'hubo un error',
+                subTitle: 'intenta subir el documento otra vez',
+                buttons: ['OK']
+            });
+            alert.present();
         });
     };
     CarRegistrationPage.prototype.changeNamePicture1 = function () {
+        this.picToViewLicense = "assets/imgs/v2.png";
         this.namePicture = this.img1;
         this.description = this.des1;
+        this.picToView = "assets/imgs/v2.png";
+        this.data = "licencia";
     };
     ;
     CarRegistrationPage.prototype.changeNamePicture2 = function () {
+        this.picToViewId = "assets/imgs/v3.png";
         this.namePicture = this.img2;
         this.description = this.des1;
+        this.picToView = "assets/imgs/v3.png";
+        this.data = "cedula";
     };
     ;
     CarRegistrationPage.prototype.findRide = function () {
@@ -2100,9 +2129,9 @@ var CarRegistrationPage = /** @class */ (function () {
     ;
     CarRegistrationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>VERIFIY MY ID\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v2.png" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img  src="assets/imgs/v3.png" (click)="changeNamePicture2()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img src="assets/imgs/v1.png">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCamera()">Subir Foto</button></p>\n        </ion-col>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white rounded buttonLight" style="width: 80%;" (click)= "findRide()">Hacer después</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/,
+            selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>VERIFIY MY ID\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img [src]="picToView">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCamera()">Subir Foto</button></p>\n        </ion-col>\n        <ion-col>\n            <p padding-top class="btn-box"><button class="btn text-white rounded buttonLight" style="width: 80%;" (click)= "findRide()">Hacer después</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], CarRegistrationPage);
     return CarRegistrationPage;
 }());
@@ -2215,11 +2244,14 @@ var ListridePage = /** @class */ (function () {
                     text: 'Eliminar',
                     handler: function () {
                         console.log('user eliminado');
-                        setTimeout(function () {
-                            //REVISAR
-                            _this.sendUsersService.removeUsersOnListRide(_this.driver, userId);
-                            _this.sendUsersService.removeUsersOnPickingUsers(_this.driver, userId);
-                        }, 600);
+                        // setTimeout(()=>{
+                        //   //REVISAR
+                        //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+                        //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
+                        // }, 600)
+                        _this.sendUsersService.removeUsersOnListRide(_this.driver, userId);
+                        console.log('remove on list');
+                        _this.sendUsersService.removeUsersOnPickingUsers(_this.driver, userId);
                     }
                 }
             ]
@@ -2246,7 +2278,7 @@ var ListridePage = /** @class */ (function () {
     };
     ListridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-listride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/listride/listride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="Title">DRIVER\n                <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content class="bg-light" class="hideLongText">\n    <ion-row class="center-align bg-white flow-ride">\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n            <h2>Origen:</h2> {{origin}}\n\n        </ion-col>\n        <ion-col col-2 text-center>\n            <img src="assets/imgs/arrow.jpg">\n        </ion-col>\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n            <h2>Destino:</h2> {{destination}}\n        </ion-col>\n\n    </ion-row>\n    \n    <ion-card *ngFor = "let user of usersFindingTrip">\n        \n                <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/face-1.jpg">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.name |titlecase}} {{user.lastname |titlecase | slice:0:1}}.\n            \n                                <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n                            </h2>\n                            <p>Honda Cvic | White</p>\n                        </div>\n                        <div class="more">\n                            <ion-icon name="close-circle"  (click)="deleteUser2(user.userId, user.name)"></ion-icon>\n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p  >\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p > \n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                        <ion-row class="center-align">\n                            <!-- <ion-col col-3 class="detail-text text-theme">\n                                3 seats\n                            </ion-col> -->\n                            <ion-col col-2 class="detail-text text-theme">\n                            </ion-col>\n                            <ion-col col-4 class="detail-text text-theme">\n                            \n                            </ion-col>\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n                                <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user) >aceptar usuario</button>\n                            </ion-col>\n                        </ion-row>\n                    </ion-card-content>\n               \n        \n        \n    </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/listride/listride.html"*/
+            selector: 'page-listride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/listride/listride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="Title">DRIVER\n                <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content class="bg-light" class="hideLongText">\n    <ion-row class="center-align bg-white flow-ride">\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n            <h2>Origen:</h2> {{origin}}\n\n        </ion-col>\n        <ion-col col-2 text-center>\n            <img src="assets/imgs/arrow.jpg">\n        </ion-col>\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n            <h2>Destino:</h2> {{destination}}\n        </ion-col>\n\n    </ion-row>\n    \n    <ion-card *ngFor = "let user of usersFindingTrip">\n        \n                <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/face-1.jpg">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.name |titlecase}} {{user.lastname |titlecase | slice:0:1}}.\n            \n                                <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n                            </h2>\n                            <p>Honda Cvic | White</p>\n                        </div>\n                        <div class="more">\n                            <ion-icon name="close-circle"  (click)="deleteUser(user.userId, user.name)"></ion-icon>\n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p  >\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p > \n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                        <ion-row class="center-align">\n                            <!-- <ion-col col-3 class="detail-text text-theme">\n                                3 seats\n                            </ion-col> -->\n                            <ion-col col-2 class="detail-text text-theme">\n                            </ion-col>\n                            <ion-col col-4 class="detail-text text-theme">\n                            \n                            </ion-col>\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n                                <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user) >aceptar usuario</button>\n                            </ion-col>\n                        </ion-row>\n                    </ion-card-content>\n               \n        \n        \n    </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/listride/listride.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["AngularFireAuth"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__["AngularFireDatabase"]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_9__services_instances_service__["a" /* instancesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_instances_service__["a" /* instancesService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_10__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]) === "function" && _m || Object])
     ], ListridePage);
@@ -2311,6 +2343,7 @@ var FilterPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_price_service__ = __webpack_require__(364);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__confirmdirection_confirmdirection__ = __webpack_require__(365);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2320,6 +2353,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2349,6 +2383,7 @@ var ConfirmpricePage = /** @class */ (function () {
         this.driverInfo = {};
         this.buttonColor = '#0fc874';
         this.buttonColor2 = '#0fc874';
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_10_rxjs__["Subject"];
         this.geoInfo1 = this.navParams.get('geoInfo1');
         console.log(this.geoInfo1);
         this.geoInfo2 = this.navParams.get('geoInfo2');
@@ -2357,18 +2392,18 @@ var ConfirmpricePage = /** @class */ (function () {
     ConfirmpricePage.prototype.setPriceDriver = function () {
         var _this = this;
         if (this.precio == null || this.precio == '') {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Informacion Incompleta',
                 subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu carro',
                 buttons: ['OK']
             });
-            alert_1.present();
+            alert.present();
         }
         else if (this.note == null) {
             this.PriceService.setPrice(this.userDriverUid, this.precio);
             this.accepted = true;
             this.dismiss();
-            this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
+            this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
                 _this.driver = driver;
                 console.log(_this.driver.trips.origin);
                 _this.driverInfo.origin = _this.driver.trips.origin;
@@ -2388,7 +2423,7 @@ var ConfirmpricePage = /** @class */ (function () {
             this.PriceService.setPriceAndNote(this.userDriverUid, this.precio, this.note);
             this.accepted = true;
             this.dismiss();
-            this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
+            this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
                 _this.driver = driver;
                 console.log(_this.driver.trips.origin);
                 _this.driverInfo.origin = _this.driver.trips.origin;
@@ -2418,9 +2453,10 @@ var ConfirmpricePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-confirmprice',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/'<ion-content>\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n        <h6 class="text-theme">Detalles del Viaje</h6>\n       \n        <ion-card-content>\n            <div class="ride-detail">\n                <ion-item class="form">\n                    <ion-label floating>Precio</ion-label>\n                    <ion-input type="number" [(ngModel)]="precio"></ion-input>\n                  </ion-item>\n                  <ion-item>\n                    <div class="form">\n                        <ion-list no-lines>\n                            <ion-item>\n                                <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota para tus compañeros (Opcional)" ></ion-textarea>\n                            </ion-item>\n                        </ion-list>\n                    </div>\n                  </ion-item>\n            </div>\n        </ion-card-content>\n\n        <ion-card-content>\n            <div class="ride-detail no-before">\n                <p><small>Recuerda:</small>\n                    <ion-icon name="md-calendar" class="icon-location"></ion-icon>\n                  - Precio Recomendado: 2500 </p>\n        \n                <p>- Tus compañeros te pagarán en efectivo, evita colocar precios que requieran mucho vuelto, lleva dinero suficiente para dar vueltas.</p>\n            </div>\n        </ion-card-content>\n        <ion-card-content>\n            <div class="seats">\n                \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="setPriceDriver()">Aceptar Viaje</button>\n                    </ion-col>\n                </ion-row>\n\n\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */]) === "function" && _o || Object])
     ], ConfirmpricePage);
     return ConfirmpricePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 }());
 
 //# sourceMappingURL=confirmprice.js.map
@@ -3568,6 +3604,7 @@ var sendUsersService = /** @class */ (function () {
     sendUsersService.prototype.removeUsersOnListRide = function (userUid, userId) {
         //send the information of every student the driver acepts in myRide
         this.afDB.database.ref('/drivers/' + userUid + '/trips/usersListRide/' + userId).remove();
+        this.afDB.database.ref('/users/' + userId + '/trips/driversListRide/' + userUid).remove();
     };
     sendUsersService.prototype.removeUsersOnPickingUsers = function (userUid, userId) {
         //send the information of every student the driver acepts in myRide
@@ -3605,9 +3642,10 @@ var sendUsersService = /** @class */ (function () {
     };
     sendUsersService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object])
     ], sendUsersService);
     return sendUsersService;
+    var _a;
 }());
 
 //# sourceMappingURL=sendUsers.service.js.map

@@ -18,15 +18,15 @@
 
     <ion-row>
         <ion-col col-4 text-center>
-            <img  src="assets/imgs/v2.png" (click)="changeNamePicture1()">
+            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">
         </ion-col>
         <ion-col col-4 text-center>
-            <img  src="assets/imgs/v3.png" (click)="changeNamePicture2()">
+            <img   [src]="picToViewId" (click)="changeNamePicture2()">
         </ion-col>
     </ion-row>
 
     <div text-center class="verifiy">
-        <img src="assets/imgs/v1.png">
+        <img [src]="picToView">
     </div>
     <ion-row>
         <ion-col>

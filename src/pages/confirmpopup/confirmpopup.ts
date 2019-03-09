@@ -11,6 +11,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { geofireService } from '../../services/geofire.services';
 import { instancesService } from '../../services/instances.service';
 import { ListridePage } from '../listride/listride';
+import { Subject } from 'rxjs';
 
 
 
@@ -28,43 +29,47 @@ export class ConfirmpopupPage {
   userDriverUid=this.AngularFireAuth.auth.currentUser.uid
   accepted: any;
   infoUser:any = {};
+  unsubscribe = new Subject;
   constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController ) {
       //we get the info of the users with navParams
       this.user= this.navParams.get('user') 
       console.log(this.user)
   
          //get origin from driver
-      this.sendCoordsService.getOrigin(this.userDriverUid)
+      this.sendCoordsService.getOrigin(this.userDriverUid).takeUntil(this.unsubscribe)
       .subscribe( origin => {
         this.locationOrigin = origin;
       })
          //get destination from driver
-      this.sendCoordsService.getDestination(this.userDriverUid)
+      this.sendCoordsService.getDestination(this.userDriverUid).takeUntil(this.unsubscribe)
         .subscribe( destination => {
           this.locationDestination = destination;
 		})
 		
-		this.SignUpService.getMyInfoDriver(this.userDriverUid)
+		this.SignUpService.getMyInfoDriver(this.userDriverUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
-        
+		
+		console.log('a')
    
     }
 
 	acceptUser() {
 		//REVISAR
-		setTimeout(()=>{
-			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+		// setTimeout(()=>{
+		// 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 
-		}, 600)
+		// }, 600)
 		
-		setTimeout(()=>{
-			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+		// setTimeout(()=>{
+		// 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 
-		}, 1000)
-
+		// }, 1100)
+		console.log('before delete')
+		this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+		console.log('after delete')
 		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
 		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
 		
@@ -86,6 +91,9 @@ export class ConfirmpopupPage {
 
 	dismiss() {
 		this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+		console.log('deleted on click')
 		this.viewCtrl.dismiss(this.accepted);
+		this.unsubscribe.next();
+		this.unsubscribe.complete();
 	}
 }

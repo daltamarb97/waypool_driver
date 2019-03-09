@@ -11,6 +11,7 @@ import { priceService } from '../../services/price.service';
 import { ListridePage } from '../listride/listride';
 import { geofireService } from '../../services/geofire.services';
 import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
+import { Subscription, Subject } from 'rxjs';
 
 
 @Component({
@@ -34,6 +35,8 @@ export class ConfirmpricePage {
   location;
   buttonColor:string = '#0fc874';
   buttonColor2:string = '#0fc874';
+  unsubscribe = new Subject;
+  
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     this.geoInfo1 = this.navParams.get('geoInfo1')
@@ -58,7 +61,7 @@ export class ConfirmpricePage {
         this.PriceService.setPrice(this.userDriverUid,this.precio)
         this.accepted = true;
         this.dismiss();
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+        this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
           this.driver = driver;
           console.log(this.driver.trips.origin)
           this.driverInfo.origin = this.driver.trips.origin
@@ -79,7 +82,7 @@ export class ConfirmpricePage {
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note)
         this.accepted = true;
         this.dismiss();
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+        this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
           this.driver = driver;
           console.log(this.driver.trips.origin)
           this.driverInfo.origin = this.driver.trips.origin
@@ -106,11 +109,18 @@ export class ConfirmpricePage {
       confirmDirection(geoInfo1, geoInfo2, driverInfo){
         let modal = this.modalCtrl.create(ConfirmdirectionPage, {geoInfo1, geoInfo2, driverInfo});
      modal.present();
+     
      }
       
     
         
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);
+   
   }  
+
+  // ngOnDestroy(){
+  //   this.unsubscribe.next();
+  //   this.unsubscribe.complete();
+  // }
 }

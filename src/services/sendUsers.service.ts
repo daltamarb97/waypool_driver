@@ -26,7 +26,7 @@ constructor(public afDB: AngularFireDatabase){
      public removeUsersOnListRide(userUid,userId ){
         //send the information of every student the driver acepts in myRide
            this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/'+ userId).remove();
-               
+            this.afDB.database.ref('/users/' + userId + '/trips/driversListRide/' + userUid).remove();
            }
 
            public removeUsersOnPickingUsers(userUid,userId ){
