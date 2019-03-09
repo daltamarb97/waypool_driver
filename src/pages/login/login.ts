@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NavController, AlertController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angular';
 
-import { SignupPage } from '../signup/signup';
-import { TabsPage } from '../tabs/tabs';
-// import { FindridePage } from '../findride/findride';
-import {CarRegistrationPage } from '../car-registration/car-registration';
+
 import { authenticationService } from '../../services/driverauthentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import * as firebase from 'firebase';
 // import { SignUpService } from '../../services/signup.service';
 
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -30,7 +28,7 @@ export class LoginPage {
   }
   
     signup(){
-        this.navCtrl.push(SignupPage);
+        this.navCtrl.push('SignupPage');
 
     };
 
@@ -72,10 +70,10 @@ export class LoginPage {
                     console.log(metadata.creationTime);
                     console.log(metadata.lastSignInTime);
 
-                    this.navCtrl.push(TabsPage);//aqui va registration car, no tabspge
+                    this.navCtrl.push('TabsPage');//aqui va registration car, no tabspge
 
                 }else{
-                    this.navCtrl.push(TabsPage);
+                    this.navCtrl.push('TabsPage');
                 }
                 this.authenticationService.getStatus;  
             };

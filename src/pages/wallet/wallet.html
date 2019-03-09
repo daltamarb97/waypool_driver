@@ -1,93 +1,52 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title class="text-center">MY WALLET</ion-title>
+        <ion-title class="text-center">Mis Ganancias</ion-title>
+        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> 
+
     </ion-navbar>
-    <div text-center padding>
-        <p><small class="text-white">Total Balance</small></p>
-        <h1 class="text-white" [ngModel]='price'></h1>
+    <div text-center >
+        <p><small class="text-white">Ganancias Totales:</small></p>
+        <h1 class="text-white">$ {{total}}</h1>
         <ion-row>
-            <ion-col>
-                <button class="btn text-white bg-yellow rounded" name="Submit" type="submit"  value="Enviar" >Pagar</button>
-            </ion-col>
-            <ion-col>
-                <button class="btn text-theme bg-white rounded">SEND TO BANK</button>
-            </ion-col>
+           
         </ion-row>
     </div>
 
 </ion-header>
-
+ 
 <ion-content class="bg-light">
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/face-1.jpg">
-            </ion-avatar>
-            <div class="name">
-                <h2>Paid for Ride
-                    <small>19 Feb, 05:15 pm</small>
-                </h2>
-                <p>Washing sq. Park to East Network</p>
-            </div>
-            <div class="more" text-right>
-                <h2 class="text-theme">+$120
-                </h2>
-                <p class="text-dark">To Johnson</p>
-            </div>
-        </ion-item>
-    </ion-card>
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/man3.png">
-            </ion-avatar>
-            <div class="name">
-                <h2>Paid for Ride
-                    <small>19 Feb, 05:15 pm</small>
-                </h2>
-                <p>Washing sq. Park to East Network</p>
-            </div>
-            <div class="more" text-right>
-                <h2 class="text-theme">+$120
-                </h2>
-                <p class="text-dark">To Johnson</p>
-            </div>
-        </ion-item>
-    </ion-card>
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/man1.png">
-            </ion-avatar>
-            <div class="name">
-                <h2>Paid for Ride
-                    <small>19 Feb, 05:15 pm</small>
-                </h2>
-                <p>Washing sq. Park to East Network</p>
-            </div>
-            <div class="more" text-right>
-                <h2 class="text-theme">+$120
-                </h2>
-                <p class="text-dark">To Johnson</p>
-            </div>
-        </ion-item>
-    </ion-card>
-    <ion-card>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/man2.png">
-            </ion-avatar>
-            <div class="name">
-                <h2>Paid for Ride
-                    <small>19 Feb, 05:15 pm</small>
-                </h2>
-                <p>Washing sq. Park to East Network</p>
-            </div>
-            <div class="more" text-right>
-                <h2 class="text-theme">+$120
-                </h2>
-                <p class="text-dark">To Johnson</p>
-            </div>
-        </ion-item>
-    </ion-card>
+        <p class="love">Historial de viajes</p> 
+
+    <ion-list>
+            <ion-card *ngFor = "let user of recordTrips">
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <img src="assets/imgs/face-1.jpg">
+                        </ion-avatar>
+                        <div class="name">
+                            <h2>{{user.DestinationTime}}
+                            </h2>
+                            <p>{{user.car}}</p>
+                        </div>
+                        <div class="more">                       
+                                <ion-badge  class="badge">$ {{user.price}}</ion-badge>                                  
+                                    
+                        </div>
+                    </ion-item>
+                    <ion-card-content>
+                        <div class="ride-detail">
+                            <p>
+                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>
+                            <p>
+                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
+                        </div>
+                       
+                    </ion-card-content>       
+
+                </ion-card>  
+    </ion-list>
+   
+   
+    
+    
 </ion-content>

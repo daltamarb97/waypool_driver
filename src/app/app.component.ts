@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, IonicPage } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-//import { TabsPage } from '../pages/tabs/tabs';
-//import { AboutPage } from '../pages/about/about';
-import { LoginPage } from '../pages/login/login';
 
-import { CarRegistrationPage } from '../pages/car-registration/car-registration';
-import { FindridePage } from '../pages/findride/findride';
+
 
 
 
@@ -16,13 +12,15 @@ import { FindridePage } from '../pages/findride/findride';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any;
- 
+  rootPage:any  = 'LoginPage';
+
 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    localStorage.removeItem('firebase:previous_websocket_failure');
-    this.rootPage = LoginPage;
+   platform.ready().then(()=>{
+     statusBar.styleDefault();
+     splashScreen.hide()
+   })
     
   }
 }

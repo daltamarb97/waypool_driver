@@ -24,14 +24,14 @@
                         </h2>
                     </div>
                     <div class="more">
-                        <ion-icon name="close-circle" (click)="deleteUser(user.userId,user.name)"></ion-icon>
+                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>
                     </div>
                 </ion-item>
                 <ion-card-content>
                     <div class="ride-detail">
-                        <p><small>Origen:</small>
+                        <p><small></small>
                             <span class="icon-location bg-theme"></span>{{user.origin}}</p>
-                        <p><small>Destino:</small>
+                        <p><small></small>
                             <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
                     </div>
                     <ion-row>
@@ -79,6 +79,8 @@
         
                     
                 </ion-card> 
+
+
                 <button class="btn bg-theme text-white rounded" (click)="goToMyDestination()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Ir a mi destino</button>
 
         </ion-list>

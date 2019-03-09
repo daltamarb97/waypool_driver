@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, Tabs, AlertController, App } from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, Tabs, AlertController, App, IonicPage } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { sendCoordsService } from '../../services/sendCoords.service';
@@ -11,6 +11,7 @@ import { ListridePage } from '../listride/listride';
 
 
 
+@IonicPage()
 
 @Component({
   selector: 'page-confirmdirection',

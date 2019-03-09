@@ -5,30 +5,16 @@ import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { MyridePage } from '../pages/myride/myride';
-import { ChatsPage } from '../pages/chats/chats';
 import { FindridePage } from '../pages/findride/findride';
 import { WalletPage } from '../pages/wallet/wallet';
 import { MorePage } from '../pages/more/more';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { PasswordPage } from '../pages/password/password';
-import { VerificationPage } from '../pages/verification/verification';
-import { CodePage } from '../pages/code/code';
 import { ListridePage } from '../pages/listride/listride';
-import { FilterPage } from '../pages/filter/filter';
-import { RiderprofilePage } from '../pages/riderprofile/riderprofile';
-import { ConfirmridePage } from '../pages/confirmride/confirmride';
 import { ConfirmpopupPage } from '../pages/confirmpopup/confirmpopup';
-import { RateriderPage } from '../pages/raterider/raterider';
-import { ChattingPage } from '../pages/chatting/chatting';
 import { ProfilePage } from '../pages/profile/profile';
-import { ReviewsPage } from '../pages/reviews/reviews';
-import { NotificationPage } from '../pages/notification/notification';
 import { TermsPage } from '../pages/terms/terms';
-import { EarnPage } from '../pages/earn/earn';
-import { RatevroomPage } from '../pages/ratevroom/ratevroom';
 import { HelpPage } from '../pages/help/help';
-import { UploadPage } from '../pages/upload/upload';
 import { CarRegistrationPage } from '../pages/car-registration/car-registration';
 
 
@@ -59,6 +45,9 @@ import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
+import { ShowInfoCarPage } from '../pages/showinfocar/showinfocar';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { SupportPage } from '../pages/support/support';
 
 
 export const firebaseConfig = {
@@ -75,41 +64,8 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
-    TabsPage,
-    MyridePage,
-    ChatsPage,
-    FindridePage,
-    WalletPage,
-    MorePage,
-    LoginPage,
-    PasswordPage,
-    SignupPage,
-    VerificationPage,
-    CodePage,
-    ListridePage,
-    FilterPage,
-    PickupPage,
-    RiderprofilePage,
-    ConfirmridePage,
-    ConfirmpricePage,
-    ConfirmpopupPage,
-    RateriderPage,
-    ChattingPage,
-    ProfilePage,
-    ReviewsPage,
-    NotificationPage,
-    TermsPage,
-    EarnPage,
-    RatevroomPage,
-    RatevroomPage,
-    HelpPage,
-    RatetripPage,
-    ConfirmdirectionPage,
-    OnTripPage,
-    UploadPage,
-    CarRegistrationPage,
-    ConfirmdirectionPage
+    MyApp
+  
   ],
   imports: [
     BrowserModule,
@@ -123,40 +79,8 @@ export const firebaseConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    TabsPage,
-    MyridePage,
-    ChatsPage,
-    FindridePage,
-    WalletPage,
-    MorePage,
-    PickupPage,
-    LoginPage,
-    PasswordPage,
-    SignupPage,
-    ConfirmpricePage,
-    ConfirmdirectionPage,
-    VerificationPage,
-    CodePage,
-    ListridePage,
-    FilterPage,
-    RiderprofilePage,
-    ConfirmridePage,
-    ConfirmpopupPage,
-    RateriderPage,
-    ChattingPage,
-    ProfilePage,
-    ReviewsPage,
-    NotificationPage,
-    TermsPage,
-    EarnPage,
-    RatevroomPage,
-    RatetripPage,
-    HelpPage,
-    OnTripPage,
-    UploadPage,
-    CarRegistrationPage,
-    ConfirmdirectionPage
+    MyApp
+  
 
   ],
   providers: [
@@ -167,6 +91,7 @@ export const firebaseConfig = {
     authenticationService,
     geofireService,
     Geolocation,
+    EmailComposer,
     sendCoordsService,
     sendUsersService,
     instancesService,

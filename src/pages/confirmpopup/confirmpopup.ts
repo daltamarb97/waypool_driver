@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, ToastController} from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
@@ -14,6 +14,7 @@ import { ListridePage } from '../listride/listride';
 import { Subject } from 'rxjs';
 
 
+@IonicPage()
 
 @Component({
 	selector: 'page-confirmpopup',
@@ -71,10 +72,11 @@ export class ConfirmpopupPage {
 		this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 		console.log('after delete')
 		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriver.carModel, this.userDriver.plateNumber,this.userDriver.trips.price);
-		
-		this.instances.turnOntripUsers(this.user.userId);
+		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 
+			this.instances.turnOntripUsers(this.user.userId);
 	//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 	  this.instances.turnOntripUsers(this.user.userId);
 	  this.accepted = true;
@@ -85,7 +87,7 @@ export class ConfirmpopupPage {
 			position: 'middle'
 		});
 		toast.present();
-        
+
       }
   
 

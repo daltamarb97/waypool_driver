@@ -5,7 +5,7 @@ import { ListridePage } from '../listride/listride';
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, Platform, ViewController, AlertController, ModalController, ToastController } from 'ionic-angular';
+import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 
@@ -24,12 +24,13 @@ import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
 
  
 declare var google;
-
+@IonicPage()
 @Component({
   selector: 'page-findride',
   templateUrl: 'findride.html'
 })
 export class FindridePage {
+ 
 
   @ViewChild('map') mapElement: ElementRef;
   
@@ -72,9 +73,10 @@ export class FindridePage {
   geoInfo1:any = {};
   geoInfo2:any = {};
   // hits = new BehaviorSubject([])
-
+  markerGeolocation:any;
+  markerDest:any;
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
-
+    
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -101,6 +103,7 @@ export class FindridePage {
   ionViewDidLoad(){
     
     this.loadMap();
+    
   }
  
   loadMap(){
@@ -118,23 +121,34 @@ export class FindridePage {
           zoomControl: false,
             mapTypeControl: false,
             scaleControl: false,
-            streetViewControl: true,
+            streetViewControl: false,
             rotateControl: false,
-            fullscreenControl: false
+            fullscreenControl: false,
+            styles: [
+              {
+                featureType: 'poi',
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off'
+                  }
+                ]
+              }
+            ]
         }
     //creates the map and give options
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
 
-      let marker = new google.maps.Marker({
+      this.markerGeolocation = new google.maps.Marker({
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
         draggable:true
       });
-      this.markers.push(marker);
+      this.markers.push(this.markerGeolocation);
       
-      this.dragMarker(marker,this.autocompleteMyPos)
+      this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       //to reverse-geocode position
       this.geocodeLatLng(latLng,this.autocompleteMyPos)
  
@@ -146,7 +160,7 @@ export class FindridePage {
 
   }
   
-   calculateRoute(positionDest){
+   calculateRoute(positionOr,positionDest){
     //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
 
     this.bounds.extend(this.myLatLng);
@@ -156,7 +170,7 @@ export class FindridePage {
     this.map.fitBounds(this.bounds);
     
     this.directionsService.route({
-     origin: new google.maps.LatLng(this.myLatLng.lat, this.myLatLng.lng),
+     origin: positionOr,
       destination: positionDest,
       travelMode: google.maps.TravelMode.DRIVING,
       avoidTolls: true
@@ -227,13 +241,13 @@ selectSearchResultMyPos(item){
       //     lat: results[0].geometry.location.lat,
       //     lng: results[0].geometry.location.lng
       // };
-       let marker = new google.maps.Marker({
+        this.markerGeolocation = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
         draggable: true
       });
-      this.dragMarker(marker,this.autocompleteMyPos)
-      this.markers.push(marker);
+      this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
+      this.markers.push( this.markerGeolocation);
       this.map.setCenter(results[0].geometry.location);
       this.autocompleteMyPos.input=[item.description]
 
@@ -250,29 +264,28 @@ selectSearchResultMyDest(item){
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
 
-      
-        this.myLatLngDest = {
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-
-         
-        
-
-      
-
-        let marker = new google.maps.Marker({
+      // let position = {
+      //   latitude: results[0].geometry.location.lat,
+      //   longitude: results[0].geometry.location.lng
+      // };
+        let position = new google.maps.LatLng( results[0].geometry.location.lat,
+         results[0].geometry.location.lng)
+          console.log(position)
+       this.markerDest = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
         draggable:true       
       });
+      console.log(position)
       this.map.fitBounds(this.bounds);     
-      this.markers.push(marker);
+      this.markers.push(this.markerDest);
       this.map.setCenter(results[0].geometry.location);
+      console.log(results[0].geometry.location)
       this.autocompleteMyDest.input=[item.description]
-      this.dragMarker(marker,this.autocompleteMyDest)
+      this.dragMarkerDest(this.markerDest,this.autocompleteMyDest)
       this.directionsDisplay.setMap(this.map);
-      this.calculateRoute(results[0].geometry.location);
+      this.myLatLngDest=results[0].geometry.location
+      this.calculateRoute(this.markerGeolocation.position,results[0].geometry.location);
      
      
     }
@@ -288,7 +301,7 @@ clearMarkers(){
     this.markers = [];
   }
   
- dragMarker(marker,inputName){
+ dragMarkerDest(marker,inputName){
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
@@ -296,7 +309,24 @@ clearMarkers(){
    
     this.map.setCenter(latLng);
     this.geocodeLatLng(latLng,inputName)
+   this.calculateRoute(this.markerGeolocation.position,latLng);
+})
+}
+dragMarkerOr(marker,inputName){
+  google.maps.event.addListener(marker, 'dragend',  (evt) => {
+    let lat = marker.getPosition().lat()
+    let lng = marker.getPosition().lng()
+    let latLng = {lat,lng}
    
+    this.map.setCenter(latLng);
+    this.geocodeLatLng(latLng,inputName)
+    if(this.autocompleteMyDest.input == undefined || this.autocompleteMyDest.input==''){
+      console.log("funciona")
+    } else {
+
+      this.calculateRoute(latLng,this.markerDest.position);
+
+    }
 })
 }
 geocodeLatLng(latLng,inputName) {
@@ -326,8 +356,8 @@ geocodeLatLng(latLng,inputName) {
     
   
     try {
-      this.orFirebase=this.autocompleteMyPos.input
-      this.desFirebase=this.autocompleteMyDest.input   
+      this.orFirebase=[this.autocompleteMyPos.input]
+      this.desFirebase=[this.autocompleteMyDest.input]   
       console.log(this.orFirebase);
     if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
           this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
@@ -375,10 +405,10 @@ geocodeLatLng(latLng,inputName) {
 
   
    confirmPrice(geoInfo1, geoInfo2){
-      let modal = this.modalCtrl.create(ConfirmpricePage, {geoInfo1, geoInfo2});
+      let modal = this.modalCtrl.create('ConfirmpricePage', {geoInfo1, geoInfo2});
       modal.onDidDismiss(accepted => {
         if(accepted){
-          this.navCtrl.push(ListridePage);
+          this.navCtrl.push('ListridePage');
         }
       })
    modal.present();

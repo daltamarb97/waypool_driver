@@ -1,6 +1,6 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title>RATE VROOM</ion-title>
+        <ion-title>Viaje Finalizado</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -11,24 +11,30 @@
             <p class="text-light">{{today | date}}
 
         </p>
-            <h1 class="text-theme">$ 3000</h1>
+            <h1 class="text-theme">$ {{userDriver.trips.price}}</h1>
             <h4 class="text-dark">Podrás ver tu pago en el ícono<br>Ganancias</h4>
         </div>
     </ion-card>
     <ion-card class="rate">
         <div text-center>
-            <p>Cuéntanos como ha sido la experiencia con Waypool</p>
+                <h4 class="text-dark">Cuéntanos {{userDriver.name}} como ha sido la experiencia con Waypool</h4>
+
+           
             <div class="driver">
                 
                 <div class="form">
                     <ion-list no-lines>
                         <ion-item>
-                            <ion-textarea type="text" value="Déjanos tu sugerencia"></ion-textarea>
+                            <ion-textarea [(ngModel)]="experience" type="text" placeholder="Déjanos tu sugerencia" ></ion-textarea>
                         </ion-item>
                     </ion-list>
                 </div>
-                <p padding-top><button class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>
+
+
+                <p padding-top><button navPop (click)="sendEmail()" class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>
             </div>
         </div>
     </ion-card>
+    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> 
+
 </ion-content>

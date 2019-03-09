@@ -31,6 +31,18 @@
             </div>
         </ion-card-content>
         <ion-card-content>
+                <ion-row style="margin-top: 14px;    display: flex;
+                justify-content: center">
+                   <ion-list>
+                        <ion-item>
+                          <ion-label>Carro:</ion-label>
+                          <ion-select [(ngModel)]="car">
+                                <ion-option *ngFor="let car of carModelList" >{{car.carModel}} | {{car.plateNumber}} | {{car.color}}</ion-option>
+                       
+                          </ion-select>
+                        </ion-item>
+                      </ion-list>
+                </ion-row>
             <div class="seats">
                 
                 <ion-row style="margin-top: 14px;    display: flex;

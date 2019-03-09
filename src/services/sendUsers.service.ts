@@ -54,7 +54,7 @@ constructor(public afDB: AngularFireDatabase){
             );
 
         }
-        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,carModel,plateNumber,price){
+        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,price,car){
             //send the driver information to the students
             this.afDB.database.ref('/users/'+ userId +'/trips/pickingUsers/driver/'+ userUid).update(
                 {
@@ -64,9 +64,10 @@ constructor(public afDB: AngularFireDatabase){
                  lastname:lastname,
                  phone: phone,
                  userId:userUid,
-                 carModel:carModel,
-                 plateNumber:plateNumber,    
-                 price:price    
+                 car:car, 
+                 price:price
+                 
+                
                 }
                 );
             }
@@ -76,6 +77,9 @@ constructor(public afDB: AngularFireDatabase){
         this.afDB.database.ref('/drivers/'+ userUid +'/trips').push();
     }
 
-   
+   public getRecordTrips(userUid){
+    return  this.afDB.list('/drivers/'+ userUid +'/recordTrips/').valueChanges();
+
+   }
 }
 

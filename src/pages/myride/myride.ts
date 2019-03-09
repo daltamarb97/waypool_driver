@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { RateriderPage } from '../raterider/raterider';
-import { ChattingPage } from '../chatting/chatting';
+
 import { TabsPage } from '../tabs/tabs';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendUsersService } from '../../services/sendUsers.service';
-import { OnTripPage } from '../onTrip/onTrip';
-import { PickupPage } from '../pickup/pickup';
+
+
 import { CallNumber } from '@ionic-native/call-number';
 import { geofireService } from '../../services/geofire.services';
+import { SignUpService } from '../../services/signup.service';
+import * as moment from 'moment';
 
+@IonicPage()
 @Component({
   selector: 'page-myride',
   templateUrl: 'myride.html'
@@ -21,10 +23,14 @@ export class MyridePage {
  pickedUpUsers:any = [];
 
 ride: string = "today";
-driverUid=this.AngularFireAuth.auth.currentUser.uid;
-userInfo;
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+driverUid=this.AngularFireAuth.auth.currentUser.uid;
+
+userInfo;
+userDriver:any;
+
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+
     this.sendUsersService.getUsersOnTrip(this.driverUid)
     .subscribe( user => {
       
@@ -41,12 +47,14 @@ userInfo;
       console.log(this.pickedUpUsers);
       
     });
-
+    this.SignUpService.getMyInfoDriver(this.driverUid)
+		.subscribe(userDriver => {
+			this.userDriver = userDriver;
+			console.log(this.userDriver);
+		});
    
   }
-raterider(){
-this.navCtrl.push(RateriderPage);
-}
+
 callUser(number){
     console.log(number)
   this.callNumber.isCallSupported()
@@ -61,11 +69,9 @@ else {
       }
   });
 }
-      chatting(){
-    this.navCtrl.push(ChattingPage);
-    }
+     
           goToRide(user){
-    this.navCtrl.push(PickupPage,{user});
+    this.navCtrl.push('PickupPage',{user});
     }
     goToMyDestination(){
       this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).subscribe(user=>{
@@ -79,7 +85,39 @@ else {
         }
       })
       if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
-        this.navCtrl.push(OnTripPage);
+        let alert = this.alertCtrl.create({
+          title: 'Ir a mi destino',
+          message: `¿Estas seguro que deseas ir a tu destino?, no podrás recoger a ningun otro estudiante en este viaje`,
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              handler: () => {
+             
+              }
+            },
+            { 
+              text: 'Si',
+              handler: () => {
+
+                  moment.locale('es'); //to make the date be in spanish  
+
+                 let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
+                 this.sendCoordsService.timeOfDestinationDriver(this.driverUid,today)
+
+                this.pickedUpUsers.forEach(user => {
+                 
+
+                  this.sendCoordsService.timeOfDestinationUser(user.userId,today)
+                });        
+
+                this.navCtrl.push('OnTripPage');
+              }
+            }
+          ]
+        });
+        alert.present();
+        
         
       } else {
         this.presentAlert('Viaje Incompleto','Por favor termina de recoger a todos los usuarios o cancélalos','Ok');
@@ -124,8 +162,9 @@ else {
             text: 'Eliminar',
             handler: () => {
               console.log('user eliminado');
+              this.sendCoordsService.eliminateOnTrip(userId);
               this.sendCoordsService.eliminatePickingUsers(this.driverUid,userId);
-              this.presentToast(`Haz eliminado a ${name} de tu viaje`,4000,'bottom')
+              this.presentToast(`Haz eliminado a ${name} de tu viaje`,3000,'bottom')
   
             }
           }

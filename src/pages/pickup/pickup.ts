@@ -1,7 +1,6 @@
 import { Component, NgZone, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
 
-import { ChattingPage } from '../chatting/chatting';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
@@ -9,8 +8,10 @@ import { authenticationService } from '../../services/driverauthentication.servi
 import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
+import * as moment from 'moment';
 
 declare var google; 
+@IonicPage()
 @Component({
   selector: 'page-pickup',
   templateUrl: 'pickup.html'
@@ -29,7 +30,8 @@ export class PickupPage {
   addressOrigin:any;
   updatelocation:any;
   useruid=this.AngularFireAuth.auth.currentUser.uid;
-
+  userDriver:any;
+  
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
     this.markers = [];
     //we get the info of the users with navParams
@@ -42,8 +44,13 @@ export class PickupPage {
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
 
+    this.SignUpService.getMyInfoDriver(this.useruid)
+		.subscribe(userDriver => {
+			this.userDriver = userDriver;
+			console.log(this.userDriver);
+		});
+   
   }
-  
   ionViewDidLoad(){
     
     this.loadMap();
@@ -66,9 +73,21 @@ export class PickupPage {
             zoomControl: false,
             mapTypeControl: false,
             scaleControl: false,
-            streetViewControl: true,
+            streetViewControl: false,
             rotateControl: false,
-            fullscreenControl: false
+            fullscreenControl: false,
+           
+            styles: [
+              {
+                featureType: 'poi',
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off'
+                  }
+                ]
+              }
+            ]
           
         }
 
@@ -191,16 +210,23 @@ export class PickupPage {
       this.clearMarkers();
       this.markers = [];
     }
-     chatting(){
-    this.navCtrl.push(ChattingPage);
-    }
+    
     notifyDriver(){
-      this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top')
+      this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }
     PickUp(){
+      this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price)
+
       this.sendCoordsService.eliminatePickingUsers(this.useruid,this.user.userId);
-      this.sendCoordsService.pickUp(this.useruid,this.user.userId,this.user)
-      this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top')
+      this.sendCoordsService.pickUp(this.useruid,this.user.userId,this.user);
+
+      this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
+      this.sendCoordsService.pickUpInstance(this.user.userId);
+      moment.locale('es');   
+      let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId)
+        this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate)
+
     }
     
     callUser(){

@@ -17,7 +17,6 @@ geoquery2:any;
 
 driverUid:any;
 driver:any;
-
 origin:any;
 destination:any;
 name:any;
@@ -81,15 +80,14 @@ keyEnteredDest(driverInfo){
    this.geoquery1.on("key_entered", function(key){
     console.log(key);
     setTimeout(()=>{
-      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).set({
+      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).update({
       origin:driverInfo.origin,
        destination:driverInfo.destination,
        name: driverInfo.name,
        lastname: driverInfo.lastname,
        phone: driverInfo.phone,
        userId: driverInfo.userId,
-       carModel: driverInfo.carModel,
-       plateNumber: driverInfo.plateNumber,
+       car:driverInfo.car,      
        price: driverInfo.price,
        note: driverInfo.note
        
@@ -118,8 +116,7 @@ keyEnteredOr(driverInfo){
       lastname: driverInfo.lastname,
       phone: driverInfo.phone,
       userId: driverInfo.userId,
-      carModel: driverInfo.carModel,
-      plateNumber: driverInfo.plateNumber,
+      car:driverInfo.car,
       price: driverInfo.price,
       note: driverInfo.note
       
