@@ -249,6 +249,7 @@ selectSearchResultMyPos(item){
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       this.markers.push( this.markerGeolocation);
       this.map.setCenter(results[0].geometry.location);
+      console.log(results[0].geometry.location)
       this.autocompleteMyPos.input=[item.description]
 
     }
@@ -284,7 +285,7 @@ selectSearchResultMyDest(item){
       this.autocompleteMyDest.input=[item.description]
       this.dragMarkerDest(this.markerDest,this.autocompleteMyDest)
       this.directionsDisplay.setMap(this.map);
-      this.myLatLngDest=results[0].geometry.location
+      this.myLatLngDest= results[0].geometry.location;
       this.calculateRoute(this.markerGeolocation.position,results[0].geometry.location);
      
      
@@ -372,7 +373,10 @@ geocodeLatLng(latLng,inputName) {
           this.geoInfo1 = this.myLatLng;
           console.log(this.geoInfo1);
 
-          this.geoInfo2 = this.myLatLngDest;
+          this.geoInfo2 = {
+            lat: this.myLatLngDest.lat(),
+            lng: this.myLatLngDest.lng()
+          }
           console.log(this.geoInfo2);
           
           // this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);

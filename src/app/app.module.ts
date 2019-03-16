@@ -48,6 +48,7 @@ import { HttpModule } from '@angular/http';
 import { ShowInfoCarPage } from '../pages/showinfocar/showinfocar';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SupportPage } from '../pages/support/support';
+import { sendFeedbackService } from '../services/sendFeedback.service';
 
 
 export const firebaseConfig = {
@@ -100,7 +101,9 @@ export const firebaseConfig = {
     priceService,
     Geofence,
     CallNumber,
-    MyApp
+    MyApp,
+    EmailComposer,
+    sendFeedbackService
 
   ]
 })

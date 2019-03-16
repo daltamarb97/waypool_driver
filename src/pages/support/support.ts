@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, AlertController } from 'ionic-angular';
 import { SignUpService } from '../../services/signup.service';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { sendFeedbackService } from '../../services/sendFeedback.service';
+
 
 @IonicPage()
 
@@ -16,10 +17,14 @@ export class SupportPage {
   info:string;
   today:any;
   userUid=this.AngularFireAuth.auth.currentUser.uid;
+  userEmail = this.AngularFireAuth.auth.currentUser.email;
   user:any={};
 email:any;
+
 experience:string;
-    constructor(public navCtrl: NavController,public navParams: NavParams, public AngularFireAuth:AngularFireAuth,private emailComposer: EmailComposer,private authenticationService: authenticationService,public SignupService:SignUpService) {
+
+
+    constructor(public navCtrl: NavController,public navParams: NavParams, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService, public sendFeedbackService: sendFeedbackService) {
     this.typeOfSituation=this.navParams.get('typeOfSituation')
     this.info=this.navParams.get('info')
 
@@ -30,33 +35,10 @@ experience:string;
     })
   }
     sendEmail() {
-      //send email
-    this.emailComposer.isAvailable().then((available: boolean) =>{
-      if(available) {
-        //if its available we can send the mail
-        
-          this.email = {
-            to:'waypooltec@gmail.com',
-            cc: `${this.user.email}${this.user.fixedemail}`,      
-            subject: this.typeOfSituation,
-            body: this.experience,
-            isHtml: true
-          };
-       
-          this.emailComposer.open(this.email);
-        // add alias
-      this.email.addAlias('gmail', 'com.google.android.gm');
-  
-  // then use alias when sending email
-      this.email.open({
-    app: 'gmail'
+      this.sendFeedbackService.sendFeedback(this.typeOfSituation, this.experience, this.user.name, this.user.lastname, this.user.phone, this.userUid);
+      this.navCtrl.pop()
+     }
     
-  })
-      }else{
-        console.log('hay un problema con el correo')
-      }
-     })
-    }
 
   
 

@@ -20,6 +20,7 @@ export class SignUpService {
 
     public async saveUser(user){
         this.afDB.database.ref('drivers/'+ user.userId).update(user);
+        this.afDB.database.ref('users/'+ user.userId).update(user);
 
     }
 

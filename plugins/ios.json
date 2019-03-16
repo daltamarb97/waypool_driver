@@ -36,6 +36,9 @@
     },
     "cordova-plugin-email-composer": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

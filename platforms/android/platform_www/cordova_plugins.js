@@ -93,6 +93,14 @@ module.exports = [
     "clobbers": [
       "cordova.plugins.email"
     ]
+  },
+  {
+    "id": "cordova-plugin-badge.Badge",
+    "file": "plugins/cordova-plugin-badge/www/badge.js",
+    "pluginId": "cordova-plugin-badge",
+    "clobbers": [
+      "cordova.plugins.notification.badge"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -107,7 +115,8 @@ module.exports.metadata =
   "call-number": "0.0.2",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-statusbar": "2.4.2",
-  "cordova-plugin-email-composer": "0.9.2"
+  "cordova-plugin-email-composer": "0.9.2",
+  "cordova-plugin-badge": "0.8.8"
 };
 // BOTTOM OF METADATA
 });

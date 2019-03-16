@@ -4,25 +4,27 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
     <div class="logo">
         <img src="../../assets/imgs/logo waypool-01 (1).png" alt="logo">
     </div>
 
-    <div class="bg-white login">
-        <div class="">
-            <ion-list class="form">
-                <ion-item>
+<div class="bg-white login">
+    <div class="">
+     <form [formGroup]="loginGroup" (ngSubmit)="logIn()">
+        <ion-list class="form">
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-input type="email"  text-right  formControlName="email" placeholder= "email universitario"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-input type="password" text-right  formControlName="password" placeholder= "Tú contraseña"></ion-input>
+            </ion-item>
+        </ion-list>
+        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!loginGroup.valid">ENTRAR</button>
+    </form>
 
-                    <ion-label></ion-label>
-                    <ion-input type="email"  text-right [(ngModel)]="email" placeholder= "email universitario"  text-right></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
-                    <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>
-                </ion-item>
-            </ion-list>
-            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn(user)">Iniciar Sésion</button>
             <ion-row style="padding-top: 8px;">
                 <ion-col (click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>
                 <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Olvidaste tu Contraseña??</strong></small></ion-col>
@@ -40,6 +42,5 @@
         </div>
 
     </div>
-    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> 
-
+    <!-- <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p>  -->
 </ion-content>

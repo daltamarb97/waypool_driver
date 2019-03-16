@@ -37,6 +37,9 @@
     "cordova-plugin-email-composer": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

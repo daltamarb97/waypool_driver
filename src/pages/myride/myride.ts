@@ -36,10 +36,10 @@ userDriver:any;
       
         this.pickingUsers = user;
         console.log(this.pickingUsers);
-        
-      
-     
+          
     });
+
+
     this.sendUsersService.getPickUpUsers(this.driverUid)
     .subscribe( user => {
     

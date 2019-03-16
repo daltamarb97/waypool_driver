@@ -81,5 +81,28 @@ constructor(public afDB: AngularFireDatabase){
     return  this.afDB.list('/drivers/'+ userUid +'/recordTrips/').valueChanges();
 
    }
+
+   public badgeTrue(userUid){
+       this.afDB.database.ref('/drivers/'+ userUid).update({
+           badgePicking: true
+       })
+   }
+
+   public badgeFalse(userUid){
+    this.afDB.database.ref('/drivers/'+ userUid).update({
+        badgePicking: false
+    })
+}
+public badgeTrueOntrip(userUid){
+    this.afDB.database.ref('/drivers/'+ userUid).update({
+        badgeOntrip: true
+    })
+}
+
+public badgeFalseOntrip(userUid){
+ this.afDB.database.ref('/drivers/'+ userUid).update({
+     badgeOntrip: false
+ })
+}
 }
 

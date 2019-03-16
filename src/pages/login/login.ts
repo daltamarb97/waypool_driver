@@ -5,6 +5,7 @@ import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angu
 
 import { authenticationService } from '../../services/driverauthentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 // import * as firebase from 'firebase';
 // import { SignUpService } from '../../services/signup.service';
 
@@ -17,15 +18,19 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class LoginPage {
 
     email:string = '';
-    password:string = null;
+    password:string;
     auth = this.AngularFireAuth.auth;
     receivedUser;
+    private loginGroup: FormGroup;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
-  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder) {
+    this.loginGroup = this.formBuilder.group({
+        email: ["", Validators.required],
+        password: ["", Validators.required]
+    })
+}
 
-
-  }
   
     signup(){
         this.navCtrl.push('SignupPage');
@@ -55,36 +60,40 @@ export class LoginPage {
     
     logIn(){      
         this.receivedUser = this.navParams.data;
-        this.authenticationService.loginWithEmail(this.email, this.password).then((data) => {
-            console.log(data);
-            if(data.user.emailVerified == false){
+
+        let email = this.loginGroup.controls['email'].value;
+        let password = this.loginGroup.controls['password'].value;
+
+            this.authenticationService.loginWithEmail(email, password).then((data) => {
+                console.log(data);
+                if(data.user.emailVerified == false){
+                    const alert = this.alertCtrl.create({
+                        title: 'Oops!',
+                        subTitle: 'por favor verifica tu email',
+                        buttons: ['OK']
+                      });
+                      alert.present();  
+                }else{
+                    let metadata = this.auth.currentUser.metadata;
+                    if(metadata.creationTime == metadata.lastSignInTime){
+                        console.log(metadata.creationTime);
+                        console.log(metadata.lastSignInTime);
+    
+                        this.navCtrl.push('CarRegistrationPage');
+    
+                    }else{
+                        this.navCtrl.push('TabsPage');
+                    }
+                    this.authenticationService.getStatus;  
+                };
+            }).catch((error) => {
                 const alert = this.alertCtrl.create({
                     title: 'Oops!',
-                    subTitle: 'por favor verifica tu email',
+                    subTitle: 'El usuario o la contraseña están incorrectas',
                     buttons: ['OK']
                   });
-                  alert.present();  
-            }else{
-                let metadata = this.auth.currentUser.metadata;
-                if(metadata.creationTime == metadata.lastSignInTime){
-                    console.log(metadata.creationTime);
-                    console.log(metadata.lastSignInTime);
-
-                    this.navCtrl.push('TabsPage');//aqui va registration car, no tabspge
-
-                }else{
-                    this.navCtrl.push('TabsPage');
-                }
-                this.authenticationService.getStatus;  
-            };
-        }).catch((error) => {
-            const alert = this.alertCtrl.create({
-                title: 'Oops!',
-                subTitle: 'El usuario o la contraseña están incorrectas',
-                buttons: ['OK']
-              });
-              alert.present();
-            console.log(error);
-        });
-    }
+                  alert.present();
+                console.log(error);
+            });
+        }
 }

@@ -50,6 +50,7 @@
 		0BE71CB1CF6746B8B4446919 /* APPEmailComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = D11CE7FEFB2843E0A4E1FB74 /* APPEmailComposer.m */; };
 		9880FD35687B4D0E9111D78A /* APPEmailComposerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A5EBF381E8468CA4F691BC /* APPEmailComposerImpl.m */; };
 		9A2C5702EEA24A93993ACD23 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCD219903E343DF9FE16D26 /* MessageUI.framework */; };
+		9BD366C860754A6C9B697BCD /* APPBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 471C637AD4384730A10093CA /* APPBadge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,8 @@
 		5F4FBC9EE75A4B3D93B79033 /* APPEmailComposer.h */ = {isa = PBXFileReference; name = "APPEmailComposer.h"; path = "cordova-plugin-email-composer/APPEmailComposer.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		164E8818270F41CFAC209CCA /* APPEmailComposerImpl.h */ = {isa = PBXFileReference; name = "APPEmailComposerImpl.h"; path = "cordova-plugin-email-composer/APPEmailComposerImpl.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		4CCD219903E343DF9FE16D26 /* MessageUI.framework */ = {isa = PBXFileReference; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		471C637AD4384730A10093CA /* APPBadge.m */ = {isa = PBXFileReference; name = "APPBadge.m"; path = "cordova-plugin-badge/APPBadge.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		878BB8C59FFD4257BE612358 /* APPBadge.h */ = {isa = PBXFileReference; name = "APPBadge.h"; path = "cordova-plugin-badge/APPBadge.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +332,8 @@
 				52A5EBF381E8468CA4F691BC /* APPEmailComposerImpl.m */,
 				5F4FBC9EE75A4B3D93B79033 /* APPEmailComposer.h */,
 				164E8818270F41CFAC209CCA /* APPEmailComposerImpl.h */,
+				471C637AD4384730A10093CA /* APPBadge.m */,
+				878BB8C59FFD4257BE612358 /* APPBadge.h */,
 			);
 			name = Plugins;
 			path = "MyApp/Plugins";
@@ -469,6 +474,7 @@
 				696FB47472B44A44B3653B1E /* CDVStatusBar.m in Sources */,
 				0BE71CB1CF6746B8B4446919 /* APPEmailComposer.m in Sources */,
 				9880FD35687B4D0E9111D78A /* APPEmailComposerImpl.m in Sources */,
+				9BD366C860754A6C9B697BCD /* APPBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
