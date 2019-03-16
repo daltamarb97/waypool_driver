@@ -1,17 +1,25 @@
 <ion-content>
   <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
   <ion-card>
-      <h6 class="text-theme">¿para donde vas?</h6>
+      <h6 class="text-theme">¿Cuál es tu destino? (IMPORTANTE)</h6>
       <ion-card-content>
           <div class="ride-detail">
-            <button class="btn bg-theme text-white rounded" (click)="setGeoFireDestination()" [ngStyle]="{'background-color': buttonColor}">
+            <button class="btn bg-light text-theme rounded" (click)="setGeoFireDestination()" [ngStyle]="{'background-color': buttonColor}">
                 Casa
               <ion-icon name="home"></ion-icon>
             </button>
-            <button class="btn bg-theme text-white rounded" (click)="setGeoFireOrigin()" [ngStyle]="{'background-color': buttonColor2}">
+            <button class="btn bg-light text-theme rounded" (click)="setGeoFireOrigin()" [ngStyle]="{'background-color': buttonColor2}">
                   Universidad
                 <ion-icon name="book"></ion-icon>
               </button>
+              <button class="btn bg-light text-theme rounded" (click)="setGeoFireOrigin()" [ngStyle]="{'background-color': buttonColor3}">
+                C. Jurídico Uninorte
+              
+            </button>
+            <button class="btn bg-light text-theme rounded" (click)="setGeoFireOrigin()"[ngStyle]="{'background-color': buttonColor4}">
+              Hospital Uninorte
+            <ion-icon name="book"></ion-icon>
+          </button>
           </div>
       </ion-card-content>
 

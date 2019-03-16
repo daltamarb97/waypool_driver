@@ -100,6 +100,11 @@ export class PickupPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
+        icon: {         url: "/assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
+      
         
       });
       this.markers.push(marker);   
@@ -123,14 +128,17 @@ export class PickupPage {
   //   this.setMapOnAll(this.map); //nose de esta funcion
   // });   
   }
-   geocodeAddress(originDriver) {
-    this.geocoder.geocode({'address':JSON.stringify(originDriver)}, (results, status) =>  {
+   geocodeAddress(userOrigin) {
+    this.geocoder.geocode({'address':JSON.stringify(userOrigin)}, (results, status) =>  {
       if (status == 'OK') {
      
         
         var marker = new google.maps.Marker({
           map: this.map,
-          position: results[0].geometry.location
+          position: results[0].geometry.location,
+          icon: {         url: "/assets/imgs/marker-destination2.png",
+          scaledSize: new google.maps.Size(90, 90)     
+        }
         });
       
         this.directionsDisplay.setMap(this.map);

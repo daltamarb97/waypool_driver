@@ -26,8 +26,11 @@ export class ConfirmdirectionPage {
   userUid=this.AngularFireAuth.auth.currentUser.uid;
   geoinfo1;
   geoinfo2;
-  buttonColor:string = '#0fc874';
-  buttonColor2:string = '#0fc874';
+  buttonColor:string = '#3fb1df';
+  buttonColor2:string = '#3fb1df';
+  buttonColor3:string = '#3fb1df';
+  buttonColor4:string = '#3fb1df';
+
   driverInfo;
 
   constructor(public navCtrl: NavController, public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {

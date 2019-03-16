@@ -144,7 +144,11 @@ export class FindridePage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
-        draggable:true
+        draggable:true,
+        icon: {         url: "/assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
       });
       this.markers.push(this.markerGeolocation);
       
@@ -244,13 +248,20 @@ selectSearchResultMyPos(item){
         this.markerGeolocation = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
-        draggable: true
+        draggable: true,
+        icon: {         url: "/assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      },
+      animation: google.maps.Animation.DROP,
+
       });
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       this.markers.push( this.markerGeolocation);
       this.map.setCenter(results[0].geometry.location);
       this.autocompleteMyPos.input=[item.description]
-
+      this.autocompleteMyDest.input=''
+      this.directionsDisplay.setMap(null)
     }
   })
   
@@ -261,6 +272,9 @@ selectSearchResultMyPos(item){
 
 selectSearchResultMyDest(item){
   this.autocompleteItems2=[];
+  if(this.markerDest!==undefined){
+    this.markerDest.setMap(null)
+  }
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
 
@@ -274,7 +288,12 @@ selectSearchResultMyDest(item){
        this.markerDest = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
-        draggable:true       
+        animation: google.maps.Animation.DROP,
+        draggable:true,
+           icon: {         url: "/assets/imgs/marker-destination2.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
       });
       console.log(position)
       this.map.fitBounds(this.bounds);     
@@ -372,7 +391,7 @@ geocodeLatLng(latLng,inputName) {
           this.geoInfo1 = this.myLatLng;
           console.log(this.geoInfo1);
 
-          this.geoInfo2 = this.myLatLngDest;
+          this.geoInfo2 = {lat:this.myLatLngDest.lat() , lng:this.myLatLngDest.lng()};
           console.log(this.geoInfo2);
           
           // this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);

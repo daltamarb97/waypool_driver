@@ -143,12 +143,20 @@ page-myride {
         color: #bfbfbf;
         text-transform: none;
     }
-    deleteIcon{
+    .deleteIcon{
         font-weight: 900
     }
     .love{
         display: flex;
         justify-content: center;
         color: #4d5853
+    }
+    .imagenViajes{
+        color: #777
+    }
+    .imagenTitle{
+        color: #737373;
+        text-align: center;
+        position: absolute;
     }
 }

@@ -1,14 +1,14 @@
 webpackJsonp([16],{
 
-/***/ 590:
+/***/ 589:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListridePageModule", function() { return ListridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(742);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__listride__ = __webpack_require__(741);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var LoginPageModule = /** @class */ (function () {
-    function LoginPageModule() {
+var ListridePageModule = /** @class */ (function () {
+    function ListridePageModule() {
     }
-    LoginPageModule = __decorate([
+    ListridePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_2__listride__["a" /* ListridePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__listride__["a" /* ListridePage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
+                __WEBPACK_IMPORTED_MODULE_2__listride__["a" /* ListridePage */]
             ]
         })
-    ], LoginPageModule);
-    return LoginPageModule;
+    ], ListridePageModule);
+    return ListridePageModule;
 }());
 
-//# sourceMappingURL=login.module.js.map
+//# sourceMappingURL=listride.module.js.map
 
 /***/ }),
 
-/***/ 742:
+/***/ 741:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__ = __webpack_require__(333);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,95 +67,120 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+// import { RiderprofilePage } from '../riderprofile/riderprofile';
+// import { Observable } from 'rxjs';
+// import { AngularFireDatabase} from 'angularfire2/database';
 
 
-// import * as firebase from 'firebase';
-// import { SignUpService } from '../../services/signup.service';
-var LoginPage = /** @class */ (function () {
-    // userFirebase = this.AngularFireAuth.auth.currentUser;
-    function LoginPage(navCtrl, authenticationService, alertCtrl, AngularFireAuth, navParams) {
-        this.navCtrl = navCtrl;
-        this.authenticationService = authenticationService;
-        this.alertCtrl = alertCtrl;
-        this.AngularFireAuth = AngularFireAuth;
-        this.navParams = navParams;
-        this.email = '';
-        this.password = null;
-        this.auth = this.AngularFireAuth.auth;
-    }
-    LoginPage.prototype.signup = function () {
-        this.navCtrl.push('SignupPage');
-    };
-    ;
-    LoginPage.prototype.resetPassword = function (email) {
-        if (this.email == '') {
-            var alert_1 = this.alertCtrl.create({
-                title: 'no hay ningun email',
-                subTitle: 'ingresa un email para resetear tu contraseña',
-                buttons: ['OK']
-            });
-            alert_1.present();
-            console.log("reset password email hasn't been sent");
-        }
-        else {
-            this.auth.sendPasswordResetEmail(this.email);
-            var alert_2 = this.alertCtrl.create({
-                title: 'revisa tu email',
-                subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
-                buttons: ['OK']
-            });
-            alert_2.present();
-            console.log("reset password email has been sent");
-        }
-        ;
-    };
-    ;
-    LoginPage.prototype.logIn = function () {
+
+
+
+
+
+var ListridePage = /** @class */ (function () {
+    function ListridePage(navCtrl, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, alertCtrl, geofireService, afDB, instances, sendUsersService, toastCtrl, geoFireService) {
         var _this = this;
-        this.receivedUser = this.navParams.data;
-        this.authenticationService.loginWithEmail(this.email, this.password).then(function (data) {
-            console.log(data);
-            if (data.user.emailVerified == false) {
-                var alert_3 = _this.alertCtrl.create({
-                    title: 'Oops!',
-                    subTitle: 'por favor verifica tu email',
-                    buttons: ['OK']
-                });
-                alert_3.present();
-            }
-            else {
-                var metadata = _this.auth.currentUser.metadata;
-                if (metadata.creationTime == metadata.lastSignInTime) {
-                    console.log(metadata.creationTime);
-                    console.log(metadata.lastSignInTime);
-                    _this.navCtrl.push('TabsPage'); //aqui va registration car, no tabspge
-                }
-                else {
-                    _this.navCtrl.push('TabsPage');
-                }
-                _this.authenticationService.getStatus;
-            }
-            ;
-        }).catch(function (error) {
-            var alert = _this.alertCtrl.create({
-                title: 'Oops!',
-                subTitle: 'El usuario o la contraseña están incorrectas',
-                buttons: ['OK']
-            });
-            alert.present();
-            console.log(error);
+        this.navCtrl = navCtrl;
+        this.SignUpService = SignUpService;
+        this.sendCoordsService = sendCoordsService;
+        this.modalCtrl = modalCtrl;
+        this.AngularFireAuth = AngularFireAuth;
+        this.alertCtrl = alertCtrl;
+        this.geofireService = geofireService;
+        this.afDB = afDB;
+        this.instances = instances;
+        this.sendUsersService = sendUsersService;
+        this.toastCtrl = toastCtrl;
+        this.geoFireService = geoFireService;
+        this.locationOrigin = [];
+        this.locationDestination = [];
+        this.driver = this.AngularFireAuth.auth.currentUser.uid;
+        this.usersFindingTrip = [];
+        this.user = [];
+        this.usersOnListRide = [];
+        this.text = 'Aceptar viaje';
+        //get origin from driver
+        this.sendCoordsService.getOrigin(this.driver)
+            .subscribe(function (origin) {
+            _this.locationOrigin = origin;
+            console.log(_this.locationOrigin[0]);
+        });
+        //get destination from driver
+        this.sendCoordsService.getDestination(this.driver)
+            .subscribe(function (destination) {
+            _this.locationDestination = destination;
+            console.log(destination);
+        });
+        this.SignUpService.getMyInfoDriver(this.driver)
+            .subscribe(function (userDriver) {
+            _this.userDriver = userDriver;
+            console.log(_this.userDriver);
+        });
+    }
+    ListridePage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.subscribe = this.geofireService.getUsersListRide()
+            .subscribe(function (user) {
+            _this.usersFindingTrip = user;
         });
     };
-    LoginPage = __decorate([
+    ListridePage.prototype.deleteUser = function (userId, nameUser) {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Eliminar Usuario',
+            message: "\u00BFEstas que deseas eliminar a este a " + nameUser + " de tus posibles compa\u00F1eros de viaje?",
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('holi');
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    handler: function () {
+                        console.log('user eliminado');
+                        // setTimeout(()=>{
+                        //   //REVISAR
+                        //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
+                        //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
+                        // }, 600)
+                        _this.sendUsersService.removeUsersOnListRide(_this.driver, userId);
+                        console.log('remove on list');
+                        _this.sendUsersService.removeUsersOnPickingUsers(_this.driver, userId);
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    ListridePage.prototype.confirmpopup = function (user) {
+        var modal = this.modalCtrl.create('ConfirmpopupPage', { user: user });
+        modal.present();
+        // this.usersFindingTrip.pop();
+        // this.subscribe.unsubscribe();
+    };
+    ListridePage.prototype.help = function () {
+        var toast = this.toastCtrl.create({
+            message: 'Aquí te saldrán los estudiantes que te hayan escogido, ahora te toca escoger a quienes y cuantos quieres llevar (máximo 4), a los que no quieras llevar, elimínalos',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
+    };
+    ListridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/login/login.html"*/'<ion-header class="transparent">\n    <ion-navbar>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content >\n    <div class="logo">\n        <img src="../../assets/imgs/logo waypool-01 (1).png" alt="logo">\n    </div>\n\n    <div class="bg-white login">\n        <div class="">\n            <ion-list class="form">\n                <ion-item>\n\n                    <ion-label></ion-label>\n                    <ion-input type="email"  text-right [(ngModel)]="email" placeholder= "email universitario"  text-right></ion-input>\n                </ion-item>\n                <ion-item>\n                    <ion-label></ion-label>\n                    <ion-input type="password" text-right  [(ngModel)]="password" placeholder= "Tú contraseña"  text-right></ion-input>\n                </ion-item>\n            </ion-list>\n            <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn(user)">Iniciar Sésion</button>\n            <ion-row style="padding-top: 8px;">\n                <ion-col (click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>\n                <ion-col text-right (click)="resetPassword(email)"><small>Forgot <strong class="text-theme">Olvidaste tu Contraseña??</strong></small></ion-col>\n            </ion-row>\n            <!-- <p text-center class="option-login"><span>OR CONTINUE WITH</span></p> -->\n            <!-- <ion-row>\n\n                <ion-col col-6><button ion-button full class="bg-blue text-white btn rounded small"><img src="assets/imgs/fb_white.png">\n                    <span>Facebook</span></button></ion-col>\n                <ion-col col-6><button ion-button full class="bg-white text-dark btn rounded small"><img src="assets/imgs/google.png">\n                    <span>Google&nbsp;&nbsp;</span></button></ion-col>\n\n            </ion-row> -->\n\n        </div>\n\n    </div>\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/login/login.html"*/
+            selector: 'page-listride',template:/*ion-inline-start:"D:\Users\Daniel\Documents\WaypoolApp\merge1\waypool_driver\src\pages\listride\listride.html"*/'<ion-header class="bg-theme title">\n\n    <ion-navbar >\n\n        <ion-title >USUARIOS DISPONIBLES\n\n\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content class="bg-light" class="hideLongText">\n\n    <ion-row class="center-align bg-white flow-ride">\n\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n\n            <h2>Mi Origen:</h2> {{origin}}\n\n\n\n        </ion-col>\n\n        <ion-col col-2 text-center>\n\n            <img src="assets/imgs/baseline_compare_arrows_black_36dp.png">\n\n        </ion-col>\n\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n\n            <h2>Mi Destino:</h2> {{destination}}\n\n        </ion-col>\n\n\n\n    </ion-row>\n\n    <div class="iconHelp">\n\n        <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>\n\n\n\n    </div>\n\n\n\n    <ion-card *ngFor = "let user of usersFindingTrip">\n\n        \n\n                <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2>{{user.name |titlecase}} {{user.lastname |titlecase | slice:0:1}}.\n\n            \n\n                                <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n\n                            </h2>\n\n                        </div>\n\n                        <div class="more">\n\n                            <ion-icon name="close-circle"  (click)="deleteUser(user.userId, user.name)"></ion-icon>\n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p  >\n\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                            <p > \n\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                        </div>\n\n                        <ion-row class="center-align">\n\n                            <!-- <ion-col col-3 class="detail-text text-theme">\n\n                                3 seats\n\n                            </ion-col> -->\n\n                            <ion-col col-2 class="detail-text text-theme">\n\n                            </ion-col>\n\n                            <ion-col col-4 class="detail-text text-theme">\n\n                            \n\n                            </ion-col>\n\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                                <button class="btn bg-theme rounded full text-white" (click)=confirmpopup(user) >Aceptar Usuario</button>\n\n                            </ion-col>\n\n                        </ion-row>\n\n                    </ion-card-content>\n\n               \n\n        \n\n        \n\n    </ion-card>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\Users\Daniel\Documents\WaypoolApp\merge1\waypool_driver\src\pages\listride\listride.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
-    ], LoginPage);
-    return LoginPage;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__["AngularFireDatabase"]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */]) === "function" && _m || Object])
+    ], ListridePage);
+    return ListridePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 }());
 
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=listride.js.map
 
 /***/ })
 

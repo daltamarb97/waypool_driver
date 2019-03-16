@@ -19,7 +19,10 @@ import * as moment from 'moment';
   templateUrl: 'myride.html'
 })
 export class MyridePage {
-  pickingUsers:any = [];
+
+ hideImage:boolean = false;
+
+ pickingUsers:any = [];
  pickedUpUsers:any = [];
 
 ride: string = "today";
@@ -36,7 +39,7 @@ userDriver:any;
       
         this.pickingUsers = user;
         console.log(this.pickingUsers);
-        
+       
       
      
     });
@@ -50,7 +53,12 @@ userDriver:any;
     this.SignUpService.getMyInfoDriver(this.driverUid)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
-			console.log(this.userDriver);
+      console.log(this.userDriver);
+      if(this.pickingUsers.length == 0 && this.pickedUpUsers.length == 0 ){
+        this.hideImage = !this.hideImage;
+    } else {
+      console.log("hola")
+    }
 		});
    
   }
@@ -74,16 +82,7 @@ else {
     this.navCtrl.push('PickupPage',{user});
     }
     goToMyDestination(){
-      this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).subscribe(user=>{
-        this.userInfo = user;
-        if(this.userInfo.geofireOr == true){
-          this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
-          this.geofireServices.cancelGeoqueryOr()
-        }else{
-          this.geofireServices.deleteUserGeofireDest(this.userInfo.userId);
-          this.geofireServices.cancelGeoqueryDest()
-        }
-      })
+     
       if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
         let alert = this.alertCtrl.create({
           title: 'Ir a mi destino',
@@ -99,7 +98,16 @@ else {
             { 
               text: 'Si',
               handler: () => {
-
+                this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).subscribe(user=>{
+                  this.userInfo = user;
+                  if(this.userInfo.geofireOr == true){
+                    this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
+                    this.geofireServices.cancelGeoqueryOr()
+                  }else{
+                    this.geofireServices.deleteUserGeofireDest(this.userInfo.userId);
+                    this.geofireServices.cancelGeoqueryDest()
+                  }
+                })
                   moment.locale('es'); //to make the date be in spanish  
 
                  let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date

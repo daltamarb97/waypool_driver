@@ -3,7 +3,6 @@
         <ion-title class="text-center">MY RIDE
            
             <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> 
-            <ion-icon name="md-locate" class="text-white" ></ion-icon>
         </ion-title>
 
     </ion-navbar>
@@ -11,13 +10,18 @@
 </ion-header>
 
 <ion-content class="bg-light"> 
-        
+    <div *ngIf="hideImage">
+            <h6 class="imagenTitle"> Ups... No estás en ningún viaje actualmente, cura tu soledad con waypool!!! :D</h6>
+                
+        <img class="imagenViajes"  src="assets/imgs/imagenViajes.png" alt="logo">
+      
+    </div>
 
         <ion-list >
             <ion-card *ngFor = "let user of pickingUsers">
                 <ion-item>
                     <ion-avatar item-start>
-                        <img src="assets/imgs/face-1.jpg">
+                        <img src="assets/imgs/userPicture.png">
                     </ion-avatar>
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.

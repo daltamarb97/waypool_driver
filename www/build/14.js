@@ -1,14 +1,14 @@
 webpackJsonp([14],{
 
-/***/ 603:
+/***/ 591:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OnTripPageModule", function() { return OnTripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MorePageModule", function() { return MorePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__onTrip__ = __webpack_require__(754);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(743);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,44 +18,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var OnTripPageModule = /** @class */ (function () {
-    function OnTripPageModule() {
+var MorePageModule = /** @class */ (function () {
+    function MorePageModule() {
     }
-    OnTripPageModule = __decorate([
+    MorePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */]
+                __WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */]
             ]
         })
-    ], OnTripPageModule);
-    return OnTripPageModule;
+    ], MorePageModule);
+    return MorePageModule;
 }());
 
-//# sourceMappingURL=onTrip.module.js.map
+//# sourceMappingURL=more.module.js.map
 
 /***/ }),
 
-/***/ 754:
+/***/ 743:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OnTripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MorePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(329);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,247 +65,57 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+// import { UploadPage } from '../upload/upload';
 
 
 
 
-
-
-
-var OnTripPage = /** @class */ (function () {
-    function OnTripPage(navCtrl, alertCtrl, sendUsersService, SignupService, toastCtrl, callNumber, navParams, SignUpService, authenticationService, geolocation, zone, sendCoordsService, AngularFireAuth) {
+var MorePage = /** @class */ (function () {
+    function MorePage(navCtrl, modalCtrl, AngularFireAuth, authenticationService, SignupService) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.alertCtrl = alertCtrl;
-        this.sendUsersService = sendUsersService;
-        this.SignupService = SignupService;
-        this.toastCtrl = toastCtrl;
-        this.callNumber = callNumber;
-        this.navParams = navParams;
-        this.SignUpService = SignUpService;
-        this.authenticationService = authenticationService;
-        this.geolocation = geolocation;
-        this.zone = zone;
-        this.sendCoordsService = sendCoordsService;
+        this.modalCtrl = modalCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.directionsService = null;
-        this.directionsDisplay = null;
-        this.bounds = null;
-        this.pickedUpUsers = [];
-        this.useruid = this.AngularFireAuth.auth.currentUser.uid;
-        this.markers = [];
-        //we get the info of the users with navParams
-        this.directionsService = new google.maps.DirectionsService();
-        this.directionsDisplay = new google.maps.DirectionsRenderer({
-            suppressMarkers: true,
-        });
-        this.bounds = new google.maps.LatLngBounds();
-        this.geocoder = new google.maps.Geocoder();
-        this.sendUsersService.getPickUpUsers(this.useruid)
-            .subscribe(function (user) {
-            _this.pickedUpUsers = user;
-            console.log(_this.pickedUpUsers);
-        });
-        this.SignUpService.getMyInfoDriver(this.useruid)
-            .subscribe(function (userDriver) {
-            _this.driver = userDriver;
-            console.log(_this.driver);
+        this.authenticationService = authenticationService;
+        this.SignupService = SignupService;
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.user = {};
+        this.SignupService.getMyInfoForProfile(this.userUid).subscribe(function (user) {
+            _this.user = user;
+            console.log(_this.user);
         });
     }
-    OnTripPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.sendCoordsService.getDestination(this.useruid)
-            .subscribe(function (destination) {
-            _this.destinationOnTrip = destination;
-            console.log(_this.destinationOnTrip);
-            _this.loadMap();
-        });
+    MorePage.prototype.profile = function () {
+        this.navCtrl.push('ProfilePage');
     };
-    OnTripPage.prototype.loadMap = function () {
-        // this gets current position and set the camera of the map and put a marker in your location
-        var _this = this;
-        this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(function (position) {
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            var mapOptions = {
-                center: latLng,
-                zoom: 17,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                zoomControl: false,
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: true,
-                rotateControl: false,
-                fullscreenControl: false,
-                styles: [
-                    {
-                        featureType: 'poi',
-                        elementType: 'labels.icon',
-                        stylers: [
-                            {
-                                visibility: 'off'
-                            }
-                        ]
-                    }
-                ]
-            };
-            _this.myLatLng = { lat: position.coords.latitude, lng: position.coords.longitude };
-            //creates the map and give options
-            _this.map = new google.maps.Map(_this.mapElement.nativeElement, mapOptions);
-            _this.geocodeLatLng(latLng);
-            _this.geocodeAddress(_this.destinationOnTrip);
-            var marker = new google.maps.Marker({
-                map: _this.map,
-                animation: google.maps.Animation.DROP,
-                position: latLng,
-            });
-            _this.markers.push(marker);
-        }, function (err) {
-            console.log(err);
-        });
-        //transform the position of the user into an adress
+    MorePage.prototype.showInfoCars = function () {
+        var modal = this.modalCtrl.create('ShowInfoCarPage', { user: this.user });
+        modal.present();
     };
-    // watch: track the position of the user
-    //   let watch = this.geolocation.watchPosition();
-    //   watch.subscribe((data) => {
-    //   this.deleteMarkers();
-    //   this.updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
-    //   this.geocodeLatLng(this.updatelocation);
-    //   console.log(this.updatelocation)
-    //   this.sendCoordsService.updateGeolocationOrigin(this.useruid,this.addressOrigin)
-    //   this.addMarker(this.updatelocation);
-    //   this.setMapOnAll(this.map); //nose de esta funcion
-    // });   
-    OnTripPage.prototype.geocodeAddress = function (destinationDriver) {
-        var _this = this;
-        this.geocoder.geocode({ 'address': JSON.stringify(destinationDriver) }, function (results, status) {
-            if (status == 'OK') {
-                var marker = new google.maps.Marker({
-                    map: _this.map,
-                    position: results[0].geometry.location
-                });
-                _this.directionsDisplay.setMap(_this.map);
-                _this.calculateRoute(results[0].geometry.location);
-            }
-            else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
+    MorePage.prototype.terms = function () {
+        this.navCtrl.push('TermsPage');
     };
-    OnTripPage.prototype.geocodeLatLng = function (latLng) {
-        var _this = this;
-        this.geocoder.geocode({ 'location': latLng }, function (results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    _this.addressOrigin = results[0].formatted_address;
-                }
-                else {
-                    alert('No results found');
-                }
-            }
-            else {
-                alert('Geocoder failed due to: ' + status);
-            }
-        });
+    MorePage.prototype.help = function () {
+        this.navCtrl.push('HelpPage');
     };
-    OnTripPage.prototype.calculateRoute = function (destinationOnTrip) {
-        //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
-        var _this = this;
-        this.bounds.extend(this.myLatLng);
-        this.map.fitBounds(this.bounds);
-        this.directionsService.route({
-            origin: new google.maps.LatLng(this.myLatLng.lat, this.myLatLng.lng),
-            destination: destinationOnTrip,
-            travelMode: google.maps.TravelMode.DRIVING,
-            avoidTolls: true
-        }, function (response, status) {
-            //render
-            if (status === google.maps.DirectionsStatus.OK) {
-                _this.directionsDisplay.setDirections(response);
-            }
-            else {
-                alert('Could not display directions due to: ' + status);
-            }
-        });
+    MorePage.prototype.logout = function () {
+        this.authenticationService.logOut();
+        console.log(__WEBPACK_IMPORTED_MODULE_3_firebase__["auth"]().currentUser);
+        this.navCtrl.setRoot('LoginPage');
     };
-    OnTripPage.prototype.addMarker = function (location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: this.map,
-        });
-        this.markers.push(marker);
+    MorePage.prototype.upload = function () {
+        this.navCtrl.push('CarRegistrationPage');
     };
-    OnTripPage.prototype.setMapOnAll = function (map) {
-        for (var i = 0; i < this.markers.length; i++) {
-            this.markers[i].setMap(map);
-        }
-    };
-    OnTripPage.prototype.clearMarkers = function () {
-        this.setMapOnAll(null);
-    };
-    OnTripPage.prototype.deleteMarkers = function () {
-        this.clearMarkers();
-        this.markers = [];
-    };
-    OnTripPage.prototype.endTrip = function () {
-        var _this = this;
-        //let user rate the trip
-        this.navCtrl.push('RatetripPage', { user: this.driver });
-        this.pickedUpUsers.forEach(function (user) {
-            // save trip in every record of every users
-            _this.sendCoordsService.recordTripOnUser(user.userId, user);
-            _this.sendCoordsService.endTripUserPickingUsers(user.userId);
-            _this.sendCoordsService.endTripUserPickedUpUsers(user.userId);
-            _this.sendCoordsService.endTripUserOnTripInstance(user.userId);
-            _this.sendCoordsService.endTripUserPickupInstance(user.userId);
-            _this.sendCoordsService.endTripUserDriverListRide(user.userId);
-        });
-        //Save trip into RecordTrip on User & Driver
-        this.sendCoordsService.recordTripOnWaypool(this.driver.trips);
-        this.sendCoordsService.recordTripOnDriver(this.useruid, this.driver.trips);
-        //End trip into RecordTrip on User & Driver
-        this.sendCoordsService.endTripDriverPickingUsers(this.useruid);
-        this.sendCoordsService.endTripDriverPickedUpUsers(this.useruid);
-        this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!', 'OK');
-    };
-    OnTripPage.prototype.presentToast = function (message, duration, position) {
-        var toast = this.toastCtrl.create({
-            message: message,
-            duration: duration,
-            position: position
-        });
-        toast.present();
-    };
-    OnTripPage.prototype.presentAlert = function (title, text, button) {
-        var alert = this.alertCtrl.create({
-            title: title,
-            subTitle: text,
-            buttons: [button]
-        });
-        alert.present();
-    };
-    OnTripPage.prototype.help = function () {
-        var toast = this.toastCtrl.create({
-            message: 'En esta página podrás dirigirte hacia la universidad y ver en el mapa el camino que puedes tomar, cuando hayas llegado presiona el botón finalizar viaje y cuentanos tu experiencia con Waypool.',
-            showCloseButton: true,
-            closeButtonText: 'OK',
-            position: 'top'
-        });
-        toast.present();
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
-    ], OnTripPage.prototype, "mapElement", void 0);
-    OnTripPage = __decorate([
+    MorePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ontrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/onTrip/onTrip.html"*/'<ion-header class="bg-theme">\n    <ion-navbar hideBackButton >\n        <ion-title>IR A MI DESTINO\n                <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n        <ion-card class="cardOnTrip">\n                \n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p>\n                            <span class="icon-location bg-theme"></span>{{addressOrigin}}</p>\n                        <p>\n                            <span class="icon-location bg-yellow"></span>{{destinationOnTrip}}</p>\n                    </div>\n                    <ion-row class="endTripButton">\n                        \n                        \n                        <ion-col col-5>\n                            <button navPop class="btn bg-theme rounded full text-white" (click)="endTrip()" >Finalizar viaje</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>\n               \n            </ion-card>\n    <div #map id="map"></div>  \n   \n\n\n   \n\n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/onTrip/onTrip.html"*/
+            selector: 'page-more',template:/*ion-inline-start:"D:\Users\Daniel\Documents\WaypoolApp\merge1\waypool_driver\src\pages\more\more.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">PERFIL</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="bg-light" >\n\n    <ion-item>\n\n        \n\n                <ion-avatar item-start>\n\n                        <img src="assets/imgs/userPicture.png">\n\n                    </ion-avatar>\n\n                    <div class="name">\n\n                        <h2>{{user.name |titlecase}} {{user.lastname |titlecase}}\n\n                            <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n\n                        </h2>\n\n                        <p (click)="profile()">Editar Perfil</p>\n\n                    </div>\n\n        \n\n        \n\n        \n\n    </ion-item>\n\n\n\n    <ion-list no-lines>\n\n        <!-- <button ion-item (click)="reviews()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="ios-star"></ion-icon>\n\n            </ion-avatar>\n\n            Mis calificaciones (Próximamente)\n\n        </button> -->\n\n        <button ion-item (click)="showInfoCars()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="car"></ion-icon>\n\n            </ion-avatar>\n\n            Mis Vehículos        </button>\n\n        <button ion-item (click)="terms()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="md-paper"></ion-icon>\n\n            </ion-avatar>\n\n            Terminos y Condiciones\n\n        </button>\n\n        <button ion-item (click)="earn()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="md-share"></ion-icon>\n\n            </ion-avatar>\n\n            Refiérenos y Ganas (Próximamente)\n\n        </button>\n\n        <button ion-item (click)="ratevroom()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="md-thumbs-up"></ion-icon>\n\n            </ion-avatar>\n\n            Cálifica a Waypool (Próximamente)\n\n        </button>\n\n        <button ion-item (click)="help()">\n\n            <ion-avatar item-start>\n\n                <ion-icon name="md-alert"></ion-icon>\n\n            </ion-avatar>\n\n           Soporte \n\n        </button>\n\n    </ion-list>\n\n  \n\n    \n\n    <ion-list no-lines>\n\n        <button ion-item (click)="logout()" text-center><h2 class="text-theme"><strong>Salir de mi cuenta</strong></h2></button>\n\n\n\n    </ion-list>\n\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n\n</ion-content>\n\n'/*ion-inline-end:"D:\Users\Daniel\Documents\WaypoolApp\merge1\waypool_driver\src\pages\more\more.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]])
-    ], OnTripPage);
-    return OnTripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
+    ], MorePage);
+    return MorePage;
 }());
 
-//# sourceMappingURL=onTrip.js.map
+//# sourceMappingURL=more.js.map
 
 /***/ })
 

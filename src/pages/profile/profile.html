@@ -7,7 +7,7 @@
 <ion-content class="bg-light">
     <ion-item style="position: relative;z-index: 2;">
         <ion-avatar item-start>
-            <img src="assets/imgs/man3.png">
+            <img src="assets/imgs/userPicture.png">
         </ion-avatar>
         <div class="name">
             <h2>{{user.name |titlecase}} {{user.lastname |titlecase}}
@@ -41,14 +41,7 @@
                         <ion-label floating>Email</ion-label>
                         <ion-input type="text"  [(ngModel)]="user.email"  readonly></ion-input>
                     </ion-item>
-                    <div padding-top padding-left padding-right text-center>
-                        <p>
-                            <button class="btn text-white rounded bg-theme" style="width: 100%;margin-bottom: 8px;" (click)="showInfoCars()">Ver Carros</button>
-  
-                      
-                        </p>
-        
-                    </div>
+                   
                 </ion-list>
             </div>
             <div padding-top padding-left padding-right text-center>

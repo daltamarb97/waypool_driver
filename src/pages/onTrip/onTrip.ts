@@ -114,6 +114,10 @@ export class OnTripPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
+        icon: {         url: "/assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
         
       });
       this.markers.push(marker);   
@@ -149,7 +153,11 @@ export class OnTripPage {
         
         var marker = new google.maps.Marker({
           map: this.map,
-          position: results[0].geometry.location
+          position: results[0].geometry.location,
+          icon: {         url: "/assets/imgs/marker-destination.png",
+          scaledSize: new google.maps.Size(90, 90)    
+  
+        }
         });
       
         this.directionsDisplay.setMap(this.map);
