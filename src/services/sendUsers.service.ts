@@ -29,6 +29,12 @@ constructor(public afDB: AngularFireDatabase){
             this.afDB.database.ref('/users/' + userId + '/trips/driversListRide/' + userUid).remove();
            }
 
+           public removeUsersOnListRideTotal(userUid ){
+            //send the information of every student the driver acepts in myRide
+               this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/').remove();
+
+               }
+
            public removeUsersOnPickingUsers(userUid,userId ){
             //send the information of every student the driver acepts in myRide
                this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).remove();

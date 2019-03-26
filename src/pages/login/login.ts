@@ -6,6 +6,7 @@ import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angu
 import { authenticationService } from '../../services/driverauthentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SignUpService } from '../../services/signup.service';
 // import * as firebase from 'firebase';
 // import { SignUpService } from '../../services/signup.service';
 
@@ -24,12 +25,25 @@ export class LoginPage {
     private loginGroup: FormGroup;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
-  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService) {
     this.loginGroup = this.formBuilder.group({
         email: ["", Validators.required],
         password: ["", Validators.required]
     })
+
+    
 }
+
+ionViewDidLoad(){
+    this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+        if(user){
+            this.navCtrl.setRoot('TabsPage')
+        }else{
+            console.log('there is no user');
+        }
+    })
+
+  }
 
   
     signup(){
@@ -38,7 +52,7 @@ export class LoginPage {
     };
 
     resetPassword(email:string){
-        if(this.email == ''){
+        if(this.loginGroup.controls['email'].value  == ''){
             const alert = this.alertCtrl.create({
                 title: 'no hay ningun email',
                 subTitle: 'ingresa un email para resetear tu contraseña',
@@ -47,7 +61,7 @@ export class LoginPage {
               alert.present();
               console.log("reset password email hasn't been sent");
         }else{
-            this.auth.sendPasswordResetEmail(this.email);
+            this.auth.sendPasswordResetEmail(this.loginGroup.controls['email'].value);
             const alert = this.alertCtrl.create({
                 title: 'revisa tu email',
                 subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
@@ -79,7 +93,7 @@ export class LoginPage {
                         console.log(metadata.creationTime);
                         console.log(metadata.lastSignInTime);
     
-                        this.navCtrl.push('CarRegistrationPage');
+                        this.navCtrl.push('CarRegistrationLoginPage');
     
                     }else{
                         this.navCtrl.push('TabsPage');

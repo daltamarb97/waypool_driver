@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage} from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage, AlertController} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
@@ -31,7 +31,9 @@ export class ConfirmpopupPage {
   accepted: any;
   infoUser:any = {};
   unsubscribe = new Subject;
-  constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController ) {
+  pickingUsers:any =  [];
+  pickedUpUsers:any = [];
+  constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController ) {
       //we get the info of the users with navParams
       this.user= this.navParams.get('user') 
       console.log(this.user)
@@ -50,49 +52,121 @@ export class ConfirmpopupPage {
 		this.SignUpService.getMyInfoDriver(this.userDriverUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
-			console.log(this.userDriver);
+			this.pickingUsers = this.userDriver.trips.pickingUsers;
+			this.pickedUpUsers = this.userDriver.trips.pickedUpUsers;
+
 		});
 		
-		console.log('a')
    
     }
 
 	acceptUser() {
-		//REVISAR
-		// setTimeout(()=>{
-		// 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+	if(this.userDriver.trips.pickingUsers){
 
-		// }, 600)
+		if(this.userDriver.trips.pickedUpUsers){
+
+
+			if(Object.keys(this.pickingUsers).length + Object.keys(this.pickedUpUsers).length >= 4){
+
+
+				this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
+				this.geoFireService.cancelGeoqueryDest();
+				this.geoFireService.cancelGeoqueryOr();
+				const alert = this.alertCtrl.create({
+					title: 'limite de estudiantes permitido',
+					subTitle: 'ya recogiste o aceptaste más de 4 personas. Este es el limite de personas para cada viaje',
+					buttons: ['OK']
+				  });
+				  alert.present();
+
+				this.instances.turnOntripUsersFalse(this.user.userId);
+			}else{
+
+
+				console.log('before delete')
+				this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+				console.log('after delete')
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
+				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 		
-		// setTimeout(()=>{
-		// 	this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+					this.instances.turnOntripUsers(this.user.userId);
+			//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+			  this.instances.turnOntripUsers(this.user.userId);
+			  this.accepted = true;
+			  this.dismiss();
+				const toast = this.toastCtrl.create({
+					message: `¡Haz aceptado a ${this.user.name} en tu viaje!, Acepta otros compañeros y dirigete a Viajes para encontrar su dirección`,
+					duration: 4500,
+					position: 'middle'
+				});
+				toast.present();
+			}
+		}else if(Object.keys(this.pickingUsers).length >= 4){
 
-		// }, 1100)
+
+			this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
+				this.geoFireService.cancelGeoqueryDest();
+				this.geoFireService.cancelGeoqueryOr();
+				const alert = this.alertCtrl.create({
+					title: 'limite de estudiantes permitido',
+					subTitle: 'ya recogiste o aceptaste más de 4 personas. Este es el limite de personas para cada viaje',
+					buttons: ['OK']
+				  });
+				  alert.present();
+				  this.instances.turnOntripUsersFalse(this.user.userId);
+
+			
+		}else{
+			console.log('before delete')
+				this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+				console.log('after delete')
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
+				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+		
+					this.instances.turnOntripUsers(this.user.userId);
+			//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+			  this.instances.turnOntripUsers(this.user.userId);
+			  this.accepted = true;
+			  this.dismiss();
+				const toast = this.toastCtrl.create({
+					message: `¡Haz aceptado a ${this.user.name} en tu viaje!, Acepta otros compañeros y dirigete a Viajes para encontrar su dirección`,
+					duration: 4500,
+					position: 'middle'
+				});
+				toast.present();
+		}
+	}else{
+		console.log('g');
+
 		console.log('before delete')
-		this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
-		console.log('after delete')
-		this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-		this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
-			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
-			this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+			console.log('after delete')
+			this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
+			this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+	
+				this.instances.turnOntripUsers(this.user.userId);
+		//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+		  this.instances.turnOntripUsers(this.user.userId);
+		  this.accepted = true;
+		  this.dismiss();
+			const toast = this.toastCtrl.create({
+				message: `¡Haz aceptado a ${this.user.name} en tu viaje!, Acepta otros compañeros y dirigete a Viajes para encontrar su dirección`,
+				duration: 4500,
+				position: 'middle'
+			});
+			toast.present();
+	}
 
-			this.instances.turnOntripUsers(this.user.userId);
-	//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
-	  this.instances.turnOntripUsers(this.user.userId);
-	  this.accepted = true;
-	  this.dismiss();
-		const toast = this.toastCtrl.create({
-			message: `¡Haz aceptado a ${this.user.name} en tu viaje!, Acepta otros compañeros y dirigete a Viajes para encontrar su dirección`,
-			duration: 4500,
-			position: 'middle'
-		});
-		toast.present();
-
-      }
+ }
   
 
 	dismiss() {
-		this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 		console.log('deleted on click')
 		this.viewCtrl.dismiss(this.accepted);
 		this.unsubscribe.next();

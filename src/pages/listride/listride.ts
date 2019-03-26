@@ -114,7 +114,7 @@ export class ListridePage{
   
   help(){
     const toast = this.toastCtrl.create({
-      message: 'En esta página podrás ver que estudiantes te han pedido compartir un viaje contigo, sólo tendrás máximo 4 estudiantes debido a que es el máximo numero permitido en colombia para carros particulares, si tienes un carro con más asientos, escríbenos para darte acceso a más',
+      message: 'Aquí te saldrán los estudiantes que te hayan escogido, ahora te toca escoger a quienes y cuantos quieres llevar (máximo 4), a los que no quieras llevar, elimínalos',
       showCloseButton:true,
       closeButtonText: 'OK',
       position:'top'

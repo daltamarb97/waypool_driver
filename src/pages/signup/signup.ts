@@ -88,7 +88,7 @@ export class SignupPage {
                     if(user){
                                user.getIdToken().then((token)=>{
                                this.user.tokenId = token;
-                               console.log(this.user.tokenId);
+
                             })
                          if(!this.user.userId){
                             this.user.userId = user.uid;

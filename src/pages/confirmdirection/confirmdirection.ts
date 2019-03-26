@@ -26,8 +26,15 @@ export class ConfirmdirectionPage {
   userUid=this.AngularFireAuth.auth.currentUser.uid;
   geoinfo1;
   geoinfo2;
-  buttonColor:string = '#0fc874';
-  buttonColor2:string = '#0fc874';
+  buttonColor:string = '#3fb1df';
+  buttonColor2:string = '#3fb1df';
+  buttonColor3:string = '#3fb1df';
+  buttonColor4:string = '#3fb1df';
+  click1 = false;
+  click2 = false;
+  click3 = false;
+  click4 = false;
+
   driverInfo;
 
   constructor(public navCtrl: NavController, public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
@@ -50,16 +57,59 @@ export class ConfirmdirectionPage {
   }
   
   setGeoFireOrigin(){
-    this.buttonColor2 = '#1AA3E8';
-    this.buttonColor = '#0fc874';
+    this.buttonColor2 = '#0fc874';
+    this.buttonColor = '#3fb1df';
+    this.buttonColor3 = '#3fb1df';
+    this.buttonColor4 = '#3fb1df';
     this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
-    
+    this.click1 = true;
+    if(this.click4 == true){
+      this.geofireService.cancelGeoqueryDest();
+      this.click4 = false;
+    }
+   } 
+
+   setGeoFireOrigin1(){
+    this.buttonColor2 = '#3fb1df';
+    this.buttonColor = '#3fb1df';
+    this.buttonColor3 = '#0fc874';
+    this.buttonColor4 = '#3fb1df';
+    this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+    this.click2 = true;
+    if(this.click4 == true){
+      this.geofireService.cancelGeoqueryDest();
+      this.click4 = false;
+    }
+   } 
+
+   setGeoFireOrigin2(){
+    this.buttonColor2 = '#3fb1df';
+    this.buttonColor = '#3fb1df';
+    this.buttonColor3 = '#3fb1df';
+    this.buttonColor4 = '#0fc874';
+    this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+    this.click3 = true;
+    if(this.click4 == true){
+      this.geofireService.cancelGeoqueryDest();
+      this.click4 = false;
+    }
    } 
 
   setGeoFireDestination(){
-    this.buttonColor = '#1AA3E8';
-      this.buttonColor2 = '#0fc874';
+    this.buttonColor = '#0fc874';
+      this.buttonColor2 = '#3fb1df';
+      this.buttonColor3 = '#3fb1df';
+      this.buttonColor4 = '#3fb1df';
       this.geofireService.setGeofireDest(1, this.geoinfo2.lat, this.geoinfo2.lng, this.driverInfo);
+      this.click4 = true;
+    if(this.click1 == true || this.click2 == true || this.click3 == true){
+      this.geofireService.cancelGeoqueryOr();
+      this.click1 = false;
+      this.click2 = false;
+      this.click3 = false;
+
+    }
+    
     }  
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);

@@ -191,6 +191,7 @@ public getInfoUser(userId){
 cancelGeoqueryDest(){
   if(this.geoquery1){
     this.geoquery1.cancel()
+    console.log('geofireDest deleted');
   }else{
     console.log('dont dest query')
   }
@@ -200,6 +201,8 @@ cancelGeoqueryDest(){
 cancelGeoqueryOr(){
   if(this.geoquery2){
     this.geoquery2.cancel()
+    console.log('geofireOr deleted');
+
   }else{
     console.log('dont or query')
   }

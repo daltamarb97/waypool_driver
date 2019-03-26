@@ -20,6 +20,18 @@ public turnOntripUsers(user){
     })
 } 
 
+public turnOntripUsersFalse(user){
+    this.afDB.database.ref('users/' + user + '/trips/').update({
+        onTrip: false
+    }, (error)=>{
+        if(error){
+            console.log(error)
+        }else{
+            console.log("everything successful");
+        }
+    })
+} 
+
 public turnOntripUsersListRide(driverId, user){
     this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + user).update({
         onTrip: true

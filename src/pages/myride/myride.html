@@ -1,9 +1,8 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title class="text-center">MY RIDE
+        <ion-title class="text-center">MI VIAJE
            
             <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> 
-            <ion-icon name="md-locate" class="text-white" ></ion-icon>
         </ion-title>
 
     </ion-navbar>
@@ -11,13 +10,11 @@
 </ion-header>
 
 <ion-content class="bg-light"> 
-        
-
         <ion-list >
             <ion-card *ngFor = "let user of pickingUsers">
                 <ion-item>
                     <ion-avatar item-start>
-                        <img src="assets/imgs/face-1.jpg">
+                        <img src="assets/imgs/userPicture.png">
                     </ion-avatar>
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
@@ -54,7 +51,7 @@
             <ion-card *ngFor = "let user of pickedUpUsers">
                     <ion-item>
                         <ion-avatar item-start>
-                            <img src="assets/imgs/face-1.jpg">
+                            <img src="assets/imgs/userPicture.png">
                         </ion-avatar>
                         <div class="name">
                             <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.

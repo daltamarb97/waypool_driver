@@ -1,5 +1,5 @@
 import { Component, NgZone, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage, App } from 'ionic-angular';
 
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -36,7 +36,7 @@ export class OnTripPage {
 
   useruid=this.AngularFireAuth.auth.currentUser.uid;
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public sendUsersService: sendUsersService,public SignupService:SignUpService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public sendUsersService: sendUsersService,public SignupService:SignUpService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public app: App) {
     
     this.markers = [];
     //we get the info of the users with navParams
@@ -114,6 +114,10 @@ export class OnTripPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
+        icon: {         url: "/assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
         
       });
       this.markers.push(marker);   
@@ -149,7 +153,11 @@ export class OnTripPage {
         
         var marker = new google.maps.Marker({
           map: this.map,
-          position: results[0].geometry.location
+          position: results[0].geometry.location,
+          icon: {         url: "/assets/imgs/marker-destination.png",
+          scaledSize: new google.maps.Size(90, 90)    
+  
+        }
         });
       
         this.directionsDisplay.setMap(this.map);
@@ -244,8 +252,9 @@ export class OnTripPage {
        this.sendCoordsService.endTripUserOnTripInstance(user.userId)
        this.sendCoordsService.endTripUserPickupInstance(user.userId)
 
-       this.sendCoordsService.endTripUserDriverListRide(user.userId)
-
+       this.sendCoordsService.endTripUserDriverListRide(user.userId);
+      
+       this.sendCoordsService.pushOnTripFinalUser(user.userId);
 
        })
        //Save trip into RecordTrip on User & Driver

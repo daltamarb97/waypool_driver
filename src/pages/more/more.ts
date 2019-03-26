@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, IonicPage } from 'ionic-angular';
+import { NavController, ModalController, IonicPage, App } from 'ionic-angular';
 
 
 
@@ -17,7 +17,7 @@ import { SignUpService } from '../../services/signup.service';
 export class MorePage {
      userUid=this.AngularFireAuth.auth.currentUser.uid;
      user:any={};
-     constructor(public navCtrl: NavController,public modalCtrl: ModalController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService) {
+     constructor(public navCtrl: NavController,public modalCtrl: ModalController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService, public app: App) {
           this.SignupService.getMyInfoForProfile(this.userUid).subscribe(user=>{
           this.user= user;
             console.log(this.user)
@@ -44,9 +44,9 @@ export class MorePage {
          logout(){
           this.authenticationService.logOut();
           console.log(firebase.auth().currentUser);
-          this.navCtrl.setRoot('LoginPage');
+          this.app.getRootNav().push('LoginPage');
     }
-         upload(){
+         docs(){
     this.navCtrl.push('CarRegistrationPage');
     }
 

@@ -64,6 +64,7 @@ export class FindridePage {
   orFirebase:any;
 
   user=this.AngularFireAuth.auth.currentUser.uid;
+  userInfo:any;
   //geofire variables
   dbRef:any;
   geoFire:any;
@@ -97,11 +98,17 @@ export class FindridePage {
   
     this.dbRef = this.afDB.database.ref('geofire/' );
     this.geoFire = new GeoFire(this.dbRef); 
+
+    this.SignUpService.getMyInfo(this.user).subscribe(user=>{
+      this.userInfo = user;
+    })
+    
+
     
   }
  
   ionViewDidLoad(){
-    
+
     this.loadMap();
     
   }
@@ -144,7 +151,11 @@ export class FindridePage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
-        draggable:true
+        draggable:true,
+        icon: {         url: "assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
       });
       this.markers.push(this.markerGeolocation);
       
@@ -244,14 +255,21 @@ selectSearchResultMyPos(item){
         this.markerGeolocation = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
-        draggable: true
+        draggable: true,
+        icon: {         url: "assets/imgs/marker-origin.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      },
+      animation: google.maps.Animation.DROP,
+
       });
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       this.markers.push( this.markerGeolocation);
       this.map.setCenter(results[0].geometry.location);
       console.log(results[0].geometry.location)
       this.autocompleteMyPos.input=[item.description]
-
+      this.autocompleteMyDest.input=''
+      this.directionsDisplay.setMap(null)
     }
   })
   
@@ -262,6 +280,9 @@ selectSearchResultMyPos(item){
 
 selectSearchResultMyDest(item){
   this.autocompleteItems2=[];
+  if(this.markerDest!==undefined){
+    this.markerDest.setMap(null)
+  }
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
 
@@ -275,7 +296,12 @@ selectSearchResultMyDest(item){
        this.markerDest = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
-        draggable:true       
+        animation: google.maps.Animation.DROP,
+        draggable:true,
+           icon: {         url: "assets/imgs/marker-destination2.png",
+        scaledSize: new google.maps.Size(90, 90)    
+
+      }
       });
       console.log(position)
       this.map.fitBounds(this.bounds);     
@@ -351,50 +377,91 @@ geocodeLatLng(latLng,inputName) {
 
 
   listride(){
-    // TO DO: IF  (GEOPOSITION !== POSITIONDEST){
-//      NO PERMITIR VIAJE , ES UNA IDEA PERO NO ESTOY 100% DE ACUERDO
-    //}
-    
+  if(this.userInfo.documents){
+    if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
+      try {
+        this.orFirebase=[this.autocompleteMyPos.input]
+        this.desFirebase=[this.autocompleteMyDest.input]   
+        console.log(this.orFirebase);
+      if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
+            this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
+            this.clearMarkers();
+            
+            this.directionsDisplay.setDirections({routes: []});
+            this.loadMap();
+           } else {
+            this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
+          //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
+   
+            this.geoInfo1 = this.myLatLng;
+            console.log(this.geoInfo1);
   
-    try {
-      this.orFirebase=[this.autocompleteMyPos.input]
-      this.desFirebase=[this.autocompleteMyDest.input]   
-      console.log(this.orFirebase);
-    if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
-          this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
-          this.clearMarkers();
-          
-          this.directionsDisplay.setDirections({routes: []});
-          this.loadMap();
-         } else {
-          this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
-        //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
- 
-          this.geoInfo1 = this.myLatLng;
-          console.log(this.geoInfo1);
-
-          this.geoInfo2 = {
-            lat: this.myLatLngDest.lat(),
-            lng: this.myLatLngDest.lng()
+  
+            this.geoInfo2 = {
+              lat: this.myLatLngDest.lat(),
+              lng: this.myLatLngDest.lng()
+            }
+  
+            
+           
+            this.confirmPrice(this.geoInfo1, this.geoInfo2);
+                  
           }
-          console.log(this.geoInfo2);
-          
-          // this.geofireService.setGeofire(1, this.myLatLng.lat, this.myLatLng.lng, this.driverInfo);
-          
-         
-          this.confirmPrice(this.geoInfo1, this.geoInfo2);
-                
+        
          }
-      
-       }
-       
-    catch(error) {
-      console.log(error)
-      this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
-      }
-
-      console.log(this.orFirebase);
-      
+         
+      catch(error) {
+        console.log(error)
+        this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+        }
+  
+        console.log(this.orFirebase);
+    }else{
+      let alert = this.alertCtrl.create({
+        title: '¡oh-uh!',
+        subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+       buttons: [
+        { 
+          text: 'Subir mis documentos',
+          handler: () => {
+            this.navCtrl.push('CarRegistrationPage');
+          }
+        },
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+           
+            }
+          }
+        ],
+        cssClass: 'alertDanger'
+      });
+      alert.present();
+    }
+  }else{
+    let alert = this.alertCtrl.create({
+      title: '¡oh-oh!',
+      subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+     buttons: [
+      { 
+        text: 'Subir mis documentos',
+        handler: () => {
+          this.navCtrl.push('CarRegistrationPage');
+        }
+      },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+         
+          }
+        }
+      ],
+      cssClass: 'alertDanger'
+    });
+    alert.present();
+  }
 
     }
 
@@ -426,8 +493,4 @@ geocodeLatLng(latLng,inputName) {
          });
     toast.present();
   }
-  }
-  
-
-
-
+  }  

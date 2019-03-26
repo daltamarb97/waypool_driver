@@ -131,6 +131,14 @@ constructor(public afDB: AngularFireDatabase){
             onTrip:false
         });
     }
+
+    public pushOnTripFinalUser(userId){
+        this.afDB.database.ref('/users/'+ userId ).update({
+            onTripFinal: true
+        });
+    }
+
+
     public eliminatePickingUsers(DriverUid,userId){
       
 

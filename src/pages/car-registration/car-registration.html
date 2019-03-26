@@ -5,8 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-header class="bg-theme">
-    <ion-navbar>
-        <ion-title>VERIFIY MY ID
+    <ion-navbar >
+        <ion-title>SUBIR DOCUMENTOS
             <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->
         </ion-title>
     </ion-navbar>
@@ -30,10 +30,8 @@
     </div>
     <ion-row>
         <ion-col>
-            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCamera()">Subir Foto</button></p>
-        </ion-col>
-        <ion-col>
-            <p padding-top class="btn-box"><button class="btn text-white rounded buttonLight" style="width: 80%;" (click)= "findRide()">Hacer después</button></p>
+            <p padding-top class="btn-box" *ngIf = 'showLicense'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>
+            <p padding-top class="btn-box" *ngIf = 'showId'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>
         </ion-col>
     </ion-row>
 </ion-content>

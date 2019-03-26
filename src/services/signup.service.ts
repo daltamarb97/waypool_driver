@@ -14,6 +14,17 @@ export class SignUpService {
     return this.afDB.object('drivers/'+userId).valueChanges();
     }
 
+    public pushDocsL(userId){
+       this.afDB.database.ref('drivers/'+userId+'/documents').update({
+           license: false
+       })
+    }
+    public pushDocsId(userId){
+        this.afDB.database.ref('drivers/'+userId+'/documents').update({
+            id: false
+        })
+     }
+
     public getMyInfoDriver(userId){
         return this.afDB.object('drivers/' + userId).valueChanges();
     }
@@ -36,7 +47,9 @@ this.afDB.database.ref('/drivers/'+ userUid).update({
     });
 }
 public deleteAccount(userUid){
-this.afDB.database.ref('/drivers/'+userUid).remove()
+this.afDB.database.ref('/drivers/'+userUid).remove();
+this.afDB.database.ref('/users/'+userUid).remove();
+
 }
 public addCar(userUid,carModel,plateNumber,color){
     this.afDB.database.ref('/drivers/'+userUid+'/cars/').push({
