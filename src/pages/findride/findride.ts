@@ -110,13 +110,19 @@ export class FindridePage {
   ionViewDidLoad(){
 
     this.loadMap();
-    
+
   }
  
   loadMap(){
 
  // this gets current position and set the camera of the map and put a marker in your location
-    
+ const alert = this.alertCtrl.create({
+  title: 'Permiso de uso de tu geolocalización',
+  subTitle: 'Se usará tu geolocalización para hacer posible nuestro servicio de conexión con otros usuarios. Asi como mejorar nuestro sosporte e historial. ',
+  buttons: ['OK']
+});
+alert.present();
+
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

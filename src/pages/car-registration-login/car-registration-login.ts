@@ -63,6 +63,12 @@ export class CarRegistrationLoginPage {
 
 
   usageCameraLicense(){
+    const alert = this.alertCtrl.create({
+      title: 'Permiso de uso de tu cámara',
+      subTitle: 'Queremos acceder a tú camara para que puedas tomarle foto a tus documentos',
+      buttons: ['OK']
+    });
+    alert.present();
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):

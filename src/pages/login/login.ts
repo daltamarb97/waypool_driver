@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, NavParams, IonicPage, Platform } from 'ionic-angular';
 
 
 import { authenticationService } from '../../services/driverauthentication.service';
@@ -25,7 +25,7 @@ export class LoginPage {
     private loginGroup: FormGroup;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
-  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService) {
+  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService,  public platform: Platform) {
     this.loginGroup = this.formBuilder.group({
         email: ["", Validators.required],
         password: ["", Validators.required]
@@ -33,17 +33,6 @@ export class LoginPage {
 
     
 }
-
-ionViewDidLoad(){
-    this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
-        if(user){
-            this.navCtrl.setRoot('TabsPage')
-        }else{
-            console.log('there is no user');
-        }
-    })
-
-  }
 
   
     signup(){
