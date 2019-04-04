@@ -11,7 +11,7 @@
 
 <div class="bg-white login">
     <div class="">
-     <form [formGroup]="loginGroup" (ngSubmit)="logIn()">
+     <div [formGroup]="loginGroup" >
         <ion-list class="form">
             <ion-item>
                 <ion-label></ion-label>
@@ -22,8 +22,9 @@
                 <ion-input type="password" text-right  formControlName="password" placeholder= "Tú contraseña"></ion-input>
             </ion-item>
         </ion-list>
-        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!loginGroup.valid">ENTRAR</button>
-    </form>
+    </div>
+    <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()" [disabled]="!loginGroup.valid">ENTRAR</button>
+
 
             <ion-row style="padding-top: 8px;">
                 <ion-col (click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>
