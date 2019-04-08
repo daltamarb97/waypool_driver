@@ -126,8 +126,15 @@ constructor(public afDB: AngularFireDatabase){
         });
  
      }
+
      public eliminateOnTrip(userId){
         this.afDB.database.ref('/drivers/'+ userId ).update({
+            onTrip:false
+        });
+    }
+
+    public eliminateOnTripUser(userId){
+        this.afDB.database.ref('/users/'+ userId + '/trips' ).update({
             onTrip:false
         });
     }
@@ -145,6 +152,11 @@ constructor(public afDB: AngularFireDatabase){
                //eliminate the user from pickingUsers
         this.afDB.database.ref('/drivers/'+ DriverUid +'/trips/pickingUsers/'+ userId).remove();
     }
+
+    public eliminatePickingUsersUser(userId){
+ this.afDB.database.ref('/users/'+ userId + '/trips/pickingUsers').remove();
+}
+
     sumTotal(trip,total){
       total = total + trip;
     

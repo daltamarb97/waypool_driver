@@ -114,7 +114,7 @@ export class OnTripPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
-        icon: {         url: "/assets/imgs/marker-origin.png",
+        icon: { url: "/assets/imgs/marker-origin.png",
         scaledSize: new google.maps.Size(90, 90)    
 
       }
@@ -154,7 +154,7 @@ export class OnTripPage {
         var marker = new google.maps.Marker({
           map: this.map,
           position: results[0].geometry.location,
-          icon: {         url: "/assets/imgs/marker-destination.png",
+          icon: {  url: "/assets/imgs/marker-destination.png",
           scaledSize: new google.maps.Size(90, 90)    
   
         }
@@ -242,7 +242,8 @@ export class OnTripPage {
     endTrip(){
 
       //let user rate the trip
-      this.navCtrl.push('RatetripPage',{user:this.driver})
+      // this.navCtrl.push('RatetripPage',{user:this.driver})
+      this.app.getRootNav().push('RatetripPage', {user:this.driver});
 
       this.pickedUpUsers.forEach(user => {
       // save trip in every record of every users

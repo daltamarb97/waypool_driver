@@ -258,7 +258,8 @@ var OnTripPage = /** @class */ (function () {
     OnTripPage.prototype.endTrip = function () {
         var _this = this;
         //let user rate the trip
-        this.navCtrl.push('RatetripPage', { user: this.driver });
+        // this.navCtrl.push('RatetripPage',{user:this.driver})
+        this.app.getRootNav().push('RatetripPage', { user: this.driver });
         this.pickedUpUsers.forEach(function (user) {
             // save trip in every record of every users
             _this.sendCoordsService.recordTripOnUser(user.userId, user);

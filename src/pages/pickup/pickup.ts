@@ -9,6 +9,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
 import * as moment from 'moment';
+import { geofireService } from '../../services/geofire.services';
 
 declare var google; 
 @IonicPage()
@@ -32,7 +33,7 @@ export class PickupPage {
   useruid=this.AngularFireAuth.auth.currentUser.uid;
   userDriver:any;
   
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public geofireServices: geofireService) {
     this.markers = [];
     //we get the info of the users with navParams
     this.user= this.navParams.get('user')  
@@ -227,6 +228,8 @@ export class PickupPage {
 
       this.sendCoordsService.eliminatePickingUsers(this.useruid,this.user.userId);
       this.sendCoordsService.pickUp(this.useruid,this.user.userId,this.user);
+      this.geofireServices.deleteUserGeofireDest(this.user.userId);
+      this.geofireServices.deleteUserGeofireOr(this.user.userId);
 
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
       this.sendCoordsService.pickUpInstance(this.user.userId);

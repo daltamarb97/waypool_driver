@@ -34,11 +34,11 @@ var map = {
 		5
 	],
 	"../pages/confirmpopup/confirmpopup.module": [
-		589,
+		590,
 		18
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		590,
+		589,
 		4
 	],
 	"../pages/findride/findride.module": [
@@ -46,23 +46,23 @@ var map = {
 		17
 	],
 	"../pages/help/help.module": [
-		595,
+		591,
 		16
 	],
 	"../pages/listride/listride.module": [
-		591,
+		592,
 		15
 	],
 	"../pages/login/login.module": [
-		592,
+		593,
 		14
 	],
 	"../pages/more/more.module": [
-		593,
+		594,
 		13
 	],
 	"../pages/myride/myride.module": [
-		594,
+		595,
 		1
 	],
 	"../pages/onTrip/onTrip.module": [
@@ -82,15 +82,15 @@ var map = {
 		3
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		599,
+		598,
 		2
 	],
 	"../pages/signup/signup.module": [
-		598,
+		600,
 		10
 	],
 	"../pages/support/support.module": [
-		600,
+		599,
 		9
 	],
 	"../pages/tabs/tabs.module": [
@@ -98,11 +98,11 @@ var map = {
 		8
 	],
 	"../pages/terms/terms.module": [
-		602,
+		603,
 		7
 	],
 	"../pages/wallet/wallet.module": [
-		603,
+		602,
 		6
 	]
 };
@@ -361,6 +361,11 @@ var sendCoordsService = /** @class */ (function () {
             onTrip: false
         });
     };
+    sendCoordsService.prototype.eliminateOnTripUser = function (userId) {
+        this.afDB.database.ref('/users/' + userId + '/trips').update({
+            onTrip: false
+        });
+    };
     sendCoordsService.prototype.pushOnTripFinalUser = function (userId) {
         this.afDB.database.ref('/users/' + userId).update({
             onTripFinal: true
@@ -370,14 +375,18 @@ var sendCoordsService = /** @class */ (function () {
         //eliminate the user from pickingUsers
         this.afDB.database.ref('/drivers/' + DriverUid + '/trips/pickingUsers/' + userId).remove();
     };
+    sendCoordsService.prototype.eliminatePickingUsersUser = function (userId) {
+        this.afDB.database.ref('/users/' + userId + '/trips/pickingUsers').remove();
+    };
     sendCoordsService.prototype.sumTotal = function (trip, total) {
         total = total + trip;
     };
     sendCoordsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object])
     ], sendCoordsService);
     return sendCoordsService;
+    var _a;
 }());
 
 //# sourceMappingURL=sendCoords.service.js.map
@@ -596,6 +605,7 @@ var geofireService = /** @class */ (function () {
         if (this.geoquery2) {
             this.geoquery2.cancel();
         }
+        console.log('geoquery dest added');
     };
     geofireService.prototype.setGeofireOr = function (radius, lat, lng, driverInfor) {
         this.dbRef = this.afDB.database.ref('geofireOr/');
@@ -609,6 +619,7 @@ var geofireService = /** @class */ (function () {
         if (this.geoquery1) {
             this.geoquery1.cancel();
         }
+        console.log('geoquery or added');
     };
     geofireService.prototype.keyEnteredDest = function (driverInfo) {
         this.geoquery1.on("key_entered", function (key) {
@@ -715,9 +726,10 @@ var geofireService = /** @class */ (function () {
     };
     geofireService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]) === "function" && _b || Object])
     ], geofireService);
     return geofireService;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=geofire.services.js.map
@@ -997,21 +1009,21 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmdirection/confirmdirection.module#ConfirmdirectionPageModule', name: 'ConfirmdirectionPage', segment: 'confirmdirection', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/listride/listride.module#ListridePageModule', name: 'ListridePage', segment: 'listride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/onTrip/onTrip.module#OnTripPageModule', name: 'OnTripPage', segment: 'onTrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] }

@@ -30,10 +30,10 @@ export class ConfirmdirectionPage {
   buttonColor2:string = '#3fb1df';
   buttonColor3:string = '#3fb1df';
   buttonColor4:string = '#3fb1df';
-  click1 = false;
-  click2 = false;
-  click3 = false;
-  click4 = false;
+  click1:any;
+  click4:any;
+  click2:any;
+  click3:any;
 
   driverInfo;
 
@@ -48,7 +48,15 @@ export class ConfirmdirectionPage {
     this.driverInfo = this.navParams.get('driverInfo')
     console.log(this.driverInfo);
 
+
     
+  }
+
+  ionViewWillEnter(){
+    this.click1 = false;
+    this.click2 = false;
+    this.click3 = false;
+    this.click4 = false;
   }
 
   acceptTrip(){

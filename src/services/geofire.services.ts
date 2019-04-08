@@ -53,6 +53,8 @@ setGeofireDest( radius:number, lat, lng, driverInfor):void{
 if(this.geoquery2){
   this.geoquery2.cancel();
 }
+
+console.log('geoquery dest added');
 }
 
 setGeofireOr( radius:number, lat, lng, driverInfor):void{ 
@@ -71,6 +73,9 @@ setGeofireOr( radius:number, lat, lng, driverInfor):void{
   if(this.geoquery1){
     this.geoquery1.cancel();
   }
+
+  console.log('geoquery or added');
+
 
 }
 
