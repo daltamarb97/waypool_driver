@@ -80,7 +80,9 @@
       "id": "cordova-plugin-email-composer@^0.9.2"
     },
     "is_top_level": true,
-    "variables": {}
+    "variables": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+"
+    }
   },
   "cordova-plugin-badge": {
     "source": {
