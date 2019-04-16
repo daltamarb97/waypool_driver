@@ -1159,7 +1159,7 @@ var MyApp = /** @class */ (function () {
             messagingSenderId: "729494621596"
         });
         platform.ready().then(function () {
-            statusBar.styleDefault();
+            statusBar.backgroundColorByHexString('#ffffff');
             splashScreen.hide();
             __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().onAuthStateChanged(function (user) {
                 if (user) {
