@@ -25703,7 +25703,7 @@ li,
 }
 
 .text-theme {
-  color: #3fb1df;
+  color: #001127;
 }
 
 .text-dark {
@@ -25719,7 +25719,7 @@ li,
 }
 
 .bg-theme {
-  background: #3fb1df;
+  background: #001127;
 }
 
 .bg-light {
@@ -25744,8 +25744,8 @@ li,
 
 .tab-button[aria-selected=true],
 .tab-button[aria-selected=true] .tab-button-icon {
-  color: #3fb1df !important;
-  border-color: #3fb1df !important;
+  color: #001127 !important;
+  border-color: #001127 !important;
 }
 
 .tabbar {
@@ -25873,7 +25873,7 @@ li,
 }
 
 .header.bg-theme .toolbar-background {
-  background: #3fb1df !important;
+  background: #001127 !important;
 }
 
 .header.bg-theme .text-center {
@@ -26147,7 +26147,7 @@ page-confirmdirection ion-card-content .full.btn {
 
 page-confirmdirection .seats .rate {
   font-weight: 700;
-  color: #3fb1df;
+  color: #001127;
 }
 
 page-confirmdirection .seats .rate small {
@@ -26162,9 +26162,9 @@ page-confirmdirection .seats .seats-tag {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  border: 1px solid #3fb1df;
+  border: 1px solid #001127;
   border-radius: 10px;
-  color: #3fb1df;
+  color: #001127;
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
@@ -26961,7 +26961,7 @@ page-more ion-item .more p {
 
 page-more ion-item p {
   font-size: 1rem !important;
-  color: #3fb1df !important;
+  color: #001127 !important;
   font-weight: 400;
 }
 
@@ -26985,7 +26985,7 @@ page-more button ion-avatar ion-icon {
   right: 0;
   bottom: 0;
   margin: auto;
-  color: #3fb1df;
+  color: #001127;
 }
 
 page-more .love {
@@ -27963,7 +27963,7 @@ page-ratetrip .card h1 {
   font-size: 4rem;
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
-  color: #3fb1df;
+  color: #001127;
   font-weight: 600;
 }
 
@@ -28069,7 +28069,7 @@ page-showinfocar .card {
 }
 
 page-showinfocar .card h6 {
-  color: #3fb1df;
+  color: #001127;
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
@@ -28186,7 +28186,7 @@ page-showinfocar ion-card-content .full.btn {
 
 page-showinfocar .seats .rate {
   font-weight: 700;
-  color: #3fb1df;
+  color: #001127;
 }
 
 page-showinfocar .seats .rate small {
@@ -28201,9 +28201,9 @@ page-showinfocar .seats .seats-tag {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  border: 1px solid #3fb1df;
+  border: 1px solid #001127;
   border-radius: 10px;
-  color: #3fb1df;
+  color: #001127;
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
@@ -28331,7 +28331,7 @@ page-support .card h1 {
   font-size: 4rem;
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
-  color: #3fb1df;
+  color: #001127;
   font-weight: 600;
 }
 
@@ -28447,7 +28447,7 @@ page-terms .text-theme {
 }
 
 page-terms .text-theme2 {
-  color: #3fb1df;
+  color: #001127;
   font-weight: bold;
 }
 
@@ -28511,13 +28511,13 @@ page-wallet .card ion-item .more .badge {
   position: absolute;
   right: 21px;
   top: 19px;
-  background-color: #3fb1df;
+  background-color: #001127;
 }
 
 page-wallet .card ion-item .more h2 {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #3fb1df;
+  color: #001127;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

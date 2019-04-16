@@ -114,7 +114,7 @@ export class OnTripPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
-        icon: {         url: "/assets/imgs/marker-origin.png",
+        icon: {         url: "assets/imgs/marker-origin.png",
         scaledSize: new google.maps.Size(90, 90)    
 
       }
@@ -154,7 +154,7 @@ export class OnTripPage {
         var marker = new google.maps.Marker({
           map: this.map,
           position: results[0].geometry.location,
-          icon: {         url: "/assets/imgs/marker-destination.png",
+          icon: {         url: "assets/imgs/marker-destination.png",
           scaledSize: new google.maps.Size(90, 90)    
   
         }
@@ -242,31 +242,34 @@ export class OnTripPage {
     endTrip(){
 
       //let user rate the trip
-      this.navCtrl.push('RatetripPage',{user:this.driver})
+      this.navCtrl.push('RatetripPage',{user:this.driver});
 
       this.pickedUpUsers.forEach(user => {
+        
+
+      //erase chat message for every user
+      this.sendCoordsService.eraseChatsUsers(user.userId,this.useruid);  
+
       // save trip in every record of every users
-      this.sendCoordsService.recordTripOnUser(user.userId,user);  
+      this.sendCoordsService.recordTripOnUser(user.userId,user); 
+
       this.sendCoordsService.endTripUserPickingUsers(user.userId);
-      this.sendCoordsService.endTripUserPickedUpUsers(user.userId)
-       this.sendCoordsService.endTripUserOnTripInstance(user.userId)
-       this.sendCoordsService.endTripUserPickupInstance(user.userId)
-
-       this.sendCoordsService.endTripUserDriverListRide(user.userId);
-      
-       this.sendCoordsService.pushOnTripFinalUser(user.userId);
-
-       })
+      this.sendCoordsService.endTripUserPickedUpUsers(user.userId);
+      this.sendCoordsService.endTripUserOnTripInstance(user.userId);
+      this.sendCoordsService.endTripUserPickupInstance(user.userId);
+      this.sendCoordsService.endTripUserDriverListRide(user.userId);      
+      this.sendCoordsService.pushOnTripFinalUser(user.userId);
+      })
        //Save trip into RecordTrip on User & Driver
       this.sendCoordsService.recordTripOnWaypool(this.driver.trips);
       this.sendCoordsService.recordTripOnDriver(this.useruid,this.driver.trips);        
        //End trip into RecordTrip on User & Driver
-      this.sendCoordsService.endTripDriverPickingUsers(this.useruid)
-      this.sendCoordsService.endTripDriverPickedUpUsers(this.useruid)
+      this.sendCoordsService.endTripDriverPickingUsers(this.useruid);
+      this.sendCoordsService.endTripDriverPickedUpUsers(this.useruid);
 
       
       
-      this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!','OK')
+      this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!','OK');
     
           }
    
