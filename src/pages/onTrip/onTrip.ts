@@ -114,7 +114,7 @@ export class OnTripPage {
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
-        icon: {         url: "assets/imgs/marker-origin.png",
+        icon: {         url: "assets/imgs/marker-origin-driver.png",
         scaledSize: new google.maps.Size(90, 90)    
 
       }
