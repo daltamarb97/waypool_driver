@@ -65,6 +65,7 @@ export class FindridePage {
 
   user=this.AngularFireAuth.auth.currentUser.uid;
   userInfo:any;
+  currentUser = this.AngularFireAuth.auth.currentUser;
   //geofire variables
   dbRef:any;
   geoFire:any;
@@ -99,16 +100,27 @@ export class FindridePage {
     this.dbRef = this.afDB.database.ref('geofire/' );
     this.geoFire = new GeoFire(this.dbRef); 
 
-    this.SignUpService.getMyInfo(this.user).subscribe(user=>{
-      this.userInfo = user;
-    })
+    
     
 
     
   }
  
   ionViewDidLoad(){
-
+    this.SignUpService.getMyInfo(this.user).subscribe(user=>{
+      this.userInfo = user;
+      if(this.userInfo.emailVerificationMessage !== true){
+        const alert = this.alertCtrl.create({
+          title: 'VERIFICA TU EMAIL',
+          subTitle: 'te hemos enviado un correo de verificación. Sigue los pasos del correo para empezar a disfrutar de Waypool.',
+          buttons: ['OK']
+        });
+        alert.present();
+        this.SignUpService.emailVerificationMessage(this.user);
+      }else{
+  
+      }
+    })
     this.loadMap();
 
   }
@@ -116,12 +128,6 @@ export class FindridePage {
   loadMap(){
 
  // this gets current position and set the camera of the map and put a marker in your location
- const alert = this.alertCtrl.create({
-  title: 'Permiso de uso de tu geolocalización',
-  subTitle: 'Se usará tu geolocalización para hacer posible nuestro servicio de conexión con otros usuarios. Asi como mejorar nuestro sosporte e historial. ',
-  buttons: ['OK']
-});
-alert.present();
 
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
@@ -383,91 +389,101 @@ geocodeLatLng(latLng,inputName) {
 
 
   listride(){
-  if(this.userInfo.documents){
-    if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
-      try {
-        this.orFirebase=[this.autocompleteMyPos.input]
-        this.desFirebase=[this.autocompleteMyDest.input]   
-        console.log(this.orFirebase);
-      if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
-            this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
-            this.clearMarkers();
-            
-            this.directionsDisplay.setDirections({routes: []});
-            this.loadMap();
-           } else {
-            this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
-          //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-   
-            this.geoInfo1 = this.myLatLng;
-            console.log(this.geoInfo1);
-  
-  
-            this.geoInfo2 = {
-              lat: this.myLatLngDest.lat(),
-              lng: this.myLatLngDest.lng()
-            }
-  
-            
-           
-            this.confirmPrice(this.geoInfo1, this.geoInfo2);
-                  
-          }
-        
-         }
-         
-      catch(error) {
-        console.log(error)
-        this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
-        }
-  
-        console.log(this.orFirebase);
-    }else{
-      let alert = this.alertCtrl.create({
-        title: '¡oh-uh!',
-        subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-       buttons: [
-        { 
-          text: 'Subir mis documentos',
-          handler: () => {
-            this.navCtrl.push('CarRegistrationPage');
-          }
-        },
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: () => {
-           
-            }
-          }
-        ],
-        cssClass: 'alertDanger'
+    if(this.currentUser.emailVerified == false){
+      const alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'por favor verifica tu email',
+        buttons: ['OK']
       });
-      alert.present();
+      alert.present();  
+    }else{
+      if(this.userInfo.documents){
+        if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
+          try {
+            this.orFirebase=[this.autocompleteMyPos.input]
+            this.desFirebase=[this.autocompleteMyDest.input]   
+            console.log(this.orFirebase);
+          if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
+                this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
+                this.clearMarkers();
+                
+                this.directionsDisplay.setDirections({routes: []});
+                this.loadMap();
+               } else {
+                this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
+              //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
+       
+                this.geoInfo1 = this.myLatLng;
+                console.log(this.geoInfo1);
+      
+      
+                this.geoInfo2 = {
+                  lat: this.myLatLngDest.lat(),
+                  lng: this.myLatLngDest.lng()
+                }
+      
+                
+               
+                this.confirmPrice(this.geoInfo1, this.geoInfo2);
+                      
+              }
+            
+             }
+             
+          catch(error) {
+            console.log(error)
+            this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+            }
+      
+            console.log(this.orFirebase);
+        }else{
+          let alert = this.alertCtrl.create({
+            title: '¡oh-uh!',
+            subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+           buttons: [
+            { 
+              text: 'Subir mis documentos',
+              handler: () => {
+                this.navCtrl.push('CarRegistrationPage');
+              }
+            },
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+               
+                }
+              }
+            ],
+            cssClass: 'alertDanger'
+          });
+          alert.present();
+        }
+      }else{
+        let alert = this.alertCtrl.create({
+          title: '¡oh-oh!',
+          subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+         buttons: [
+          { 
+            text: 'Subir mis documentos',
+            handler: () => {
+              this.navCtrl.push('CarRegistrationPage');
+            }
+          },
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              handler: () => {
+             
+              }
+            }
+          ],
+          cssClass: 'alertDanger'
+        });
+        alert.present();
+      }
     }
-  }else{
-    let alert = this.alertCtrl.create({
-      title: '¡oh-oh!',
-      subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-     buttons: [
-      { 
-        text: 'Subir mis documentos',
-        handler: () => {
-          this.navCtrl.push('CarRegistrationPage');
-        }
-      },
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-         
-          }
-        }
-      ],
-      cssClass: 'alertDanger'
-    });
-    alert.present();
-  }
+  
 
     }
 

@@ -24,6 +24,12 @@ export class SignUpService {
             id: false
         })
      }
+     public emailVerificationMessage(user){
+
+        this.afDB.database.ref('/drivers/' + user).update({
+            emailVerificationMessage: true
+        })
+    }
 
     public getMyInfoDriver(userId){
         return this.afDB.object('drivers/' + userId).valueChanges();

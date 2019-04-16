@@ -57,7 +57,7 @@
     </feature>
     <name>Waypool Cars</name>
     <description>Waypool for students with car</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
