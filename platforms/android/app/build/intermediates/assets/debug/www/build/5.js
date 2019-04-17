@@ -99,10 +99,21 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.navParams = navParams;
         this.geofireService = geofireService;
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+<<<<<<< HEAD:platforms/android/app/build/intermediates/assets/debug/www/build/5.js
         this.buttonColor = '#3fb1df';
         this.buttonColor2 = '#3fb1df';
         this.buttonColor3 = '#3fb1df';
         this.buttonColor4 = '#3fb1df';
+=======
+        this.buttonColor = '#001127';
+        this.buttonColor2 = '#001127';
+        this.buttonColor3 = '#001127';
+        this.buttonColor4 = '#001127';
+        this.click1 = false;
+        this.click2 = false;
+        this.click3 = false;
+        this.click4 = false;
+>>>>>>> origin/deployjuan:platforms/android/assets/www/build/5.js
         this.geoinfo1 = this.navParams.get('geoInfo1');
         console.log(this.geoinfo1);
         this.geoinfo2 = this.navParams.get('geoInfo2');
@@ -122,9 +133,9 @@ var ConfirmdirectionPage = /** @class */ (function () {
     };
     ConfirmdirectionPage.prototype.setGeoFireOrigin = function () {
         this.buttonColor2 = '#0fc874';
-        this.buttonColor = '#3fb1df';
-        this.buttonColor3 = '#3fb1df';
-        this.buttonColor4 = '#3fb1df';
+        this.buttonColor = '#001127';
+        this.buttonColor3 = '#001127';
+        this.buttonColor4 = '#001127';
         this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
         this.click1 = true;
         if (this.click4 == true) {
@@ -133,10 +144,10 @@ var ConfirmdirectionPage = /** @class */ (function () {
         }
     };
     ConfirmdirectionPage.prototype.setGeoFireOrigin1 = function () {
-        this.buttonColor2 = '#3fb1df';
-        this.buttonColor = '#3fb1df';
+        this.buttonColor2 = '#001127';
+        this.buttonColor = '#001127';
         this.buttonColor3 = '#0fc874';
-        this.buttonColor4 = '#3fb1df';
+        this.buttonColor4 = '#001127';
         this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
         this.click2 = true;
         if (this.click4 == true) {
@@ -145,9 +156,9 @@ var ConfirmdirectionPage = /** @class */ (function () {
         }
     };
     ConfirmdirectionPage.prototype.setGeoFireOrigin2 = function () {
-        this.buttonColor2 = '#3fb1df';
-        this.buttonColor = '#3fb1df';
-        this.buttonColor3 = '#3fb1df';
+        this.buttonColor2 = '#001127';
+        this.buttonColor = '#001127';
+        this.buttonColor3 = '#001127';
         this.buttonColor4 = '#0fc874';
         this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
         this.click3 = true;
@@ -158,9 +169,9 @@ var ConfirmdirectionPage = /** @class */ (function () {
     };
     ConfirmdirectionPage.prototype.setGeoFireDestination = function () {
         this.buttonColor = '#0fc874';
-        this.buttonColor2 = '#3fb1df';
-        this.buttonColor3 = '#3fb1df';
-        this.buttonColor4 = '#3fb1df';
+        this.buttonColor2 = '#001127';
+        this.buttonColor3 = '#001127';
+        this.buttonColor4 = '#001127';
         this.geofireService.setGeofireDest(1, this.geoinfo2.lat, this.geoinfo2.lng, this.driverInfo);
         this.click4 = true;
         if (this.click1 == true || this.click2 == true || this.click3 == true) {

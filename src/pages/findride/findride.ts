@@ -164,7 +164,7 @@ export class FindridePage {
         animation: google.maps.Animation.DROP,
         position: latLng,
         draggable:true,
-        icon: {         url: "assets/imgs/marker-origin.png",
+        icon: {         url: "assets/imgs/marker-origin-driver.png",
         scaledSize: new google.maps.Size(90, 90)    
 
       }
@@ -268,7 +268,7 @@ selectSearchResultMyPos(item){
         position: results[0].geometry.location,
         map: this.map,
         draggable: true,
-        icon: {         url: "assets/imgs/marker-origin.png",
+        icon: {         url: "assets/imgs/marker-origin-driver.png",
         scaledSize: new google.maps.Size(90, 90)    
 
       },

@@ -26,14 +26,14 @@ export class ConfirmdirectionPage {
   userUid=this.AngularFireAuth.auth.currentUser.uid;
   geoinfo1;
   geoinfo2;
-  buttonColor:string = '#3fb1df';
-  buttonColor2:string = '#3fb1df';
-  buttonColor3:string = '#3fb1df';
-  buttonColor4:string = '#3fb1df';
-  click1:any;
-  click4:any;
+  buttonColor:string = '#001127';
+  buttonColor2:string = '#001127';
+  buttonColor3:string = '#001127';
+  buttonColor4:string = '#001127';
   click2:any;
   click3:any;
+  click1:any;
+  click4:any;
 
   driverInfo;
 
@@ -66,9 +66,9 @@ export class ConfirmdirectionPage {
   
   setGeoFireOrigin(){
     this.buttonColor2 = '#0fc874';
-    this.buttonColor = '#3fb1df';
-    this.buttonColor3 = '#3fb1df';
-    this.buttonColor4 = '#3fb1df';
+    this.buttonColor = '#001127';
+    this.buttonColor3 = '#001127';
+    this.buttonColor4 = '#001127';
     this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
     this.click1 = true;
     if(this.click4 == true){
@@ -78,10 +78,10 @@ export class ConfirmdirectionPage {
    } 
 
    setGeoFireOrigin1(){
-    this.buttonColor2 = '#3fb1df';
-    this.buttonColor = '#3fb1df';
+    this.buttonColor2 = '#001127';
+    this.buttonColor = '#001127';
     this.buttonColor3 = '#0fc874';
-    this.buttonColor4 = '#3fb1df';
+    this.buttonColor4 = '#001127';
     this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
     this.click2 = true;
     if(this.click4 == true){
@@ -91,9 +91,9 @@ export class ConfirmdirectionPage {
    } 
 
    setGeoFireOrigin2(){
-    this.buttonColor2 = '#3fb1df';
-    this.buttonColor = '#3fb1df';
-    this.buttonColor3 = '#3fb1df';
+    this.buttonColor2 = '#001127';
+    this.buttonColor = '#001127';
+    this.buttonColor3 = '#001127';
     this.buttonColor4 = '#0fc874';
     this.geofireService.setGeofireOr(1, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
     this.click3 = true;
@@ -105,9 +105,9 @@ export class ConfirmdirectionPage {
 
   setGeoFireDestination(){
     this.buttonColor = '#0fc874';
-      this.buttonColor2 = '#3fb1df';
-      this.buttonColor3 = '#3fb1df';
-      this.buttonColor4 = '#3fb1df';
+      this.buttonColor2 = '#001127';
+      this.buttonColor3 = '#001127';
+      this.buttonColor4 = '#001127';
       this.geofireService.setGeofireDest(1, this.geoinfo2.lat, this.geoinfo2.lng, this.driverInfo);
       this.click4 = true;
     if(this.click1 == true || this.click2 == true || this.click3 == true){

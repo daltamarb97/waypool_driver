@@ -39,9 +39,9 @@
                         <ion-list class="form">
                             <ion-item  class="nonEditable-email">
                                     <!-- <ion-input type="email" value="@uninorte.edu.co"  text-right formControlName="fixedemail" [readonly]="isReadonly"></ion-input> -->
+                                    
                                     <ion-select formControlName="fixedemail" placeholder="@uninorte.edu.co" type="email">
                                             <ion-option value="@uninorte.edu.co">@uninorte.edu.co</ion-option>
-
                                         </ion-select>
                             </ion-item>
                         </ion-list>
@@ -49,8 +49,8 @@
                 </ion-row>
                 <ion-list class="form" style="margin-bottom: 0">
                     <ion-item>
-                        <ion-label floating>contraseña nueva <span style="font-weight: bold; color: red;">(minimo 6 caracteres)</span></ion-label>
-                        <ion-input type="password"  text-right formControlName="password"  minlength="6"></ion-input>
+                            <ion-label  fixed><span style="font-weight: bold; color: red;">(mínimo 6 caracteres)</span></ion-label>
+                            <ion-input type="password"  text-right formControlName="password" placeholder= "Escribe tu contraseña" minlength="6"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label></ion-label>
@@ -60,7 +60,10 @@
                         <ion-label></ion-label>
                         <ion-input type="text" text-right formControlName="phone" placeholder= "Tú número de celular"></ion-input>
                     </ion-item>
-                    <ion-row>
+                </ion-list>
+                <ion-list>
+
+                    <ion-row class="col-car">
                         <ion-col class="name-fild-2">
                             <ion-list class="form">
                                 <ion-item class="carModel">
@@ -75,11 +78,14 @@
                                         <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>
                                 </ion-item>
                             </ion-list>
-                        </ion-col>
-                        <ion-item class="plateNumber">
-                            <ion-input type="text"  text-right formControlName="color" placeholder= "Color de carro" ></ion-input>
-                    </ion-item>
-                    </ion-row>
+                        </ion-col>               
+                    </ion-row>     
+                            <ion-list class="form">
+                                    <ion-item class="form" class="plateNumber" >
+                                            <ion-input type="text"  text-right formControlName="color" placeholder= "Color de carro" class="name-fild-2"></ion-input>
+                                        </ion-item>
+                                </ion-list>
+                   
                 </ion-list>
                         <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>
                         <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Inicia Sesión</strong></p>

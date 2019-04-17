@@ -29,8 +29,7 @@ export class MyApp {
     });
 
    platform.ready().then(()=>{
-     statusBar.styleDefault();
-     splashScreen.hide();
+    statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
      firebase.auth().onAuthStateChanged((user)=>{
       if(user){
         this.rootPage = 'TabsPage';

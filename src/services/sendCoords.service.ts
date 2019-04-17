@@ -92,6 +92,11 @@ constructor(public afDB: AngularFireDatabase){
     public endTripDriverPickingUsers(DriverUid){
         this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickingUsers').remove()
     }
+
+    public eraseChatsUsers(userId,DriverUid){
+        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickingUsers/'+userId+'/chat').remove()
+    }
+    
     public endTripDriverPickedUpUsers(DriverUid){
         this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
     }
