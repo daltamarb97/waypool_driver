@@ -42,7 +42,7 @@ INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver
 INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:1-26:12
 INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:1-26:12
 	package
-		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:102-141
+		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:102-138
 		INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml
 	android:versionName
@@ -52,7 +52,7 @@ INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver
 	android:hardwareAccelerated
 		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:142-200
+		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:139-197
 	android:versionCode
 		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:2:46-73
 		INJECTED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml
@@ -85,7 +85,7 @@ ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/pl
 		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:5:18-52
 	android:icon
 		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:5:53-80
-activity#com.waypoolsas.waypooldriver2.MainActivity
+activity#com.waypoolsas.waypoolcars.MainActivity
 ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:6:9-11:20
 	android:label
 		ADDED from /Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/platforms/android/app/src/main/AndroidManifest.xml:6:97-134

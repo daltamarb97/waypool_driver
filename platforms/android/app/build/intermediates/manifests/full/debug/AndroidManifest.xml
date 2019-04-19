@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.waypoolsas.waypooldriver2"
+    package="com.waypoolsas.waypoolcars"
     android:hardwareAccelerated="true"
-    android:versionCode="10000"
-    android:versionName="1.0.0" >
+    android:versionCode="10100"
+    android:versionName="1.1.0" >
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -60,7 +60,7 @@
         android:supportsRtl="true"
         android:testOnly="true" >
         <activity
-            android:name="com.waypoolsas.waypooldriver2.MainActivity"
+            android:name="com.waypoolsas.waypoolcars.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:label="@string/activity_name"
             android:launchMode="singleTop"
@@ -75,7 +75,7 @@
 
         <provider
             android:name="org.apache.cordova.camera.FileProvider"
-            android:authorities="com.waypoolsas.waypooldriver2.provider"
+            android:authorities="com.waypoolsas.waypoolcars.provider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -84,7 +84,7 @@
         </provider>
         <provider
             android:name="de.appplant.cordova.emailcomposer.Provider"
-            android:authorities="com.waypoolsas.waypooldriver2.emailcomposer.provider"
+            android:authorities="com.waypoolsas.waypoolcars.emailcomposer.provider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

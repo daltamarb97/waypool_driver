@@ -8,12 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:729494621596:android:9c03708824c1dcd6",
+        "mobilesdk_app_id": "1:729494621596:android:558e9df4e7c52835",
         "android_client_info": {
-          "package_name": "com.waypoolsas.waypool"
+          "package_name": "com.waypoolsas.waypoolcars"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "729494621596-lba0slgcnfqbnmsrilgd79vucnsg19jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDVEuiJjPUGGQA7xmjfvI_dBArHaTwFwek"
@@ -39,12 +44,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:729494621596:android:a9d0c711dd61ecba",
+        "mobilesdk_app_id": "1:729494621596:android:188288bccc534bc0",
         "android_client_info": {
-          "package_name": "com.waypoolsas.waypooldriver2"
+          "package_name": "com.waypoolsas.waypooluser"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "729494621596-lba0slgcnfqbnmsrilgd79vucnsg19jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDVEuiJjPUGGQA7xmjfvI_dBArHaTwFwek"

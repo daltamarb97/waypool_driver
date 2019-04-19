@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypooldriver2" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waypoolsas.waypoolcars" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="CallNumber">
         <param name="android-package" value="com.rohithvaranasi.callnumber.CFCallNumber" />
     </feature>
@@ -38,7 +38,7 @@
     </feature>
     <name>Waypool Cars</name>
     <description>Waypool for students with car</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -48,11 +48,17 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
-    <icon density="mdpi" src="resources/android/icon/drawable-mdpi/ic_launcher.png" />
-    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi/ic_launcher.png" />
-    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi/ic_launcher.png" />
-    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi/ic_launcher.png" />
-    <splash density="land-ldpi" src="resources/android/splash/splash.png" />
+    <icon density="mdpi" src="resources/android/icon/drawable-mdpi/icon.png" />
+    <icon density="hdpi" src="resources/android/icon/drawable-hdpi/icon.png" />
+    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi/icon.png" />
+    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi/icon.png" />
+    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi/icon.png" />
+    <splash density="port-ldpi" src="resources/android/splash/splash.png" />
+    <splash density="port-mdpi" src="resources/android/splash/splash.png" />
+    <splash density="port-hdpi" src="resources/android/splash/splash.png" />
+    <splash density="port-xhdpi" src="resources/android/splash/splash.png" />
+    <splash density="port-xxhdpi" src="resources/android/splash/splash.png" />
+    <splash density="port-xxxhdpi" src="resources/android/splash/splash.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />

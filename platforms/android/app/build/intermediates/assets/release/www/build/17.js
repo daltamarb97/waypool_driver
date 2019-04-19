@@ -1,6 +1,6 @@
 webpackJsonp([17],{
 
-/***/ 604:
+/***/ 607:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FindridePageModule", function() { return FindridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride__ = __webpack_require__(756);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride__ = __webpack_require__(761);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -27,7 +27,7 @@ var FindridePageModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__findride__["a" /* FindridePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__findride__["a" /* FindridePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__findride__["a" /* FindridePage */]),
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__findride__["a" /* FindridePage */]
@@ -41,7 +41,7 @@ var FindridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 756:
+/***/ 761:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49,15 +49,15 @@ var FindridePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(335);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(330);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_geofire__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_geofire__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_geofire___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_geofire__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_driverauthentication_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_driverauthentication_service__ = __webpack_require__(332);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -83,7 +83,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var FindridePage = /** @class */ (function () {
     function FindridePage(geofireService, afDB, navCtrl, SignUpService, modalCtrl, authenticationService, geolocation, zone, sendCoordsService, AngularFireAuth, alertCtrl, toastCtrl) {
-        var _this = this;
         this.geofireService = geofireService;
         this.afDB = afDB;
         this.navCtrl = navCtrl;
@@ -105,6 +104,7 @@ var FindridePage = /** @class */ (function () {
         this.trip = {};
         this.tripId = null;
         this.user = this.AngularFireAuth.auth.currentUser.uid;
+        this.currentUser = this.AngularFireAuth.auth.currentUser;
         this.driverInfo = {};
         this.geoInfo1 = {};
         this.geoInfo2 = {};
@@ -123,22 +123,28 @@ var FindridePage = /** @class */ (function () {
         //meter datos por el id del firebase
         this.dbRef = this.afDB.database.ref('geofire/');
         this.geoFire = new __WEBPACK_IMPORTED_MODULE_7_geofire__(this.dbRef);
-        this.SignUpService.getMyInfo(this.user).subscribe(function (user) {
-            _this.userInfo = user;
-        });
     }
     FindridePage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.SignUpService.getMyInfo(this.user).subscribe(function (user) {
+            _this.userInfo = user;
+            if (_this.userInfo.emailVerificationMessage !== true) {
+                var alert_1 = _this.alertCtrl.create({
+                    title: 'VERIFICA TU EMAIL',
+                    subTitle: 'te hemos enviado un correo de verificación. Sigue los pasos del correo para empezar a disfrutar de Waypool.',
+                    buttons: ['OK']
+                });
+                alert_1.present();
+                _this.SignUpService.emailVerificationMessage(_this.user);
+            }
+            else {
+            }
+        });
         this.loadMap();
     };
     FindridePage.prototype.loadMap = function () {
-        var _this = this;
         // this gets current position and set the camera of the map and put a marker in your location
-        var alert = this.alertCtrl.create({
-            title: 'Permiso de uso de tu geolocalización',
-            subTitle: 'Se usará tu geolocalización para hacer posible nuestro servicio de conexión con otros usuarios. Asi como mejorar nuestro sosporte e historial. ',
-            buttons: ['OK']
-        });
-        alert.present();
+        var _this = this;
         this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(function (position) {
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             var mapOptions = {
@@ -171,7 +177,7 @@ var FindridePage = /** @class */ (function () {
                 animation: google.maps.Animation.DROP,
                 position: latLng,
                 draggable: true,
-                icon: { url: "assets/imgs/marker-origin.png",
+                icon: { url: "assets/imgs/marker-origin-driver.png",
                     scaledSize: new google.maps.Size(90, 90)
                 }
             });
@@ -254,7 +260,7 @@ var FindridePage = /** @class */ (function () {
                     position: results[0].geometry.location,
                     map: _this.map,
                     draggable: true,
-                    icon: { url: "assets/imgs/marker-origin.png",
+                    icon: { url: "assets/imgs/marker-origin-driver.png",
                         scaledSize: new google.maps.Size(90, 90)
                     },
                     animation: google.maps.Animation.DROP,
@@ -357,39 +363,71 @@ var FindridePage = /** @class */ (function () {
     };
     FindridePage.prototype.listride = function () {
         var _this = this;
-        if (this.userInfo.documents) {
-            if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
-                try {
-                    this.orFirebase = [this.autocompleteMyPos.input];
-                    this.desFirebase = [this.autocompleteMyDest.input];
+        if (this.currentUser.emailVerified == false) {
+            var alert_2 = this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'por favor verifica tu email',
+                buttons: ['OK']
+            });
+            alert_2.present();
+        }
+        else {
+            if (this.userInfo.documents) {
+                if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
+                    try {
+                        this.orFirebase = [this.autocompleteMyPos.input];
+                        this.desFirebase = [this.autocompleteMyDest.input];
+                        console.log(this.orFirebase);
+                        if (this.autocompleteMyDest.input == '' || this.autocompleteMyPos.input == '') {
+                            this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tu origen y destino sean correctos', 'Ok');
+                            this.clearMarkers();
+                            this.directionsDisplay.setDirections({ routes: [] });
+                            this.loadMap();
+                        }
+                        else {
+                            this.sendCoordsService.pushcoordinatesDrivers(this.user, this.desFirebase, this.orFirebase);
+                            //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
+                            this.geoInfo1 = this.myLatLng;
+                            console.log(this.geoInfo1);
+                            this.geoInfo2 = {
+                                lat: this.myLatLngDest.lat(),
+                                lng: this.myLatLngDest.lng()
+                            };
+                            this.confirmPrice(this.geoInfo1, this.geoInfo2);
+                        }
+                    }
+                    catch (error) {
+                        console.log(error);
+                        this.presentAlert('Hay un error en la aplicación', 'Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.', 'Ok');
+                    }
                     console.log(this.orFirebase);
-                    if (this.autocompleteMyDest.input == '' || this.autocompleteMyPos.input == '') {
-                        this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tu origen y destino sean correctos', 'Ok');
-                        this.clearMarkers();
-                        this.directionsDisplay.setDirections({ routes: [] });
-                        this.loadMap();
-                    }
-                    else {
-                        this.sendCoordsService.pushcoordinatesDrivers(this.user, this.desFirebase, this.orFirebase);
-                        //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-                        this.geoInfo1 = this.myLatLng;
-                        console.log(this.geoInfo1);
-                        this.geoInfo2 = {
-                            lat: this.myLatLngDest.lat(),
-                            lng: this.myLatLngDest.lng()
-                        };
-                        this.confirmPrice(this.geoInfo1, this.geoInfo2);
-                    }
                 }
-                catch (error) {
-                    console.log(error);
-                    this.presentAlert('Hay un error en la aplicación', 'Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.', 'Ok');
+                else {
+                    var alert_3 = this.alertCtrl.create({
+                        title: '¡oh-uh!',
+                        subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+                        buttons: [
+                            {
+                                text: 'Subir mis documentos',
+                                handler: function () {
+                                    _this.navCtrl.push('CarRegistrationPage');
+                                }
+                            },
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            }
+                        ],
+                        cssClass: 'alertDanger'
+                    });
+                    alert_3.present();
                 }
-                console.log(this.orFirebase);
             }
             else {
-                var alert_1 = this.alertCtrl.create({
-                    title: '¡oh-uh!',
+                var alert_4 = this.alertCtrl.create({
+                    title: '¡oh-oh!',
                     subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                     buttons: [
                         {
@@ -407,30 +445,8 @@ var FindridePage = /** @class */ (function () {
                     ],
                     cssClass: 'alertDanger'
                 });
-                alert_1.present();
+                alert_4.present();
             }
-        }
-        else {
-            var alert_2 = this.alertCtrl.create({
-                title: '¡oh-oh!',
-                subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-                buttons: [
-                    {
-                        text: 'Subir mis documentos',
-                        handler: function () {
-                            _this.navCtrl.push('CarRegistrationPage');
-                        }
-                    },
-                    {
-                        text: 'Cancelar',
-                        role: 'cancel',
-                        handler: function () {
-                        }
-                    }
-                ],
-                cssClass: 'alertDanger'
-            });
-            alert_2.present();
         }
     };
     FindridePage.prototype.presentAlert = function (title, text, button) {
@@ -468,7 +484,7 @@ var FindridePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title><span class="text-white">PIDE TU VIAJE</span>\n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n        </ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n<ion-content  padding>\n    \n    <ion-card class="search">\n          \n        <ion-card-content>\n            <span class="dot bg-theme"></span>\n            <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Tu origen"></ion-searchbar>\n          \n            <ion-list   [hidden]="autocompleteItems.length == 0">\n                <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                  {{ item.description }}\n                </ion-item>\n              </ion-list>\n              <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n        </ion-card-content>\n        <ion-card-content>\n            <span class="dot bg-yellow"></span>           \n           <ion-searchbar required [(ngModel)]="autocompleteMyDest.input" (ionInput)="updateSearchResultsMyDest()" placeholder="Tu destino"></ion-searchbar>\n\n\n            <ion-list   [hidden]="autocompleteItems2.length == 0">\n            <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n              {{ item.description }}\n            </ion-item>\n          </ion-list>\n            <!-- <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span> -->\n\n        </ion-card-content>\n        \n    </ion-card>\n\n\n <div #map id="map"></div>  \n    <div></div>\n <button (click)="listride()" class="btn rounded bg-theme text-white" style="width: 100%">Pedir</button>\n\n \n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* ModalController */], __WEBPACK_IMPORTED_MODULE_9__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_8__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_9__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* ToastController */]])
     ], FindridePage);
     return FindridePage;
 }());
