@@ -242,7 +242,9 @@ export class OnTripPage {
     endTrip(){
 
       //let user rate the trip
-      this.navCtrl.push('RatetripPage',{user:this.driver});
+      
+      this.app.getRootNav().push('RatetripPage', {user:this.driver});
+
 
       this.pickedUpUsers.forEach(user => {
         
@@ -253,7 +255,7 @@ export class OnTripPage {
       // save trip in every record of every users
       this.sendCoordsService.recordTripOnUser(user.userId,user); 
 
-      this.sendCoordsService.endTripUserPickingUsers(user.userId);
+      // this.sendCoordsService.endTripUserPickingUsers(user.userId);
       this.sendCoordsService.endTripUserPickedUpUsers(user.userId);
       this.sendCoordsService.endTripUserOnTripInstance(user.userId);
       this.sendCoordsService.endTripUserPickupInstance(user.userId);

@@ -39,7 +39,7 @@ export class SignupPage {
         name: ["", Validators.required],
         lastname: ["", Validators.required],
         email: ["", Validators.required],
-        fixedemail: [""],
+        fixedemail: ["", Validators.required],
         password: ["", Validators.required],
         passwordconf: ["", Validators.required],
         phone: ["", Validators.required],

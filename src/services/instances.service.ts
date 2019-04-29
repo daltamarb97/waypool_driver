@@ -56,5 +56,29 @@ public stopShowingOnDriver(driverId, user){
     })
 }  
 
+public noDriversAvailableInstance(userId){
+    this.afDB.database.ref('/drivers/' + userId).update({
+        noUsersMessage: true
+    })
+}
+
+public noDriversAvailableInstanceDelete(userId){
+    this.afDB.database.ref('/drivers/' + userId).update({
+        noUsersMessage: false
+    })
+}
+
+public clickedDirectionMessage(userId){
+    this.afDB.database.ref('/drivers/' + userId).update({
+        clickedDirection: true
+    })
+}
+
+public clickedDirectionMessageCancel(userId){
+    this.afDB.database.ref('/drivers/' + userId).update({
+        clickedDirection: false
+    })
+}
+
 }
 

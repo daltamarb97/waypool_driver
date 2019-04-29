@@ -103,8 +103,7 @@ this.callNumber.callNumber(number, true)
                   if(this.userInfo.geofireOr == true){
                     this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
                     this.geofireServices.cancelGeoqueryOr()
-                    console.log('problema');
-                  }else{
+                  }else if (this.userInfo.geofireDest == true){
                     this.geofireServices.deleteUserGeofireDest(this.userInfo.userId);
                     this.geofireServices.cancelGeoqueryDest()
                   }
