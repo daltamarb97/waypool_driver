@@ -137,7 +137,7 @@ export class ConfirmdirectionPage {
  
    setTimeout(() => {
     loading.dismiss();
-  }, 10000);
+  }, 30000);
  }
 
   ionViewDidLeave(){

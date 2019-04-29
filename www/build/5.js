@@ -185,7 +185,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
         loading.present();
         setTimeout(function () {
             loading.dismiss();
-        }, 10000);
+        }, 30000);
     };
     ConfirmdirectionPage.prototype.ionViewDidLeave = function () {
         this.presentLoadingDefault();

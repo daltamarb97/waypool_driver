@@ -96,7 +96,7 @@ export class ListridePage{
         }, 500)
         
         }    
-    }, 24000)
+    }, 63000)
   }
 
   ionViewDidLeave(){

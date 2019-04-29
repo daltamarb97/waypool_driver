@@ -151,7 +151,7 @@ var ListridePage = /** @class */ (function () {
                     }
                 }, 500);
             }
-        }, 24000);
+        }, 63000);
     };
     ListridePage.prototype.ionViewDidLeave = function () {
         this.geoFireService.cancelGeoqueryDest();
