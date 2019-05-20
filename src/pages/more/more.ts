@@ -25,7 +25,8 @@ export class MorePage {
   }
   
        profile(){
-    this.navCtrl.push('ProfilePage');
+    
+    this.app.getRootNav().push('ProfilePage');
     }
     showInfoCars(){
 

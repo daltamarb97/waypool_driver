@@ -19,6 +19,8 @@ name:string;
 lastname:string;
 phone:string;
 email:string;
+about:string;
+url:any;
 userForDelete = this.AngularFireAuth.auth.currentUser;
 userUid=this.AngularFireAuth.auth.currentUser.uid;
 emailUser = this.AngularFireAuth.auth.currentUser.email;
@@ -34,7 +36,24 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
     })
   }
   saveChanges(){
-    this.SignupService.saveInfoProfile(this.userUid,this.phone);
+      if(this.phone != null){
+        this.SignupService.saveInfoProfile(this.userUid,this.phone);
+        this.toastConfirmation();
+        this.navCtrl.pop();
+      }else{
+        this.toastConfirmation();
+        this.navCtrl.pop();
+
+      }
+    }
+
+    toastConfirmation(){
+      let toast = this.toastCtrl.create({
+        message: 'Información actualizada',
+        duration: 1000,
+        position: 'bottom'
+      })
+      toast.present();
     }
     
      
@@ -82,7 +101,8 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
   showInfoProfile(user){
     this.name = user.name;
     this.lastname = user.lastname;
-    
+    this.url = user.url;
+    this.about = user.about;
     this.email = user.email;
   }
 
