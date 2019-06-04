@@ -1,6 +1,6 @@
 webpackJsonp([13],{
 
-/***/ 597:
+/***/ 596:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MorePageModule", function() { return MorePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(751);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(750);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var MorePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 751:
+/***/ 750:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87,7 +87,7 @@ var MorePage = /** @class */ (function () {
         });
     }
     MorePage.prototype.profile = function () {
-        this.navCtrl.push('ProfilePage');
+        this.app.getRootNav().push('ProfilePage');
     };
     MorePage.prototype.showInfoCars = function () {
         var modal = this.modalCtrl.create('ShowInfoCarPage', { user: this.user });
@@ -105,7 +105,7 @@ var MorePage = /** @class */ (function () {
         this.app.getRootNav().push('LoginPage');
     };
     MorePage.prototype.docs = function () {
-        this.navCtrl.push('CarRegistrationPage');
+        this.app.getRootNav().push('CarRegistrationPage');
     };
     MorePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({

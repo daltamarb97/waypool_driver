@@ -36,16 +36,47 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
     })
   }
   saveChanges(){
-      if(this.phone != null){
-        this.SignupService.saveInfoProfile(this.userUid,this.phone);
-        this.toastConfirmation();
-        this.navCtrl.pop();
-      }else{
-        this.toastConfirmation();
-        this.navCtrl.pop();
-
-      }
+    
+    if(this.phone == null && this.user.about == null && this.user.url == null){
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone == null && this.user.about == null && this.user.url != null){
+      this.SignupService.saveInfoProfileUrl(this.userUid,this.user.url);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone == null && this.user.about != null && this.user.url == null){
+      this.SignupService.saveInfoProfileAbout(this.userUid,this.user.about);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone != null && this.user.about == null && this.user.url == null){
+      this.SignupService.saveInfoProfilePhone(this.userUid,this.phone);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone != null && this.user.about != null && this.user.url == null){
+      this.SignupService.saveInfoProfilePhone(this.userUid,this.phone);
+      this.SignupService.saveInfoProfileAbout(this.userUid,this.user.about);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone != null && this.user.about == null && this.user.url != null){
+      this.SignupService.saveInfoProfilePhone(this.userUid,this.phone);
+      this.SignupService.saveInfoProfileUrl(this.userUid,this.user.url);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else if(this.phone == null && this.user.about != null && this.user.url != null){
+      this.SignupService.saveInfoProfileAbout(this.userUid,this.user.about);
+      this.SignupService.saveInfoProfileUrl(this.userUid,this.user.url);
+      this.toastConfirmation();
+      this.navCtrl.pop(); 
+    }else if(this.phone != null && this.user.about != null && this.user.url != null){
+      this.SignupService.saveInfoProfileAbout(this.userUid,this.user.about);
+      this.SignupService.saveInfoProfileUrl(this.userUid,this.user.url);
+      this.SignupService.saveInfoProfilePhone(this.userUid, this.phone);
+      this.toastConfirmation();
+      this.navCtrl.pop();
+    }else{
+      console.log('go to the f*cking hell');
     }
+  }
 
     toastConfirmation(){
       let toast = this.toastCtrl.create({

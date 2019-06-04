@@ -5,7 +5,7 @@ import { ListridePage } from '../listride/listride';
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage, App } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 
@@ -77,7 +77,10 @@ export class FindridePage {
   // hits = new BehaviorSubject([])
   markerGeolocation:any;
   markerDest:any;
-  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
+
+
+  locationUniversity:any ={};
+  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -96,14 +99,13 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
-  
-    this.dbRef = this.afDB.database.ref('geofire/' );
-    this.geoFire = new GeoFire(this.dbRef); 
+    
+    // set geofire key of university to avoid asking users to put where they are going
+    this.geofireService.getLocationUniversity().subscribe(location=>{
+      this.locationUniversity = location;
+      this.geofireService.setLocationUniversity("some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+    })
 
-    
-    
-
-    
   }
  
   ionViewDidLoad(){
@@ -421,9 +423,10 @@ geocodeLatLng(latLng,inputName) {
                   lat: this.myLatLngDest.lat(),
                   lng: this.myLatLngDest.lng()
                 }
-      
                 
-               
+                //turn on geoquery university to determine wether the user is in university
+                this.geofireService.setGeofireUniversity(0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+               //
                 this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       
               }
@@ -496,12 +499,19 @@ geocodeLatLng(latLng,inputName) {
       alert.present();
     }
 
+    availableReserves(){
+      this.app.getRootNav().push('ListridePage');
+
+    }
+
+   
   
    confirmPrice(geoInfo1, geoInfo2){
       let modal = this.modalCtrl.create('ConfirmpricePage', {geoInfo1, geoInfo2});
       modal.onDidDismiss(accepted => {
         if(accepted){
-          this.navCtrl.push('ListridePage');
+          // this.navCtrl.push('ListridePage');
+          
         }
       })
    modal.present();

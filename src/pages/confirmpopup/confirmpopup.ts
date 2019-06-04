@@ -84,10 +84,10 @@ export class ConfirmpopupPage {
 
 
 				console.log('before delete')
-				this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+				// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 				console.log('after delete')
-				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
 					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 		
@@ -120,10 +120,10 @@ export class ConfirmpopupPage {
 			
 		}else{
 			console.log('before delete')
-				this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+				// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 				console.log('after delete')
-				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car,this.userDriver.about);
 					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 		
@@ -143,10 +143,10 @@ export class ConfirmpopupPage {
 		console.log('g');
 
 		console.log('before delete')
-			this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
+			// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 			console.log('after delete')
-			this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone);
-			this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car);
+			this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+			this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
 				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
 	

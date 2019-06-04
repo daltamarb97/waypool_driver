@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage, App } from 'ionic-angular';
 
 
 import { TabsPage } from '../tabs/tabs';
@@ -35,7 +35,7 @@ userDriver:any;
 
 unsubscribe = new Subject;
 
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService, public app: App) {
 
     this.sendUsersService.getUsersOnTrip(this.driverUid)
     .subscribe( user => {
@@ -76,6 +76,7 @@ this.callNumber.callNumber(number, true)
     console.log('Error launching dialer', err)
   });
 }
+
      
           goToRide(user){
     this.navCtrl.push('PickupPage',{user});

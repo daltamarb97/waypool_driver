@@ -123,6 +123,27 @@ constructor(public afDB: AngularFireDatabase){
        this.afDB.database.ref('/drivers/'+ DriverUid +'/trips/pickedUpUsers/'+ userId).update(user);
 
     }
+
+    public addReserve(driverId, car, dest, or, note, price, currentHour, startHour){
+        this.afDB.database.ref('/reserves/'+ driverId).push({
+            car:car,
+            destination:dest,
+            origin:or,
+            note:note,
+            price:price,
+            currentHour:currentHour,
+            startHour:startHour
+
+        }).then((snap)=>{
+            const key = snap.key;
+            this.afDB.database.ref('/reserves/'+ driverId + '/' + key).update({
+                keyTrip: key 
+            })
+            console.log('reserve executed');
+        })
+    }
+
+
     public pickUpInstance(userId){       
 
         // driver add pickup instance to the user when picked up

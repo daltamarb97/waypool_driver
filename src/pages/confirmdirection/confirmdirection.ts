@@ -9,9 +9,10 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { geofireService } from '../../services/geofire.services';
 import { ListridePage } from '../listride/listride';
 import { instancesService } from '../../services/instances.service';
+import { SignUpService } from '../../services/signup.service';
 
 
-
+declare var google;
 @IonicPage()
 
 @Component({
@@ -37,8 +38,14 @@ export class ConfirmdirectionPage {
   click4:any;
 
   driverInfo;
+  driver:any;
+  //geocoder variable
+  geocoder: any
+  geocoordinatesDest:any ={};
+  geocoordinatesOr:any ={};
 
-  constructor(public navCtrl: NavController, public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService, public instances: instancesService, public loadingCtrl: LoadingController ) {
+
+  constructor(public navCtrl: NavController, public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService, public instances: instancesService, public loadingCtrl: LoadingController, private signupService:SignUpService ) {
 
     this.geoinfo1 = this.navParams.get('geoInfo1')
     console.log(this.geoinfo1)
@@ -49,6 +56,33 @@ export class ConfirmdirectionPage {
     this.driverInfo = this.navParams.get('driverInfo')
     console.log(this.driverInfo);
 
+    this.geocoder = new google.maps.Geocoder;
+
+    // geocoding of addresses that came from findaRide
+    this.geocoder.geocode({'address': this.driverInfo.destination[0][0]}, (results, status)=>{
+      if(status==='OK'){
+        this.geocoordinatesDest={
+          lat:results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+        console.log(this.geocoordinatesDest.lat, this.geocoordinatesDest.lng )
+      }
+    })
+
+    this.geocoder.geocode({'address': this.driverInfo.origin[0][0]}, (results, status)=>{
+      if(status==='OK'){
+        this.geocoordinatesOr={
+          lat:results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+        console.log(this.geocoordinatesOr.lat, this.geocoordinatesOr.lng )
+      }
+    })
+
+    this.signupService.getMyInfoDriver(this.userUid).subscribe((driver)=>{
+      this.driver = driver;
+    })
+
 
     
   }
@@ -58,14 +92,17 @@ export class ConfirmdirectionPage {
     this.click2 = false;
     this.click3 = false;
     this.click4 = false;
+   
   }
+
 
 
 
   acceptTrip(){
     this.accepted = true;
-    // this.instances.clickedDirectionMessage(this.userUid);
+    this.sendCoordsService.addReserve(this.userUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour);
     this.dismiss();
+
   }
   
   setGeoFireOrigin(){
@@ -73,7 +110,7 @@ export class ConfirmdirectionPage {
     this.buttonColor = '#001127';
     this.buttonColor3 = '#001127';
     this.buttonColor4 = '#001127';
-    this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+    this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
     this.click1 = true;
     if(this.click4 == true){
       this.geofireService.cancelGeoqueryDest();
@@ -86,7 +123,7 @@ export class ConfirmdirectionPage {
     this.buttonColor = '#001127';
     this.buttonColor3 = '#0fc874';
     this.buttonColor4 = '#001127';
-    this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+    this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
     this.click2 = true;
     if(this.click4 == true){
       this.geofireService.cancelGeoqueryDest();
@@ -99,7 +136,7 @@ export class ConfirmdirectionPage {
     this.buttonColor = '#001127';
     this.buttonColor3 = '#001127';
     this.buttonColor4 = '#0fc874';
-    this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+    this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
     this.click3 = true;
     if(this.click4 == true){
       this.geofireService.cancelGeoqueryDest();
@@ -112,7 +149,7 @@ export class ConfirmdirectionPage {
       this.buttonColor2 = '#001127';
       this.buttonColor3 = '#001127';
       this.buttonColor4 = '#001127';
-      this.geofireService.setGeofireDest(2, this.geoinfo2.lat, this.geoinfo2.lng, this.driverInfo);
+      this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
       this.click4 = true;
     if(this.click1 == true || this.click2 == true || this.click3 == true){
       this.geofireService.cancelGeoqueryOr();
@@ -128,21 +165,8 @@ export class ConfirmdirectionPage {
     
   }  
 
-  presentLoadingDefault() {
-    let loading = this.loadingCtrl.create({
-     content: 'Buscando compañeros...'
-   });
- 
-   loading.present();
- 
-   setTimeout(() => {
-    loading.dismiss();
-  }, 30000);
- }
+  
 
-  ionViewDidLeave(){
-    this.presentLoadingDefault();
-  }
 
 }
 

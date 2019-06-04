@@ -34,14 +34,15 @@ export class ListridePage{
   userDriver;
   timer:any;
   loading:any;
-
+  // this variable determines the amount of time to wait until a rserve should be deleted
+  timeToWait:any;
   constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService, public loadingCtrl: LoadingController) {
     
     //get origin from driver
     this.sendCoordsService.getOrigin(this.driver)
         .subscribe( origin => {
           this.locationOrigin = origin;
-          console.log(this.locationOrigin[0]);
+         
         })
 
   
@@ -49,14 +50,12 @@ export class ListridePage{
       this.sendCoordsService.getDestination(this.driver)
         .subscribe( destination => {
           this.locationDestination = destination;
-          console.log(destination);
+
         })
 
         this.SignUpService.getMyInfoDriver(this.driver)
 		.subscribe(userDriver => {
-			this.userDriver = userDriver;
-      console.log(this.userDriver);
-      
+			this.userDriver = userDriver;  
     });
         
     
@@ -64,53 +63,40 @@ export class ListridePage{
   }
 
   ionViewDidLoad(){
-    this.subscribe = this.geofireService.getUsersListRide()
-    .subscribe(user=>{
-        this.usersFindingTrip = user;
+
+    this.subscribe = this.geofireService.getMyReserves(this.driver)
+    .subscribe(reserve=>{
+        this.usersFindingTrip = reserve;  
+        // reserves delete itself after the startHour passes, TODO: dont eliminate if there are passengers in reserve
+        // TODO: fix this because reserve must eliminate itself even when the user have not entered into listRide
+        this.usersFindingTrip.forEach(reserveInd => {
+          var startTime = reserveInd.startHour.split(':');
+          var currentTime = reserveInd.currentHour.split(':');
+          var hours = startTime[0] - currentTime[0]
+          var minutes = startTime[1] - currentTime[1]
+          var hoursInMilliSeconds = hours*3600000
+          var minutesInMilliseconds = minutes*60000
+          this.timeToWait = hoursInMilliSeconds + minutesInMilliseconds; 
+          console.log(this.timeToWait);
+          setTimeout(()=>{
+            this.sendUsersService.removeReserve(this.driver, reserveInd.keyTrip);
+          }, this.timeToWait) 
+        });
+     
     })
   }
 
-  ionViewDidEnter(){
-    this.timer = setTimeout(()=>{
-      if(this.usersFindingTrip.length == 0 ){  
-        this.instances.noDriversAvailableInstance(this.driver);
-        setTimeout(()=>{
-          if(this.userDriver.noUsersMessage == true){
-            this.instances.clickedDirectionMessageCancel(this.driver);
-            const alert =  this.alertCtrl.create({
-              message: 'No hay compañeros en este momento para compartir tu viaje, vuelve a intentar en unos minutos',
-              buttons: [
-                {
-                  text: 'OK',
-                  handler: () => {
-                    this.instances.noDriversAvailableInstanceDelete(this.driver);
-                    this.geoFireService.cancelGeoqueryDest();
-                    this.geoFireService.cancelGeoqueryOr();
-                    this.navCtrl.pop();
-                  }
-                }
-              ]
-            });
-            alert.present();
-          }
-        }, 500)
-        
-        }    
-    }, 63000)
-  }
 
   ionViewDidLeave(){
     this.geoFireService.cancelGeoqueryDest();
     this.geoFireService.cancelGeoqueryOr();
-    clearTimeout(this.timer);
+    // clearTimeout(this.timer);
 
 
   }
-    
   
 
-
-  deleteUser(userId,nameUser){
+  deleteUser(reserveKey,nameUser){
   
     let alert = this.alertCtrl.create({
       title: 'Eliminar Usuario',
@@ -120,21 +106,12 @@ export class ListridePage{
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('holi');
           }
         },
         {
           text: 'Eliminar',
           handler: () => {
-            console.log('user eliminado');
-            // setTimeout(()=>{
-            //   //REVISAR
-            //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-            //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
-            // }, 600)
-            this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-            console.log('remove on list')
-            this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
+            this.sendUsersService.removeReserve(this.driver, reserveKey);
           }
         }
       ]

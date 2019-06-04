@@ -23,10 +23,9 @@ constructor(public afDB: AngularFireDatabase){
          //get all the users from the pickUpUsers []
         return  this.afDB.list('/drivers/'+ userUid +'/trips/pickedUpUsers').valueChanges();
      }
-     public removeUsersOnListRide(userUid,userId ){
-        //send the information of every student the driver acepts in myRide
-           this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/'+ userId).remove();
-            this.afDB.database.ref('/users/' + userId + '/trips/driversListRide/' + userUid).remove();
+     public removeReserve(driverId, keyReserve ){
+        //remove the reserve done
+           this.afDB.database.ref('/reserves/'+ driverId + '/' + keyReserve).remove();
            }
 
            public removeUsersOnListRideTotal(userUid ){
@@ -44,7 +43,7 @@ constructor(public afDB: AngularFireDatabase){
     
 
 
-    public pushPickingUpUsersOnDrivers(userUid,userId ,origin,destination,name,lastname,phone){
+    public pushPickingUpUsersOnDrivers(userUid,userId ,origin,destination,name,lastname,phone, about){
      //send the information of every student the driver acepts in myRide
         this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).update(
             {
@@ -54,13 +53,13 @@ constructor(public afDB: AngularFireDatabase){
              lastname:lastname,
              phone: phone,
              userId:userId,
-             
+             about:about
             
             }
             );
 
         }
-        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,price,car){
+        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,price,car,about){
             //send the driver information to the students
             this.afDB.database.ref('/users/'+ userId +'/trips/pickingUsers/driver/'+ userUid).update(
                 {
@@ -71,7 +70,8 @@ constructor(public afDB: AngularFireDatabase){
                  phone: phone,
                  userId:userUid,
                  car:car, 
-                 price:price
+                 price:price,
+                 about:about
                  
                 
                 }

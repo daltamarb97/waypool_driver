@@ -48,7 +48,8 @@ export class MorePage {
           this.app.getRootNav().push('LoginPage');
     }
          docs(){
-    this.navCtrl.push('CarRegistrationPage');
+    this.app.getRootNav().push('CarRegistrationPage');
+
     }
 
 }

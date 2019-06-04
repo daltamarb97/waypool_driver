@@ -19,6 +19,7 @@
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
                         </h2>
+                        <p>{{user.about}}</p>
                     </div>
                     <div class="more">
                             <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>
@@ -54,7 +55,7 @@
                             <img src="assets/imgs/userPicture.png">
                         </ion-avatar>
                         <div class="name">
-                            <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
+                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
                             </h2>
                       
                         </div>

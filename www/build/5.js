@@ -70,6 +70,7 @@ __export(__webpack_require__(36));
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_signup_service__ = __webpack_require__(329);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -87,8 +88,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ConfirmdirectionPage = /** @class */ (function () {
-    function ConfirmdirectionPage(navCtrl, appCtrl, alertCtrl, afDB, sendUsersService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService, instances, loadingCtrl) {
+    function ConfirmdirectionPage(navCtrl, appCtrl, alertCtrl, afDB, sendUsersService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService, instances, loadingCtrl, signupService) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.appCtrl = appCtrl;
         this.alertCtrl = alertCtrl;
@@ -102,17 +105,43 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.geofireService = geofireService;
         this.instances = instances;
         this.loadingCtrl = loadingCtrl;
+        this.signupService = signupService;
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
         this.buttonColor = '#001127';
         this.buttonColor2 = '#001127';
         this.buttonColor3 = '#001127';
         this.buttonColor4 = '#001127';
+        this.geocoordinatesDest = {};
+        this.geocoordinatesOr = {};
         this.geoinfo1 = this.navParams.get('geoInfo1');
         console.log(this.geoinfo1);
         this.geoinfo2 = this.navParams.get('geoInfo2');
         console.log(this.geoinfo2);
         this.driverInfo = this.navParams.get('driverInfo');
         console.log(this.driverInfo);
+        this.geocoder = new google.maps.Geocoder;
+        // geocoding of addresses that came from findaRide
+        this.geocoder.geocode({ 'address': this.driverInfo.destination[0][0] }, function (results, status) {
+            if (status === 'OK') {
+                _this.geocoordinatesDest = {
+                    lat: results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                };
+                console.log(_this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+            }
+        });
+        this.geocoder.geocode({ 'address': this.driverInfo.origin[0][0] }, function (results, status) {
+            if (status === 'OK') {
+                _this.geocoordinatesOr = {
+                    lat: results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                };
+                console.log(_this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+            }
+        });
+        this.signupService.getMyInfoDriver(this.userUid).subscribe(function (driver) {
+            _this.driver = driver;
+        });
     }
     ConfirmdirectionPage.prototype.ionViewWillEnter = function () {
         this.click1 = false;
@@ -122,7 +151,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
     };
     ConfirmdirectionPage.prototype.acceptTrip = function () {
         this.accepted = true;
-        // this.instances.clickedDirectionMessage(this.userUid);
+        this.sendCoordsService.addReserve(this.userUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour);
         this.dismiss();
     };
     ConfirmdirectionPage.prototype.setGeoFireOrigin = function () {
@@ -130,7 +159,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.buttonColor = '#001127';
         this.buttonColor3 = '#001127';
         this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
         this.click1 = true;
         if (this.click4 == true) {
             this.geofireService.cancelGeoqueryDest();
@@ -142,7 +171,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.buttonColor = '#001127';
         this.buttonColor3 = '#0fc874';
         this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
         this.click2 = true;
         if (this.click4 == true) {
             this.geofireService.cancelGeoqueryDest();
@@ -154,7 +183,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.buttonColor = '#001127';
         this.buttonColor3 = '#001127';
         this.buttonColor4 = '#0fc874';
-        this.geofireService.setGeofireOr(2, this.geoinfo1.lat, this.geoinfo1.lng, this.driverInfo);
+        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
         this.click3 = true;
         if (this.click4 == true) {
             this.geofireService.cancelGeoqueryDest();
@@ -166,7 +195,7 @@ var ConfirmdirectionPage = /** @class */ (function () {
         this.buttonColor2 = '#001127';
         this.buttonColor3 = '#001127';
         this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireDest(2, this.geoinfo2.lat, this.geoinfo2.lng, this.driverInfo);
+        this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
         this.click4 = true;
         if (this.click1 == true || this.click2 == true || this.click3 == true) {
             this.geofireService.cancelGeoqueryOr();
@@ -178,23 +207,11 @@ var ConfirmdirectionPage = /** @class */ (function () {
     ConfirmdirectionPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss(this.accepted);
     };
-    ConfirmdirectionPage.prototype.presentLoadingDefault = function () {
-        var loading = this.loadingCtrl.create({
-            content: 'Buscando compañeros...'
-        });
-        loading.present();
-        setTimeout(function () {
-            loading.dismiss();
-        }, 30000);
-    };
-    ConfirmdirectionPage.prototype.ionViewDidLeave = function () {
-        this.presentLoadingDefault();
-    };
     ConfirmdirectionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-confirmdirection',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmdirection/confirmdirection.html"*/'<ion-content>\n  <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n  <ion-card>\n      <h6 class="text-theme">¿Cuál es tu destino? (IMPORTANTE)</h6>\n      <ion-card-content>\n          <div class="ride-detail">\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireDestination()" [ngStyle]="{\'background-color\': buttonColor}">\n                Casa\n              <ion-icon name="home"></ion-icon>\n            </button>\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin()" [ngStyle]="{\'background-color\': buttonColor2}">\n                  Universidad\n                <ion-icon name="book"></ion-icon>\n              </button>\n              <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin1()" [ngStyle]="{\'background-color\': buttonColor3}">\n                C. Jurídico Uninorte\n              \n            </button>\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin2()"[ngStyle]="{\'background-color\': buttonColor4}">\n              Hospital Uninorte\n            <ion-icon name="book"></ion-icon>\n          </button>\n          </div>\n      </ion-card-content>\n\n      <ion-card-content>\n          <div class="seats">\n              \n              <ion-row style="margin-top: 14px;justify-content: center">\n                  \n                  <ion-col col-8>\n                      <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="acceptTrip()">Iniciar Viaje</button>\n                  </ion-col>\n              </ion-row>\n\n\n          </div>\n      </ion-card-content>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmdirection/confirmdirection.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_8__services_signup_service__["a" /* SignUpService */]])
     ], ConfirmdirectionPage);
     return ConfirmdirectionPage;
 }());

@@ -26580,7 +26580,7 @@ page-confirmprice .content {
 page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 500px;
+  height: 540px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26819,6 +26819,10 @@ page-findride .findRideText {
 
 page-findride .alert {
   font-weight: bold;
+}
+
+page-findride .reserve {
+  margin-top: 490px;
 }
 
 page-help p {
