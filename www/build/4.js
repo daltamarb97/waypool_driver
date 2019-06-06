@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 606:
+/***/ 605:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmpricePageModule", function() { return ConfirmpricePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(760);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(758);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var ConfirmpricePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 611:
+/***/ 737:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55,7 +55,7 @@ __export(__webpack_require__(36));
 
 /***/ }),
 
-/***/ 760:
+/***/ 758:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64,13 +64,13 @@ __export(__webpack_require__(36));
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(611);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(737);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_price_service__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -145,17 +145,17 @@ var ConfirmpricePage = /** @class */ (function () {
         });
         this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
             _this.driver2 = driver;
-            _this.driverInfoNote.origin = _this.driver.trips.origin;
-            _this.driverInfoNote.destination = _this.driver.trips.destination;
-            _this.driverInfoNote.name = _this.driver.name;
-            _this.driverInfoNote.lastname = _this.driver.lastname;
-            _this.driverInfoNote.phone = _this.driver.phone;
-            _this.driverInfoNote.userId = _this.driver.userId;
-            _this.driverInfoNote.car = _this.driver.trips.car;
-            _this.driverInfoNote.price = _this.driver.trips.price;
-            _this.driverInfoNote.currentHour = _this.driver.trips.nowHour;
-            _this.driverInfoNote.startHour = _this.driver.trips.hour;
-            _this.driverInfoNote.note = _this.driver.trips.note;
+            _this.driverInfoNote.origin = _this.driver2.trips.origin;
+            _this.driverInfoNote.destination = _this.driver2.trips.destination;
+            _this.driverInfoNote.name = _this.driver2.name;
+            _this.driverInfoNote.lastname = _this.driver2.lastname;
+            _this.driverInfoNote.phone = _this.driver2.phone;
+            _this.driverInfoNote.userId = _this.driver2.userId;
+            _this.driverInfoNote.car = _this.driver2.trips.car;
+            _this.driverInfoNote.price = _this.driver2.trips.price;
+            _this.driverInfoNote.currentHour = _this.driver2.trips.nowHour;
+            _this.driverInfoNote.startHour = _this.driver2.trips.hour;
+            _this.driverInfoNote.note = _this.driver2.trips.note;
         });
         this.geocoder = new google.maps.Geocoder;
     }
@@ -177,8 +177,20 @@ var ConfirmpricePage = /** @class */ (function () {
             this.PriceService.setPrice(this.userDriverUid, this.precio, this.car, this.hour, this.hourToSend);
             this.accepted = true;
             this.dismiss();
+            this.goefireKey = Date.now();
+            console.log(this.goefireKey);
             // add reserve and command to dismiss modal
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour);
+            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
+            setTimeout(function () {
+                if (_this.driver.geofireOrigin === true) {
+                    _this.typeOfReserve = 'origin';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.driverInfo.note, _this.driverInfo.price, _this.driverInfo.currentHour, _this.driverInfo.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+                else {
+                    _this.typeOfReserve = 'destination';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.driverInfo.note, _this.driverInfo.price, _this.driverInfo.currentHour, _this.driverInfo.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+            }, 2000);
             // geocoding of addresses that came from findRide
             this.destination = this.driverInfo.destination[0][0];
             this.origin = this.driverInfo.origin[0][0];
@@ -188,6 +200,15 @@ var ConfirmpricePage = /** @class */ (function () {
                         lat: results[0].geometry.location.lat(),
                         lng: results[0].geometry.location.lng()
                     };
+                }
+                // turn geofire On
+                if (!_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
+                    console.log('executed geofire Dest');
+                }
+                else {
+                    console.log('not destination');
                 }
             });
             this.geocoder.geocode({ 'address': this.origin }, function (results, status) {
@@ -199,22 +220,35 @@ var ConfirmpricePage = /** @class */ (function () {
                 }
                 // turn geofire On
                 if (_this.driver.geofireOrigin === true) {
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.driverInfo.name, _this.driverInfo.lastname, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.note, _this.driverInfo.origin, _this.driverInfo.price, _this.driverInfo.userId);
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfo.name, _this.driverInfo.lastname, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.note, _this.driverInfo.origin, _this.driverInfo.price, _this.driverInfo.userId);
                     console.log('executed geofire Or');
                 }
                 else {
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.driverInfo.name, _this.driverInfo.lastname, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.note, _this.driverInfo.origin, _this.driverInfo.price, _this.driverInfo.userId);
-                    console.log('executed geofire Dest');
+                    console.log('not origin');
                 }
             });
         }
         else {
+            console.log(this.driverInfoNote.car);
             this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
             this.PriceService.setPriceAndNote(this.userDriverUid, this.precio, this.note, this.car, this.hour, this.hourToSend);
             this.accepted = true;
             this.dismiss();
+            this.goefireKey = Date.now();
+            console.log(this.goefireKey);
             // add reserve and command to dismiss modal
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour);
+            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
+            setTimeout(function () {
+                if (_this.driver.geofireOrigin === true) {
+                    _this.typeOfReserve = 'origin';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+                else {
+                    _this.typeOfReserve = 'destination';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+            }, 2000);
             // geocoding of addresses that came from findRide
             this.destinationNote = this.driverInfoNote.destination[0][0];
             this.originNote = this.driverInfoNote.origin[0][0];
@@ -225,6 +259,14 @@ var ConfirmpricePage = /** @class */ (function () {
                         lng: results[0].geometry.location.lng()
                     };
                 }
+                if (!_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
+                    console.log('executed geofire Dest');
+                }
+                else {
+                    console.log('not destination');
+                }
             });
             this.geocoder.geocode({ 'address': this.originNote }, function (results, status) {
                 if (status === 'OK') {
@@ -234,11 +276,13 @@ var ConfirmpricePage = /** @class */ (function () {
                     };
                 }
                 // turn geofire On
-                if (_this.driver.geofireOrigin == true) {
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
+                if (_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
+                    console.log('executed geofire Or');
                 }
                 else {
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
+                    console.log('not origin');
                 }
             });
         }

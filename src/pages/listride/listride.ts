@@ -34,6 +34,9 @@ export class ListridePage{
   userDriver;
   timer:any;
   loading:any;
+  
+  // variable to put info of individual rserves
+  reserveInd:any;
   // this variable determines the amount of time to wait until a rserve should be deleted
   timeToWait:any;
   constructor(public navCtrl: NavController, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService, public loadingCtrl: LoadingController) {
@@ -58,18 +61,19 @@ export class ListridePage{
 			this.userDriver = userDriver;  
     });
         
-    
-        
-  }
-
-  ionViewDidLoad(){
-
     this.subscribe = this.geofireService.getMyReserves(this.driver)
     .subscribe(reserve=>{
-        this.usersFindingTrip = reserve;  
-        // reserves delete itself after the startHour passes, TODO: dont eliminate if there are passengers in reserve
-        // TODO: fix this because reserve must eliminate itself even when the user have not entered into listRide
-        this.usersFindingTrip.forEach(reserveInd => {
+      this.usersFindingTrip = reserve;
+      console.log(this.usersFindingTrip);
+    }) 
+   
+  }
+
+    ionViewDidEnter(){
+     // reserves delete itself after the startHour passes, TODO: dont eliminate if there are passengers in reserve
+     // TODO: fix this because reserve must eliminate itself within a timeframe, not static times (currenthour / starthour)
+      this.usersFindingTrip.forEach(reserveInd => {
+          this.reserveInd = reserveInd;
           var startTime = reserveInd.startHour.split(':');
           var currentTime = reserveInd.currentHour.split(':');
           var hours = startTime[0] - currentTime[0]
@@ -80,22 +84,22 @@ export class ListridePage{
           console.log(this.timeToWait);
           setTimeout(()=>{
             this.sendUsersService.removeReserve(this.driver, reserveInd.keyTrip);
+            //cancel specific geofire of reserve
+            // TODO: geofire's reserve is not cancelling
+
+            if(reserveInd.type == 'origin'){
+              console.log(reserveInd.geofireKey);
+              this.geoFireService.cancelGeoqueryOr(reserveInd.geofireKey);
+            }else if(reserveInd.type == 'destination'){
+              console.log(reserveInd.geofireKey);
+              this.geoFireService.cancelGeoqueryDest(reserveInd.geofireKey);
+            }
           }, this.timeToWait) 
         });
-     
-    })
-  }
+    }
+ 
 
-
-  ionViewDidLeave(){
-    this.geoFireService.cancelGeoqueryDest();
-    this.geoFireService.cancelGeoqueryOr();
-    // clearTimeout(this.timer);
-
-
-  }
   
-
   deleteUser(reserveKey,nameUser){
   
     let alert = this.alertCtrl.create({
@@ -112,6 +116,8 @@ export class ListridePage{
           text: 'Eliminar',
           handler: () => {
             this.sendUsersService.removeReserve(this.driver, reserveKey);
+            this.geoFireService.cancelGeoqueryDest(this.reserveInd.geofireKey);
+            this.geoFireService.cancelGeoqueryOr(this.reserveInd.geofireKey);
           }
         }
       ]

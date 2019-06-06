@@ -18,7 +18,6 @@ import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
 import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
-import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
 
 
 
@@ -511,7 +510,7 @@ geocodeLatLng(latLng,inputName) {
       modal.onDidDismiss(accepted => {
         if(accepted){
           // this.navCtrl.push('ListridePage');
-          
+          this.app.getRootNav().push('ListridePage');
         }
       })
    modal.present();

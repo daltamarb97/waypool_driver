@@ -24,6 +24,8 @@ lastname:any;
 phone:any;
 carModel:any;
 plateNumber:any;
+proofToCancelDest:any;
+proofToCancelOr:any;
 
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
@@ -37,8 +39,8 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 
 
 
-setGeofireDest( radius:number, lat, lng, name, lastname, car, destination, note, origin, price, driverId):void{ 
-  
+setGeofireDest( radius:number, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId):void{ 
+  this.proofToCancelDest = this.variableName(geofirename);
   this.dbRef = this.afDB.database.ref('geofireDest/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
@@ -47,18 +49,24 @@ setGeofireDest( radius:number, lat, lng, name, lastname, car, destination, note,
     radius: radius
   })
 
+  
   this.keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId);
   this.keyExitedDest();
 
-if(this.geoquery2){
-  this.geoquery2.cancel();
-}
+// if(this.geoquery2){
+//   this.geoquery2.cancel();
+// }
 
 console.log('geoquery dest added');
 }
 
-setGeofireOr( radius:number, lat, lng, name, lastname, car, destination, note, origin, price, driverId):void{ 
-  
+variableName(variable){
+  var variableName = variable;
+  return variableName;
+}
+
+setGeofireOr( radius:number, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId):void{ 
+  this.proofToCancelOr = this.variableName(geofirename);
   this.dbRef = this.afDB.database.ref('geofireOr/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
@@ -70,9 +78,9 @@ setGeofireOr( radius:number, lat, lng, name, lastname, car, destination, note, o
   this.keyEnteredOr(name, lastname, car, destination, note, origin, price, driverId);
   this.keyExitedOr();
 
-  if(this.geoquery1){
-    this.geoquery1.cancel();
-  }
+  // if(this.geoquery1){
+  //   this.geoquery1.cancel();
+  // }
 
   console.log('geoquery or added');
 
@@ -192,25 +200,27 @@ public getInfoUser(userId){
  return this.afDB.object('users/' + userId).valueChanges();
 }
 
-cancelGeoqueryDest(){
-  if(this.geoquery1){
-    this.geoquery1.cancel()
-    console.log('geofireDest deleted');
-  }else{
-    console.log('dont dest query')
+cancelGeoqueryDest(geofirename){
+  if(this.proofToCancelDest === geofirename){
+    if(this.geoquery1){
+      this.geoquery1.cancel()
+      console.log('geofireDest deleted');
+    }else{
+      console.log('dont dest query')
+    }
   }
-  
 }
 
-cancelGeoqueryOr(){
-  if(this.geoquery2){
-    this.geoquery2.cancel()
-    console.log('geofireOr deleted');
-
-  }else{
-    console.log('dont or query')
-  }
+cancelGeoqueryOr(geofirename){
+  if(this.proofToCancelOr === geofirename){
+    if(this.geoquery2){
+      this.geoquery2.cancel()
+      console.log('geofireOr deleted');
   
+    }else{
+      console.log('dont or query')
+    }
+  }
 }
 
 // set a new node on firebase which is the location of the university

@@ -38,6 +38,7 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
   saveChanges(){
     
     if(this.phone == null && this.user.about == null && this.user.url == null){
+      
       this.toastConfirmation();
       this.navCtrl.pop();
     }else if(this.phone == null && this.user.about == null && this.user.url != null){

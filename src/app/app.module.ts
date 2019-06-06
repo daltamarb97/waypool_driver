@@ -41,7 +41,7 @@ import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';
 import { PickupPage } from '../pages/pickup/pickup';
 import { RatetripPage } from '../pages/ratetrip/ratetrip';
-import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection';
+// import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 

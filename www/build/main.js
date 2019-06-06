@@ -1,4 +1,4 @@
-webpackJsonp([23],{
+webpackJsonp([22],{
 
 /***/ 223:
 /***/ (function(module, exports) {
@@ -23,95 +23,91 @@ webpackEmptyAsyncContext.id = 223;
 var map = {
 	"../pages/car-registration-login/car-registration-login.module": [
 		587,
-		22
+		21
 	],
 	"../pages/car-registration/car-registration.module": [
 		588,
-		21
+		20
 	],
 	"../pages/chats/chats.module": [
 		589,
-		20
+		19
 	],
 	"../pages/chatting/chatting.module": [
 		590,
-		19
-	],
-	"../pages/confirmdirection/confirmdirection.module": [
-		591,
-		5
-	],
-	"../pages/confirmpopup/confirmpopup.module": [
-		592,
 		18
 	],
+	"../pages/confirmpopup/confirmpopup.module": [
+		591,
+		17
+	],
 	"../pages/confirmprice/confirmprice.module": [
-		606,
+		605,
 		4
 	],
 	"../pages/findride/findride.module": [
-		609,
-		17
-	],
-	"../pages/help/help.module": [
-		593,
+		608,
 		16
 	],
-	"../pages/listride/listride.module": [
-		594,
+	"../pages/help/help.module": [
+		592,
 		15
 	],
-	"../pages/login/login.module": [
-		595,
+	"../pages/listride/listride.module": [
+		593,
 		14
 	],
-	"../pages/more/more.module": [
-		596,
+	"../pages/login/login.module": [
+		594,
 		13
 	],
+	"../pages/more/more.module": [
+		595,
+		12
+	],
 	"../pages/myride/myride.module": [
-		597,
+		596,
 		1
 	],
 	"../pages/onTrip/onTrip.module": [
-		607,
-		12
+		606,
+		11
 	],
 	"../pages/pickup/pickup.module": [
-		608,
+		607,
 		0
 	],
 	"../pages/profile/profile.module": [
-		598,
-		11
+		597,
+		10
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		599,
+		598,
 		3
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		600,
+		599,
 		2
 	],
 	"../pages/signup/signup.module": [
-		601,
-		10
-	],
-	"../pages/support/support.module": [
-		602,
+		600,
 		9
 	],
-	"../pages/tabs/tabs.module": [
-		603,
+	"../pages/support/support.module": [
+		601,
 		8
 	],
-	"../pages/terms/terms.module": [
-		604,
+	"../pages/tabs/tabs.module": [
+		602,
 		7
 	],
-	"../pages/wallet/wallet.module": [
-		605,
+	"../pages/terms/terms.module": [
+		603,
 		6
+	],
+	"../pages/wallet/wallet.module": [
+		604,
+		5
 	]
 };
 function webpackAsyncContext(req) {
@@ -387,7 +383,7 @@ var sendCoordsService = /** @class */ (function () {
         // add the driver to pickedUpUsers 
         this.afDB.database.ref('/drivers/' + DriverUid + '/trips/pickedUpUsers/' + userId).update(user);
     };
-    sendCoordsService.prototype.addReserve = function (driverId, car, dest, or, note, price, currentHour, startHour) {
+    sendCoordsService.prototype.addReserve = function (driverId, car, dest, or, note, price, currentHour, startHour, geofireKey, type) {
         var _this = this;
         this.afDB.database.ref('/reserves/' + driverId).push({
             car: car,
@@ -396,7 +392,9 @@ var sendCoordsService = /** @class */ (function () {
             note: note,
             price: price,
             currentHour: currentHour,
-            startHour: startHour
+            startHour: startHour,
+            geofireKey: geofireKey,
+            type: type
         }).then(function (snap) {
             var key = snap.key;
             _this.afDB.database.ref('/reserves/' + driverId + '/' + key).update({
@@ -438,10 +436,9 @@ var sendCoordsService = /** @class */ (function () {
     };
     sendCoordsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
     ], sendCoordsService);
     return sendCoordsService;
-    var _a;
 }());
 
 //# sourceMappingURL=sendCoords.service.js.map
@@ -449,6 +446,62 @@ var sendCoordsService = /** @class */ (function () {
 /***/ }),
 
 /***/ 331:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var authenticationService = /** @class */ (function () {
+    function authenticationService(angularFireAuth) {
+        this.angularFireAuth = angularFireAuth;
+    }
+    authenticationService.prototype.loginWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.registerWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.getStatus = function () {
+        return this.angularFireAuth.authState;
+    };
+    authenticationService.prototype.logOut = function () {
+        return this.angularFireAuth.auth.signOut();
+    };
+    authenticationService.prototype.resetPassword = function (email) {
+        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
+        return auth.sendPasswordResetEmail(email)
+            .then(function () { return console.log("email sent"); })
+            .catch(function (error) { return console.log(error); });
+    };
+    ;
+    authenticationService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
+    ], authenticationService);
+    return authenticationService;
+}());
+
+//# sourceMappingURL=driverauthentication.service.js.map
+
+/***/ }),
+
+/***/ 332:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -563,7 +616,7 @@ var sendUsersService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 332:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -593,7 +646,8 @@ var geofireService = /** @class */ (function () {
         this.AngularFireAuth = AngularFireAuth;
         this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
     }
-    geofireService.prototype.setGeofireDest = function (radius, lat, lng, name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.setGeofireDest = function (radius, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId) {
+        this.proofToCancelDest = this.variableName(geofirename);
         this.dbRef = this.afDB.database.ref('geofireDest/');
         this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
         this.geoquery1 = this.geoFire.query({
@@ -602,12 +656,17 @@ var geofireService = /** @class */ (function () {
         });
         this.keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId);
         this.keyExitedDest();
-        if (this.geoquery2) {
-            this.geoquery2.cancel();
-        }
+        // if(this.geoquery2){
+        //   this.geoquery2.cancel();
+        // }
         console.log('geoquery dest added');
     };
-    geofireService.prototype.setGeofireOr = function (radius, lat, lng, name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.variableName = function (variable) {
+        var variableName = variable;
+        return variableName;
+    };
+    geofireService.prototype.setGeofireOr = function (radius, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId) {
+        this.proofToCancelOr = this.variableName(geofirename);
         this.dbRef = this.afDB.database.ref('geofireOr/');
         this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
         this.geoquery2 = this.geoFire.query({
@@ -616,9 +675,9 @@ var geofireService = /** @class */ (function () {
         });
         this.keyEnteredOr(name, lastname, car, destination, note, origin, price, driverId);
         this.keyExitedOr();
-        if (this.geoquery1) {
-            this.geoquery1.cancel();
-        }
+        // if(this.geoquery1){
+        //   this.geoquery1.cancel();
+        // }
         console.log('geoquery or added');
     };
     //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
@@ -706,22 +765,26 @@ var geofireService = /** @class */ (function () {
     geofireService.prototype.getInfoUser = function (userId) {
         return this.afDB.object('users/' + userId).valueChanges();
     };
-    geofireService.prototype.cancelGeoqueryDest = function () {
-        if (this.geoquery1) {
-            this.geoquery1.cancel();
-            console.log('geofireDest deleted');
-        }
-        else {
-            console.log('dont dest query');
+    geofireService.prototype.cancelGeoqueryDest = function (geofirename) {
+        if (this.proofToCancelDest === geofirename) {
+            if (this.geoquery1) {
+                this.geoquery1.cancel();
+                console.log('geofireDest deleted');
+            }
+            else {
+                console.log('dont dest query');
+            }
         }
     };
-    geofireService.prototype.cancelGeoqueryOr = function () {
-        if (this.geoquery2) {
-            this.geoquery2.cancel();
-            console.log('geofireOr deleted');
-        }
-        else {
-            console.log('dont or query');
+    geofireService.prototype.cancelGeoqueryOr = function (geofirename) {
+        if (this.proofToCancelOr === geofirename) {
+            if (this.geoquery2) {
+                this.geoquery2.cancel();
+                console.log('geofireOr deleted');
+            }
+            else {
+                console.log('dont or query');
+            }
         }
     };
     // set a new node on firebase which is the location of the university
@@ -776,73 +839,16 @@ var geofireService = /** @class */ (function () {
     };
     geofireService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]])
     ], geofireService);
     return geofireService;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=geofire.services.js.map
 
 /***/ }),
 
-/***/ 333:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var authenticationService = /** @class */ (function () {
-    function authenticationService(angularFireAuth) {
-        this.angularFireAuth = angularFireAuth;
-    }
-    authenticationService.prototype.loginWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-    };
-    authenticationService.prototype.registerWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
-    };
-    authenticationService.prototype.getStatus = function () {
-        return this.angularFireAuth.authState;
-    };
-    authenticationService.prototype.logOut = function () {
-        return this.angularFireAuth.auth.signOut();
-    };
-    authenticationService.prototype.resetPassword = function (email) {
-        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
-        return auth.sendPasswordResetEmail(email)
-            .then(function () { return console.log("email sent"); })
-            .catch(function (error) { return console.log(error); });
-    };
-    ;
-    authenticationService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
-    ], authenticationService);
-    return authenticationService;
-}());
-
-//# sourceMappingURL=driverauthentication.service.js.map
-
-/***/ }),
-
-/***/ 334:
+/***/ 337:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1119,15 +1125,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_auth__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_geolocation__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_geolocation__ = __webpack_require__(335);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_sendUsers_service__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_sendUsers_service__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(578);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(341);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(579);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(586);
@@ -1160,6 +1166,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+// import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection';
 
 
 
@@ -1190,7 +1197,6 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmdirection/confirmdirection.module#ConfirmdirectionPageModule', name: 'ConfirmdirectionPage', segment: 'confirmdirection', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/listride/listride.module#ListridePageModule', name: 'ListridePage', segment: 'listride', priority: 'low', defaultHistory: [] },

@@ -1,14 +1,14 @@
 webpackJsonp([5],{
 
-/***/ 591:
+/***/ 604:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmdirectionPageModule", function() { return ConfirmdirectionPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmdirection__ = __webpack_require__(745);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(757);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,59 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ConfirmdirectionPageModule = /** @class */ (function () {
-    function ConfirmdirectionPageModule() {
+var WalletPageModule = /** @class */ (function () {
+    function WalletPageModule() {
     }
-    ConfirmdirectionPageModule = __decorate([
+    WalletPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__confirmdirection__["a" /* ConfirmdirectionPage */],
+                __WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirmdirection__["a" /* ConfirmdirectionPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__confirmdirection__["a" /* ConfirmdirectionPage */]
+                __WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */]
             ]
         })
-    ], ConfirmdirectionPageModule);
-    return ConfirmdirectionPageModule;
+    ], WalletPageModule);
+    return WalletPageModule;
 }());
 
-//# sourceMappingURL=confirmdirection.module.js.map
+//# sourceMappingURL=wallet.module.js.map
 
 /***/ }),
 
-/***/ 611:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(36));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9kYXRhYmFzZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLDRDQUF1QyJ9
-
-/***/ }),
-
-/***/ 745:
+/***/ 757:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmdirectionPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WalletPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(611);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(332);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -85,138 +66,61 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-
-var ConfirmdirectionPage = /** @class */ (function () {
-    function ConfirmdirectionPage(navCtrl, appCtrl, alertCtrl, afDB, sendUsersService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService, instances, loadingCtrl, signupService) {
+var WalletPage = /** @class */ (function () {
+    function WalletPage(navCtrl, toastCtrl, sendUsersService, sendCoordsService, AngularFireAuth) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.appCtrl = appCtrl;
-        this.alertCtrl = alertCtrl;
-        this.afDB = afDB;
+        this.toastCtrl = toastCtrl;
         this.sendUsersService = sendUsersService;
         this.sendCoordsService = sendCoordsService;
-        this.modalCtrl = modalCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
-        this.geofireService = geofireService;
-        this.instances = instances;
-        this.loadingCtrl = loadingCtrl;
-        this.signupService = signupService;
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.buttonColor = '#001127';
-        this.buttonColor2 = '#001127';
-        this.buttonColor3 = '#001127';
-        this.buttonColor4 = '#001127';
-        this.geocoordinatesDest = {};
-        this.geocoordinatesOr = {};
-        this.geoinfo1 = this.navParams.get('geoInfo1');
-        console.log(this.geoinfo1);
-        this.geoinfo2 = this.navParams.get('geoInfo2');
-        console.log(this.geoinfo2);
-        this.driverInfo = this.navParams.get('driverInfo');
-        console.log(this.driverInfo);
-        this.geocoder = new google.maps.Geocoder;
-        // geocoding of addresses that came from findaRide
-        this.geocoder.geocode({ 'address': this.driverInfo.destination[0][0] }, function (results, status) {
-            if (status === 'OK') {
-                _this.geocoordinatesDest = {
-                    lat: results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
-                };
-                console.log(_this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-            }
+        this.recordTrips = [];
+        this.total = 0;
+        this.subtotal = 0;
+        this.pickedUpUsers = [];
+        this.newNumber = 0;
+        this.sendUsersService.getRecordTrips(this.userUid)
+            .subscribe(function (user) {
+            _this.recordTrips = user;
+            console.log(_this.recordTrips);
+            _this.hola();
         });
-        this.geocoder.geocode({ 'address': this.driverInfo.origin[0][0] }, function (results, status) {
-            if (status === 'OK') {
-                _this.geocoordinatesOr = {
-                    lat: results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
-                };
-                console.log(_this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-            }
-        });
-        this.signupService.getMyInfoDriver(this.userUid).subscribe(function (driver) {
-            _this.driver = driver;
-        });
+        console.log(this.total);
     }
-    ConfirmdirectionPage.prototype.ionViewWillEnter = function () {
-        this.click1 = false;
-        this.click2 = false;
-        this.click3 = false;
-        this.click4 = false;
+    WalletPage.prototype.hola = function () {
+        var _this = this;
+        this.newNumber = 0;
+        this.total = 0;
+        console.log(this.total);
+        this.recordTrips.forEach(function (trip) {
+            _this.trip = trip;
+            _this.pickedUpUsers = Object.keys(_this.trip.pickedUpUsers);
+            _this.totalTrip = _this.pickedUpUsers.length * _this.trip.price;
+            console.log(_this.newNumber);
+            _this.newNumber = _this.newNumber + _this.totalTrip;
+        });
+        this.total = this.total + this.newNumber;
     };
-    ConfirmdirectionPage.prototype.acceptTrip = function () {
-        this.accepted = true;
-        this.sendCoordsService.addReserve(this.userUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour);
-        this.dismiss();
+    WalletPage.prototype.help = function () {
+        var toast = this.toastCtrl.create({
+            message: 'En esta página podrás ver cuanto dinero haz hecho por viaje, ádemas del historial de viajes en los que podrás ver la hora en la que terminaste el viaje, origen y destino, y el precio que colocaste por persona',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
     };
-    ConfirmdirectionPage.prototype.setGeoFireOrigin = function () {
-        this.buttonColor2 = '#0fc874';
-        this.buttonColor = '#001127';
-        this.buttonColor3 = '#001127';
-        this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
-        this.click1 = true;
-        if (this.click4 == true) {
-            this.geofireService.cancelGeoqueryDest();
-            this.click4 = false;
-        }
-    };
-    ConfirmdirectionPage.prototype.setGeoFireOrigin1 = function () {
-        this.buttonColor2 = '#001127';
-        this.buttonColor = '#001127';
-        this.buttonColor3 = '#0fc874';
-        this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
-        this.click2 = true;
-        if (this.click4 == true) {
-            this.geofireService.cancelGeoqueryDest();
-            this.click4 = false;
-        }
-    };
-    ConfirmdirectionPage.prototype.setGeoFireOrigin2 = function () {
-        this.buttonColor2 = '#001127';
-        this.buttonColor = '#001127';
-        this.buttonColor3 = '#001127';
-        this.buttonColor4 = '#0fc874';
-        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
-        this.click3 = true;
-        if (this.click4 == true) {
-            this.geofireService.cancelGeoqueryDest();
-            this.click4 = false;
-        }
-    };
-    ConfirmdirectionPage.prototype.setGeoFireDestination = function () {
-        this.buttonColor = '#0fc874';
-        this.buttonColor2 = '#001127';
-        this.buttonColor3 = '#001127';
-        this.buttonColor4 = '#001127';
-        this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId);
-        this.click4 = true;
-        if (this.click1 == true || this.click2 == true || this.click3 == true) {
-            this.geofireService.cancelGeoqueryOr();
-            this.click1 = false;
-            this.click2 = false;
-            this.click3 = false;
-        }
-    };
-    ConfirmdirectionPage.prototype.dismiss = function () {
-        this.viewCtrl.dismiss(this.accepted);
-    };
-    ConfirmdirectionPage = __decorate([
+    WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-confirmdirection',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmdirection/confirmdirection.html"*/'<ion-content>\n  <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n  <ion-card>\n      <h6 class="text-theme">¿Cuál es tu destino? (IMPORTANTE)</h6>\n      <ion-card-content>\n          <div class="ride-detail">\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireDestination()" [ngStyle]="{\'background-color\': buttonColor}">\n                Casa\n              <ion-icon name="home"></ion-icon>\n            </button>\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin()" [ngStyle]="{\'background-color\': buttonColor2}">\n                  Universidad\n                <ion-icon name="book"></ion-icon>\n              </button>\n              <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin1()" [ngStyle]="{\'background-color\': buttonColor3}">\n                C. Jurídico Uninorte\n              \n            </button>\n            <button class="btn bg-light text-white rounded" (click)="setGeoFireOrigin2()"[ngStyle]="{\'background-color\': buttonColor4}">\n              Hospital Uninorte\n            <ion-icon name="book"></ion-icon>\n          </button>\n          </div>\n      </ion-card-content>\n\n      <ion-card-content>\n          <div class="seats">\n              \n              <ion-row style="margin-top: 14px;justify-content: center">\n                  \n                  <ion-col col-8>\n                      <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="acceptTrip()">Iniciar Viaje</button>\n                  </ion-col>\n              </ion-row>\n\n\n          </div>\n      </ion-card-content>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmdirection/confirmdirection.html"*/
+            selector: 'page-wallet',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n    </ion-navbar>\n    <div text-center >\n        <p><small class="text-white">Ganancias Totales:</small></p>\n        <h1 class="text-white">$ {{total}}</h1>\n        <ion-row>\n           \n        </ion-row>\n    </div>\n\n</ion-header>\n \n<ion-content class="bg-light">\n        <p class="love">Historial de viajes</p> \n\n    <ion-list>\n            <ion-card *ngFor = "let user of recordTrips">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.DestinationTime}}\n                            </h2>\n                            <p>{{user.car}}</p>\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge">$ {{user.price}}</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>       \n\n                </ion-card>  \n    </ion-list>\n   \n   \n    \n    \n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_8__services_signup_service__["a" /* SignUpService */]])
-    ], ConfirmdirectionPage);
-    return ConfirmdirectionPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], WalletPage);
+    return WalletPage;
 }());
 
-//# sourceMappingURL=confirmdirection.js.map
+//# sourceMappingURL=wallet.js.map
 
 /***/ })
 
