@@ -4,6 +4,7 @@ import * as GeoFire from 'geofire';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs";
+import * as firebase from 'firebase';
 
 
 @Injectable()
@@ -27,6 +28,7 @@ plateNumber:any;
 proofToCancelDest:any;
 proofToCancelOr:any;
 
+KeyLastTripSaved:any
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
 
@@ -39,7 +41,7 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 
 
 
-setGeofireDest( radius:number, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId):void{ 
+setGeofireDest( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
   this.proofToCancelDest = this.variableName(geofirename);
   this.dbRef = this.afDB.database.ref('geofireDest/' );
   this.geoFire = new GeoFire(this.dbRef); 
@@ -50,7 +52,7 @@ setGeofireDest( radius:number, lat, lng, geofirename, name, lastname, car, desti
   })
 
   
-  this.keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId);
+  this.keyEnteredDest( driverId, keyReserve);
   this.keyExitedDest();
 
 // if(this.geoquery2){
@@ -65,7 +67,7 @@ variableName(variable){
   return variableName;
 }
 
-setGeofireOr( radius:number, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId):void{ 
+setGeofireOr( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
   this.proofToCancelOr = this.variableName(geofirename);
   this.dbRef = this.afDB.database.ref('geofireOr/' );
   this.geoFire = new GeoFire(this.dbRef); 
@@ -75,7 +77,7 @@ setGeofireOr( radius:number, lat, lng, geofirename, name, lastname, car, destina
     radius: radius
   })
 
-  this.keyEnteredOr(name, lastname, car, destination, note, origin, price, driverId);
+  this.keyEnteredOr( driverId, keyReserve);
   this.keyExitedOr();
 
   // if(this.geoquery1){
@@ -89,19 +91,13 @@ setGeofireOr( radius:number, lat, lng, geofirename, name, lastname, car, destina
 
 
 //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
-keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId ){
+keyEnteredDest( driverId, keyReserve ){
    this.geoquery1.on("key_entered", function(key){
     console.log(key);
     setTimeout(()=>{
       this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
-      origin:origin,
-       destination:destination,
-       car:car,      
-       price: price,
-       note:note,
-       name:name,
-       lastname:lastname,
-       driverId: driverId
+       driverId: driverId,
+       keyReserve: keyReserve
        
       })
     }, 2000)
@@ -109,6 +105,7 @@ keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId )
     
   }.bind(this))
 }
+
 
 keyExitedDest(){
   
@@ -118,24 +115,17 @@ keyExitedDest(){
 }
 
 //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
-keyEnteredOr(name, lastname, car, destination, note, origin, price, driverId){
+keyEnteredOr( driverId, keyReserve){
   this.geoquery2.on("key_entered", function(key){
    console.log(key);
    setTimeout(()=>{
      this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
-      origin:origin,
-      destination:destination,
-      car:car,      
-      price: price,
-      note:note,
-      name:name,
-      lastname:lastname,
-      driverId: driverId
-      
+      driverId: driverId,
+      keyReserve: keyReserve
+    
      })
    }, 2000)
-   
-   
+      
  }.bind(this))
 }
 

@@ -43,6 +43,7 @@ export class ConfirmpricePage {
   unsubscribe = new Subject;
   carModelList:any=[];
   car:string;
+
   hour:any;
   nowHour:any = new Date();
   hourToSend:any;
@@ -59,17 +60,14 @@ export class ConfirmpricePage {
    // variables for reserve
    goefireKey:any;
    typeOfReserve:any;
-  
+   reserve:any;
+
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
-    // this.geoInfo1 = this.navParams.get('geoInfo1')
-    // console.log(this.geoInfo1)
-
-    // this.geoInfo2 = this.navParams.get('geoInfo2')
-    // console.log(this.geoInfo2)
-
+    //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
     this.SignUpService.getCar(this.userDriverUid)
     .subscribe( car => {
+      //get cars registered
       this.carModelList = car;
       console.log(this.carModelList)
     });
@@ -85,9 +83,10 @@ export class ConfirmpricePage {
       this.driverInfo.userId = this.driver.userId
       this.driverInfo.car = this.driver.trips.car
       this.driverInfo.price = this.driver.trips.price
-      this.driverInfo.currentHour = this.driver.trips.nowHour,
+      this.driverInfo.currentHour = this.driver.trips.nowHour
       this.driverInfo.startHour = this.driver.trips.hour
       this.driverInfo.note = 'No hay nota.'
+      this.driverInfo.keyReserve = this.driver.keyLastReserve
  })
 
  this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
@@ -104,6 +103,8 @@ export class ConfirmpricePage {
      this.driverInfoNote.currentHour = this.driver2.trips.nowHour
      this.driverInfoNote.startHour = this.driver2.trips.hour
      this.driverInfoNote.note = this.driver2.trips.note
+     this.driverInfoNote.keyReserve = this.driver2.keyLastReserve
+
   
 })
 
@@ -133,19 +134,16 @@ export class ConfirmpricePage {
         this.dismiss();
         this.goefireKey = Date.now();
         console.log(this.goefireKey);
-
-     // add reserve and command to dismiss modal
-     // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
-     setTimeout(()=>{
+      
       if(this.driver.geofireOrigin === true){
         this.typeOfReserve = 'origin';
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+        this.note = 'No hay nota.'
+       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
       }else{
         this.typeOfReserve = 'destination'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+        this.note = 'No hay nota.'
+       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
       }
-     }, 2000)
-     
     // geocoding of addresses that came from findRide
    this.destination = this.driverInfo.destination[0][0];
    this.origin = this.driverInfo.origin[0][0];
@@ -160,7 +158,7 @@ export class ConfirmpricePage {
       // turn geofire On
       if(!this.driver.geofireOrigin === true){
         console.log(this.goefireKey);
-      this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfoNote.name, this.driverInfoNote.lastname, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.note, this.driverInfoNote.origin, this.driverInfoNote.price, this.driverInfoNote.userId)
+      this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, this.driverInfo.keyReserve);
       console.log('executed geofire Dest')
       }else{
         console.log('not destination');
@@ -168,7 +166,6 @@ export class ConfirmpricePage {
 
   })
 
-    
     this.geocoder.geocode({'address': this.origin}, (results, status)=>{
       if(status==='OK'){
         this.geocoordinatesOr={
@@ -179,7 +176,7 @@ export class ConfirmpricePage {
           // turn geofire On
         if(this.driver.geofireOrigin === true){
           console.log(this.goefireKey);
-        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.name, this.driverInfo.lastname, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.note, this.driverInfo.origin, this.driverInfo.price, this.driverInfo.userId)
+        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, this.driverInfo.keyReserve)
         console.log('executed geofire Or')
         }else{
           console.log('not origin');
@@ -207,7 +204,6 @@ export class ConfirmpricePage {
             this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve);
           }
         }, 2000)
-
         
       // geocoding of addresses that came from findRide
      this.destinationNote = this.driverInfoNote.destination[0][0];
@@ -222,7 +218,7 @@ export class ConfirmpricePage {
       }
       if(!this.driver.geofireOrigin === true){
         console.log(this.goefireKey);
-        this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfoNote.name, this.driverInfoNote.lastname, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.note, this.driverInfoNote.origin, this.driverInfoNote.price, this.driverInfoNote.userId)
+        this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfoNote.userId, this.driverInfoNote.keyReserve)
         console.log('executed geofire Dest')
       }else{
         console.log('not destination');
@@ -239,7 +235,7 @@ export class ConfirmpricePage {
        // turn geofire On
         if(this.driver.geofireOrigin === true){
           console.log(this.goefireKey);
-          this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfoNote.name, this.driverInfoNote.lastname, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.note, this.driverInfoNote.origin, this.driverInfoNote.price, this.driverInfoNote.userId)
+          this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, this.driverInfoNote.keyReserve)
           console.log('executed geofire Or')
         }else{
           console.log('not origin')
@@ -249,7 +245,16 @@ export class ConfirmpricePage {
 }
       
 }; 
-    
+    addReserve(){
+      if(this.driver.geofireOrigin === true){
+        this.typeOfReserve = 'origin';
+       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+      }else{
+        this.typeOfReserve = 'destination'
+       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+      }
+     
+    }
         
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);

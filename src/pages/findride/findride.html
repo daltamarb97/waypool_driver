@@ -41,9 +41,19 @@
 
  <div #map id="map"></div>  
     <div></div>
- <button (click)="listride()" class="btn rounded bg-theme text-white" style="width: 100%">¡Conéctate!</button>
- <!-- test -->
- <button (click)="availableReserves()" class="btn rounded bg-theme text-white reserve" style="width: 100%">mis reservas</button>
+    <ion-row>        
+    <button (click)="listride()" class="btn rounded bg-theme text-white" style="width: 100%">Conectarme</button>
+          
+          
+
+    </ion-row>
+    <div class="btn-footer">
+        <button class="btn rounded bg-theme text-white" style="width: 100%" (click)="availableReserves()" >Mis Reservas</button>
+    </div>
+
+    
+
+
  
 </ion-content>
 

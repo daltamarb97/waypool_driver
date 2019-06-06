@@ -10,7 +10,6 @@ import { sendCoordsService } from '../../services/sendCoords.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { geofireService } from '../../services/geofire.services';
 import { instancesService } from '../../services/instances.service';
-import { ListridePage } from '../listride/listride';
 import { Subject } from 'rxjs';
 
 
@@ -70,8 +69,8 @@ export class ConfirmpopupPage {
 
 
 				this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
-				this.geoFireService.cancelGeoqueryDest();
-				this.geoFireService.cancelGeoqueryOr();
+				// this.geoFireService.cancelGeoqueryDest();
+				// this.geoFireService.cancelGeoqueryOr();
 				const alert = this.alertCtrl.create({
 					title: 'limite de estudiantes permitido',
 					subTitle: 'ya recogiste o aceptaste más de 4 personas. Este es el limite de personas para cada viaje',
@@ -107,8 +106,8 @@ export class ConfirmpopupPage {
 
 
 			this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
-				this.geoFireService.cancelGeoqueryDest();
-				this.geoFireService.cancelGeoqueryOr();
+				// this.geoFireService.cancelGeoqueryDest();
+				// this.geoFireService.cancelGeoqueryOr();
 				const alert = this.alertCtrl.create({
 					title: 'limite de estudiantes permitido',
 					subTitle: 'ya recogiste o aceptaste más de 4 personas. Este es el limite de personas para cada viaje',

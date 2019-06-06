@@ -10,7 +10,6 @@ import { WalletPage } from '../pages/wallet/wallet';
 import { MorePage } from '../pages/more/more';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { ListridePage } from '../pages/listride/listride';
 import { ConfirmpopupPage } from '../pages/confirmpopup/confirmpopup';
 import { ProfilePage } from '../pages/profile/profile';
 import { TermsPage } from '../pages/terms/terms';
@@ -50,6 +49,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SupportPage } from '../pages/support/support';
 import { sendFeedbackService } from '../services/sendFeedback.service';
 import { ChatsService } from '../services/chat.service';
+import { TripsService } from '../services/trips.service';
 
 
 export const firebaseConfig = {
@@ -105,7 +105,8 @@ export const firebaseConfig = {
     MyApp,
     EmailComposer,
     sendFeedbackService,
-    ChatsService
+    ChatsService,
+    TripsService
 
   ]
 })

@@ -1,4 +1,4 @@
-webpackJsonp([22],{
+webpackJsonp([23],{
 
 /***/ 223:
 /***/ (function(module, exports) {
@@ -22,92 +22,96 @@ webpackEmptyAsyncContext.id = 223;
 
 var map = {
 	"../pages/car-registration-login/car-registration-login.module": [
-		587,
-		21
+		588,
+		22
 	],
 	"../pages/car-registration/car-registration.module": [
-		588,
-		20
+		589,
+		21
 	],
 	"../pages/chats/chats.module": [
-		589,
-		19
+		590,
+		20
 	],
 	"../pages/chatting/chatting.module": [
-		590,
-		18
+		591,
+		19
 	],
 	"../pages/confirmpopup/confirmpopup.module": [
-		591,
-		17
+		592,
+		18
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		605,
-		4
+		607,
+		3
+	],
+	"../pages/confirmreserve/confirmreserve.module": [
+		593,
+		17
 	],
 	"../pages/findride/findride.module": [
-		608,
+		610,
 		16
 	],
 	"../pages/help/help.module": [
-		592,
+		594,
 		15
 	],
-	"../pages/listride/listride.module": [
-		593,
+	"../pages/login/login.module": [
+		595,
 		14
 	],
-	"../pages/login/login.module": [
-		594,
+	"../pages/more/more.module": [
+		596,
 		13
 	],
-	"../pages/more/more.module": [
-		595,
-		12
-	],
 	"../pages/myride/myride.module": [
-		596,
-		1
-	],
-	"../pages/onTrip/onTrip.module": [
-		606,
-		11
-	],
-	"../pages/pickup/pickup.module": [
-		607,
+		597,
 		0
 	],
+	"../pages/onTrip/onTrip.module": [
+		608,
+		12
+	],
+	"../pages/pickup/pickup.module": [
+		609,
+		11
+	],
 	"../pages/profile/profile.module": [
-		597,
+		598,
 		10
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		598,
-		3
-	],
-	"../pages/showinfocar/showinfocar.module": [
 		599,
 		2
 	],
-	"../pages/signup/signup.module": [
+	"../pages/reservetrip/reservetrip.module": [
 		600,
 		9
 	],
-	"../pages/support/support.module": [
+	"../pages/showinfocar/showinfocar.module": [
 		601,
+		1
+	],
+	"../pages/signup/signup.module": [
+		602,
 		8
 	],
-	"../pages/tabs/tabs.module": [
-		602,
+	"../pages/support/support.module": [
+		603,
 		7
 	],
-	"../pages/terms/terms.module": [
-		603,
+	"../pages/tabs/tabs.module": [
+		604,
 		6
 	],
-	"../pages/wallet/wallet.module": [
-		604,
+	"../pages/terms/terms.module": [
+		605,
 		5
+	],
+	"../pages/wallet/wallet.module": [
+		606,
+		4
 	]
 };
 function webpackAsyncContext(req) {
@@ -131,9 +135,9 @@ module.exports = webpackAsyncContext;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -208,6 +212,9 @@ var SignUpService = /** @class */ (function () {
     SignUpService.prototype.getMyInfoDriver = function (userId) {
         return this.afDB.object('drivers/' + userId).valueChanges();
     };
+    SignUpService.prototype.getInfoUser = function (userId) {
+        return this.afDB.object('users/' + userId).valueChanges();
+    };
     SignUpService.prototype.saveUser = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -280,7 +287,7 @@ var SignUpService = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendCoordsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -301,11 +308,26 @@ var sendCoordsService = /** @class */ (function () {
     function sendCoordsService(afDB) {
         this.afDB = afDB;
     }
+    sendCoordsService.prototype.getPendingUsers = function (userUid, pushKey) {
+        return this.afDB.list('/reserves/' + userUid + '/' + pushKey + '/pendingUsers').valueChanges();
+    };
+    sendCoordsService.prototype.getSpecificReserves = function (userUid, pushKey) {
+        return this.afDB.object('/reserves/' + userUid + '/' + pushKey).valueChanges();
+    };
+    sendCoordsService.prototype.eraseUser = function (userId, DriverUid, pushKey) {
+        this.afDB.database.ref('reserves/' + DriverUid + '/' + pushKey + '/pendingUsers/' + userId).remove();
+    };
     sendCoordsService.prototype.getDestination = function (user) {
         return this.afDB.list('/drivers/' + user + '/trips/destination').valueChanges();
     };
     sendCoordsService.prototype.getOrigin = function (user) {
         return this.afDB.list('/drivers/' + user + '/trips/origin').valueChanges();
+    };
+    sendCoordsService.prototype.pushcoordinatesReserves = function (user, dest, or) {
+        this.afDB.database.ref('drivers/' + user + '/Reserves').push({
+            orReserve: or,
+            destReserve: dest,
+        });
     };
     sendCoordsService.prototype.pushcoordinatesDrivers = function (user, dest, or) {
         this.afDB.database.ref('drivers/' + user + '/trips').update({
@@ -332,12 +354,6 @@ var sendCoordsService = /** @class */ (function () {
         //set time when user is picked up in driver's trips
         this.afDB.database.ref('/drivers/' + userDriverUid + '/trips/pickedUpUsers/' + userUid).update({
             pickedUpTime: date
-        });
-    };
-    sendCoordsService.prototype.timeOfDestinationDriver = function (userDriverUid, date) {
-        //set time when driver go to destination 
-        this.afDB.database.ref('/drivers/' + userDriverUid + '/trips/').update({
-            DestinationTime: date
         });
     };
     sendCoordsService.prototype.timeOfDestinationUser = function (userUid, date) {
@@ -400,6 +416,9 @@ var sendCoordsService = /** @class */ (function () {
             _this.afDB.database.ref('/reserves/' + driverId + '/' + key).update({
                 keyTrip: key
             });
+            _this.afDB.database.ref('/drivers/' + driverId).update({
+                keyLastReserve: key
+            });
             console.log('reserve executed');
         });
     };
@@ -449,64 +468,8 @@ var sendCoordsService = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var authenticationService = /** @class */ (function () {
-    function authenticationService(angularFireAuth) {
-        this.angularFireAuth = angularFireAuth;
-    }
-    authenticationService.prototype.loginWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-    };
-    authenticationService.prototype.registerWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
-    };
-    authenticationService.prototype.getStatus = function () {
-        return this.angularFireAuth.authState;
-    };
-    authenticationService.prototype.logOut = function () {
-        return this.angularFireAuth.auth.signOut();
-    };
-    authenticationService.prototype.resetPassword = function (email) {
-        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
-        return auth.sendPasswordResetEmail(email)
-            .then(function () { return console.log("email sent"); })
-            .catch(function (error) { return console.log(error); });
-    };
-    ;
-    authenticationService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
-    ], authenticationService);
-    return authenticationService;
-}());
-
-//# sourceMappingURL=driverauthentication.service.js.map
-
-/***/ }),
-
-/***/ 332:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendUsersService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -530,6 +493,10 @@ var sendUsersService = /** @class */ (function () {
     sendUsersService.prototype.getUsersOnListRide = function (userUid) {
         // Get all the students from the usersListRide
         return this.afDB.list('/drivers/' + userUid + '/trips/usersListRide').valueChanges();
+    };
+    sendUsersService.prototype.getTripsOfReserves = function (userUid) {
+        // Get all the trips the driver have reserve
+        return this.afDB.list('/reserves/' + userUid).valueChanges();
     };
     sendUsersService.prototype.getUsersOnTrip = function (userUid) {
         // Get all the students the driver acepts in myListRidePage to be send to the students
@@ -616,16 +583,72 @@ var sendUsersService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 332:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var authenticationService = /** @class */ (function () {
+    function authenticationService(angularFireAuth) {
+        this.angularFireAuth = angularFireAuth;
+    }
+    authenticationService.prototype.loginWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.registerWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.getStatus = function () {
+        return this.angularFireAuth.authState;
+    };
+    authenticationService.prototype.logOut = function () {
+        return this.angularFireAuth.auth.signOut();
+    };
+    authenticationService.prototype.resetPassword = function (email) {
+        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
+        return auth.sendPasswordResetEmail(email)
+            .then(function () { return console.log("email sent"); })
+            .catch(function (error) { return console.log(error); });
+    };
+    ;
+    authenticationService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
+    ], authenticationService);
+    return authenticationService;
+}());
+
+//# sourceMappingURL=driverauthentication.service.js.map
+
+/***/ }),
+
 /***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return geofireService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire__ = __webpack_require__(559);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire__ = __webpack_require__(560);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_geofire__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -646,7 +669,7 @@ var geofireService = /** @class */ (function () {
         this.AngularFireAuth = AngularFireAuth;
         this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
     }
-    geofireService.prototype.setGeofireDest = function (radius, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.setGeofireDest = function (radius, lat, lng, geofirename, driverId, keyReserve) {
         this.proofToCancelDest = this.variableName(geofirename);
         this.dbRef = this.afDB.database.ref('geofireDest/');
         this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
@@ -654,7 +677,7 @@ var geofireService = /** @class */ (function () {
             center: [lat, lng],
             radius: radius
         });
-        this.keyEnteredDest(name, lastname, car, destination, note, origin, price, driverId);
+        this.keyEnteredDest(driverId, keyReserve);
         this.keyExitedDest();
         // if(this.geoquery2){
         //   this.geoquery2.cancel();
@@ -665,7 +688,7 @@ var geofireService = /** @class */ (function () {
         var variableName = variable;
         return variableName;
     };
-    geofireService.prototype.setGeofireOr = function (radius, lat, lng, geofirename, name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.setGeofireOr = function (radius, lat, lng, geofirename, driverId, keyReserve) {
         this.proofToCancelOr = this.variableName(geofirename);
         this.dbRef = this.afDB.database.ref('geofireOr/');
         this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
@@ -673,7 +696,7 @@ var geofireService = /** @class */ (function () {
             center: [lat, lng],
             radius: radius
         });
-        this.keyEnteredOr(name, lastname, car, destination, note, origin, price, driverId);
+        this.keyEnteredOr(driverId, keyReserve);
         this.keyExitedOr();
         // if(this.geoquery1){
         //   this.geoquery1.cancel();
@@ -681,20 +704,14 @@ var geofireService = /** @class */ (function () {
         console.log('geoquery or added');
     };
     //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
-    geofireService.prototype.keyEnteredDest = function (name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.keyEnteredDest = function (driverId, keyReserve) {
         this.geoquery1.on("key_entered", function (key) {
             var _this = this;
             console.log(key);
             setTimeout(function () {
                 _this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
-                    origin: origin,
-                    destination: destination,
-                    car: car,
-                    price: price,
-                    note: note,
-                    name: name,
-                    lastname: lastname,
-                    driverId: driverId
+                    driverId: driverId,
+                    keyReserve: keyReserve
                 });
             }, 2000);
         }.bind(this));
@@ -705,20 +722,14 @@ var geofireService = /** @class */ (function () {
         }.bind(this));
     };
     //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
-    geofireService.prototype.keyEnteredOr = function (name, lastname, car, destination, note, origin, price, driverId) {
+    geofireService.prototype.keyEnteredOr = function (driverId, keyReserve) {
         this.geoquery2.on("key_entered", function (key) {
             var _this = this;
             console.log(key);
             setTimeout(function () {
                 _this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
-                    origin: origin,
-                    destination: destination,
-                    car: car,
-                    price: price,
-                    note: note,
-                    name: name,
-                    lastname: lastname,
-                    driverId: driverId
+                    driverId: driverId,
+                    keyReserve: keyReserve
                 });
             }, 2000);
         }.bind(this));
@@ -848,12 +859,12 @@ var geofireService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 337:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return instancesService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -949,12 +960,111 @@ var instancesService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 338:
+/***/ 336:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var TripsService = /** @class */ (function () {
+    function TripsService(afDB, AngularFireAuth) {
+        this.afDB = afDB;
+        this.AngularFireAuth = AngularFireAuth;
+    }
+    TripsService.prototype.getTrip = function (keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.object('/trips/' + driverUid + '/' + keyTrip).valueChanges();
+    };
+    TripsService.prototype.getPendingUsers = function (keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
+    };
+    TripsService.prototype.getPickedUpUsers = function (keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
+    };
+    TripsService.prototype.startTrip = function (keyTrip, driverUid, trip) {
+        //create a trip in Trip's node in database
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update(trip);
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update({
+            onTrip: true
+        });
+    };
+    TripsService.prototype.deleteReserve = function (keyTrip, driverUid) {
+        this.afDB.database.ref('/reserves/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.pushKeyInDriver = function (keyTrip, DriverUid) {
+        //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
+        this.afDB.database.ref('/drivers/' + DriverUid).update({
+            keyTrip: keyTrip
+        });
+    };
+    TripsService.prototype.pushOnTripInDriver = function (DriverUid) {
+        //push a onTrip in Driver's node
+        this.afDB.database.ref('/drivers/' + DriverUid).update({
+            onTrip: true
+        });
+    };
+    TripsService.prototype.eliminatePendingUsers = function (keyTrip, driverUid, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.pickUp = function (keyTrip, driverUid, userId, user) {
+        // add the driver to pickedUpUsers 
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
+    };
+    TripsService.prototype.timeFinishedTrip = function (keyTrip, driverUid, date) {
+        //set time when driver go to destination 
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update({
+            DestinationTime: date
+        });
+    };
+    TripsService.prototype.endTrip = function (keyTrip, driverUid) {
+        //erase trip in trip's node
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.setOnTripFalse = function (driverUid) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref('/drivers/' + driverUid).update({
+            onTrip: false
+        });
+    };
+    TripsService.prototype.eraseKeyTrip = function (driverUid) {
+        // erase keyTrip in driver's node
+        this.afDB.database.ref('drivers/' + driverUid + '/keyTrip').remove();
+    };
+    TripsService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], TripsService);
+    return TripsService;
+}());
+
+//# sourceMappingURL=trips.service.js.map
+
+/***/ }),
+
+/***/ 339:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendFeedbackService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -990,14 +1100,14 @@ var sendFeedbackService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 339:
+/***/ 340:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1038,14 +1148,14 @@ var ChatsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 341:
+/***/ 342:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return priceService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
@@ -1069,6 +1179,7 @@ var priceService = /** @class */ (function () {
     }
     priceService.prototype.setPriceAndNote = function (user, price, note, car, hour, nowHour) {
         __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('drivers/' + user + '/trips').update({
+            //set important information with note
             price: price,
             note: note,
             car: car,
@@ -1084,6 +1195,28 @@ var priceService = /** @class */ (function () {
             nowHour: nowHour
         });
     };
+    priceService.prototype.saveTripToReserves = function (driverUid, or, dest, timeLeaving, price, car, note, driver) {
+        var arrayReserves = this.afDB.database.ref('reserves/' + driverUid + '/').push({
+            orReserve: or,
+            destReserve: dest,
+            timeLeaving: timeLeaving,
+            price: price,
+            car: car,
+            note: note,
+            driver: driver
+        });
+        //get key of reserve pushed
+        var KeyLastTripSaved = arrayReserves.key;
+        //save key inside reserve
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('reserves/' + driverUid + '/' + arrayReserves.key + '/').update({
+            keyTrip: arrayReserves.key
+        });
+        //save key inside driver momentarily to access reserve 
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('drivers/' + driverUid + '/' + arrayReserves.key).update({
+            keyLastReserve: arrayReserves.key
+        });
+        console.log(KeyLastTripSaved);
+    };
     priceService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
@@ -1095,13 +1228,13 @@ var priceService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 342:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(464);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1109,7 +1242,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 463:
+/***/ 464:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1118,28 +1251,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(577);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(578);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(327);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(328);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_auth__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_geolocation__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_geolocation__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_sendUsers_service__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(578);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(579);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(579);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(586);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_sendFeedback_service__ = __webpack_require__(338);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(580);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_sendFeedback_service__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(340);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_trips_service__ = __webpack_require__(336);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1172,6 +1306,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var firebaseConfig = {
     apiKey: "AIzaSyAPagXvglCXnK3neJwU50EiZnJPmdd__PM",
     authDomain: "waypoooldemo.firebaseapp.com",
@@ -1198,13 +1333,14 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/listride/listride.module#ListridePageModule', name: 'ListridePage', segment: 'listride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
@@ -1247,7 +1383,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__["a" /* EmailComposer */],
                 __WEBPACK_IMPORTED_MODULE_23__services_sendFeedback_service__["a" /* sendFeedbackService */],
-                __WEBPACK_IMPORTED_MODULE_24__services_chat_service__["a" /* ChatsService */]
+                __WEBPACK_IMPORTED_MODULE_24__services_chat_service__["a" /* ChatsService */],
+                __WEBPACK_IMPORTED_MODULE_25__services_trips_service__["a" /* TripsService */]
             ]
         })
     ], AppModule);
@@ -1258,7 +1395,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 577:
+/***/ 578:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1311,7 +1448,7 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
@@ -1320,5 +1457,5 @@ var MyApp = /** @class */ (function () {
 
 /***/ })
 
-},[342]);
+},[343]);
 //# sourceMappingURL=main.js.map

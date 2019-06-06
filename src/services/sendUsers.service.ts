@@ -15,10 +15,15 @@ constructor(public afDB: AngularFireDatabase){
         // Get all the students from the usersListRide
          return  this.afDB.list('/drivers/'+ userUid +'/trips/usersListRide').valueChanges();
      } 
+     public getTripsOfReserves(userUid){
+        // Get all the trips the driver have reserve
+         return  this.afDB.list('/reserves/'+ userUid).valueChanges();
+     } 
     public getUsersOnTrip(userUid){
         // Get all the students the driver acepts in myListRidePage to be send to the students
          return  this.afDB.list('/drivers/'+ userUid +'/trips/pickingUsers').valueChanges();
      }   
+
      public getPickUpUsers(userUid){
          //get all the users from the pickUpUsers []
         return  this.afDB.list('/drivers/'+ userUid +'/trips/pickedUpUsers').valueChanges();

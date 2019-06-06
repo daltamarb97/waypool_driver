@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 605:
+/***/ 606:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmpricePageModule", function() { return ConfirmpricePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(758);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(760);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,60 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ConfirmpricePageModule = /** @class */ (function () {
-    function ConfirmpricePageModule() {
+var WalletPageModule = /** @class */ (function () {
+    function WalletPageModule() {
     }
-    ConfirmpricePageModule = __decorate([
+    WalletPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */],
+                __WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */]
+                __WEBPACK_IMPORTED_MODULE_2__wallet__["a" /* WalletPage */]
             ]
         })
-    ], ConfirmpricePageModule);
-    return ConfirmpricePageModule;
+    ], WalletPageModule);
+    return WalletPageModule;
 }());
 
-//# sourceMappingURL=confirmprice.module.js.map
+//# sourceMappingURL=wallet.module.js.map
 
 /***/ }),
 
-/***/ 737:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(36));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9kYXRhYmFzZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLDRDQUF1QyJ9
-
-/***/ }),
-
-/***/ 758:
+/***/ 760:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmpricePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WalletPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(737);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_price_service__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(331);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -86,226 +66,61 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-
-
-var ConfirmpricePage = /** @class */ (function () {
-    function ConfirmpricePage(navCtrl, appCtrl, PriceService, alertCtrl, afDB, sendUsersService, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService) {
-        // this.geoInfo1 = this.navParams.get('geoInfo1')
-        // console.log(this.geoInfo1)
+var WalletPage = /** @class */ (function () {
+    function WalletPage(navCtrl, toastCtrl, sendUsersService, sendCoordsService, AngularFireAuth) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.appCtrl = appCtrl;
-        this.PriceService = PriceService;
-        this.alertCtrl = alertCtrl;
-        this.afDB = afDB;
+        this.toastCtrl = toastCtrl;
         this.sendUsersService = sendUsersService;
-        this.SignUpService = SignUpService;
         this.sendCoordsService = sendCoordsService;
-        this.modalCtrl = modalCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
-        this.geofireService = geofireService;
-        this.userDriverUid = this.AngularFireAuth.auth.currentUser.uid;
-        //variable for get data in function
-        this.driver = {};
-        //variable to transfer data from driver to this one
-        this.driverInfo = {};
-        this.driverInfoNote = {};
-        this.buttonColor = '#0fc874';
-        this.buttonColor2 = '#0fc874';
-        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_9_rxjs__["Subject"];
-        this.carModelList = [];
-        this.nowHour = new Date();
-        this.geocoordinatesDest = {};
-        this.geocoordinatesOr = {};
-        // this.geoInfo2 = this.navParams.get('geoInfo2')
-        // console.log(this.geoInfo2)
-        this.SignUpService.getCar(this.userDriverUid)
-            .subscribe(function (car) {
-            _this.carModelList = car;
-            console.log(_this.carModelList);
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.recordTrips = [];
+        this.total = 0;
+        this.subtotal = 0;
+        this.pickedUpUsers = [];
+        this.newNumber = 0;
+        this.sendUsersService.getRecordTrips(this.userUid)
+            .subscribe(function (user) {
+            _this.recordTrips = user;
+            console.log(_this.recordTrips);
+            _this.hola();
         });
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
-            _this.driver = driver;
-            _this.driverInfo.origin = _this.driver.trips.origin;
-            _this.driverInfo.destination = _this.driver.trips.destination;
-            _this.driverInfo.name = _this.driver.name;
-            _this.driverInfo.lastname = _this.driver.lastname;
-            _this.driverInfo.phone = _this.driver.phone;
-            _this.driverInfo.userId = _this.driver.userId;
-            _this.driverInfo.car = _this.driver.trips.car;
-            _this.driverInfo.price = _this.driver.trips.price;
-            _this.driverInfo.currentHour = _this.driver.trips.nowHour,
-                _this.driverInfo.startHour = _this.driver.trips.hour;
-            _this.driverInfo.note = 'No hay nota.';
-        });
-        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
-            _this.driver2 = driver;
-            _this.driverInfoNote.origin = _this.driver2.trips.origin;
-            _this.driverInfoNote.destination = _this.driver2.trips.destination;
-            _this.driverInfoNote.name = _this.driver2.name;
-            _this.driverInfoNote.lastname = _this.driver2.lastname;
-            _this.driverInfoNote.phone = _this.driver2.phone;
-            _this.driverInfoNote.userId = _this.driver2.userId;
-            _this.driverInfoNote.car = _this.driver2.trips.car;
-            _this.driverInfoNote.price = _this.driver2.trips.price;
-            _this.driverInfoNote.currentHour = _this.driver2.trips.nowHour;
-            _this.driverInfoNote.startHour = _this.driver2.trips.hour;
-            _this.driverInfoNote.note = _this.driver2.trips.note;
-        });
-        this.geocoder = new google.maps.Geocoder;
+        console.log(this.total);
     }
-    ConfirmpricePage.prototype.ionViewDidEnter = function () {
-        this.geofireService.cancelGeoqueryUniversity();
-    };
-    ConfirmpricePage.prototype.setPriceDriver = function () {
+    WalletPage.prototype.hola = function () {
         var _this = this;
-        if (this.precio == null || this.precio == '' || this.car == null || this.car == '' || this.hour == null || this.hour == '') {
-            var alert_1 = this.alertCtrl.create({
-                title: 'Informacion Incompleta',
-                subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu viaje, no haz especificado en que carro te moverás o no haz puesto la hora del inicio del viaje',
-                buttons: ['OK']
-            });
-            alert_1.present();
-        }
-        else if (this.note == null || this.note == '') {
-            this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-            this.PriceService.setPrice(this.userDriverUid, this.precio, this.car, this.hour, this.hourToSend);
-            this.accepted = true;
-            this.dismiss();
-            this.goefireKey = Date.now();
-            console.log(this.goefireKey);
-            // add reserve and command to dismiss modal
-            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
-            setTimeout(function () {
-                if (_this.driver.geofireOrigin === true) {
-                    _this.typeOfReserve = 'origin';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.driverInfo.note, _this.driverInfo.price, _this.driverInfo.currentHour, _this.driverInfo.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-                else {
-                    _this.typeOfReserve = 'destination';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.driverInfo.note, _this.driverInfo.price, _this.driverInfo.currentHour, _this.driverInfo.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-            }, 2000);
-            // geocoding of addresses that came from findRide
-            this.destination = this.driverInfo.destination[0][0];
-            this.origin = this.driverInfo.origin[0][0];
-            this.geocoder.geocode({ 'address': this.destination }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesDest = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (!_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
-                    console.log('executed geofire Dest');
-                }
-                else {
-                    console.log('not destination');
-                }
-            });
-            this.geocoder.geocode({ 'address': this.origin }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesOr = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfo.name, _this.driverInfo.lastname, _this.driverInfo.car, _this.driverInfo.destination, _this.driverInfo.note, _this.driverInfo.origin, _this.driverInfo.price, _this.driverInfo.userId);
-                    console.log('executed geofire Or');
-                }
-                else {
-                    console.log('not origin');
-                }
-            });
-        }
-        else {
-            console.log(this.driverInfoNote.car);
-            this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-            this.PriceService.setPriceAndNote(this.userDriverUid, this.precio, this.note, this.car, this.hour, this.hourToSend);
-            this.accepted = true;
-            this.dismiss();
-            this.goefireKey = Date.now();
-            console.log(this.goefireKey);
-            // add reserve and command to dismiss modal
-            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
-            setTimeout(function () {
-                if (_this.driver.geofireOrigin === true) {
-                    _this.typeOfReserve = 'origin';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-                else {
-                    _this.typeOfReserve = 'destination';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-            }, 2000);
-            // geocoding of addresses that came from findRide
-            this.destinationNote = this.driverInfoNote.destination[0][0];
-            this.originNote = this.driverInfoNote.origin[0][0];
-            this.geocoder.geocode({ 'address': this.destinationNote }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesDest = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                if (!_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
-                    console.log('executed geofire Dest');
-                }
-                else {
-                    console.log('not destination');
-                }
-            });
-            this.geocoder.geocode({ 'address': this.originNote }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesOr = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfoNote.name, _this.driverInfoNote.lastname, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.note, _this.driverInfoNote.origin, _this.driverInfoNote.price, _this.driverInfoNote.userId);
-                    console.log('executed geofire Or');
-                }
-                else {
-                    console.log('not origin');
-                }
-            });
-        }
+        this.newNumber = 0;
+        this.total = 0;
+        console.log(this.total);
+        this.recordTrips.forEach(function (trip) {
+            _this.trip = trip;
+            _this.pickedUpUsers = Object.keys(_this.trip.pickedUpUsers);
+            _this.totalTrip = _this.pickedUpUsers.length * _this.trip.price;
+            console.log(_this.newNumber);
+            _this.newNumber = _this.newNumber + _this.totalTrip;
+        });
+        this.total = this.total + this.newNumber;
     };
-    ;
-    ConfirmpricePage.prototype.dismiss = function () {
-        this.viewCtrl.dismiss(this.accepted);
-        // this.unsubscribe.next();
-        // this.unsubscribe.unsubscribe();
+    WalletPage.prototype.help = function () {
+        var toast = this.toastCtrl.create({
+            message: 'En esta página podrás ver cuanto dinero haz hecho por viaje, ádemas del historial de viajes en los que podrás ver la hora en la que terminaste el viaje, origen y destino, y el precio que colocaste por persona',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
     };
-    ConfirmpricePage.prototype.ionViewDidLeave = function () {
-        this.geofireService.cancelGeofireOrigin(this.userDriverUid);
-    };
-    ConfirmpricePage = __decorate([
+    WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-confirmprice',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/'<ion-content>\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n        <h6 class="text-theme">Detalles del Viaje</h6>\n       \n        <ion-card-content>\n            <div class="ride-detail">\n                <ion-item class="form">\n                    <ion-label floating>Precio Por Persona</ion-label>\n                    <ion-input type="number" [(ngModel)]="precio"></ion-input>\n                  </ion-item>\n                  <ion-item>\n                    <div class="form">\n                        <ion-list no-lines>\n                            <ion-item>\n                                <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota para tus compañeros (Opcional)" ></ion-textarea>\n                            </ion-item>\n                        </ion-list>\n                    </div>\n                  </ion-item>\n            </div>\n        </ion-card-content>\n\n        <ion-card-content>\n            <div class="ride-detail no-before">\n                <p><small>Recuerda:</small>\n                    <ion-icon name="md-calendar" class="icon-location"></ion-icon>\n                  - Precio Recomendado: 2500 </p>\n        \n                <p>- Tus compañeros te pagarán en efectivo, evita colocar precios que requieran mucho vuelto, lleva dinero suficiente para dar vueltas.</p>\n            </div>\n        </ion-card-content>\n        <ion-card-content>\n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   <ion-list>\n                        <ion-item>\n                          <ion-label>Escoge el carro:</ion-label>\n                          <ion-select [(ngModel)]="car">\n                                <ion-option *ngFor="let car of carModelList" >{{car.carModel}} | {{car.plateNumber}} | {{car.color}}</ion-option>\n                       \n                          </ion-select>\n                        </ion-item>\n                      </ion-list>\n                </ion-row>\n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                    <ion-list>\n                        <ion-item>\n                                <ion-label>Hora de inicio de viaje:</ion-label>\n                        <ion-datetime displayFormat="hmm A" picker-format="hmm A" [(ngModel)]="hour"></ion-datetime>\n                        </ion-item>\n                    </ion-list>\n                </ion-row>\n            <div class="seats">\n                \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="setPriceDriver()">Aceptar Viaje</button>\n                    </ion-col>\n                </ion-row>\n\n\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/
+            selector: 'page-wallet',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n    </ion-navbar>\n    <div text-center >\n        <p><small class="text-white">Ganancias Totales:</small></p>\n        <h1 class="text-white">$ {{total}}</h1>\n        <ion-row>\n           \n        </ion-row>\n    </div>\n\n</ion-header>\n \n<ion-content class="bg-light">\n        <p class="love">Historial de viajes</p> \n\n    <ion-list>\n            <ion-card *ngFor = "let user of recordTrips">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.DestinationTime}}\n                            </h2>\n                            <p>{{user.car}}</p>\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge">$ {{user.price}}</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>       \n\n                </ion-card>  \n    </ion-list>\n   \n   \n    \n    \n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */]])
-    ], ConfirmpricePage);
-    return ConfirmpricePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], WalletPage);
+    return WalletPage;
 }());
 
-//# sourceMappingURL=confirmprice.js.map
+//# sourceMappingURL=wallet.js.map
 
 /***/ })
 

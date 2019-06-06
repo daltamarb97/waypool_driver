@@ -1,14 +1,14 @@
 webpackJsonp([3],{
 
-/***/ 598:
+/***/ 607:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RatetripPageModule", function() { return RatetripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmpricePageModule", function() { return ConfirmpricePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ratetrip__ = __webpack_require__(751);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(761);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,30 +18,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RatetripPageModule = /** @class */ (function () {
-    function RatetripPageModule() {
+var ConfirmpricePageModule = /** @class */ (function () {
+    function ConfirmpricePageModule() {
     }
-    RatetripPageModule = __decorate([
+    ConfirmpricePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]
+                __WEBPACK_IMPORTED_MODULE_2__confirmprice__["a" /* ConfirmpricePage */]
             ]
         })
-    ], RatetripPageModule);
-    return RatetripPageModule;
+    ], ConfirmpricePageModule);
+    return ConfirmpricePageModule;
 }());
 
-//# sourceMappingURL=ratetrip.module.js.map
+//# sourceMappingURL=confirmprice.module.js.map
 
 /***/ }),
 
-/***/ 737:
+/***/ 612:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50,26 +50,28 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(36));
+__export(__webpack_require__(31));
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9kYXRhYmFzZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLDRDQUF1QyJ9
 
 /***/ }),
 
-/***/ 751:
+/***/ 761:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RatetripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmpricePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(737);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_email_composer_ngx__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendFeedback_service__ = __webpack_require__(338);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(612);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_price_service__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -87,42 +89,232 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var RatetripPage = /** @class */ (function () {
-    function RatetripPage(navCtrl, navParams, emailComposer, SignUpServices, afDB, SignUpService, AngularFireAuth, sendfeedback, geofireService) {
+
+
+var ConfirmpricePage = /** @class */ (function () {
+    function ConfirmpricePage(navCtrl, appCtrl, PriceService, alertCtrl, afDB, sendUsersService, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService) {
+        var _this = this;
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.emailComposer = emailComposer;
-        this.SignUpServices = SignUpServices;
+        this.appCtrl = appCtrl;
+        this.PriceService = PriceService;
+        this.alertCtrl = alertCtrl;
         this.afDB = afDB;
+        this.sendUsersService = sendUsersService;
         this.SignUpService = SignUpService;
+        this.sendCoordsService = sendCoordsService;
+        this.modalCtrl = modalCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.sendfeedback = sendfeedback;
+        this.viewCtrl = viewCtrl;
+        this.navParams = navParams;
         this.geofireService = geofireService;
         this.userDriverUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.userDriver = {};
-        this.title = 'calificacion de viaje';
-        this.today = Date.now();
-        this.userDriver = this.navParams.get('user');
+        //variable for get data in function
+        this.driver = {};
+        //variable to transfer data from driver to this one
+        this.driverInfo = {};
+        this.driverInfoNote = {};
+        this.buttonColor = '#0fc874';
+        this.buttonColor2 = '#0fc874';
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_9_rxjs__["Subject"];
+        this.carModelList = [];
+        this.nowHour = new Date();
+        this.geocoordinatesDest = {};
+        this.geocoordinatesOr = {};
+        //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
+        this.SignUpService.getCar(this.userDriverUid)
+            .subscribe(function (car) {
+            //get cars registered
+            _this.carModelList = car;
+            console.log(_this.carModelList);
+        });
+        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
+            _this.driver = driver;
+            _this.driverInfo.origin = _this.driver.trips.origin;
+            _this.driverInfo.destination = _this.driver.trips.destination;
+            _this.driverInfo.name = _this.driver.name;
+            _this.driverInfo.lastname = _this.driver.lastname;
+            _this.driverInfo.phone = _this.driver.phone;
+            _this.driverInfo.userId = _this.driver.userId;
+            _this.driverInfo.car = _this.driver.trips.car;
+            _this.driverInfo.price = _this.driver.trips.price;
+            _this.driverInfo.currentHour = _this.driver.trips.nowHour;
+            _this.driverInfo.startHour = _this.driver.trips.hour;
+            _this.driverInfo.note = 'No hay nota.';
+            _this.driverInfo.keyReserve = _this.driver.keyLastReserve;
+        });
+        this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
+            _this.driver2 = driver;
+            _this.driverInfoNote.origin = _this.driver2.trips.origin;
+            _this.driverInfoNote.destination = _this.driver2.trips.destination;
+            _this.driverInfoNote.name = _this.driver2.name;
+            _this.driverInfoNote.lastname = _this.driver2.lastname;
+            _this.driverInfoNote.phone = _this.driver2.phone;
+            _this.driverInfoNote.userId = _this.driver2.userId;
+            _this.driverInfoNote.car = _this.driver2.trips.car;
+            _this.driverInfoNote.price = _this.driver2.trips.price;
+            _this.driverInfoNote.currentHour = _this.driver2.trips.nowHour;
+            _this.driverInfoNote.startHour = _this.driver2.trips.hour;
+            _this.driverInfoNote.note = _this.driver2.trips.note;
+            _this.driverInfoNote.keyReserve = _this.driver2.keyLastReserve;
+        });
+        this.geocoder = new google.maps.Geocoder;
     }
-    RatetripPage.prototype.sendEmail = function () {
-        this.sendfeedback.sendFeedback(this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-        this.geofireService.cancelGeoqueryDest();
-        this.geofireService.cancelGeoqueryOr();
+    ConfirmpricePage.prototype.ionViewDidEnter = function () {
+        this.geofireService.cancelGeoqueryUniversity();
     };
-    RatetripPage.prototype.ionViewWillLeave = function () {
-        this.geofireService.cancelGeoqueryDest();
-        this.geofireService.cancelGeoqueryOr();
+    ConfirmpricePage.prototype.setPriceDriver = function () {
+        var _this = this;
+        if (this.precio == null || this.precio == '' || this.car == null || this.car == '' || this.hour == null || this.hour == '') {
+            var alert = this.alertCtrl.create({
+                title: 'Informacion Incompleta',
+                subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu viaje, no haz especificado en que carro te moverás o no haz puesto la hora del inicio del viaje',
+                buttons: ['OK']
+            });
+            alert.present();
+        }
+        else if (this.note == null || this.note == '') {
+            this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
+            this.PriceService.setPrice(this.userDriverUid, this.precio, this.car, this.hour, this.hourToSend);
+            this.accepted = true;
+            this.dismiss();
+            this.goefireKey = Date.now();
+            console.log(this.goefireKey);
+            if (this.driver.geofireOrigin === true) {
+                this.typeOfReserve = 'origin';
+                this.note = 'No hay nota.';
+                this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+            }
+            else {
+                this.typeOfReserve = 'destination';
+                this.note = 'No hay nota.';
+                this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+            }
+            // geocoding of addresses that came from findRide
+            this.destination = this.driverInfo.destination[0][0];
+            this.origin = this.driverInfo.origin[0][0];
+            this.geocoder.geocode({ 'address': this.destination }, function (results, status) {
+                if (status === 'OK') {
+                    _this.geocoordinatesDest = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    };
+                }
+                // turn geofire On
+                if (!_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfo.userId, _this.driverInfo.keyReserve);
+                    console.log('executed geofire Dest');
+                }
+                else {
+                    console.log('not destination');
+                }
+            });
+            this.geocoder.geocode({ 'address': this.origin }, function (results, status) {
+                if (status === 'OK') {
+                    _this.geocoordinatesOr = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    };
+                }
+                // turn geofire On
+                if (_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfo.userId, _this.driverInfo.keyReserve);
+                    console.log('executed geofire Or');
+                }
+                else {
+                    console.log('not origin');
+                }
+            });
+        }
+        else {
+            console.log(this.driverInfoNote.car);
+            this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
+            this.PriceService.setPriceAndNote(this.userDriverUid, this.precio, this.note, this.car, this.hour, this.hourToSend);
+            this.accepted = true;
+            this.dismiss();
+            this.goefireKey = Date.now();
+            console.log(this.goefireKey);
+            // add reserve and command to dismiss modal
+            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
+            setTimeout(function () {
+                if (_this.driver.geofireOrigin === true) {
+                    _this.typeOfReserve = 'origin';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+                else {
+                    _this.typeOfReserve = 'destination';
+                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
+                }
+            }, 2000);
+            // geocoding of addresses that came from findRide
+            this.destinationNote = this.driverInfoNote.destination[0][0];
+            this.originNote = this.driverInfoNote.origin[0][0];
+            this.geocoder.geocode({ 'address': this.destinationNote }, function (results, status) {
+                if (status === 'OK') {
+                    _this.geocoordinatesDest = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    };
+                }
+                if (!_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.userId, _this.driverInfoNote.keyReserve);
+                    console.log('executed geofire Dest');
+                }
+                else {
+                    console.log('not destination');
+                }
+            });
+            this.geocoder.geocode({ 'address': this.originNote }, function (results, status) {
+                if (status === 'OK') {
+                    _this.geocoordinatesOr = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    };
+                }
+                // turn geofire On
+                if (_this.driver.geofireOrigin === true) {
+                    console.log(_this.goefireKey);
+                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfoNote.userId, _this.driverInfoNote.keyReserve);
+                    console.log('executed geofire Or');
+                }
+                else {
+                    console.log('not origin');
+                }
+            });
+        }
     };
-    RatetripPage = __decorate([
+    ;
+    ConfirmpricePage.prototype.addReserve = function () {
+        if (this.driver.geofireOrigin === true) {
+            this.typeOfReserve = 'origin';
+            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+        }
+        else {
+            this.typeOfReserve = 'destination';
+            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+        }
+    };
+    ConfirmpricePage.prototype.dismiss = function () {
+        this.viewCtrl.dismiss(this.accepted);
+        // this.unsubscribe.next();
+        // this.unsubscribe.unsubscribe();
+    };
+    ConfirmpricePage.prototype.ionViewDidLeave = function () {
+        this.geofireService.cancelGeofireOrigin(this.userDriverUid);
+    };
+    ConfirmpricePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ratetrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>Viaje Finalizado</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <ion-card class="slip">\n        <div text-center>\n            <h4 class="text-dark">¡Esperamos que hayas tenido un excelente viaje!</h4>\n            <p class="text-light">{{today | date}}\n\n        </p>\n            <h1 class="text-theme">$ {{userDriver.trips.price}}</h1>\n            <h4 class="text-dark">Podrás ver tu pago en el ícono<br>Ganancias</h4>\n        </div>\n    </ion-card>\n    <ion-card class="rate">\n        <div text-center>\n                <h4 class="text-dark">Cuéntanos {{userDriver.name}} como ha sido la experiencia con Waypool</h4>\n\n           \n            <div class="driver">\n                \n                <div class="form">\n                    <ion-list no-lines>\n                        <ion-item>\n                            <ion-textarea [(ngModel)]="experience" type="text" placeholder="Déjanos tu sugerencia" ></ion-textarea>\n                        </ion-item>\n                    </ion-list>\n                </div>\n\n\n                <p padding-top><button navPop (click)="sendEmail()" class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>\n            </div>\n        </div>\n    </ion-card>\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/
+            selector: 'page-confirmprice',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/'<ion-content>\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n        <h6 class="text-theme">Detalles del Viaje</h6>\n       \n        <ion-card-content>\n            <div class="ride-detail">\n                <ion-item class="form">\n                    <ion-label floating>Precio Por Persona</ion-label>\n                    <ion-input type="number" [(ngModel)]="precio"></ion-input>\n                  </ion-item>\n                  <ion-item>\n                    <div class="form">\n                        <ion-list no-lines>\n                            <ion-item>\n                                <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota para tus compañeros (Opcional)" ></ion-textarea>\n                            </ion-item>\n                        </ion-list>\n                    </div>\n                  </ion-item>\n            </div>\n        </ion-card-content>\n\n        <ion-card-content>\n            <!-- <div class="ride-detail no-before">\n                <p><small>Recuerda:</small>\n                    <ion-icon name="md-calendar" class="icon-location"></ion-icon>\n                  - Precio Recomendado: 2500 </p>\n        \n                <p>- Tus compañeros te pagarán en efectivo, evita colocar precios que requieran mucho vuelto, lleva dinero suficiente para dar vueltas.</p>\n            </div> -->\n        </ion-card-content>\n        <ion-card-content>\n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   <ion-list>\n                        <ion-item>\n                          <ion-label>Escoge el carro:</ion-label>\n                          <ion-select [(ngModel)]="car">\n                                <ion-option *ngFor="let car of carModelList" >{{car.carModel}} | {{car.plateNumber}} | {{car.color}}</ion-option>\n                       \n                          </ion-select>\n                        </ion-item>\n                      </ion-list>\n                </ion-row>\n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                    <ion-list>\n                        <ion-item>\n                                <ion-label>Hora de inicio de viaje:</ion-label>\n                        <ion-datetime displayFormat="hmm A" picker-format="hmm A" [(ngModel)]="hour"></ion-datetime>\n                        </ion-item>\n                    </ion-list>\n                </ion-row>\n            <div class="seats">\n                \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="setPriceDriver()">Aceptar Viaje</button>\n                    </ion-col>\n                </ion-row>\n\n\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/confirmprice/confirmprice.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_email_composer_ngx__["a" /* EmailComposer */], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_6__services_sendFeedback_service__["a" /* sendFeedbackService */], __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]])
-    ], RatetripPage);
-    return RatetripPage;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_price_service__["a" /* priceService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ViewController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__["a" /* geofireService */]) === "function" && _o || Object])
+    ], ConfirmpricePage);
+    return ConfirmpricePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 }());
 
-//# sourceMappingURL=ratetrip.js.map
+//# sourceMappingURL=confirmprice.js.map
 
 /***/ })
 

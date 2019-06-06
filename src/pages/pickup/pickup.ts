@@ -10,6 +10,7 @@ import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
 import * as moment from 'moment';
 import { geofireService } from '../../services/geofire.services';
+import { TripsService } from '../../services/trips.service';
 
 declare var google; 
 @IonicPage()
@@ -32,12 +33,16 @@ export class PickupPage {
   updatelocation:any;
   useruid=this.AngularFireAuth.auth.currentUser.uid;
   userDriver:any;
-  
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public geofireServices: geofireService) {
+  userFirebase:any;
+  keyTrip:string;
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public TripsService:TripsService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
     this.markers = [];
     //we get the info of the users with navParams
-    this.user= this.navParams.get('user')  
-  console.log(this.user)
+    this.user= this.navParams.get('user') 
+    this.keyTrip= this.navParams.get('keyTrip') 
+    console.log(this.user)
+    console.log(this.keyTrip)
+
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer({
       suppressMarkers: true,
@@ -50,7 +55,27 @@ export class PickupPage {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
-   
+    this.SignUpService.getInfoUser(this.user.userId)
+		.subscribe(userFirebase => {
+      //modificar
+      //get info user and observe if user has not canceled
+      this.userFirebase = userFirebase;
+
+    // if(this.userFirebase.trips.onTrip === true ){
+
+    // } else {
+    //   //if canceled go back to myRidePage
+    //   this.navCtrl.pop();
+    //   const toast = this.toastCtrl.create({
+    //     message: `El estudiante ${this.user.name} que ibas a recoger te ha cancelado`,
+    //     showCloseButton:true,
+    //     closeButtonText: 'OK',
+    //     position:'middle'
+    //        });
+    //   toast.present();
+    // }
+			
+		});
   }
   ionViewDidLoad(){
     
@@ -224,19 +249,18 @@ export class PickupPage {
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }
     PickUp(){
-      this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price)
+      
+      this.TripsService.eliminatePendingUsers(this.keyTrip,this.useruid,this.user.userId);
 
-      this.sendCoordsService.eliminatePickingUsers(this.useruid,this.user.userId);
-      this.sendCoordsService.pickUp(this.useruid,this.user.userId,this.user);
-      this.geofireServices.deleteUserGeofireDest(this.user.userId);
-      this.geofireServices.deleteUserGeofireOr(this.user.userId);
+      // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price)
 
+      this.TripsService.pickUp(this.keyTrip,this.useruid,this.user.userId,this.user);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
-      this.sendCoordsService.pickUpInstance(this.user.userId);
-      moment.locale('es');   
-      let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-        this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId)
-        this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate)
+      // this.sendCoordsService.pickUpInstance(this.user.userId);
+      // moment.locale('es');   
+      // let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+      //   this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId)
+      //   this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate)
 
     }
     

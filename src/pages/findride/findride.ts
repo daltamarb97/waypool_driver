@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
 
 
-import { ListridePage } from '../listride/listride';
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -128,8 +127,9 @@ export class FindridePage {
  
   loadMap(){
 
- // this gets current position and set the camera of the map and put a marker in your location
+  
 
+ // this gets current position and set the camera of the map and put a marker in your location
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -171,7 +171,7 @@ export class FindridePage {
       }
       });
       this.markers.push(this.markerGeolocation);
-      
+      //allow the marker to be draged and changed the position
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       //to reverse-geocode position
       this.geocodeLatLng(latLng,this.autocompleteMyPos)
@@ -186,6 +186,7 @@ export class FindridePage {
   
    calculateRoute(positionOr,positionDest){
     //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
+    //calculate route between markers
 
     this.bounds.extend(this.myLatLng);
 
@@ -231,7 +232,7 @@ updateSearchResultsMyPos(){
       }
   });
 }
-  ////autocomplete of my destination
+  ////autocomplete of my destination Searchbar
   updateSearchResultsMyDest(){
     if (this.autocompleteMyDest.input == '') {
       this.autocompleteItems2 = [];
@@ -342,6 +343,7 @@ clearMarkers(){
   }
   
  dragMarkerDest(marker,inputName){
+   //allow destination marker to be draged and calculate route with the new position
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
@@ -349,10 +351,13 @@ clearMarkers(){
    
     this.map.setCenter(latLng);
     this.geocodeLatLng(latLng,inputName)
+    
    this.calculateRoute(this.markerGeolocation.position,latLng);
 })
 }
 dragMarkerOr(marker,inputName){
+     //allow origin marker to be draged and calculate route with the new position
+
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
@@ -387,7 +392,7 @@ geocodeLatLng(latLng,inputName) {
 }
 
 
-
+  
 
   listride(){
     if(this.currentUser.emailVerified == false){
@@ -487,8 +492,7 @@ geocodeLatLng(latLng,inputName) {
     }
   
 
-    }
-
+}
     presentAlert(title,text,button) {
       let alert = this.alertCtrl.create({
         title: title,
@@ -499,7 +503,8 @@ geocodeLatLng(latLng,inputName) {
     }
 
     availableReserves(){
-      this.app.getRootNav().push('ListridePage');
+      this.app.getRootNav().push('ReservetripPage');
+
 
     }
 
@@ -510,7 +515,7 @@ geocodeLatLng(latLng,inputName) {
       modal.onDidDismiss(accepted => {
         if(accepted){
           // this.navCtrl.push('ListridePage');
-          this.app.getRootNav().push('ListridePage');
+          this.app.getRootNav().push('ReservetripPage');
         }
       })
    modal.present();
@@ -525,3 +530,4 @@ geocodeLatLng(latLng,inputName) {
     toast.present();
   }
   }  
+  
