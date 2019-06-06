@@ -4,6 +4,7 @@ import * as GeoFire from 'geofire';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs";
+import * as firebase from 'firebase';
 
 
 @Injectable()
@@ -24,7 +25,7 @@ lastname:any;
 phone:any;
 carModel:any;
 plateNumber:any;
-
+KeyLastTripSaved:any
 
 constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFireAuth){
 
@@ -34,7 +35,6 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
  
 
 }
-
 
 
 setGeofireDest( radius:number, lat, lng, driverInfor):void{ 
@@ -75,29 +75,54 @@ setGeofireOr( radius:number, lat, lng, driverInfor):void{
 }
 
 
+// OLD
+// keyEnteredDest(driverInfo){
+//    this.geoquery1.on("key_entered", function(key){
+//     console.log(key);
+//     setTimeout(()=>{
+//       this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).update({
+//       origin:driverInfo.origin,
+//        destination:driverInfo.destination,
+//        name: driverInfo.name,
+//        lastname: driverInfo.lastname,
+//        phone: driverInfo.phone,
+//        userId: driverInfo.userId,
+//        car:driverInfo.car,      
+//        price: driverInfo.price,
+//        note: driverInfo.note
+       
+//       })
+//     }, 2000)
+    
+    
+//   }.bind(this))
+// }
+
+
 
 keyEnteredDest(driverInfo){
-   this.geoquery1.on("key_entered", function(key){
-    console.log(key);
-    setTimeout(()=>{
-      this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).update({
-      origin:driverInfo.origin,
-       destination:driverInfo.destination,
-       name: driverInfo.name,
-       lastname: driverInfo.lastname,
-       phone: driverInfo.phone,
-       userId: driverInfo.userId,
-       car:driverInfo.car,      
-       price: driverInfo.price,
-       note: driverInfo.note
-       
-      })
-    }, 2000)
-    
-    
-  }.bind(this))
+  this.geoquery1.on("key_entered", function(key){
+   console.log(key);
+   setTimeout(()=>{
+//intento viejo de daniel:
+    // this.saveTripToReserves(driverInfo.userId,driverInfo.origin,driverInfo.destination,driverInfo.timeLeaving, driverInfo.price,driverInfo.car,driverInfo.note)
+    //  this.afDB.database.ref('/reserves/' + key +'/'+ driverInfo.keyLastReserve +'/driver/' + this.driverUid).update({
+    //  origin:driverInfo.origin,
+    //   destination:driverInfo.destination,
+    //   name: driverInfo.name,
+    //   lastname: driverInfo.lastname,
+    //   phone: driverInfo.phone,
+    //   userId: driverInfo.userId,
+    //   car:driverInfo.car,      
+    //   price: driverInfo.price,
+    //   note: driverInfo.note
+      
+    //  })
+   }, 2000)
+   
+   
+ }.bind(this))
 }
-
 keyExitedDest(){
   
   this.geoquery1.on("key_exited", function(key){
@@ -118,7 +143,8 @@ keyEnteredOr(driverInfo){
       userId: driverInfo.userId,
       car:driverInfo.car,
       price: driverInfo.price,
-      note: driverInfo.note
+      note: driverInfo.note,
+      timeLeaving:driverInfo.timeLeaving
       
      })
    }, 2000)

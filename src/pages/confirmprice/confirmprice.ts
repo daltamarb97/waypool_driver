@@ -38,7 +38,8 @@ export class ConfirmpricePage {
   unsubscribe = new Subject;
   carModelList:any=[];
   car:string;
-  
+  timeLeaving:string;
+
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     this.geoInfo1 = this.navParams.get('geoInfo1')
@@ -49,6 +50,7 @@ export class ConfirmpricePage {
 
     this.SignUpService.getCar(this.userDriverUid)
     .subscribe( car => {
+      //get cars registered
       this.carModelList = car;
       console.log(this.carModelList)
 
@@ -56,22 +58,23 @@ export class ConfirmpricePage {
    
   }
     setPriceDriver(){
-      console.log(this.car)
-      
-      if(this.precio == null || this.precio == '' || this.car == null || this.car==''){
+      console.log(this.timeLeaving);
+      if(this.precio == null || this.precio == '' || this.timeLeaving == null || this.timeLeaving == '' || this.car == null || this.car==''){
+       //if there is no price, car selected and time leaving, show alert
         const alert = this.alertCtrl.create({
             title: 'Informacion Incompleta',
             subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu carro o no haz especificado en que carro te moverás',
             buttons: ['OK']
           });
           alert.present();
-    }else if(this.note == null || this.note == '' ){
-        this.PriceService.setPrice(this.userDriverUid,this.precio,this.car)
+    }else if(this.note == null || this.note == ''){
+      //if there is no note
+        this.PriceService.setPrice(this.userDriverUid,this.precio,this.car,this.timeLeaving)
         this.accepted = true;
         this.dismiss();
         this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
           this.driver = driver;
-          console.log(this.driver.trips.origin)
+          //use driverInfo to pass information to user
           this.driverInfo.origin = this.driver.trips.origin
           this.driverInfo.destination = this.driver.trips.destination
           this.driverInfo.name = this.driver.name
@@ -80,19 +83,24 @@ export class ConfirmpricePage {
           this.driverInfo.userId = this.driver.userId
           this.driverInfo.car = this.driver.trips.car
           this.driverInfo.price = this.driver.trips.price
+          this.driverInfo.timeLeaving = this.driver.trips.timeLeaving
           this.driverInfo.note = 'No hay nota.'
           console.log(this.driverInfo);
      })
+
      this.confirmDirection(this.geoInfo1, this.geoInfo2, this.driverInfo);
 
         
       } else {
-        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car)
+      //if there is note
+
+        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car,this.timeLeaving)
         this.accepted = true;
         this.dismiss();
         this.SignUpService.getMyInfo(this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
           this.driver = driver;
-       
+           //use driverInfo to pass information to user
+
           this.driverInfo.origin = this.driver.trips.origin
           this.driverInfo.destination = this.driver.trips.destination
           this.driverInfo.name = this.driver.name
@@ -102,9 +110,11 @@ export class ConfirmpricePage {
           this.driverInfo.car = this.car
           this.driverInfo.price = this.driver.trips.price
           this.driverInfo.note = this.driver.trips.note
-          console.log(this.driverInfo);
+          this.driverInfo.timeLeaving = this.driver.trips.timeLeaving
+
      })
-        
+     
+
      this.confirmDirection(this.geoInfo1, this.geoInfo2, this.driverInfo);
 
               
@@ -113,10 +123,10 @@ export class ConfirmpricePage {
        
       }; 
 
-      confirmDirection(geoInfo1, geoInfo2, driverInfo){
-        let modal = this.modalCtrl.create('ConfirmdirectionPage', {geoInfo1, geoInfo2, driverInfo});
+   confirmDirection(geoInfo1, geoInfo2, driverInfo){
+
+     let modal = this.modalCtrl.create('ConfirmdirectionPage', {geoInfo1, geoInfo2, driverInfo});
      modal.present();
-     
      }
       
     

@@ -8,6 +8,7 @@ import { TabsPage } from '../tabs/tabs';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { geofireService } from '../../services/geofire.services';
 import { ListridePage } from '../listride/listride';
+import { priceService } from '../../services/price.service';
 
 
 
@@ -37,7 +38,7 @@ export class ConfirmdirectionPage {
 
   driverInfo;
 
-  constructor(public navCtrl: NavController, public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
+  constructor(public navCtrl: NavController, public PriceService:priceService,public appCtrl: App,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
 
     this.geoinfo1 = this.navParams.get('geoInfo1')
     console.log(this.geoinfo1)
@@ -52,11 +53,16 @@ export class ConfirmdirectionPage {
   }
 
   acceptTrip(){
+    this.PriceService.saveTripToReserves(this.userUid,this.driverInfo.origin,this.driverInfo.destination,this.driverInfo.timeLeaving,this.driverInfo.price,this.driverInfo.car,this.driverInfo.note,this.driverInfo)
+    
     this.accepted = true;
     this.dismiss();
+    
+
   }
   
   setGeoFireOrigin(){
+
     this.buttonColor2 = '#0fc874';
     this.buttonColor = '#001127';
     this.buttonColor3 = '#001127';

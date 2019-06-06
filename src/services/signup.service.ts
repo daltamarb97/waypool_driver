@@ -28,7 +28,9 @@ export class SignUpService {
     public getMyInfoDriver(userId){
         return this.afDB.object('drivers/' + userId).valueChanges();
     }
-
+    public getInfoUser(userId){
+        return this.afDB.object('users/' + userId).valueChanges();
+    }
     public async saveUser(user){
         this.afDB.database.ref('drivers/'+ user.userId).update(user);
         this.afDB.database.ref('users/'+ user.userId).update(user);

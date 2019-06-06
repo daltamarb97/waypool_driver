@@ -12,6 +12,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { geofireService } from '../../services/geofire.services';
 import { SignUpService } from '../../services/signup.service';
 import * as moment from 'moment';
+import { TripsService } from '../../services/trips.service';
 
 @IonicPage()
 @Component({
@@ -22,44 +23,66 @@ export class MyridePage {
 
  hideImage:boolean = false;
 
- pickingUsers:any = [];
+ pendingUsers:any = [];
  pickedUpUsers:any = [];
 
 ride: string = "today";
-
+trip:any;
 driverUid=this.AngularFireAuth.auth.currentUser.uid;
 
 userInfo;
 userDriver:any;
-
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
-
-    this.sendUsersService.getUsersOnTrip(this.driverUid)
-    .subscribe( user => {
-      
-        this.pickingUsers = user;
-        console.log(this.pickingUsers);
-          
-    });
-
-
-    this.sendUsersService.getPickUpUsers(this.driverUid)
-    .subscribe( user => {
-    
-      this.pickedUpUsers = user;
-      console.log(this.pickedUpUsers);
-      
-    });
-    this.SignUpService.getMyInfoDriver(this.driverUid)
-		.subscribe(userDriver => {
-			this.userDriver = userDriver;
-      console.log(this.userDriver);
-		});
+onTrip:boolean;
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
    
+   //get driver information to get the keyTrip
+    this.SignUpService.getMyInfoDriver(this.driverUid)    
+		.subscribe(userDriver => {
+      this.userDriver = userDriver;
+      if(this.userDriver.keyTrip === null){
+        //do nothing
+      } else {
+        this.getTrip(this.userDriver.keyTrip,this.userDriver.userId); //get keyTrip  
+    
+        // corregir esta vuelta, no debiera estar ontrip true
+      }
+
+		});
+  
+   
+   
+  }
+  getTrip(keyTrip,driverUid){ 
+    this.TripsService.getTrip(keyTrip,driverUid)
+    .subscribe( trip => {
+      
+      this.trip = trip;
+      
+      console.log(this.trip);
+      //after getting trip from node, get pending and pickedUp arrays
+      this.getPendingAndPickedUpUsers(keyTrip,driverUid)
+
+    });
+    
+  }
+  getPendingAndPickedUpUsers(keyTrip,driverUid){
+    this.TripsService.getPendingUsers(keyTrip,driverUid)
+    .subscribe( user => {      
+        this.pendingUsers = user;
+        console.log(this.pendingUsers);          
+    });
+
+
+    this.TripsService.getPickedUpUsers(keyTrip,driverUid)
+    .subscribe( user => {    
+      this.pickedUpUsers = user;
+      console.log(this.pickedUpUsers);      
+    });
+    this.onTrip=true;
   }
 
 callUser(number){
-    console.log(number)
+    
 
 this.callNumber.callNumber(number, true)
   .then(res => console.log('Launched dialer!', res)) 
@@ -75,20 +98,20 @@ this.callNumber.callNumber(number, true)
 }
      
           goToRide(user){
-    this.navCtrl.push('PickupPage',{user});
+    this.navCtrl.push('PickupPage',{user:user,keyTrip:this.userDriver.keyTrip});
     }
-    goToMyDestination(){
-     
-      if(this.pickingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
+    endTrip(){
+     // se cambiara a finalizar viaje
+      if(this.pendingUsers.length == 0 && this.pickedUpUsers.length !== 0 ){
         let alert = this.alertCtrl.create({
           title: 'Ir a mi destino',
-          message: `¿Estas seguro que deseas ir a tu destino?, no podrás recoger a ningun otro estudiante en este viaje`,
+          message: `¿Estas seguro que deseas finalizar tu viaje?`,
           buttons: [
             {
               text: 'Cancelar',
               role: 'cancel',
               handler: () => {
-             
+              
               }
             },
             { 
@@ -96,7 +119,9 @@ this.callNumber.callNumber(number, true)
               handler: () => {
                 this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).subscribe(user=>{
                   this.userInfo = user;
+                  console.log(this.userInfo)
                   if(this.userInfo.geofireOr == true){
+                    //juandavid
                     this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
                     this.geofireServices.cancelGeoqueryOr()
                   }else{
@@ -107,16 +132,13 @@ this.callNumber.callNumber(number, true)
                   moment.locale('es'); //to make the date be in spanish  
 
                  let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
-                 this.sendCoordsService.timeOfDestinationDriver(this.driverUid,today)
+                 this.TripsService.timeFinishedTrip(this.userDriver.keyTrip,this.driverUid,today)
+                 this.TripsService.endTrip(this.userDriver.keyTrip,this.driverUid);
+                 this.TripsService.eraseKeyTrip(this.driverUid);
+                 this.TripsService.setOnTripFalse(this.driverUid);
+               
 
-                this.pickedUpUsers.forEach(user => {
-                 
-
-                  this.sendCoordsService.timeOfDestinationUser(user.userId,today)
-                });        
-
-                this.navCtrl.push('OnTripPage');
-              }
+                }
             }
           ]
         });
@@ -130,9 +152,7 @@ this.callNumber.callNumber(number, true)
       
 
     }
-    DisplayUserNote(note){
-      this.presentToast(note,4000,'bottom')
-    }
+   
     presentToast(message:string,duration,position:string) {     
       const toast = this.toastCtrl.create({
         message: message,
@@ -150,31 +170,31 @@ this.callNumber.callNumber(number, true)
       alert.present();
     }
     deleteUser(userId,nameUser){
-  
-      let alert = this.alertCtrl.create({
-        title: 'Eliminar Usuario',
-        message: `¿Estas que deseas eliminar a este a ${nameUser} de tu viaje?, recuerda que si borras muchos usuarios por día/semana esta en contra de nuestras políticas`,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: () => {
+  //TODAVÍA NO
+      // let alert = this.alertCtrl.create({
+      //   title: 'Eliminar Usuario',
+      //   message: `¿Estas que deseas eliminar a este a ${nameUser} de tu viaje?, recuerda que si borras muchos usuarios por día/semana esta en contra de nuestras políticas`,
+      //   buttons: [
+      //     {
+      //       text: 'Cancelar',
+      //       role: 'cancel',
+      //       handler: () => {
            
-            }
-          },
-          { 
-            text: 'Eliminar',
-            handler: () => {
-              console.log('user eliminado');
-              this.sendCoordsService.eliminateOnTrip(userId);
-              this.sendCoordsService.eliminatePickingUsers(this.driverUid,userId);
-              this.presentToast(`Haz eliminado a ${name} de tu viaje`,3000,'bottom')
+      //       }
+      //     },
+      //     { 
+      //       text: 'Eliminar',
+      //       handler: () => {
+      //         console.log('user eliminado');
+      //         this.sendCoordsService.eliminateOnTrip(userId);
+      //         this.sendCoordsService.eliminatePickingUsers(this.driverUid,userId);
+      //         this.presentToast(`Haz eliminado a ${name} de tu viaje`,3000,'bottom')
   
-            }
-          }
-        ]
-      });
-      alert.present();
+      //       }
+      //     }
+      //   ]
+      // });
+      // alert.present();
     }
     help(){
       const toast = this.toastCtrl.create({

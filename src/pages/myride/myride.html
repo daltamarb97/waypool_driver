@@ -11,7 +11,7 @@
 
 <ion-content class="bg-light"> 
         <ion-list >
-            <ion-card *ngFor = "let user of pickingUsers">
+            <ion-card *ngFor = "let user of pendingUsers">
                 <ion-item>
                     <ion-avatar item-start>
                         <img src="assets/imgs/userPicture.png">
@@ -78,7 +78,7 @@
                 </ion-card> 
 
 
-                <button class="btn bg-theme text-white rounded" (click)="goToMyDestination()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Ir a mi destino</button>
+                <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
 
         </ion-list>
        

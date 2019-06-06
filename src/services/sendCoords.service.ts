@@ -12,13 +12,31 @@ constructor(public afDB: AngularFireDatabase){
               
     }
     
+    public getPendingUsers(userUid,pushKey){
+        return  this.afDB.list('/reserves/'+ userUid +'/'+pushKey+'/pendingUsers').valueChanges();
+    }
+    public getSpecificReserves(userUid,pushKey){
+        return  this.afDB.object('/reserves/'+ userUid +'/'+pushKey).valueChanges();
+    } 
+    public eraseUser(userId,DriverUid,pushKey){
+        this.afDB.database.ref('reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
+    }
     public getDestination(user){
         return  this.afDB.list('/drivers/'+ user +'/trips/destination').valueChanges();
     } 
     public getOrigin(user){
         return  this.afDB.list('/drivers/'+ user +'/trips/origin').valueChanges();
     }     
-    
+       public pushcoordinatesReserves(user , dest, or){
+     
+    this.afDB.database.ref('drivers/'+ user+'/Reserves').push({
+        orReserve: or,
+        destReserve: dest,
+        
+        });
+             
+            
+        }
    public pushcoordinatesDrivers(user , dest, or){
      
     this.afDB.database.ref('drivers/'+ user+'/trips').update({
@@ -65,13 +83,7 @@ constructor(public afDB: AngularFireDatabase){
         });
 
     }
-    timeOfDestinationDriver(userDriverUid,date){
-                //set time when driver go to destination 
-
-        this.afDB.database.ref('/drivers/'+ userDriverUid + '/trips/').update({
-            DestinationTime:date
-        });
-    }
+    
     timeOfDestinationUser(userUid,date){
         this.afDB.database.ref('/users/'+ userUid + '/trips/').update({
             DestinationTime:date

@@ -19,6 +19,7 @@ import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
 import { ConfirmdirectionPage } from '../confirmdirection/confirmdirection';
+import { estimateHeight } from 'ionic-angular/umd/components/virtual-scroll/virtual-util';
 
 
 
@@ -76,6 +77,7 @@ export class FindridePage {
   // hits = new BehaviorSubject([])
   markerGeolocation:any;
   markerDest:any;
+  
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
@@ -108,14 +110,14 @@ export class FindridePage {
   }
  
   ionViewDidLoad(){
-
+    //load map after the app
     this.loadMap();
 
   }
  
   loadMap(){
 
- // this gets current position and set the camera of the map and put a marker in your location
+
  const alert = this.alertCtrl.create({
   title: 'Permiso de uso de tu geolocalización',
   subTitle: 'Se usará tu geolocalización para hacer posible nuestro servicio de conexión con otros usuarios. Asi como mejorar nuestro sosporte e historial. ',
@@ -123,6 +125,7 @@ export class FindridePage {
 });
 alert.present();
 
+ // this gets current position and set the camera of the map and put a marker in your location
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -164,7 +167,7 @@ alert.present();
       }
       });
       this.markers.push(this.markerGeolocation);
-      
+      //allow the marker to be draged and changed the position
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       //to reverse-geocode position
       this.geocodeLatLng(latLng,this.autocompleteMyPos)
@@ -179,6 +182,7 @@ alert.present();
   
    calculateRoute(positionOr,positionDest){
     //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
+    //calculate route between markers
 
     this.bounds.extend(this.myLatLng);
 
@@ -224,7 +228,7 @@ updateSearchResultsMyPos(){
       }
   });
 }
-  ////autocomplete of my destination
+  ////autocomplete of my destination Searchbar
   updateSearchResultsMyDest(){
     if (this.autocompleteMyDest.input == '') {
       this.autocompleteItems2 = [];
@@ -335,6 +339,7 @@ clearMarkers(){
   }
   
  dragMarkerDest(marker,inputName){
+   //allow destination marker to be draged and calculate route with the new position
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
@@ -342,10 +347,13 @@ clearMarkers(){
    
     this.map.setCenter(latLng);
     this.geocodeLatLng(latLng,inputName)
+    
    this.calculateRoute(this.markerGeolocation.position,latLng);
 })
 }
 dragMarkerOr(marker,inputName){
+     //allow origin marker to be draged and calculate route with the new position
+
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
@@ -380,47 +388,39 @@ geocodeLatLng(latLng,inputName) {
 }
 
 
-
+  
 
   listride(){
+    //verify if driver has uploaded documents
   if(this.userInfo.documents){
     if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
       try {
         this.orFirebase=[this.autocompleteMyPos.input]
         this.desFirebase=[this.autocompleteMyDest.input]   
         console.log(this.orFirebase);
-      if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
+        //verify if driver has completed the origin and destination information
+      if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){        
             this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
-            this.clearMarkers();
-            
+            this.clearMarkers();            
             this.directionsDisplay.setDirections({routes: []});
             this.loadMap();
            } else {
             this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
           //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-   
             this.geoInfo1 = this.myLatLng;
-            console.log(this.geoInfo1);
-  
-  
             this.geoInfo2 = {
               lat: this.myLatLngDest.lat(),
               lng: this.myLatLngDest.lng()
-            }
-  
-            
-           
-            this.confirmPrice(this.geoInfo1, this.geoInfo2);
-                  
-          }
-        
+            }         
+            this.confirmPrice(this.geoInfo1, this.geoInfo2);                  
+          }        
          }
          
       catch(error) {
+        
         console.log(error)
         this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
-        }
-  
+        }  
         console.log(this.orFirebase);
     }else{
       let alert = this.alertCtrl.create({
@@ -469,8 +469,8 @@ geocodeLatLng(latLng,inputName) {
     alert.present();
   }
 
-    }
-
+}
+///////////////////////////////////////////////////
     presentAlert(title,text,button) {
       let alert = this.alertCtrl.create({
         title: title,
@@ -480,7 +480,9 @@ geocodeLatLng(latLng,inputName) {
       alert.present();
     }
 
-  
+  goToMyReserves(){
+    this.navCtrl.push('ReservetripPage');
+  }
    confirmPrice(geoInfo1, geoInfo2){
       let modal = this.modalCtrl.create('ConfirmpricePage', {geoInfo1, geoInfo2});
       modal.onDidDismiss(accepted => {
@@ -500,3 +502,4 @@ geocodeLatLng(latLng,inputName) {
     toast.present();
   }
   }  
+  
