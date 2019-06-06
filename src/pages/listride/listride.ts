@@ -61,44 +61,46 @@ export class ListridePage{
 			this.userDriver = userDriver;  
     });
         
-    this.subscribe = this.geofireService.getMyReserves(this.driver)
-    .subscribe(reserve=>{
-      this.usersFindingTrip = reserve;
-      console.log(this.usersFindingTrip);
-    }) 
+    // this.subscribe = this.geofireService.getMyReserves(this.driver)
+    // .subscribe(reserve=>{
+    //   this.usersFindingTrip = reserve;
+    //   console.log(this.usersFindingTrip);
+    // }) 
    
   }
 
-    ionViewDidEnter(){
-     // reserves delete itself after the startHour passes, TODO: dont eliminate if there are passengers in reserve
-     // TODO: fix this because reserve must eliminate itself within a timeframe, not static times (currenthour / starthour)
-      this.usersFindingTrip.forEach(reserveInd => {
-          this.reserveInd = reserveInd;
-          var startTime = reserveInd.startHour.split(':');
-          var currentTime = reserveInd.currentHour.split(':');
-          var hours = startTime[0] - currentTime[0]
-          var minutes = startTime[1] - currentTime[1]
-          var hoursInMilliSeconds = hours*3600000
-          var minutesInMilliseconds = minutes*60000
-          this.timeToWait = hoursInMilliSeconds + minutesInMilliseconds; 
-          console.log(this.timeToWait);
-          setTimeout(()=>{
-            this.sendUsersService.removeReserve(this.driver, reserveInd.keyTrip);
-            //cancel specific geofire of reserve
-            // TODO: geofire's reserve is not cancelling
+  // PASAR A RESERVETRIP
 
-            if(reserveInd.type == 'origin'){
-              console.log(reserveInd.geofireKey);
-              this.geoFireService.cancelGeoqueryOr(reserveInd.geofireKey);
-            }else if(reserveInd.type == 'destination'){
-              console.log(reserveInd.geofireKey);
-              this.geoFireService.cancelGeoqueryDest(reserveInd.geofireKey);
-            }
-          }, this.timeToWait) 
-        });
-    }
+    // ionViewDidEnter(){
+    //  // reserves delete itself after the startHour passes, TODO: dont eliminate if there are passengers in reserve
+    //  // TODO: fix this because reserve must eliminate itself within a timeframe, not static times (currenthour / starthour)
+    //   this.usersFindingTrip.forEach(reserveInd => {
+    //       this.reserveInd = reserveInd;
+    //       var startTime = reserveInd.startHour.split(':');
+    //       var currentTime = reserveInd.currentHour.split(':');
+    //       var hours = startTime[0] - currentTime[0]
+    //       var minutes = startTime[1] - currentTime[1]
+    //       var hoursInMilliSeconds = hours*3600000
+    //       var minutesInMilliseconds = minutes*60000
+    //       this.timeToWait = hoursInMilliSeconds + minutesInMilliseconds; 
+    //       console.log(this.timeToWait);
+    //       setTimeout(()=>{
+    //         this.sendUsersService.removeReserve(this.driver, reserveInd.keyTrip);
+    //         //cancel specific geofire of reserve
+    //         // TODO: geofire's reserve is not cancelling
+
+    //         if(reserveInd.type == 'origin'){
+    //           console.log(reserveInd.geofireKey);
+    //           this.geoFireService.cancelGeoqueryOr(reserveInd.geofireKey);
+    //         }else if(reserveInd.type == 'destination'){
+    //           console.log(reserveInd.geofireKey);
+    //           this.geoFireService.cancelGeoqueryDest(reserveInd.geofireKey);
+    //         }
+    //       }, this.timeToWait) 
+    //     });
+    // }
  
-
+////////////////////////////////////
   
   deleteUser(reserveKey,nameUser){
   
