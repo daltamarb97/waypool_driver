@@ -103,12 +103,8 @@ export class ConfirmpricePage {
      this.driverInfoNote.currentHour = this.driver2.trips.nowHour
      this.driverInfoNote.startHour = this.driver2.trips.hour
      this.driverInfoNote.note = this.driver2.trips.note
-     this.driverInfoNote.keyReserve = this.driver2.keyLastReserve
-
-  
-})
-
-    
+     this.driverInfoNote.keyReserve = this.driver2.keyLastReserve  
+    })    
     this.geocoder = new google.maps.Geocoder;
   }
 
@@ -138,11 +134,11 @@ export class ConfirmpricePage {
       if(this.driver.geofireOrigin === true){
         this.typeOfReserve = 'origin';
         this.note = 'No hay nota.'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve,this.driverInfo);
       }else{
         this.typeOfReserve = 'destination'
         this.note = 'No hay nota.'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve,this.driverInfo);
       }
     // geocoding of addresses that came from findRide
    this.destination = this.driverInfo.destination[0][0];
@@ -198,10 +194,10 @@ export class ConfirmpricePage {
         setTimeout(()=>{
           if(this.driver.geofireOrigin === true){
             this.typeOfReserve = 'origin';
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve);
+            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve,this.driverInfoNote);
           }else{
             this.typeOfReserve = 'destination'
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve);
+            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve,this.driverInfoNote);
           }
         }, 2000)
         
@@ -245,13 +241,13 @@ export class ConfirmpricePage {
 }
       
 }; 
-    addReserve(){
+    addReserve(){ 
       if(this.driver.geofireOrigin === true){
-        this.typeOfReserve = 'origin';
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+         this.typeOfReserve = 'origin';
+       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve,this.driverInfo);
       }else{
         this.typeOfReserve = 'destination'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
+       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve,this.driverInfo);
       }
      
     }

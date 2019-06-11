@@ -78,6 +78,13 @@ export class TripsService {
           // erase keyTrip in driver's node
           this.afDB.database.ref('drivers/' + driverUid +'/keyTrip').remove();
         }
+        public saveTripOnRecords(driverUid,trip){
+          //save trip in recordTrips
+          
+        this.afDB.database.ref('/drivers/'+driverUid+'/recordTrips/').push(trip);
+   
+       }
+  
  }
 
      

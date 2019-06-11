@@ -136,7 +136,7 @@ constructor(public afDB: AngularFireDatabase){
 
     }
 
-    public addReserve(driverId, car, dest, or, note, price, currentHour, startHour, geofireKey, type){
+    public addReserve(driverId, car, dest, or, note, price, currentHour, startHour, geofireKey, type,driver){
         this.afDB.database.ref('/reserves/'+ driverId).push({
             car:car,
             destination:dest,
@@ -146,7 +146,8 @@ constructor(public afDB: AngularFireDatabase){
             currentHour:currentHour,
             startHour:startHour,
             geofireKey: geofireKey,
-            type: type
+            type: type,
+            driver:driver
 
         }).then((snap)=>{
             const key = snap.key;

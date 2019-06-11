@@ -32,19 +32,23 @@ driverUid=this.AngularFireAuth.auth.currentUser.uid;
 
 userInfo;
 userDriver:any;
-onTrip:boolean;
+onTrip:boolean = false;
 unsubscribe:any;
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
-   
+   console.log(this.onTrip)
    //get driver information to get the keyTrip
     this.SignUpService.getMyInfoDriver(this.driverUid)    
 		.subscribe(userDriver => {
       this.userDriver = userDriver;
       if(this.userDriver.keyTrip === null){
         //do nothing
+        console.log("que dijiste corone")
+        console.log(this.userDriver.keyTrip)
+
+
       } else {
         this.getTrip(this.userDriver.keyTrip,this.userDriver.userId); //get keyTrip  
-    
+        
         // corregir esta vuelta, no debiera estar ontrip true
       }
 
@@ -58,7 +62,8 @@ unsubscribe:any;
     .subscribe( trip => {
       
       this.trip = trip;
-      
+      this.onTrip=true;
+
       console.log(this.trip);
       //after getting trip from node, get pending and pickedUp arrays
       this.getPendingAndPickedUpUsers(keyTrip,driverUid)
@@ -79,7 +84,6 @@ unsubscribe:any;
       this.pickedUpUsers = user;
       console.log(this.pickedUpUsers);      
     });
-    this.onTrip=true;
   }
 
 callUser(number){
@@ -119,19 +123,8 @@ this.callNumber.callNumber(number, true)
             { 
               text: 'Si',
               handler: () => {
-              this.geofireServices.getInfoUser(this.pickedUpUsers[0].userId).takeUntil(this.unsubscribe)
-              .subscribe(user=>{
-                  this.userInfo = user;
-                  console.log(this.userInfo)
-                  if(this.userInfo.geofireOr == true){
-                    //juandavid
-                    this.geofireServices.deleteUserGeofireOr(this.userInfo.userId);
-                    // this.geofireServices.cancelGeoqueryOr()
-                  }else if (this.userInfo.geofireDest == true){
-                    this.geofireServices.deleteUserGeofireDest(this.userInfo.userId);
-                    // this.geofireServices.cancelGeoqueryDest()
-                  }
-                })
+             
+                 
                   moment.locale('es'); //to make the date be in spanish  
                
                   // this.geofireServices.cancelGeoqueryOr()
@@ -140,16 +133,17 @@ this.callNumber.callNumber(number, true)
 
 
                  let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
+
                  this.TripsService.timeFinishedTrip(this.userDriver.keyTrip,this.driverUid,today)
                  this.TripsService.endTrip(this.userDriver.keyTrip,this.driverUid);
                  this.TripsService.eraseKeyTrip(this.driverUid);
                  this.TripsService.setOnTripFalse(this.driverUid);
-               
-
+                  this.TripsService.saveTripOnRecords(this.driverUid,this.trip);
+                  this.onTrip=false;
                 }
             }
           ]
-        });
+          })
         alert.present();
         
         
@@ -214,8 +208,8 @@ this.callNumber.callNumber(number, true)
       toast.present();
     }
 
-    ionViewDidLeave(){
-      this.unsubscribe.next();
-      this.unsubscribe.complete();
-    }
+    // ionViewDidLeave(){
+    //   this.unsubscribe.next();
+    //   this.unsubscribe.complete();
+    // }
 }
