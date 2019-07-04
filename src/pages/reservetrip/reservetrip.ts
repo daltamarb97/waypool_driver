@@ -35,6 +35,8 @@ export class ReservetripPage{
   userDriver;
   tripsReserves:any =[];
 
+  userInReserveInfo:any;
+
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     
@@ -136,6 +138,9 @@ export class ReservetripPage{
   alert.present();
   
  }
+
+
+
   seePassengers(tripKeyTrip){
        
         
@@ -144,6 +149,34 @@ export class ReservetripPage{
     // this.usersFindingTrip.pop();
     
     // this.subscribe.unsubscribe();
+  }
+
+
+  cancelReserve(typeOfReserve, geofireKey, keyTrip){
+
+    //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
+    if(typeOfReserve == 'origin'){
+      this.geofireService.cancelGeoqueryOr(geofireKey);
+    }else if(typeOfReserve == 'destination'){
+      this.geofireService.cancelGeoqueryDest(geofireKey);
+    }
+
+    this.afDB.database.ref('/reserves/' + this.userUid + '/' + keyTrip).remove()
+  .then(()=>{
+    console.log('the reserve which key is '+ keyTrip + ' has been removed');
+    this.afDB.list('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).valueChanges()
+      .subscribe((userInRsv)=>{
+        userInRsv.forEach((user)=>{
+          this.userInReserveInfo = user;
+
+          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/availableReserves/' + keyTrip).remove();
+
+        })
+
+        this.afDB.database.ref('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).remove();
+      })
+  })
+
   }
   
   help(){

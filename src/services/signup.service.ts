@@ -47,13 +47,11 @@ export class SignUpService {
     public getMyInfoForProfile(userId){
         return this.afDB.object('drivers/'+ userId).valueChanges();
         }
+
+        
 public saveInfoProfilePhone(userUid,phone){
    //permite configurar la información del perfil
 this.afDB.database.ref('/drivers/'+ userUid).update({
-    phone:phone
-    });
-
-this.afDB.database.ref('/users/'+ userUid).update({
     phone:phone
     });
 }
@@ -63,19 +61,11 @@ public saveInfoProfileAbout(userUid,about){
  this.afDB.database.ref('/drivers/'+ userUid).update({
      about:about 
      });
-
-this.afDB.database.ref('/users/'+ userUid).update({
-     about:about
-     });
  }
 
  public saveInfoProfileUrl(userUid,url){
     //permite configurar la información del perfil
  this.afDB.database.ref('/drivers/'+ userUid).update({
-     url:url
-     });
-
- this.afDB.database.ref('/users/'+ userUid).update({
      url:url
      });
  }

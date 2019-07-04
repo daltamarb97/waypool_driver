@@ -215,7 +215,7 @@ this.callNumber.callNumber(number, true)
     }
 
     ionViewDidLeave(){
-      this.unsubscribe.next();
-      this.unsubscribe.complete();
+      // this.unsubscribe.next();
+      // this.unsubscribe.complete();
     }
 }

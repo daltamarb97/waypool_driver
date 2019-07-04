@@ -18,7 +18,7 @@ myprofile: string = "about";
 name:string;
 lastname:string;
 phone:string;
-email:string;
+emailComplete:string;
 about:string;
 url:any;
 userForDelete = this.AngularFireAuth.auth.currentUser;
@@ -135,7 +135,7 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
     this.lastname = user.lastname;
     this.url = user.url;
     this.about = user.about;
-    this.email = user.email;
+    this.emailComplete = user.email+user.fixedemail;
   }
 
   changePassword(){

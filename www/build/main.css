@@ -27966,6 +27966,354 @@ page-profile .about.info ion-icon.check {
   top: 0;
 }
 
+page-public-profile ion-item {
+  padding-bottom: 1.3rem !important;
+  padding-top: 2.3rem !important;
+  padding-left: 2rem !important;
+  padding-right: .5rem !important;
+  margin-bottom: 0px !important;
+}
+
+page-public-profile ion-item ion-avatar {
+  min-width: 80px !important;
+  min-height: 80px !important;
+}
+
+page-public-profile ion-item ion-avatar img {
+  min-width: 80px !important;
+  min-height: 80px !important;
+}
+
+page-public-profile ion-item .item-inner {
+  border-bottom: none !important;
+}
+
+page-public-profile ion-item .name {
+  width: calc(100% - 95px);
+  display: inline-block;
+}
+
+page-public-profile ion-item .name h1 {
+  font-size: 2.10rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+page-public-profile ion-item .name h1 ion-icon {
+  font-size: 1rem;
+}
+
+page-public-profile ion-item .image {
+  margin-left: 130px;
+}
+
+page-public-profile ion-item .more {
+  width: 80px;
+  display: inline-block;
+  text-align: right;
+}
+
+page-public-profile ion-item .more h2 {
+  font-size: 1.1rem;
+  color: #ffca28;
+  margin-bottom: 6px;
+}
+
+page-public-profile ion-item .more p {
+  font-size: 1rem;
+  color: #bfbfbf !important;
+  font-weight: 500;
+}
+
+page-public-profile ion-item p {
+  font-size: 1.1rem !important;
+  color: #0fc874 !important;
+  font-weight: 500;
+}
+
+page-public-profile .tabs {
+  padding-left: 25px;
+  padding-right: 25px;
+  -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  position: relative;
+}
+
+page-public-profile ion-segment-button {
+  color: #777 !important;
+}
+
+page-public-profile ion-segment-button.segment-button {
+  font-size: 1.5rem !important;
+}
+
+page-public-profile ion-segment-button.segment-button.segment-activated {
+  border-color: #0fc874 !important;
+  color: #0fc874 !important;
+}
+
+page-public-profile .card {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+page-public-profile ion-card-content {
+  padding: 15px 30px !important;
+  position: relative;
+}
+
+page-public-profile ion-card-content .detail-text {
+  font-size: 1rem;
+  color: #bfbfbf;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+page-public-profile ion-card-content .detail-text h2 {
+  color: #0fc874;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+page-public-profile ion-card-content .status {
+  display: block;
+  width: 26px;
+  height: 100px;
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+}
+
+page-public-profile ion-card-content .status img {
+  width: 100%;
+}
+
+page-public-profile .review.card {
+  margin: 0;
+  width: 100%;
+  border-bottom: 1px solid #dedede;
+  border-radius: 0;
+}
+
+page-public-profile .review.card .card-content {
+  padding-top: 0 !important;
+}
+
+page-public-profile .review.card .detail p {
+  font-size: 1.1rem;
+  padding-left: 45px;
+}
+
+page-public-profile .review.card ion-avatar {
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+page-public-profile .review.card ion-avatar img {
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+page-public-profile .review .item {
+  margin-bottom: 0;
+  padding-bottom: 5px !important;
+  padding-top: 10px !important;
+}
+
+page-public-profile .review .item ion-avatar {
+  position: relative;
+}
+
+page-public-profile .review .item .item-inner {
+  border: none !important;
+}
+
+page-public-profile .review .item .item-inner h2 {
+  margin: 2px 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+page-public-profile .review .item .item-inner p {
+  color: #4c4c4c;
+  font-size: 1.3rem;
+}
+
+page-public-profile .review .item .item-inner p ion-icon {
+  color: #bfbfbf;
+  font-size: 1.2rem;
+  margin-right: 1px;
+}
+
+page-public-profile .review .item .item-inner p ion-icon.text-yellow {
+  color: #ffca28;
+}
+
+page-public-profile .review .item .item-inner ion-note {
+  margin-top: -10px;
+  font-size: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+page-public-profile .rating-box {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+page-public-profile .rating-box p {
+  font-size: 1.1rem;
+}
+
+page-public-profile .rating-box ion-icon {
+  color: #ffd800;
+  position: relative;
+  top: 1px;
+  margin-right: 1rem;
+  float: right;
+}
+
+page-public-profile .rating-box span.text-1 {
+  display: inline-block;
+  width: 35px;
+}
+
+page-public-profile .rating-box span.text-2 {
+  display: inline-block;
+  width: 35px;
+  text-align: right;
+}
+
+page-public-profile .rating-box span.rate-bar {
+  width: calc(100% - 77px);
+  display: inline-block;
+  position: relative;
+  height: 8px;
+  background: #eee;
+}
+
+page-public-profile .rating-box span.rate-bar span {
+  min-width: 1px;
+  display: block;
+  height: 8px;
+}
+
+page-public-profile .form-list .item-input:last-child {
+  border: none;
+}
+
+page-public-profile .form-list .item {
+  padding-bottom: 0rem !important;
+  padding-top: 1rem !important;
+  padding-left: 2rem !important;
+  padding-right: .5rem !important;
+  margin-bottom: 0px !important;
+}
+
+page-public-profile .form-list .item.item-input-has-value .label {
+  font-size: 1.3rem;
+  margin-top: 8px;
+  margin-bottom: -4px;
+}
+
+page-public-profile .about {
+  margin-bottom: 5px;
+  padding: 10px 20px;
+}
+
+page-public-profile .about .heading {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+page-public-profile .about .ride-detail {
+  position: relative;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+page-public-profile .about .ride-detail .label {
+  font-size: 1.1rem;
+}
+
+page-public-profile .about .ride-detail p {
+  font-size: 1.25rem;
+  padding-left: 3rem;
+  position: relative;
+  color: #a7a7a7;
+  font-weight: 300;
+}
+
+page-public-profile .about .ride-detail p small {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  display: block;
+  margin-bottom: 5px;
+}
+
+page-public-profile .about .ride-detail p .icon-location {
+  position: absolute;
+  left: 0px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  bottom: 0;
+}
+
+page-public-profile .about .ride-detail::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 63px;
+  background: #555;
+  position: absolute;
+  left: 4px;
+  top: 12px;
+}
+
+page-public-profile .about.info .item {
+  padding: 0 !important;
+}
+
+page-public-profile .about.info .item .text-input {
+  font-size: 1.2rem;
+}
+
+page-public-profile .about.info .col {
+  padding: 0;
+  display: block;
+}
+
+page-public-profile .about.info .col .select {
+  font-size: 1.2rem;
+  padding-right: 25px;
+}
+
+page-public-profile .about.info ion-icon.check {
+  position: absolute;
+  z-index: 11;
+  top: 0;
+}
+
+page-public-profile .textBox {
+  margin-top: 5px;
+}
+
 page-ratetrip .love {
   display: -webkit-box;
   display: -webkit-flex;

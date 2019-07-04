@@ -17,6 +17,7 @@ import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
 import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
+import { sendUsersService } from '../../services/sendUsers.service';
 
 
 
@@ -72,13 +73,18 @@ export class FindridePage {
   driverInfo:any = {};
   geoInfo1:any = {};
   geoInfo2:any = {};
-  // hits = new BehaviorSubject([])
   markerGeolocation:any;
   markerDest:any;
 
+  //variables for geofire reserves
+  reserves= [];
+  geocoordinatesOr:any;
+  geocoordinatesDest:any;
 
   locationUniversity:any ={};
-  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App) {
+
+  doGeoquery:boolean;
+  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -121,8 +127,47 @@ export class FindridePage {
   
       }
     })
-    this.loadMap();
 
+    this.doGeoquery = true;
+    if(this.doGeoquery === true){
+      //here I will try to make the geofire lasts until it is deleted 
+    this.sendUsersService.getTripsOfReserves(this.user).subscribe(reserves=>{
+      this.reserves = reserves;
+
+      console.log(this.reserves);
+
+      this.reserves.forEach(reserve=>{
+        if(reserve.type === 'origin'){
+        this.geocoder.geocode({'address': reserve.origin[0][0]}, (results, status)=>{
+          if(status==='OK'){
+            this.geocoordinatesOr={
+              lat:results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
+          }
+           // turn geofire On
+              this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
+              console.log('executed geoquery Or in constructor findride')
+      })
+        }else if(reserve.type === 'destination'){
+            // geocoding of addresses that came from findRide
+        this.geocoder.geocode({'address': reserve.destination[0][0]}, (results, status)=>{
+          if(status==='OK'){
+            this.geocoordinatesDest={
+              lat:results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
+          }
+           // turn geofire On
+              this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
+              console.log('executed geoquery Dest in constructor findride')
+      })
+        }
+      })
+    })
+    }
+
+    this.loadMap();
   }
  
   loadMap(){
@@ -511,6 +556,7 @@ geocodeLatLng(latLng,inputName) {
    
   
    confirmPrice(geoInfo1, geoInfo2){
+     this.doGeoquery = false;
       let modal = this.modalCtrl.create('ConfirmpricePage', {geoInfo1, geoInfo2});
       modal.onDidDismiss(accepted => {
         if(accepted){

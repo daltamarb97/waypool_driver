@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage, AlertController} from 'ionic-angular';
+import { NavController, ViewController, ModalController, NavParams, ToastController, IonicPage, AlertController, App} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
@@ -24,15 +24,14 @@ export class ConfirmreservationPage {
 
 	reserveKey:any;
 	reserve:any;
-  userDriver:any ;
-  
-  userDriverUid=this.AngularFireAuth.auth.currentUser.uid
-  accepted: any;
-  infoUser:any = {};
-  unsubscribe = new Subject;
+  	userDriver:any ;
+  	userDriverUid=this.AngularFireAuth.auth.currentUser.uid
+	accepted: boolean;
+	infoUser:any = {};
+	unsubscribe = new Subject;
 	reserves:any = [];
 	passengers: any =[];
-  constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController ) {
+  constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController, public app: App ) {
 	
       this.reserveKey= this.navParams.get('reserveKey') 
 
@@ -49,9 +48,13 @@ export class ConfirmreservationPage {
 
 		deleteUser(userId) {
 		this.sendCoordsService.eraseUser(userId,this.userDriverUid,this.reserveKey );
+ 		}
 
-
- }
+		 showProfilePassegner(passenger){
+			this.app.getRootNav().push('PublicProfilePage', {passenger: passenger});
+			this.accepted = true;
+			this.dismiss();
+ 		}
   
 
 	dismiss() {

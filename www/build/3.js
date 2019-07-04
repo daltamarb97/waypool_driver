@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 607:
+/***/ 608:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmpricePageModule", function() { return ConfirmpricePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(761);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmprice__ = __webpack_require__(763);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var ConfirmpricePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 612:
+/***/ 613:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55,7 +55,7 @@ __export(__webpack_require__(31));
 
 /***/ }),
 
-/***/ 761:
+/***/ 763:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64,11 +64,11 @@ __export(__webpack_require__(31));
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(612);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(613);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendCoords_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendUsers_service__ = __webpack_require__(330);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_price_service__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_geofire_services__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs__ = __webpack_require__(16);
@@ -141,6 +141,7 @@ var ConfirmpricePage = /** @class */ (function () {
             _this.driverInfo.startHour = _this.driver.trips.hour;
             _this.driverInfo.note = 'No hay nota.';
             _this.driverInfo.keyReserve = _this.driver.keyLastReserve;
+            console.log('got info here');
         });
         this.SignUpService.getMyInfo(this.userDriverUid).subscribe(function (driver) {
             _this.driver2 = driver;
@@ -178,57 +179,79 @@ var ConfirmpricePage = /** @class */ (function () {
             this.accepted = true;
             this.dismiss();
             this.goefireKey = Date.now();
-            console.log(this.goefireKey);
             if (this.driver.geofireOrigin === true) {
                 this.typeOfReserve = 'origin';
                 this.note = 'No hay nota.';
-                this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+                // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
+                this.afDB.database.ref('/reserves/' + this.userDriverUid).push({
+                    driver: this.driver,
+                    car: this.car,
+                    destination: this.driverInfo.destination,
+                    origin: this.driverInfo.origin,
+                    note: this.note,
+                    price: this.precio,
+                    currentHour: this.hourToSend,
+                    startHour: this.hour,
+                    geofireKey: this.goefireKey,
+                    type: this.typeOfReserve
+                }).then(function (snap) {
+                    _this.destination = _this.driverInfo.destination[0][0];
+                    _this.origin = _this.driverInfo.origin[0][0];
+                    var key = snap.key;
+                    // geocoding of addresses that came from findRide
+                    _this.geocoder.geocode({ 'address': _this.origin }, function (results, status) {
+                        if (status === 'OK') {
+                            _this.geocoordinatesOr = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng()
+                            };
+                        }
+                        // turn geofire On
+                        _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfo.userId, key);
+                        console.log('executed geofire Or');
+                    });
+                    _this.afDB.database.ref('/reserves/' + _this.userDriverUid + '/' + key).update({
+                        keyTrip: key
+                    });
+                });
             }
             else {
                 this.typeOfReserve = 'destination';
                 this.note = 'No hay nota.';
-                this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
+                this.afDB.database.ref('/reserves/' + this.userDriverUid).push({
+                    driver: this.driver,
+                    car: this.car,
+                    destination: this.driverInfo.destination,
+                    origin: this.driverInfo.origin,
+                    note: this.note,
+                    price: this.precio,
+                    currentHour: this.hourToSend,
+                    startHour: this.hour,
+                    geofireKey: this.goefireKey,
+                    type: this.typeOfReserve
+                }).then(function (snap) {
+                    _this.destination = _this.driverInfo.destination[0][0];
+                    _this.origin = _this.driverInfo.origin[0][0];
+                    var key = snap.key;
+                    // geocoding of addresses that came from findRide
+                    _this.geocoder.geocode({ 'address': _this.destination }, function (results, status) {
+                        if (status === 'OK') {
+                            _this.geocoordinatesDest = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng()
+                            };
+                        }
+                        // turn geofire On
+                        _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfo.userId, key);
+                        console.log('executed geofire Dest');
+                    });
+                    _this.afDB.database.ref('/reserves/' + _this.userDriverUid + '/' + key).update({
+                        keyTrip: key
+                    });
+                });
             }
-            // geocoding of addresses that came from findRide
-            this.destination = this.driverInfo.destination[0][0];
-            this.origin = this.driverInfo.origin[0][0];
-            this.geocoder.geocode({ 'address': this.destination }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesDest = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (!_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfo.userId, _this.driverInfo.keyReserve);
-                    console.log('executed geofire Dest');
-                }
-                else {
-                    console.log('not destination');
-                }
-            });
-            this.geocoder.geocode({ 'address': this.origin }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesOr = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfo.userId, _this.driverInfo.keyReserve);
-                    console.log('executed geofire Or');
-                }
-                else {
-                    console.log('not origin');
-                }
-            });
         }
         else {
-            console.log(this.driverInfoNote.car);
             this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
             this.PriceService.setPriceAndNote(this.userDriverUid, this.precio, this.note, this.car, this.hour, this.hourToSend);
             this.accepted = true;
@@ -236,66 +259,77 @@ var ConfirmpricePage = /** @class */ (function () {
             this.goefireKey = Date.now();
             console.log(this.goefireKey);
             // add reserve and command to dismiss modal
-            // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
-            setTimeout(function () {
-                if (_this.driver.geofireOrigin === true) {
-                    _this.typeOfReserve = 'origin';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-                else {
-                    _this.typeOfReserve = 'destination';
-                    _this.sendCoordsService.addReserve(_this.userDriverUid, _this.driverInfoNote.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.driverInfoNote.note, _this.driverInfoNote.price, _this.driverInfoNote.currentHour, _this.driverInfoNote.startHour, _this.goefireKey, _this.typeOfReserve);
-                }
-            }, 2000);
-            // geocoding of addresses that came from findRide
-            this.destinationNote = this.driverInfoNote.destination[0][0];
-            this.originNote = this.driverInfoNote.origin[0][0];
-            this.geocoder.geocode({ 'address': this.destinationNote }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesDest = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                if (!_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.userId, _this.driverInfoNote.keyReserve);
-                    console.log('executed geofire Dest');
-                }
-                else {
-                    console.log('not destination');
-                }
-            });
-            this.geocoder.geocode({ 'address': this.originNote }, function (results, status) {
-                if (status === 'OK') {
-                    _this.geocoordinatesOr = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    };
-                }
-                // turn geofire On
-                if (_this.driver.geofireOrigin === true) {
-                    console.log(_this.goefireKey);
-                    _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfoNote.userId, _this.driverInfoNote.keyReserve);
-                    console.log('executed geofire Or');
-                }
-                else {
-                    console.log('not origin');
-                }
-            });
+            if (this.driver.geofireOrigin === true) {
+                this.typeOfReserve = 'origin';
+                this.afDB.database.ref('/reserves/' + this.userDriverUid).push({
+                    driver: this.driver2,
+                    car: this.car,
+                    destination: this.driverInfoNote.destination,
+                    origin: this.driverInfoNote.origin,
+                    note: this.note,
+                    price: this.precio,
+                    currentHour: this.hourToSend,
+                    startHour: this.hour,
+                    geofireKey: this.goefireKey,
+                    type: this.typeOfReserve
+                }).then(function (snap) {
+                    _this.destinationNote = _this.driverInfoNote.destination[0][0];
+                    _this.originNote = _this.driverInfoNote.origin[0][0];
+                    var key = snap.key;
+                    // geocoding of addresses that came from findRide
+                    _this.geocoder.geocode({ 'address': _this.originNote }, function (results, status) {
+                        if (status === 'OK') {
+                            _this.geocoordinatesOr = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng()
+                            };
+                        }
+                        // turn geofire On
+                        _this.geofireService.setGeofireOr(2, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng, _this.goefireKey, _this.driverInfoNote.userId, key);
+                        console.log('executed geofire Or');
+                    });
+                    _this.afDB.database.ref('/reserves/' + _this.userDriverUid + '/' + key).update({
+                        keyTrip: key
+                    });
+                });
+            }
+            else {
+                this.typeOfReserve = 'destination';
+                this.afDB.database.ref('/reserves/' + this.userDriverUid).push({
+                    driver: this.driver2,
+                    car: this.car,
+                    destination: this.driverInfoNote.destination,
+                    origin: this.driverInfoNote.origin,
+                    note: this.note,
+                    price: this.precio,
+                    currentHour: this.hourToSend,
+                    startHour: this.hour,
+                    geofireKey: this.goefireKey,
+                    type: this.typeOfReserve
+                }).then(function (snap) {
+                    _this.destinationNote = _this.driverInfoNote.destination[0][0];
+                    _this.originNote = _this.driverInfoNote.origin[0][0];
+                    var key = snap.key;
+                    // geocoding of addresses that came from findRide
+                    _this.geocoder.geocode({ 'address': _this.destinationNote }, function (results, status) {
+                        if (status === 'OK') {
+                            _this.geocoordinatesDest = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng()
+                            };
+                        }
+                        // turn geofire On
+                        _this.geofireService.setGeofireDest(2, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng, _this.goefireKey, _this.driverInfoNote.userId, key);
+                        console.log('executed geofire Dest');
+                    });
+                    _this.afDB.database.ref('/reserves/' + _this.userDriverUid + '/' + key).update({
+                        keyTrip: key
+                    });
+                });
+            }
         }
     };
     ;
-    ConfirmpricePage.prototype.addReserve = function () {
-        if (this.driver.geofireOrigin === true) {
-            this.typeOfReserve = 'origin';
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
-        }
-        else {
-            this.typeOfReserve = 'destination';
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
-        }
-    };
     ConfirmpricePage.prototype.dismiss = function () {
         this.viewCtrl.dismiss(this.accepted);
         // this.unsubscribe.next();

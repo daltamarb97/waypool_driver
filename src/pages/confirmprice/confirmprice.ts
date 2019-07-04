@@ -87,7 +87,9 @@ export class ConfirmpricePage {
       this.driverInfo.startHour = this.driver.trips.hour
       this.driverInfo.note = 'No hay nota.'
       this.driverInfo.keyReserve = this.driver.keyLastReserve
+      console.log('got info here');
  })
+ 
 
  this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
   this.driver2 = driver;
@@ -133,59 +135,90 @@ export class ConfirmpricePage {
         this.accepted = true;
         this.dismiss();
         this.goefireKey = Date.now();
-        console.log(this.goefireKey);
-      
+
+        
       if(this.driver.geofireOrigin === true){
         this.typeOfReserve = 'origin';
         this.note = 'No hay nota.'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
-      }else{
+
+      // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
+      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+        driver: this.driver,
+        car:this.car,
+        destination:this.driverInfo.destination,
+        origin:this.driverInfo.origin,
+        note:this.note,
+        price:this.precio,
+        currentHour:this.hourToSend,
+        startHour:this.hour,
+        geofireKey: this.goefireKey,
+        type: this.typeOfReserve
+
+    }).then((snap)=>{
+      this.destination = this.driverInfo.destination[0][0];
+      this.origin = this.driverInfo.origin[0][0];
+      const key = snap.key;
+       
+      // geocoding of addresses that came from findRide
+        this.geocoder.geocode({'address': this.origin}, (results, status)=>{
+          if(status==='OK'){
+            this.geocoordinatesOr={
+              lat:results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
+          }
+              // turn geofire On
+            this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
+            console.log('executed geofire Or')
+     })
+
+
+        this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+            keyTrip: key 
+        }) 
+    })
+    }else{
         this.typeOfReserve = 'destination'
         this.note = 'No hay nota.'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.car, this.driverInfo.destination, this.driverInfo.origin, this.note, this.precio, this.hour, this.hourToSend, this.goefireKey, this.typeOfReserve);
-      }
-    // geocoding of addresses that came from findRide
-   this.destination = this.driverInfo.destination[0][0];
-   this.origin = this.driverInfo.origin[0][0];
-   
-    this.geocoder.geocode({'address': this.destination}, (results, status)=>{
-      if(status==='OK'){
-        this.geocoordinatesDest={
-          lat:results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-      }
-      // turn geofire On
-      if(!this.driver.geofireOrigin === true){
-        console.log(this.goefireKey);
-      this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, this.driverInfo.keyReserve);
-      console.log('executed geofire Dest')
-      }else{
-        console.log('not destination');
-    }
+  
+        this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+          driver: this.driver,
+        car:this.car,
+        destination:this.driverInfo.destination,
+        origin:this.driverInfo.origin,
+        note:this.note,
+        price:this.precio,
+        currentHour:this.hourToSend,
+        startHour:this.hour,
+        geofireKey: this.goefireKey,
+        type: this.typeOfReserve
 
+    }).then((snap)=>{
+      this.destination = this.driverInfo.destination[0][0];
+      this.origin = this.driverInfo.origin[0][0];
+      const key = snap.key;
+    
+      // geocoding of addresses that came from findRide
+      this.geocoder.geocode({'address': this.destination}, (results, status)=>{
+        if(status==='OK'){
+          this.geocoordinatesDest={
+            lat:results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          }
+        }
+        // turn geofire On
+          this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
+        console.log('executed geofire Dest')  
+    })
+
+    this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+      keyTrip: key 
   })
 
-    this.geocoder.geocode({'address': this.origin}, (results, status)=>{
-      if(status==='OK'){
-        this.geocoordinatesOr={
-          lat:results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-      }
-          // turn geofire On
-        if(this.driver.geofireOrigin === true){
-          console.log(this.goefireKey);
-        this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, this.driverInfo.keyReserve)
-        console.log('executed geofire Or')
-        }else{
-          console.log('not origin');
-      }
-
- })
+    })
+    }
     
       } else {
-        console.log(this.driverInfoNote.car);
         this.hourToSend = this.nowHour.getHours()+":"+this.nowHour.getMinutes();
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car, this.hour, this.hourToSend)
         this.accepted = true;
@@ -194,67 +227,84 @@ export class ConfirmpricePage {
         console.log(this.goefireKey);
 
      // add reserve and command to dismiss modal
-     // IMPORTANT: the timeout is because the reserve settles too fast, so the price and note are not taken into account by the
-        setTimeout(()=>{
-          if(this.driver.geofireOrigin === true){
-            this.typeOfReserve = 'origin';
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve);
-          }else{
-            this.typeOfReserve = 'destination'
-            this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfoNote.car, this.driverInfoNote.destination, this.driverInfoNote.origin, this.driverInfoNote.note, this.driverInfoNote.price, this.driverInfoNote.currentHour, this.driverInfoNote.startHour, this.goefireKey, this.typeOfReserve);
+        
+     if(this.driver.geofireOrigin === true){
+      this.typeOfReserve = 'origin';
+
+      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+        driver: this.driver2,
+        car:this.car,
+        destination:this.driverInfoNote.destination,
+        origin:this.driverInfoNote.origin,
+        note: this.note,
+        price:this.precio,
+        currentHour:this.hourToSend,
+        startHour:this.hour,
+        geofireKey: this.goefireKey,
+        type: this.typeOfReserve
+      }).then((snap)=>{
+        this.destinationNote = this.driverInfoNote.destination[0][0];
+        this.originNote = this.driverInfoNote.origin[0][0];
+        const key = snap.key;
+
+        // geocoding of addresses that came from findRide
+        this.geocoder.geocode({'address': this.originNote}, (results, status)=>{
+          if(status==='OK'){
+            this.geocoordinatesOr={
+              lat:results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
           }
-        }, 2000)
-        
-      // geocoding of addresses that came from findRide
-     this.destinationNote = this.driverInfoNote.destination[0][0];
-     this.originNote = this.driverInfoNote.origin[0][0];
+           // turn geofire On
+              this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              console.log('executed geofire Or')
+      })
 
-    this.geocoder.geocode({'address': this.destinationNote}, (results, status)=>{
-      if(status==='OK'){
-        this.geocoordinatesDest={
-          lat:results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-      }
-      if(!this.driver.geofireOrigin === true){
-        console.log(this.goefireKey);
-        this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfoNote.userId, this.driverInfoNote.keyReserve)
-        console.log('executed geofire Dest')
-      }else{
-        console.log('not destination');
-      }
-    })
+      this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+        keyTrip: key 
+       })
+      })
+    }else{
+      this.typeOfReserve = 'destination';
 
-    this.geocoder.geocode({'address': this.originNote}, (results, status)=>{
-      if(status==='OK'){
-        this.geocoordinatesOr={
-          lat:results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-      }
-       // turn geofire On
-        if(this.driver.geofireOrigin === true){
-          console.log(this.goefireKey);
-          this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, this.driverInfoNote.keyReserve)
-          console.log('executed geofire Or')
-        }else{
-          console.log('not origin')
-        }
-  })
-        
+      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+        driver: this.driver2,
+        car:this.car,
+        destination:this.driverInfoNote.destination,
+        origin:this.driverInfoNote.origin,
+        note: this.note,
+        price:this.precio,
+        currentHour:this.hourToSend,
+        startHour:this.hour,
+        geofireKey: this.goefireKey,
+        type: this.typeOfReserve
+      }).then((snap)=>{
+        this.destinationNote = this.driverInfoNote.destination[0][0];
+        this.originNote = this.driverInfoNote.origin[0][0];
+        const key = snap.key;
+
+        // geocoding of addresses that came from findRide
+        this.geocoder.geocode({'address': this.destinationNote}, (results, status)=>{
+          if(status==='OK'){
+            this.geocoordinatesDest={
+              lat:results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
+          }
+           // turn geofire On
+              this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              console.log('executed geofire Dest')
+      })
+
+      this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+        keyTrip: key 
+       })
+      })
+    }
+          
 }
       
 }; 
-    addReserve(){
-      if(this.driver.geofireOrigin === true){
-        this.typeOfReserve = 'origin';
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
-      }else{
-        this.typeOfReserve = 'destination'
-       this.sendCoordsService.addReserve(this.userDriverUid, this.driverInfo.car, this.driverInfo.destination, this.driverInfo.origin, this.driverInfo.note, this.driverInfo.price, this.driverInfo.currentHour, this.driverInfo.startHour, this.goefireKey, this.typeOfReserve);
-      }
-     
-    }
         
   dismiss() {
     this.viewCtrl.dismiss(this.accepted);

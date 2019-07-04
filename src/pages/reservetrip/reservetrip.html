@@ -63,6 +63,9 @@
                             <ion-col center text-center col-4 text-right style="margin-left: auto;">
                                 <button class="btn bg-theme rounded full text-white" (click)="seePassengers(trip.keyTrip)">Ver pasajeros</button>
                             </ion-col>
+                            <ion-col center text-center col-4 text-right style="margin-left: auto;">
+                                    <button class="btn bg-red rounded full text-white" (click)="cancelReserve(trip.type, trip.geofireKey, trip.keyTrip)">cancelar reserva</button>
+                                </ion-col>
                         </ion-row>
                     </ion-card-content>
                

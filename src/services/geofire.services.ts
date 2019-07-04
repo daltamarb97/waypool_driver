@@ -53,11 +53,7 @@ setGeofireDest( radius:number, lat, lng, geofirename, driverId, keyReserve):void
 
   
   this.keyEnteredDest( driverId, keyReserve);
-  this.keyExitedDest();
-
-// if(this.geoquery2){
-//   this.geoquery2.cancel();
-// }
+  this.keyExitedDest(keyReserve);
 
 console.log('geoquery dest added');
 }
@@ -78,7 +74,7 @@ setGeofireOr( radius:number, lat, lng, geofirename, driverId, keyReserve):void{
   })
 
   this.keyEnteredOr( driverId, keyReserve);
-  this.keyExitedOr();
+  this.keyExitedOr(keyReserve);
 
   // if(this.geoquery1){
   //   this.geoquery1.cancel();
@@ -92,47 +88,49 @@ setGeofireOr( radius:number, lat, lng, geofirename, driverId, keyReserve):void{
 
 //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
 keyEnteredDest( driverId, keyReserve ){
-   this.geoquery1.on("key_entered", function(key){
+   this.geoquery1.on("key_entered", function(key, location, distance){
     console.log(key);
     setTimeout(()=>{
-      this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
+      this.afDB.database.ref('/users/' + key + '/availableReserves/' + keyReserve).update({
        driverId: driverId,
        keyReserve: keyReserve
-       
       })
-    }, 2000)
+      console.log('keyentered here');
+    }, 3000)
     
     
   }.bind(this))
 }
 
 
-keyExitedDest(){
+keyExitedDest(keyReserve){
   
   this.geoquery1.on("key_exited", function(key){
-    this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).remove()
+    this.afDB.database.ref('/users/' + key + '/availableReserves/' + keyReserve).remove()
   }.bind(this))
 }
 
 //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
 keyEnteredOr( driverId, keyReserve){
-  this.geoquery2.on("key_entered", function(key){
+  this.geoquery2.on("key_entered", function(key, location, distance){
    console.log(key);
-   setTimeout(()=>{
-     this.afDB.database.ref('/users/' + key + '/availableReserves/').push({
-      driverId: driverId,
-      keyReserve: keyReserve
-    
-     })
-   }, 2000)
-      
+   this.afDB.database.ref('/users/' + key + '/availableReserves/' + keyReserve).update({
+    driverId: driverId,
+    keyReserve: keyReserve
+   })
+
+   this.afDB.database.ref('/reservesInfoInCaseOfCancelling/'+ driverId + '/' + keyReserve).push({
+    userId: key
+
+  })
+       
  }.bind(this))
 }
 
-keyExitedOr(){
+keyExitedOr(keyReserve){
  
  this.geoquery2.on("key_exited", function(key){
-   this.afDB.database.ref('/users/' + key + '/trips/driversListRide/' + this.driverUid).remove()
+   this.afDB.database.ref('/users/' + key + '/availableReserves/' + keyReserve).remove()
  }.bind(this))
 }
 
@@ -194,7 +192,7 @@ cancelGeoqueryDest(geofirename){
   if(this.proofToCancelDest === geofirename){
     if(this.geoquery1){
       this.geoquery1.cancel()
-      console.log('geofireDest deleted');
+      console.log('geoqueryDest deleted');
     }else{
       console.log('dont dest query')
     }
@@ -205,13 +203,14 @@ cancelGeoqueryOr(geofirename){
   if(this.proofToCancelOr === geofirename){
     if(this.geoquery2){
       this.geoquery2.cancel()
-      console.log('geofireOr deleted');
+      console.log('geoqueryOr deleted');
   
     }else{
       console.log('dont or query')
     }
   }
 }
+
 
 // set a new node on firebase which is the location of the university
 setLocationUniversity( key, lat, lng){

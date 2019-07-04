@@ -136,8 +136,10 @@ constructor(public afDB: AngularFireDatabase){
 
     }
 
-    public addReserve(driverId, car, dest, or, note, price, currentHour, startHour, geofireKey, type){
+    public addReserve(driverId, name, lastname, car, dest, or, note, price, currentHour, startHour, geofireKey, type){
         this.afDB.database.ref('/reserves/'+ driverId).push({
+            name:name,
+            lastname:lastname,
             car:car,
             destination:dest,
             origin:or,
@@ -156,7 +158,7 @@ constructor(public afDB: AngularFireDatabase){
             this.afDB.database.ref('/drivers/' + driverId).update({
                 keyLastReserve: key
             })
-            console.log('reserve executed');
+            console.log(' keylastreserve');
         })
     }
 
