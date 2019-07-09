@@ -79,8 +79,16 @@
                 </ion-card> 
 
 
-                <button class="btn bg-theme text-white rounded" *ngIf="this.onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
-
+                <ion-row>
+                
+                    <ion-col class="detail-text">
+                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Cancelar Viaje</button>
+                    </ion-col>
+                    <ion-col class="detail-text">
+                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
+                    </ion-col>
+               
+                </ion-row>
         </ion-list>
        
 

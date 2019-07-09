@@ -8,15 +8,19 @@ import { elementClass } from "@angular/core/src/render3/instructions";
 export class TripsService {
     constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
     }
-            public getTrip(keyTrip,driverUid){
+      public getTrip(keyTrip,driverUid){
               //get trip in Trip's node
               return  this.afDB.object('/trips/'+driverUid+'/'+ keyTrip).valueChanges();
           } 
-          public getPendingUsers(keyTrip,driverUid){
+      public getPendingUsers(keyTrip,driverUid){
             //get trip in Trip's node
             return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers').valueChanges();
         } 
-        public getPickedUpUsers(keyTrip,driverUid){
+      public getLastMinuteUsers(keyTrip,driverUid){
+          //get trip in Trip's node
+          return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/lastMinuteUsers').valueChanges();
+      } 
+      public getPickedUpUsers(keyTrip,driverUid){
           //get trip in Trip's node
           return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pickedUpUsers').valueChanges();
       } 
@@ -27,7 +31,17 @@ export class TripsService {
               this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
                 onTrip:true
               });
-          }    
+          }   
+       public acceptLastMinute(driverUid,keyTrip,user){
+        this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+ user.userId).update(user);
+
+       }        
+      
+      public eliminateLastMinuteUser(driverUid,keyTrip,userId){  
+
+          //eliminate the user from pendingUsers
+            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/lastMinuteUsers/'+ userId).remove();
+      }
           public deleteReserve(keyTrip,driverUid){
             this.afDB.database.ref('/reserves/'+driverUid+'/'+ keyTrip).remove();
 
@@ -73,10 +87,26 @@ export class TripsService {
           // set false to onTrip instance in driver's node
           this.afDB.database.ref('/drivers/'+driverUid).update({
             onTrip:false
-          });        }
+          });  
+        }
+        public saveTripUser(driverUid,keyTrip){           
+          // this instance allows the user to save the trip in his records
+          this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
+            saveTrip:true
+          });  
+        }
         public eraseKeyTrip(driverUid){           
           // erase keyTrip in driver's node
           this.afDB.database.ref('drivers/' + driverUid +'/keyTrip').remove();
+        }
+        public cancelUserFromTrip(driverUid,keyTrip,userId){ 
+          // save user in cancelUsers array
+            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/cancelUsers/'+userId).update({
+              userId:userId
+            });            
+          //eliminate the user from pendingUsers
+          this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+userId).remove();  
+          
         }
         public saveTripOnRecords(driverUid,trip){
           //save trip in recordTrips
