@@ -86,7 +86,6 @@ export class ConfirmpricePage {
       this.driverInfo.currentHour = this.driver.trips.nowHour
       this.driverInfo.startHour = this.driver.trips.hour
       this.driverInfo.note = 'No hay nota.'
-      this.driverInfo.keyReserve = this.driver.keyLastReserve
       console.log('got info here');
  })
  
@@ -105,7 +104,6 @@ export class ConfirmpricePage {
      this.driverInfoNote.currentHour = this.driver2.trips.nowHour
      this.driverInfoNote.startHour = this.driver2.trips.hour
      this.driverInfoNote.note = this.driver2.trips.note
-     this.driverInfoNote.keyReserve = this.driver2.keyLastReserve
 
   
 })
@@ -143,7 +141,7 @@ export class ConfirmpricePage {
 
       // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
       this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
-        driver: this.driver,
+        driver: this.driverInfo,
         car:this.car,
         destination:this.driverInfo.destination,
         origin:this.driverInfo.origin,
@@ -182,7 +180,7 @@ export class ConfirmpricePage {
         this.note = 'No hay nota.'
   
         this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
-          driver: this.driver,
+          driver: this.driverInfo,
         car:this.car,
         destination:this.driverInfo.destination,
         origin:this.driverInfo.origin,
@@ -232,7 +230,7 @@ export class ConfirmpricePage {
       this.typeOfReserve = 'origin';
 
       this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
-        driver: this.driver2,
+        driver: this.driverInfoNote,
         car:this.car,
         destination:this.driverInfoNote.destination,
         origin:this.driverInfoNote.origin,
@@ -268,7 +266,7 @@ export class ConfirmpricePage {
       this.typeOfReserve = 'destination';
 
       this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
-        driver: this.driver2,
+        driver: this.driverInfoNote,
         car:this.car,
         destination:this.driverInfoNote.destination,
         origin:this.driverInfoNote.origin,
