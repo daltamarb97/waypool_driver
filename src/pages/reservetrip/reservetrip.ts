@@ -170,7 +170,7 @@ export class ReservetripPage{
           this.userInReserveInfo = user;
 
           this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/availableReserves/' + keyTrip).remove();
-
+          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/myReserves/' + keyTrip).remove();
         })
 
         this.afDB.database.ref('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).remove();
