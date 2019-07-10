@@ -130,10 +130,8 @@ export class ReservetripPage{
               console.log(trip)
                this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
                this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
-               this.TripsService.pushOnTripInDriver(this.userUid);
-              
-               //BORRAR RESERVA
-               // this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
+               this.TripsService.pushOnTripInDriver(this.userUid);              
+               this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
 
             }
            

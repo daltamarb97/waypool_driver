@@ -31,7 +31,6 @@ export class FindridePage {
  
 
   @ViewChild('map') mapElement: ElementRef;
-  
   map: any;
   markers: any;
   
@@ -79,7 +78,7 @@ export class FindridePage {
 
   locationUniversity:any ={};
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App) {
-    
+
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -122,6 +121,7 @@ export class FindridePage {
       }
     })
     this.loadMap();
+
 
   }
  
