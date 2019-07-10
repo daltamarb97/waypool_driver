@@ -136,6 +136,7 @@ constructor(public afDB: AngularFireDatabase){
 
     }
 
+    // TODO: DRIVER NO PUEDE ENTRAR TODO, SOLO DRIVERINFO (UNA PARTE DEL DRIVER, PREGUNTAR DANIEL QUE INFO)
     public addReserve(driverId, name, lastname, car, dest, or, note, price, currentHour, startHour, geofireKey, type){
         this.afDB.database.ref('/reserves/'+ driverId).push({
             name:name,
@@ -148,7 +149,8 @@ constructor(public afDB: AngularFireDatabase){
             currentHour:currentHour,
             startHour:startHour,
             geofireKey: geofireKey,
-            type: type
+            type: type,
+            // driver:driver
 
         }).then((snap)=>{
             const key = snap.key;

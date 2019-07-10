@@ -24,8 +24,7 @@ import { TripsService } from '../../services/trips.service';
   templateUrl: 'reservetrip.html'
 })
 export class ReservetripPage{
-  locationOrigin:any =[];
-  locationDestination:any =[];
+
   userUid=this.AngularFireAuth.auth.currentUser.uid;
   usersFindingTrip : any = [];
   user:any = [];
@@ -40,13 +39,13 @@ export class ReservetripPage{
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     
-  
-        //get personal info of the driver
-        this.SignUpService.getMyInfoDriver(this.userUid)
+    this.SignUpService.getMyInfoDriver(this.userUid)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
+        //get personal info of the driver
+      
     this.sendUsersService.getTripsOfReserves(this.userUid)
     .subscribe( tripsReserves => {
       this.tripsReserves = tripsReserves;
@@ -57,7 +56,7 @@ export class ReservetripPage{
   }
 
   ionViewDidLoad(){
-    
+ 
   }
     
   deleteUser(userId,nameUser){
@@ -108,7 +107,8 @@ export class ReservetripPage{
         text: 'Sí',
         handler: () => {
           //check if driver has an active trip
-          if(this.userDriver.onTrip === true){
+          if(this.userDriver.onTrip === true ){
+
             const toast = this.toastCtrl.create({
               message: 'No puedes iniciar otro viaje porque tienes un viaje en curso',
               showCloseButton:true,
@@ -117,15 +117,25 @@ export class ReservetripPage{
                  });
             toast.present();
           } else {
-            
-            console.log(tripKeyTrip)
-            console.log(trip)
-             this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
-             this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
-             this.TripsService.pushOnTripInDriver(this.userUid);         
-             //BORRAR RESERVA
-             // this.TripsService.deleteReserve(tripKeyTrip,this.userUid);
-         
+            //check if there is someone in the trip
+            if(trip.pendingUsers === null || trip.pendingUsers === undefined){
+            //do nothing because there is no one in the trip
+            const toast = this.toastCtrl.create({
+              message: 'No puedes iniciar un viaje sin ningún usuario a quien recoger',
+              showCloseButton:true,
+              closeButtonText: 'OK',
+              position:'middle'
+                 });
+            toast.present();
+            }else{
+              console.log(tripKeyTrip)
+              console.log(trip)
+               this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
+               this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
+               this.TripsService.pushOnTripInDriver(this.userUid);              
+               this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
+
+            }
            
             
           }

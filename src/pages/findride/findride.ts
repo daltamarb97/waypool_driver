@@ -32,7 +32,6 @@ export class FindridePage {
  
 
   @ViewChild('map') mapElement: ElementRef;
-  
   map: any;
   markers: any;
   

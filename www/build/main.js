@@ -1,4 +1,4 @@
-webpackJsonp([24],{
+webpackJsonp([25],{
 
 /***/ 223:
 /***/ (function(module, exports) {
@@ -23,75 +23,79 @@ webpackEmptyAsyncContext.id = 223;
 var map = {
 	"../pages/car-registration-login/car-registration-login.module": [
 		588,
-		23
+		24
 	],
 	"../pages/car-registration/car-registration.module": [
 		589,
-		22
+		23
 	],
 	"../pages/chats/chats.module": [
 		590,
-		21
+		22
 	],
 	"../pages/chatting/chatting.module": [
 		591,
-		20
+		21
 	],
 	"../pages/confirmpopup/confirmpopup.module": [
 		592,
-		19
+		20
 	],
 	"../pages/confirmprice/confirmprice.module": [
 		608,
-		3
+		4
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
+		594,
+		19
+	],
+	"../pages/confirmtrip/confirmtrip.module": [
 		593,
-		18
+		3
 	],
 	"../pages/findride/findride.module": [
-		611,
-		17
+		612,
+		18
 	],
 	"../pages/help/help.module": [
-		594,
-		16
+		595,
+		17
 	],
 	"../pages/login/login.module": [
-		595,
-		15
+		596,
+		16
 	],
 	"../pages/more/more.module": [
-		597,
-		14
+		598,
+		15
 	],
 	"../pages/myride/myride.module": [
-		596,
+		597,
 		0
 	],
 	"../pages/onTrip/onTrip.module": [
 		609,
-		13
+		14
 	],
 	"../pages/pickup/pickup.module": [
-		610,
-		12
+		611,
+		13
 	],
 	"../pages/profile/profile.module": [
-		598,
-		11
+		599,
+		12
 	],
 	"../pages/public-profile/public-profile.module": [
-		599,
-		10
+		600,
+		11
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		600,
+		601,
 		2
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		601,
-		9
+		610,
+		10
 	],
 	"../pages/showinfocar/showinfocar.module": [
 		602,
@@ -99,23 +103,23 @@ var map = {
 	],
 	"../pages/signup/signup.module": [
 		603,
-		8
+		9
 	],
 	"../pages/support/support.module": [
+		606,
+		8
+	],
+	"../pages/tabs/tabs.module": [
 		604,
 		7
 	],
-	"../pages/tabs/tabs.module": [
-		606,
-		6
-	],
 	"../pages/terms/terms.module": [
 		605,
-		5
+		6
 	],
 	"../pages/wallet/wallet.module": [
 		607,
-		4
+		5
 	]
 };
 function webpackAsyncContext(req) {
@@ -513,6 +517,7 @@ var sendCoordsService = /** @class */ (function () {
         // add the driver to pickedUpUsers 
         this.afDB.database.ref('/drivers/' + DriverUid + '/trips/pickedUpUsers/' + userId).update(user);
     };
+    // TODO: DRIVER NO PUEDE ENTRAR TODO, SOLO DRIVERINFO (UNA PARTE DEL DRIVER, PREGUNTAR DANIEL QUE INFO)
     sendCoordsService.prototype.addReserve = function (driverId, name, lastname, car, dest, or, note, price, currentHour, startHour, geofireKey, type) {
         var _this = this;
         this.afDB.database.ref('/reserves/' + driverId).push({
@@ -526,7 +531,7 @@ var sendCoordsService = /** @class */ (function () {
             currentHour: currentHour,
             startHour: startHour,
             geofireKey: geofireKey,
-            type: type
+            type: type,
         }).then(function (snap) {
             var key = snap.key;
             _this.afDB.database.ref('/reserves/' + driverId + '/' + key).update({
@@ -955,7 +960,7 @@ var instancesService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 336:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -989,6 +994,10 @@ var TripsService = /** @class */ (function () {
         //get trip in Trip's node
         return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
     };
+    TripsService.prototype.getLastMinuteUsers = function (keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers').valueChanges();
+    };
     TripsService.prototype.getPickedUpUsers = function (keyTrip, driverUid) {
         //get trip in Trip's node
         return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
@@ -999,6 +1008,13 @@ var TripsService = /** @class */ (function () {
         this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update({
             onTrip: true
         });
+    };
+    TripsService.prototype.acceptLastMinute = function (driverUid, keyTrip, user) {
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + user.userId).update(user);
+    };
+    TripsService.prototype.eliminateLastMinuteUser = function (driverUid, keyTrip, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).remove();
     };
     TripsService.prototype.deleteReserve = function (keyTrip, driverUid) {
         this.afDB.database.ref('/reserves/' + driverUid + '/' + keyTrip).remove();
@@ -1039,9 +1055,27 @@ var TripsService = /** @class */ (function () {
             onTrip: false
         });
     };
+    TripsService.prototype.saveTripUser = function (driverUid, keyTrip) {
+        // this instance allows the user to save the trip in his records
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update({
+            saveTrip: true
+        });
+    };
     TripsService.prototype.eraseKeyTrip = function (driverUid) {
         // erase keyTrip in driver's node
         this.afDB.database.ref('drivers/' + driverUid + '/keyTrip').remove();
+    };
+    TripsService.prototype.cancelUserFromTrip = function (driverUid, keyTrip, userId) {
+        // save user in cancelUsers array
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/cancelUsers/' + userId).update({
+            userId: userId
+        });
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.saveTripOnRecords = function (driverUid, trip) {
+        //save trip in recordTrips
+        this.afDB.database.ref('/drivers/' + driverUid + '/recordTrips/').push(trip);
     };
     TripsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
@@ -1261,14 +1295,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(579);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(580);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(587);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__ = __webpack_require__(341);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_sendFeedback_service__ = __webpack_require__(339);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_trips_service__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_trips_service__ = __webpack_require__(335);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1328,6 +1362,7 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
@@ -1336,15 +1371,15 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/onTrip/onTrip.module#OnTripPageModule', name: 'OnTripPage', segment: 'onTrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]
