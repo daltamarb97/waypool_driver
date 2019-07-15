@@ -41,49 +41,86 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 
 
 
-setGeofireDest( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
-  this.proofToCancelDest = this.variableName(geofirename);
-  this.dbRef = this.afDB.database.ref('geofireDest/' );
-  this.geoFire = new GeoFire(this.dbRef); 
+// setGeofireDest( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
+//   this.proofToCancelDest = this.variableName(geofirename);
+//   this.dbRef = this.afDB.database.ref('geofireDest/' );
+//   this.geoFire = new GeoFire(this.dbRef); 
 
-  this.geoquery1 = this.geoFire.query({
-    center: [lat, lng],
-    radius: radius
-  })
+//   this.geoquery1 = this.geoFire.query({
+//     center: [lat, lng],
+//     radius: radius
+//   })
 
   
-  this.keyEnteredDest( driverId, keyReserve);
-  this.keyExitedDest(keyReserve);
+//   this.keyEnteredDest( driverId, keyReserve);
+//   this.keyExitedDest(keyReserve);
 
-console.log('geoquery dest added');
-}
+// console.log('geoquery dest added');
+// }
 
-variableName(variable){
-  var variableName = variable;
-  return variableName;
-}
+// variableName(variable){
+//   var variableName = variable;
+//   return variableName;
+// }
 
-setGeofireOr( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
-  this.proofToCancelOr = this.variableName(geofirename);
+// setGeofireOr( radius:number, lat, lng, geofirename, driverId, keyReserve):void{ 
+//   this.proofToCancelOr = this.variableName(geofirename);
+//   this.dbRef = this.afDB.database.ref('geofireOr/' );
+//   this.geoFire = new GeoFire(this.dbRef); 
+
+//   this.geoquery2 = this.geoFire.query({
+//     center: [lat, lng],
+//     radius: radius
+//   })
+
+//   this.keyEnteredOr( driverId, keyReserve);
+//   this.keyExitedOr(keyReserve);
+
+//   // if(this.geoquery1){
+//   //   this.geoquery1.cancel();
+//   // }
+
+//   console.log('geoquery or added');
+
+
+// }
+
+///////////
+
+
+setGeofireOrNEWTEST(key, lat, lng){
   this.dbRef = this.afDB.database.ref('geofireOr/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
-  this.geoquery2 = this.geoFire.query({
-    center: [lat, lng],
-    radius: radius
-  })
+          this.geoFire.set(key, [lat, lng]).then(function(){
+              console.log('location updated');
+             }, function(error){
+            console.log('error: ' + error)
+             });
 
-  this.keyEnteredOr( driverId, keyReserve);
-  this.keyExitedOr(keyReserve);
-
-  // if(this.geoquery1){
-  //   this.geoquery1.cancel();
-  // }
-
-  console.log('geoquery or added');
-
-
+            //    this.afDB.database.ref('users/' + key).update({
+            //     geofireDest: true,
+            //     geofireOr: false
+            // })
 }
+
+setGeofireDestNEWTEST(key, lat, lng){
+  this.dbRef = this.afDB.database.ref('geofireDest/' );
+  this.geoFire = new GeoFire(this.dbRef); 
+
+          this.geoFire.set(key, [lat, lng]).then(function(){
+              console.log('location updated');
+             }, function(error){
+            console.log('error: ' + error)
+             });
+
+          //    this.afDB.database.ref('users/' + key).update({
+          //     geofireDest: true,
+          //     geofireOr: false
+          // })
+}
+
+////////////////////
 
 
 //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node

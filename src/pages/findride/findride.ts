@@ -127,44 +127,44 @@ export class FindridePage {
       }
     })
 
-    this.doGeoquery = true;
-    if(this.doGeoquery === true){
-      //here I will try to make the geofire lasts until it is deleted 
-    this.sendUsersService.getTripsOfReserves(this.user).subscribe(reserves=>{
-      this.reserves = reserves;
+    // this.doGeoquery = true;
+    // if(this.doGeoquery === true){
+    //   //here I will try to make the geofire lasts until it is deleted 
+    // this.sendUsersService.getTripsOfReserves(this.user).subscribe(reserves=>{
+    //   this.reserves = reserves;
 
-      console.log(this.reserves);
+    //   console.log(this.reserves);
 
-      this.reserves.forEach(reserve=>{
-        if(reserve.type === 'origin'){
-        this.geocoder.geocode({'address': reserve.origin[0][0]}, (results, status)=>{
-          if(status==='OK'){
-            this.geocoordinatesOr={
-              lat:results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng()
-            }
-          }
-           // turn geofire On
-              this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
-              console.log('executed geoquery Or in constructor findride')
-      })
-        }else if(reserve.type === 'destination'){
-            // geocoding of addresses that came from findRide
-        this.geocoder.geocode({'address': reserve.destination[0][0]}, (results, status)=>{
-          if(status==='OK'){
-            this.geocoordinatesDest={
-              lat:results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng()
-            }
-          }
-           // turn geofire On
-              this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
-              console.log('executed geoquery Dest in constructor findride')
-      })
-        }
-      })
-    })
-    }
+    //   this.reserves.forEach(reserve=>{
+    //     if(reserve.type === 'origin'){
+    //     this.geocoder.geocode({'address': reserve.origin[0][0]}, (results, status)=>{
+    //       if(status==='OK'){
+    //         this.geocoordinatesOr={
+    //           lat:results[0].geometry.location.lat(),
+    //           lng: results[0].geometry.location.lng()
+    //         }
+    //       }
+    //        // turn geofire On
+    //           this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
+    //           console.log('executed geoquery Or in constructor findride')
+    //   })
+    //     }else if(reserve.type === 'destination'){
+    //         // geocoding of addresses that came from findRide
+    //     this.geocoder.geocode({'address': reserve.destination[0][0]}, (results, status)=>{
+    //       if(status==='OK'){
+    //         this.geocoordinatesDest={
+    //           lat:results[0].geometry.location.lat(),
+    //           lng: results[0].geometry.location.lng()
+    //         }
+    //       }
+    //        // turn geofire On
+    //           this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
+    //           console.log('executed geoquery Dest in constructor findride')
+    //   })
+    //     }
+    //   })
+    // })
+    // }
 
     this.loadMap();
   }

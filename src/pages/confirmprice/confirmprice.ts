@@ -132,7 +132,7 @@ export class ConfirmpricePage {
         this.PriceService.setPrice(this.userDriverUid,this.precio,this.car, this.hour, this.hourToSend);
         this.accepted = true;
         this.dismiss();
-        this.goefireKey = Date.now();
+        // this.goefireKey = Date.now();
 
         
       if(this.driver.geofireOrigin === true){
@@ -149,7 +149,7 @@ export class ConfirmpricePage {
         price:this.precio,
         currentHour:this.hourToSend,
         startHour:this.hour,
-        geofireKey: this.goefireKey,
+        // geofireKey: this.goefireKey,
         type: this.typeOfReserve
 
     }).then((snap)=>{
@@ -166,7 +166,11 @@ export class ConfirmpricePage {
             }
           }
               // turn geofire On
-            this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
+            // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
+            this.geofireService.setGeofireOrNEWTEST(this.driverInfo.userId, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+            this.afDB.database.ref('/geofireOr/'+ this.userDriverUid).update({
+              keyReserve: key
+            })
             console.log('executed geofire Or')
      })
 
@@ -188,7 +192,7 @@ export class ConfirmpricePage {
         price:this.precio,
         currentHour:this.hourToSend,
         startHour:this.hour,
-        geofireKey: this.goefireKey,
+        // geofireKey: this.goefireKey,
         type: this.typeOfReserve
 
     }).then((snap)=>{
@@ -205,8 +209,13 @@ export class ConfirmpricePage {
           }
         }
         // turn geofire On
-          this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
-        console.log('executed geofire Dest')  
+          // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
+        
+          this.geofireService.setGeofireDestNEWTEST(this.driverInfo.userId, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+          this.afDB.database.ref('/geofireDest/'+ this.userDriverUid).update({
+            keyReserve: key
+          })
+          console.log('executed geofire Dest')  
     })
 
     this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
@@ -221,8 +230,8 @@ export class ConfirmpricePage {
         this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car, this.hour, this.hourToSend)
         this.accepted = true;
         this.dismiss();
-        this.goefireKey = Date.now();
-        console.log(this.goefireKey);
+        // this.goefireKey = Date.now();
+        // console.log(this.goefireKey);
 
      // add reserve and command to dismiss modal
         
@@ -238,7 +247,7 @@ export class ConfirmpricePage {
         price:this.precio,
         currentHour:this.hourToSend,
         startHour:this.hour,
-        geofireKey: this.goefireKey,
+        // geofireKey: this.goefireKey,
         type: this.typeOfReserve
       }).then((snap)=>{
         this.destinationNote = this.driverInfoNote.destination[0][0];
@@ -254,7 +263,11 @@ export class ConfirmpricePage {
             }
           }
            // turn geofire On
-              this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              this.geofireService.setGeofireOrNEWTEST(this.driverInfoNote.userId, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+              this.afDB.database.ref('/geofireOr/'+ this.userDriverUid).update({
+                keyReserve: key
+              })
               console.log('executed geofire Or')
       })
 
@@ -274,7 +287,7 @@ export class ConfirmpricePage {
         price:this.precio,
         currentHour:this.hourToSend,
         startHour:this.hour,
-        geofireKey: this.goefireKey,
+        // geofireKey: this.goefireKey,
         type: this.typeOfReserve
       }).then((snap)=>{
         this.destinationNote = this.driverInfoNote.destination[0][0];
@@ -290,7 +303,11 @@ export class ConfirmpricePage {
             }
           }
            // turn geofire On
-              this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
+              this.geofireService.setGeofireDestNEWTEST(this.driverInfo.userId, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+              this.afDB.database.ref('/geofireDest/'+ this.userDriverUid).update({
+                keyReserve: key
+              })
               console.log('executed geofire Dest')
       })
 
