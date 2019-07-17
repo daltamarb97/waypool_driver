@@ -165,11 +165,11 @@ export class ConfirmpricePage {
               lng: results[0].geometry.location.lng()
             }
           }
-              // turn geofire On
+              // set geofirekey 
             // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
-            this.geofireService.setGeofireOrNEWTEST(this.driverInfo.userId, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
-            this.afDB.database.ref('/geofireOr/'+ this.userDriverUid).update({
-              keyReserve: key
+            this.geofireService.setGeofireOrNEWTEST(key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+            this.afDB.database.ref('geofireOr/' + key).update({
+              driverId: this.driverInfo.userId
             })
             console.log('executed geofire Or')
      })
@@ -208,13 +208,14 @@ export class ConfirmpricePage {
             lng: results[0].geometry.location.lng()
           }
         }
-        // turn geofire On
+        // set geofire key
           // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
         
-          this.geofireService.setGeofireDestNEWTEST(this.driverInfo.userId, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-          this.afDB.database.ref('/geofireDest/'+ this.userDriverUid).update({
-            keyReserve: key
+          this.geofireService.setGeofireDestNEWTEST(key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+          this.afDB.database.ref('geofireDest/' + key).update({
+            driverId: this.driverInfo.userId
           })
+          
           console.log('executed geofire Dest')  
     })
 
@@ -262,11 +263,11 @@ export class ConfirmpricePage {
               lng: results[0].geometry.location.lng()
             }
           }
-           // turn geofire On
+           // set geofire key 
               // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
-              this.geofireService.setGeofireOrNEWTEST(this.driverInfoNote.userId, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
-              this.afDB.database.ref('/geofireOr/'+ this.userDriverUid).update({
-                keyReserve: key
+              this.geofireService.setGeofireOrNEWTEST(key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+              this.afDB.database.ref('geofireOr/' + key).update({
+                driverId: this.driverInfoNote.userId
               })
               console.log('executed geofire Or')
       })
@@ -302,12 +303,14 @@ export class ConfirmpricePage {
               lng: results[0].geometry.location.lng()
             }
           }
-           // turn geofire On
               // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
-              this.geofireService.setGeofireDestNEWTEST(this.driverInfo.userId, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-              this.afDB.database.ref('/geofireDest/'+ this.userDriverUid).update({
-                keyReserve: key
+             
+        // set geofire key 
+              this.geofireService.setGeofireDestNEWTEST(key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+              this.afDB.database.ref('geofireDest/' + key).update({
+                driverId: this.driverInfoNote.userId
               })
+              
               console.log('executed geofire Dest')
       })
 

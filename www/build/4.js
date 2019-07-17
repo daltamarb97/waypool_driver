@@ -204,11 +204,11 @@ var ConfirmpricePage = /** @class */ (function () {
                                 lng: results[0].geometry.location.lng()
                             };
                         }
-                        // turn geofire On
+                        // set geofirekey 
                         // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
-                        _this.geofireService.setGeofireOrNEWTEST(_this.driverInfo.userId, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                        _this.afDB.database.ref('/geofireOr/' + _this.userDriverUid).update({
-                            keyReserve: key
+                        _this.geofireService.setGeofireOrNEWTEST(key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                        _this.afDB.database.ref('geofireOr/' + key).update({
+                            driverId: _this.driverInfo.userId
                         });
                         console.log('executed geofire Or');
                     });
@@ -243,11 +243,11 @@ var ConfirmpricePage = /** @class */ (function () {
                                 lng: results[0].geometry.location.lng()
                             };
                         }
-                        // turn geofire On
+                        // set geofire key
                         // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
-                        _this.geofireService.setGeofireDestNEWTEST(_this.driverInfo.userId, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                        _this.afDB.database.ref('/geofireDest/' + _this.userDriverUid).update({
-                            keyReserve: key
+                        _this.geofireService.setGeofireDestNEWTEST(key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                        _this.afDB.database.ref('geofireDest/' + key).update({
+                            driverId: _this.driverInfo.userId
                         });
                         console.log('executed geofire Dest');
                     });
@@ -290,11 +290,11 @@ var ConfirmpricePage = /** @class */ (function () {
                                 lng: results[0].geometry.location.lng()
                             };
                         }
-                        // turn geofire On
+                        // set geofire key 
                         // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
-                        _this.geofireService.setGeofireOrNEWTEST(_this.driverInfoNote.userId, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                        _this.afDB.database.ref('/geofireOr/' + _this.userDriverUid).update({
-                            keyReserve: key
+                        _this.geofireService.setGeofireOrNEWTEST(key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                        _this.afDB.database.ref('geofireOr/' + key).update({
+                            driverId: _this.driverInfoNote.userId
                         });
                         console.log('executed geofire Or');
                     });
@@ -328,11 +328,11 @@ var ConfirmpricePage = /** @class */ (function () {
                                 lng: results[0].geometry.location.lng()
                             };
                         }
-                        // turn geofire On
                         // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
-                        _this.geofireService.setGeofireDestNEWTEST(_this.driverInfo.userId, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                        _this.afDB.database.ref('/geofireDest/' + _this.userDriverUid).update({
-                            keyReserve: key
+                        // set geofire key 
+                        _this.geofireService.setGeofireDestNEWTEST(key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                        _this.afDB.database.ref('geofireDest/' + key).update({
+                            driverId: _this.driverInfoNote.userId
                         });
                         console.log('executed geofire Dest');
                     });
