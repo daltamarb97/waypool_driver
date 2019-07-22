@@ -17068,11 +17068,6 @@ var MyridePage = /** @class */ (function () {
                     });
                     modal.present();
                 });
-                // if(this.lastMinuteUsers.length === 0){
-                //   //do nothing
-                // }else{
-                //   this.navCtrl.push('ConfirmtripPage',{user:user,keyTrip:this.userDriver.keyTrip});
-                // }
             }
         });
     };

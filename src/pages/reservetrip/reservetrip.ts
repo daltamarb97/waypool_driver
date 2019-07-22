@@ -18,6 +18,7 @@ import { instancesService } from '../../services/instances.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 
+declare var google;
 @IonicPage()
 @Component({
   selector: 'page-reservetrip',
@@ -35,6 +36,9 @@ export class ReservetripPage{
   tripsReserves:any =[];
 
   userInReserveInfo:any;
+  geocoder: any
+  geocoordinatesOr:any;
+  geocoordinatesDest:any;
 
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
@@ -52,7 +56,8 @@ export class ReservetripPage{
       console.log(this.tripsReserves);
     })    
     
-        
+    this.geocoder = new google.maps.Geocoder;
+ 
   }
 
   ionViewDidLoad(){
@@ -131,9 +136,57 @@ export class ReservetripPage{
               console.log(tripKeyTrip)
               console.log(trip)
                this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
+
                this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
                this.TripsService.pushOnTripInDriver(this.userUid);              
                this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
+
+
+               // steps needed to get LMU right
+               this.geofireService.deleteUserGeofireDest(tripKeyTrip);
+               this.geofireService.deleteUserGeofireOr(tripKeyTrip);
+
+               if(trip.type == 'origin'){
+
+                 // geocoding of addresses 
+                 this.geocoder.geocode({'address': trip.origin[0][0]}, (results, status)=>{
+                   if(status==='OK'){
+                     this.geocoordinatesOr={
+                     lat:results[0].geometry.location.lat(),
+                     lng: results[0].geometry.location.lng()
+                      }
+                    }
+                    // set geofirekey for LMU
+                      this.geofireService.setGeofireOrOnTrip(tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
+                      this.afDB.database.ref('geofireOrTrip/' + tripKeyTrip).update({
+                      driverId: this.userUid
+                    })
+                    console.log('executed geofire Or on Trip')
+                  })
+
+
+               }else if(trip.type == 'destination'){
+
+                // geocoding of addresses 
+                this.geocoder.geocode({'address': trip.destination[0][0]}, (results, status)=>{
+                  if(status==='OK'){
+                    this.geocoordinatesDest={
+                    lat:results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                     }
+                   }
+                   // set geofirekey for LMU
+                   this.geofireService.setGeofireDestOnTrip(tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+                   this.afDB.database.ref('geofireDestTrip/' + tripKeyTrip).update({
+                     driverId: this.userUid
+                   })
+                   console.log('executed geofire Dest on Trip')
+                 })
+
+
+               }
+
+               ////
 
             }
            

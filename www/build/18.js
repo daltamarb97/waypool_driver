@@ -148,6 +148,7 @@ var FindridePage = /** @class */ (function () {
             else {
             }
         });
+        /// DEPRECATED 
         // this.doGeoquery = true;
         // if(this.doGeoquery === true){
         //   //here I will try to make the geofire lasts until it is deleted 

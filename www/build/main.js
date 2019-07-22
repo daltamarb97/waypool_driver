@@ -26,19 +26,19 @@ var map = {
 		24
 	],
 	"../pages/car-registration/car-registration.module": [
-		592,
+		589,
 		23
 	],
 	"../pages/chats/chats.module": [
-		589,
+		590,
 		22
 	],
 	"../pages/chatting/chatting.module": [
-		590,
+		591,
 		21
 	],
 	"../pages/confirmpopup/confirmpopup.module": [
-		591,
+		592,
 		20
 	],
 	"../pages/confirmprice/confirmprice.module": [
@@ -78,7 +78,7 @@ var map = {
 		14
 	],
 	"../pages/pickup/pickup.module": [
-		611,
+		610,
 		13
 	],
 	"../pages/profile/profile.module": [
@@ -94,7 +94,7 @@ var map = {
 		2
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		610,
+		611,
 		10
 	],
 	"../pages/showinfocar/showinfocar.module": [
@@ -110,11 +110,11 @@ var map = {
 		8
 	],
 	"../pages/tabs/tabs.module": [
-		606,
+		605,
 		7
 	],
 	"../pages/terms/terms.module": [
-		605,
+		606,
 		6
 	],
 	"../pages/wallet/wallet.module": [
@@ -711,10 +711,6 @@ var geofireService = /** @class */ (function () {
         }, function (error) {
             console.log('error: ' + error);
         });
-        //    this.afDB.database.ref('users/' + key).update({
-        //     geofireDest: true,
-        //     geofireOr: false
-        // })
     };
     geofireService.prototype.setGeofireDestNEWTEST = function (key, lat, lng) {
         this.dbRef = this.afDB.database.ref('geofireDest/');
@@ -724,10 +720,24 @@ var geofireService = /** @class */ (function () {
         }, function (error) {
             console.log('error: ' + error);
         });
-        //    this.afDB.database.ref('users/' + key).update({
-        //     geofireDest: true,
-        //     geofireOr: false
-        // })
+    };
+    geofireService.prototype.setGeofireOrOnTrip = function (key, lat, lng) {
+        this.dbRef = this.afDB.database.ref('geofireOrTrip/');
+        this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
+        this.geoFire.set(key, [lat, lng]).then(function () {
+            console.log('location updated');
+        }, function (error) {
+            console.log('error: ' + error);
+        });
+    };
+    geofireService.prototype.setGeofireDestOnTrip = function (key, lat, lng) {
+        this.dbRef = this.afDB.database.ref('geofireDestTrip/');
+        this.geoFire = new __WEBPACK_IMPORTED_MODULE_2_geofire__(this.dbRef);
+        this.geoFire.set(key, [lat, lng]).then(function () {
+            console.log('location updated');
+        }, function (error) {
+            console.log('error: ' + error);
+        });
     };
     ////////////////////
     //JUAN DAVID: created a sub-node "availableRserves" inside users node, so they are able to read the reserves from their node
@@ -1386,10 +1396,10 @@ var AppModule = /** @class */ (function () {
                 }, {
                     links: [
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmpopup/confirmpopup.module#ConfirmpopupPageModule', name: 'ConfirmpopupPage', segment: 'confirmpopup', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
@@ -1402,13 +1412,13 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/onTrip/onTrip.module#OnTripPageModule', name: 'OnTripPage', segment: 'onTrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]
                 }),

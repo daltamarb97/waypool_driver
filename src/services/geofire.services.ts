@@ -98,10 +98,7 @@ setGeofireOrNEWTEST(key, lat, lng){
             console.log('error: ' + error)
              });
 
-            //    this.afDB.database.ref('users/' + key).update({
-            //     geofireDest: true,
-            //     geofireOr: false
-            // })
+   
 }
 
 setGeofireDestNEWTEST(key, lat, lng){
@@ -114,10 +111,34 @@ setGeofireDestNEWTEST(key, lat, lng){
             console.log('error: ' + error)
              });
 
-          //    this.afDB.database.ref('users/' + key).update({
-          //     geofireDest: true,
-          //     geofireOr: false
-          // })
+
+}
+
+
+setGeofireOrOnTrip(key, lat, lng){
+  this.dbRef = this.afDB.database.ref('geofireOrTrip/' );
+  this.geoFire = new GeoFire(this.dbRef); 
+
+          this.geoFire.set(key, [lat, lng]).then(function(){
+              console.log('location updated');
+             }, function(error){
+            console.log('error: ' + error)
+             });
+
+   
+}
+
+setGeofireDestOnTrip(key, lat, lng){
+  this.dbRef = this.afDB.database.ref('geofireDestTrip/' );
+  this.geoFire = new GeoFire(this.dbRef); 
+
+          this.geoFire.set(key, [lat, lng]).then(function(){
+              console.log('location updated');
+             }, function(error){
+            console.log('error: ' + error)
+             });
+
+
 }
 
 ////////////////////

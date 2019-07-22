@@ -126,6 +126,7 @@ export class FindridePage {
   
       }
     })
+/// DEPRECATED 
 
     // this.doGeoquery = true;
     // if(this.doGeoquery === true){
