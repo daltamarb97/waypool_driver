@@ -9,14 +9,17 @@ import { Subject, onErrorResumeNext } from 'rxjs';
 import { TripsService } from '../../services/trips.service';
 import { SignUpService } from '../../services/signup.service';
 
+
+
 @IonicPage()
+
 
 @Component({
   selector: 'page-confirmtrip',
   templateUrl: 'confirmtrip.html'
 })
 export class ConfirmtripPage {
-
+  
   usersOnTrip:any;
   accepted: boolean;
   reserve:any;

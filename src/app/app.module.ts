@@ -50,6 +50,7 @@ import { SupportPage } from '../pages/support/support';
 import { sendFeedbackService } from '../services/sendFeedback.service';
 import { ChatsService } from '../services/chat.service';
 import { TripsService } from '../services/trips.service';
+import { MbscModule } from '@mobiscroll/angular-lite';
 
 
 export const firebaseConfig = {
@@ -77,7 +78,8 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    MbscModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
