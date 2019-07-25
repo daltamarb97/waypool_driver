@@ -114,6 +114,10 @@ export class TripsService {
         this.afDB.database.ref('/drivers/'+driverUid+'/recordTrips/').push(trip);
    
        }
+       public cancelReserve(driverUid,keyTrip){
+        this.afDB.database.ref('/reserves/'+driverUid+'/'+ keyTrip).remove();  
+
+       }
   
  }
 

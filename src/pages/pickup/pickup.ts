@@ -55,27 +55,27 @@ export class PickupPage {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
-    this.SignUpService.getInfoUser(this.user.userId)
-		.subscribe(userFirebase => {
-      //modificar
-      //get info user and observe if user has not canceled
-      this.userFirebase = userFirebase;
+    // this.SignUpService.getInfoUser(this.user.userId)
+		// .subscribe(userFirebase => {
+    //   //modificar
+    //   //get info user and observe if user has not canceled
+    //   this.userFirebase = userFirebase;
 
-    // if(this.userFirebase.trips.onTrip === true ){
+    // // if(this.userFirebase.trips.onTrip === true ){
 
-    // } else {
-    //   //if canceled go back to myRidePage
-    //   this.navCtrl.pop();
-    //   const toast = this.toastCtrl.create({
-    //     message: `El estudiante ${this.user.name} que ibas a recoger te ha cancelado`,
-    //     showCloseButton:true,
-    //     closeButtonText: 'OK',
-    //     position:'middle'
-    //        });
-    //   toast.present();
-    // }
+    // // } else {
+    // //   //if canceled go back to myRidePage
+    // //   this.navCtrl.pop();
+    // //   const toast = this.toastCtrl.create({
+    // //     message: `El estudiante ${this.user.name} que ibas a recoger te ha cancelado`,
+    // //     showCloseButton:true,
+    // //     closeButtonText: 'OK',
+    // //     position:'middle'
+    // //        });
+    // //   toast.present();
+    // // }
 			
-		});
+		// });
   }
   ionViewDidLoad(){
     

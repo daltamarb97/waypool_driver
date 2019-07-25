@@ -460,18 +460,28 @@ geocodeLatLng(latLng,inputName) {
                 this.directionsDisplay.setDirections({routes: []});
                 this.loadMap();
                } else {
+                console.log("AQUIIIIIIIIIIIIIII")
+
+                 console.log(this.desFirebase);
                 this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
               //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
-       
+              
+
                 this.geoInfo1 = this.myLatLng;
                 console.log(this.geoInfo1);
-      
+                console.log(this.geoInfo2);
+                console.log(this.geoInfo2.lat);
+
+
       
                 this.geoInfo2 = {
                   lat: this.myLatLngDest.lat(),
                   lng: this.myLatLngDest.lng()
                 }
-                
+               
+
+                console.log("AQUIIIIIIIIIIIIIII")
+                console.log(this.geoInfo2.lat);
                 //turn on geoquery university to determine wether the user is in university
                 this.geofireService.setGeofireUniversity(0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
                //
@@ -482,8 +492,14 @@ geocodeLatLng(latLng,inputName) {
              }
              
           catch(error) {
-            console.log(error)
-            this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+            console.log(error);
+            if(this.geoInfo2.lat === null || this.geoInfo2.lat === undefined ){
+              //this is to tell the user to select a place before publishing a trip
+              this.presentAlert('Información Incompleta','no puedes publicar un viaje sin antes seleccionar un lugar de la lista.','Ok') 
+            }else {
+              this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+
+            }
             }
       
             console.log(this.orFirebase);

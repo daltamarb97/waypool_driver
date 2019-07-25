@@ -151,10 +151,10 @@ export class ReservetripPage{
 
 
 
-  seePassengers(tripKeyTrip){
+  seePassengers(KeyTrip){
        
         
-    let modal = this.modalCtrl.create('ConfirmreservationPage',{reserveKey:tripKeyTrip});
+    let modal = this.modalCtrl.create('ConfirmreservationPage',{reserveKey:KeyTrip});
     modal.present();
     // this.usersFindingTrip.pop();
     
@@ -170,22 +170,10 @@ export class ReservetripPage{
     }else if(typeOfReserve == 'destination'){
       this.geofireService.cancelGeoqueryDest(geofireKey);
     }
+    this.TripsService.cancelReserve(this.userUid,keyTrip);
+  
 
-    this.afDB.database.ref('/reserves/' + this.userUid + '/' + keyTrip).remove()
-  .then(()=>{
-    console.log('the reserve which key is '+ keyTrip + ' has been removed');
-    this.afDB.list('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).valueChanges()
-      .subscribe((userInRsv)=>{
-        userInRsv.forEach((user)=>{
-          this.userInReserveInfo = user;
-
-          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/availableReserves/' + keyTrip).remove();
-          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/myReserves/' + keyTrip).remove();
-        })
-
-        this.afDB.database.ref('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).remove();
-      })
-  })
+  //eliminate reserve
 
   }
   

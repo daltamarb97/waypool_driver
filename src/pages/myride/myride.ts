@@ -36,15 +36,15 @@ onTrip:boolean = false;
 unsubscribe:any;
 lastMinuteUsers:any =[];
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
-  	console.log(this.onTrip)
+  	console.log(this.onTrip);
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.driverUid)
 			.subscribe(userDriver => {
 				this.userDriver = userDriver;
 				if (this.userDriver.keyTrip === null) {
 					//do nothing
-					console.log("que dijiste corone")
-					console.log(this.userDriver.keyTrip)
+					console.log("que dijiste corone");
+					console.log(this.userDriver.keyTrip);
 				} else {
 					this.getTrip(this.userDriver.keyTrip, this.userDriver.userId); //get keyTrip  
 					this.getLastMinuteUsers(this.userDriver.keyTrip, this.userDriver.userId);
@@ -113,13 +113,14 @@ lastMinuteUsers:any =[];
 			});
 
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
-			// erase trip because there is no one to picked Up
+			// erase trip because driver decide to cancel
 			this.onTrip = false;
 			this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
 			this.TripsService.eraseKeyTrip(this.driverUid);
 			this.TripsService.setOnTripFalse(this.driverUid);
 			this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      this.presentToast(' tu compañero te ha cancelado el viaje', 5000, 'middle');
+			let modal = this.modalCtrl.create('CanceltripPage');
+			modal.present();
       
     }
     if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
@@ -129,11 +130,12 @@ lastMinuteUsers:any =[];
       this.TripsService.eraseKeyTrip(this.driverUid);
       this.TripsService.setOnTripFalse(this.driverUid);
       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      this.onTrip = false;
+	  this.onTrip = false;
+	  let modal = this.modalCtrl.create('CanceltripPage');
+	  modal.present();
       console.log(this.onTrip)
 
-    } else {
-    }            
+   	 }           
 	}
 
 	callUser(number) {
@@ -186,15 +188,14 @@ lastMinuteUsers:any =[];
 							let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
 
 							this.TripsService.timeFinishedTrip(this.userDriver.keyTrip, this.driverUid, today);
-							this.TripsService.saveTripUser(this.driverUid, this.userDriver.keyTrip)
-
-
+							this.TripsService.saveTripUser(this.driverUid, this.userDriver.keyTrip);
 							this.TripsService.saveTripOnRecords(this.driverUid, this.trip);
 							this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
 							this.TripsService.eraseKeyTrip(this.driverUid);
 							this.TripsService.setOnTripFalse(this.driverUid);
 							this.navCtrl.setRoot(this.navCtrl.getActive().component);
-							this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle')
+							this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle');
+							//TO-DO: AQUI FALTA RATETRIPPAGE
 						}
 					}
 				]

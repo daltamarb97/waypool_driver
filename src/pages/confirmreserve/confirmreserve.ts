@@ -11,6 +11,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { geofireService } from '../../services/geofire.services';
 import { instancesService } from '../../services/instances.service';
 import { Subject } from 'rxjs';
+import { TripsService } from '../../services/trips.service';
 
 
 @IonicPage()
@@ -25,20 +26,20 @@ export class ConfirmreservationPage {
 	reserveKey:any;
 	reserve:any;
   	userDriver:any ;
-  	userDriverUid=this.AngularFireAuth.auth.currentUser.uid
+  	userUid=this.AngularFireAuth.auth.currentUser.uid
 	accepted: boolean;
 	infoUser:any = {};
 	unsubscribe = new Subject;
 	reserves:any = [];
 	passengers: any =[];
-  constructor(public navCtrl: NavController,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController, public app: App ) {
+  constructor(public navCtrl: NavController,public TripsService:TripsService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController, public app: App ) {
 	
       this.reserveKey= this.navParams.get('reserveKey') 
-
+console.log(this.reserveKey)
 
   
 
-      this.sendCoordsService.getPendingUsers(this.userDriverUid,this.reserveKey).takeUntil(this.unsubscribe)
+      this.sendCoordsService.getPendingUsers(this.userUid,this.reserveKey).takeUntil(this.unsubscribe)
         .subscribe( users => {
 			this.passengers = users;			
 			console.log(this.passengers);
@@ -47,7 +48,7 @@ export class ConfirmreservationPage {
 }
 
 		deleteUser(userId) {
-		this.sendCoordsService.eraseUser(userId,this.userDriverUid,this.reserveKey );
+		this.sendCoordsService.eraseUser(userId,this.userUid,this.reserveKey );
  		}
 
 		 showProfilePassegner(passenger){
@@ -56,7 +57,21 @@ export class ConfirmreservationPage {
 			this.dismiss();
  		}
   
+		 cancelReserve(){
 
+			// //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
+			// if(typeOfReserve == 'origin'){
+			//   this.geofireService.cancelGeoqueryOr(geofireKey);
+			// }else if(typeOfReserve == 'destination'){
+			//   this.geofireService.cancelGeoqueryDest(geofireKey);
+			// }
+			this.TripsService.cancelReserve(this.userUid,this.reserveKey);
+			this.dismiss();
+		  
+		
+		  //eliminate reserve
+		
+		  }
 	dismiss() {
 		console.log('deleted on click')
 		this.viewCtrl.dismiss(this.accepted);
