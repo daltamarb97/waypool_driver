@@ -8,8 +8,8 @@ constructor(public afDB: AngularFireDatabase){
               
     }
     
-public turnOntripUsers(user){
-    this.afDB.database.ref('users/' + user + '/trips/').update({
+public turnOntripUsers(university, user){
+    this.afDB.database.ref(university + 'users/' + user + '/trips/').update({
         onTrip: true
     }, (error)=>{
         if(error){
@@ -20,8 +20,8 @@ public turnOntripUsers(user){
     })
 } 
 
-public turnOntripUsersFalse(user){
-    this.afDB.database.ref('users/' + user + '/trips/').update({
+public turnOntripUsersFalse(university, user){
+    this.afDB.database.ref(university + 'users/' + user + '/trips/').update({
         onTrip: false
     }, (error)=>{
         if(error){

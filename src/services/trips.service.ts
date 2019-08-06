@@ -32,15 +32,15 @@ export class TripsService {
                 onTrip:true
               });
           }   
-       public acceptLastMinute(driverUid,keyTrip,user){
-        this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+ user.userId).update(user);
+       public acceptLastMinute(university, driverUid,keyTrip,user){
+        this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+ user.userId).update(user);
 
        }        
       
-      public eliminateLastMinuteUser(driverUid,keyTrip,userId){  
+      public eliminateLastMinuteUser(university, driverUid,keyTrip,userId){  
 
           //eliminate the user from pendingUsers
-            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/lastMinuteUsers/'+ userId).remove();
+            this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip +'/lastMinuteUsers/'+ userId).remove();
       }
           public deleteReserve(keyTrip,driverUid){
             this.afDB.database.ref('/reserves/'+driverUid+'/'+ keyTrip).remove();

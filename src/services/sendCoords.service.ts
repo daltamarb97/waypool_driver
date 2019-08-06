@@ -12,20 +12,20 @@ constructor(public afDB: AngularFireDatabase){
               
     }
     
-    public getPendingUsers(userUid,pushKey){
-        return  this.afDB.list('/reserves/'+ userUid +'/'+pushKey+'/pendingUsers').valueChanges();
+    public getPendingUsers(university, userUid,pushKey){
+        return  this.afDB.list(university + '/reserves/'+ userUid +'/'+pushKey+'/pendingUsers').valueChanges();
     }
     public getSpecificReserves(userUid,pushKey){
         return  this.afDB.object('/reserves/'+ userUid +'/'+pushKey).valueChanges();
     } 
-    public eraseUser(userId,DriverUid,pushKey){
-        this.afDB.database.ref('reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
+    public eraseUser(university, userId,DriverUid,pushKey){
+        this.afDB.database.ref(university + '/reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
     }
-    public getDestination(user){
-        return  this.afDB.list('/drivers/'+ user +'/trips/destination').valueChanges();
+    public getDestination(university, user){
+        return  this.afDB.list(university+ '/drivers/'+ user +'/trips/destination').valueChanges();
     } 
-    public getOrigin(user){
-        return  this.afDB.list('/drivers/'+ user +'/trips/origin').valueChanges();
+    public getOrigin(university, user){
+        return  this.afDB.list(university + '/drivers/'+ user +'/trips/origin').valueChanges();
     }     
        public pushcoordinatesReserves(user , dest, or){
      

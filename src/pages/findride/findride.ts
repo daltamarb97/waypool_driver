@@ -81,7 +81,7 @@ export class FindridePage {
   geocoordinatesDest:any;
 
   locationUniversity:any ={};
-
+  university:any;
   doGeoquery:boolean;
   constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
     
@@ -104,15 +104,16 @@ export class FindridePage {
     //meter datos por el id del firebase
     
     // set geofire key of university to avoid asking users to put where they are going
-    this.geofireService.getLocationUniversity().subscribe(location=>{
-      this.locationUniversity = location;
-      this.geofireService.setLocationUniversity("some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+    this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
+      this.university = university
+      this.locationUniversity = this.university.location;
+      this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
     })
 
   }
  
   ionViewDidLoad(){
-    this.SignUpService.getMyInfo(this.user).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
       this.userInfo = user;
       if(this.userInfo.emailVerificationMessage !== true){
         const alert = this.alertCtrl.create({
@@ -121,7 +122,7 @@ export class FindridePage {
           buttons: ['OK']
         });
         alert.present();
-        this.SignUpService.emailVerificationMessage(this.user);
+        this.SignUpService.emailVerificationMessage(this.SignUpService.userUniversity, this.user);
       }else{
   
       }
@@ -474,7 +475,7 @@ geocodeLatLng(latLng,inputName) {
                 }
                 
                 //turn on geoquery university to determine wether the user is in university
-                this.geofireService.setGeofireUniversity(0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+                this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
                //
                 this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       

@@ -88,8 +88,8 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 ///////////
 
 
-setGeofireOrNEWTEST(key, lat, lng){
-  this.dbRef = this.afDB.database.ref('geofireOr/' );
+setGeofireOrNEWTEST(university, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(university + '/geofireOr/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -101,8 +101,8 @@ setGeofireOrNEWTEST(key, lat, lng){
    
 }
 
-setGeofireDestNEWTEST(key, lat, lng){
-  this.dbRef = this.afDB.database.ref('geofireDest/' );
+setGeofireDestNEWTEST(university, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(university + '/geofireDest/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -208,8 +208,8 @@ public getUsersGeofire(){
   return this.afDB.list('/drivers/'+ this.driverUid + '/trips/usersListRide/').valueChanges();
 }
 
-public deleteUserListRide(driverId, userId){
-  this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
+public deleteUserListRide(university, driverId, userId){
+  this.afDB.database.ref(university + '/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
 }
 
 public deleteUserListRideTotal(driverId){
@@ -271,8 +271,8 @@ cancelGeoqueryOr(geofirename){
 
 
 // set a new node on firebase which is the location of the university
-setLocationUniversity( key, lat, lng){
-  this.dbRef = this.afDB.database.ref('geofireUniversity/' );
+setLocationUniversity(university, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(university + '/geofireUniversity/' );
   this.geoFire = new GeoFire(this.dbRef); 
     this.geoFire.set(key, [lat, lng]).then(function(){
     console.log('location updated');
@@ -282,9 +282,9 @@ setLocationUniversity( key, lat, lng){
 }
 
 // set geoquery that determines if the person is in university
-setGeofireUniversity( radius:number, lat, lng, driverId):void{ 
+setGeofireUniversity(university, radius:number, lat, lng, driverId):void{ 
   
-  this.dbRef = this.afDB.database.ref('geofireUniversity/' );
+  this.dbRef = this.afDB.database.ref(university + '/geofireUniversity/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
   this.geoqueryU = this.geoFire.query({
@@ -320,15 +320,15 @@ cancelGeoqueryUniversity(){
   
 }
 
-public cancelGeofireOrigin(driverId){
-  this.afDB.database.ref('/drivers/' + driverId).update({
+public cancelGeofireOrigin(university, driverId){
+  this.afDB.database.ref(university + '/drivers/' + driverId).update({
     geofireOrigin: false
   }).then(()=>{
     console.log('geofireOrigin = false');
   })
 }
 
-public getLocationUniversity(){
-   return this.afDB.object('uninorte/').valueChanges();
+public getLocationUniversity(university){
+   return this.afDB.object('/universities/'+ university).valueChanges();
  }
 }

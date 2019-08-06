@@ -32,7 +32,12 @@ export class SignupPage {
     isReadonly = true;
     private signupGroup: FormGroup;
 
-    // userFirebase = this.AngularFireAuth.auth.currentUser;
+    //variables linked among them 
+    emailVar:any;
+    universityVar:any;
+    universities = [];
+    showReadonly:boolean = true;
+    onlyEmail:any;
 
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
     this.signupGroup = this.formBuilder.group({
@@ -45,10 +50,35 @@ export class SignupPage {
         phone: ["", Validators.required],
         carModel: ["", Validators.required],
         plateNumber: ["", Validators.required],
-        color: ["", Validators.required]
+        color: ["", Validators.required],
+        university: ["", Validators.required]
+    })
 
+
+    this.SignUpService.getUniversities().subscribe(universities => {
+        this.universities = universities;
+        console.log(this.universities);
     })
   }
+
+  onChange(){
+    this.showReadonly = true;
+    if(this.showReadonly == true){
+            var count = this.universities.length;
+            for(var i=0; i<count; i++){
+                if(this.universities[i].name == this.universityVar){
+                  if(this.universities[i].email == undefined){
+                            this.showReadonly = false;
+                        }else{
+                            this.emailVar = this.universities[i].email
+                        }
+                    }
+                }
+        }
+        
+    }
+
+
     scrolling(){
         this.content.scrollTo(30, 0);
     };
@@ -59,11 +89,11 @@ export class SignupPage {
     }
      
     verification(){
-
-          //creating user on firebase
-        //   let userName = this.signupGroup.controls['name'].value;
-        //   let userLastName = this.signupGroup.controls['lastname'].value;
-          let userEmail = this.signupGroup.controls['email'].value 
+        if(this.showReadonly== true){
+            let userName = this.signupGroup.controls['name'].value;
+            let userLastName = this.signupGroup.controls['lastname'].value;
+            let userPhone = this.signupGroup.controls['phone'].value;
+            let userEmail = this.signupGroup.controls['email'].value 
           let userFixedemail = this.signupGroup.controls['fixedemail'].value;
           let userEmailComplete = userEmail + userFixedemail;
           let userPassword = this.signupGroup.controls['password'].value;
@@ -72,14 +102,24 @@ export class SignupPage {
           let userCarModel = this.signupGroup.controls['carModel'].value;
           let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
           let usercarColor = this.signupGroup.controls['color'].value;
+          let userUniversity = this.signupGroup.controls['university'].value;
 
-          this.user = this.signupGroup.value;
-        this.car = {
-          carModel: userCarModel,
-          plateNumber:userPlateNumber,
-          color:usercarColor
-        }
-          if(userPassword === userPasswordconf){
+          this.car = {
+            carModel: userCarModel,
+            plateNumber:userPlateNumber,
+            color:usercarColor
+          }
+
+          // saving data in variable
+          this.user = {
+            name: userName,
+            lastname: userLastName,
+            email: userEmailComplete,
+            phone: userPhone,
+            university: userUniversity
+        };
+        
+          if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword).catch((error)=>{
                 if(error.code === "auth/email-already-in-use"){
                     const alert = this.alertCtrl.create({
@@ -133,6 +173,93 @@ export class SignupPage {
               });
               alert.present();
         }
+
+        }else if(this.showReadonly === false){
+            let userName = this.signupGroup.controls['name'].value;
+            let userLastName = this.signupGroup.controls['lastname'].value;
+            let userPhone = this.signupGroup.controls['phone'].value;
+            let userEmail = this.signupGroup.controls['email'].value 
+          let userFixedemail = this.signupGroup.controls['fixedemail'].value;
+          let userEmailComplete = userEmail + userFixedemail;
+          let userPassword = this.signupGroup.controls['password'].value;
+          let userPasswordconf = this.signupGroup.controls['passwordconf'].value;
+        //   let userPhone = this.signupGroup.controls['phone'].value;
+          let userCarModel = this.signupGroup.controls['carModel'].value;
+          let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+          let usercarColor = this.signupGroup.controls['color'].value;
+          let userUniversity = this.signupGroup.controls['university'].value;
+
+          this.car = {
+            carModel: userCarModel,
+            plateNumber:userPlateNumber,
+            color:usercarColor
+          }
+
+          // saving data in variable
+          this.user = {
+            name: userName,
+            lastname: userLastName,
+            email: userEmail,
+            phone: userPhone,
+            university: userUniversity
+        };
+        
+          if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
+            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).catch((error)=>{
+                if(error.code === "auth/email-already-in-use"){
+                    const alert = this.alertCtrl.create({
+                        title: 'ya existe una cuenta con este correo',
+                        subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                        buttons: ['OK']
+                      });
+                      alert.present(); 
+                }
+            })
+            this.navCtrl.push('LoginPage', this.user);
+        
+            if(!this.user.userId){
+                this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                    if(user){
+                               user.getIdToken().then((token)=>{
+                               this.user.tokenId = token;
+
+                            })
+                         if(!this.user.userId){
+                            this.user.userId = user.uid;
+                        }
+                        this.SignUpService.saveUser(this.user);
+                        this.SignUpService.addCarProfile(this.user.userId,this.car);
+                    }else{
+                        console.log('there is no user');
+                    }
+                })
+            };
+
+            // sending email verification and verifying weather email is verified or not
+            this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                if(user){
+                    if(user.emailVerified == false){
+                        user.sendEmailVerification();
+                    console.log("verification email has been sent");
+                    }else{
+                        console.log("verification email has not been sent or the email is already verifyied");
+                    }
+                }else{
+                    console.log('there is no user');
+                }
+            })  
+
+               
+        }else{
+            const alert = this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'las contraseñas no coinciden, intenta de nuevo',
+                buttons: ['OK']
+              });
+              alert.present();
+        }
+        }
+          
 
 
     }

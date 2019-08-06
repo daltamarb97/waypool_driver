@@ -19,9 +19,9 @@ constructor(public afDB: AngularFireDatabase){
         // Get all the trips the driver have reserve
          return  this.afDB.list('/reserves/'+ userUid).valueChanges();
      } 
-    public getUsersOnTrip(userUid){
+    public getUsersOnTrip(university, userUid){
         // Get all the students the driver acepts in myListRidePage to be send to the students
-         return  this.afDB.list('/drivers/'+ userUid +'/trips/pickingUsers').valueChanges();
+         return  this.afDB.list(university + '/drivers/'+ userUid +'/trips/pickingUsers').valueChanges();
      }   
 
      public getPickUpUsers(userUid){
@@ -33,9 +33,9 @@ constructor(public afDB: AngularFireDatabase){
            this.afDB.database.ref('/reserves/'+ driverId + '/' + keyReserve).remove();
            }
 
-           public removeUsersOnListRideTotal(userUid ){
+           public removeUsersOnListRideTotal(university, userUid ){
             //send the information of every student the driver acepts in myRide
-               this.afDB.database.ref('/drivers/'+ userUid +'/trips/usersListRide/').remove();
+               this.afDB.database.ref(university + '/drivers/'+ userUid +'/trips/usersListRide/').remove();
 
                }
 
@@ -48,9 +48,9 @@ constructor(public afDB: AngularFireDatabase){
     
 
 
-    public pushPickingUpUsersOnDrivers(userUid,userId ,origin,destination,name,lastname,phone, about){
+    public pushPickingUpUsersOnDrivers(university, userUid,userId ,origin,destination,name,lastname,phone, about){
      //send the information of every student the driver acepts in myRide
-        this.afDB.database.ref('/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).update(
+        this.afDB.database.ref(university + '/drivers/'+ userUid +'/trips/pickingUsers/'+ userId).update(
             {
              origin: origin,
              destination: destination,
@@ -64,9 +64,9 @@ constructor(public afDB: AngularFireDatabase){
             );
 
         }
-        public pushDriverOnUsers(userUid,userId ,origin,destination,name,lastname,phone,price,car,about){
+        public pushDriverOnUsers(university, userUid,userId ,origin,destination,name,lastname,phone,price,car,about){
             //send the driver information to the students
-            this.afDB.database.ref('/users/'+ userId +'/trips/pickingUsers/driver/'+ userUid).update(
+            this.afDB.database.ref(university + '/users/'+ userId +'/trips/pickingUsers/driver/'+ userUid).update(
                 {
                  origin: origin,
                  destination: destination,

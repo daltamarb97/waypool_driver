@@ -65,14 +65,14 @@ export class ConfirmpricePage {
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
-    this.SignUpService.getCar(this.userDriverUid)
+    this.SignUpService.getCar( this.SignUpService.userUniversity , this.userDriverUid)
     .subscribe( car => {
       //get cars registered
       this.carModelList = car;
       console.log(this.carModelList)
     });
 
-    this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).subscribe(driver=>{
       this.driver = driver;
       
       this.driverInfo.origin = this.driver.trips.origin
@@ -90,7 +90,7 @@ export class ConfirmpricePage {
  })
  
 
- this.SignUpService.getMyInfo(this.userDriverUid).subscribe(driver=>{
+ this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).subscribe(driver=>{
   this.driver2 = driver;
   
      this.driverInfoNote.origin = this.driver2.trips.origin
@@ -129,7 +129,7 @@ export class ConfirmpricePage {
           alert.present();
     }else if(this.note == null || this.note == '' ){
         this.hourToSend = this.nowHour.getHours()+":"+this.nowHour.getMinutes();
-        this.PriceService.setPrice(this.userDriverUid,this.precio,this.car, this.hour, this.hourToSend);
+        this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.car, this.hour, this.hourToSend);
         this.accepted = true;
         this.dismiss();
         // this.goefireKey = Date.now();
@@ -140,7 +140,7 @@ export class ConfirmpricePage {
         this.note = 'No hay nota.'
 
       // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
-      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid).push({
         driver: this.driverInfo,
         car:this.car,
         destination:this.driverInfo.destination,
@@ -167,15 +167,15 @@ export class ConfirmpricePage {
           }
               // set geofirekey 
             // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
-            this.geofireService.setGeofireOrNEWTEST(key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
-            this.afDB.database.ref('geofireOr/' + key).update({
+            this.geofireService.setGeofireOrNEWTEST(this.SignUpService.userUniversity, key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+            this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireOr/' + key).update({
               driverId: this.driverInfo.userId
             })
             console.log('executed geofire Or')
      })
 
 
-        this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid + '/' + key).update({
             keyTrip: key 
         }) 
     })
@@ -183,7 +183,7 @@ export class ConfirmpricePage {
         this.typeOfReserve = 'destination'
         this.note = 'No hay nota.'
   
-        this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid).push({
           driver: this.driverInfo,
         car:this.car,
         destination:this.driverInfo.destination,
@@ -211,15 +211,15 @@ export class ConfirmpricePage {
         // set geofire key
           // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
         
-          this.geofireService.setGeofireDestNEWTEST(key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-          this.afDB.database.ref('geofireDest/' + key).update({
+          this.geofireService.setGeofireDestNEWTEST(this.SignUpService.userUniversity, key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+          this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDest/' + key).update({
             driverId: this.driverInfo.userId
           })
           
           console.log('executed geofire Dest')  
     })
 
-    this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid + '/' + key).update({
       keyTrip: key 
   })
 
@@ -228,7 +228,7 @@ export class ConfirmpricePage {
     
       } else {
         this.hourToSend = this.nowHour.getHours()+":"+this.nowHour.getMinutes();
-        this.PriceService.setPriceAndNote(this.userDriverUid,this.precio,this.note,this.car, this.hour, this.hourToSend)
+        this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.note,this.car, this.hour, this.hourToSend)
         this.accepted = true;
         this.dismiss();
         // this.goefireKey = Date.now();
@@ -239,7 +239,7 @@ export class ConfirmpricePage {
      if(this.driver.geofireOrigin === true){
       this.typeOfReserve = 'origin';
 
-      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid).push({
         driver: this.driverInfoNote,
         car:this.car,
         destination:this.driverInfoNote.destination,
@@ -265,21 +265,21 @@ export class ConfirmpricePage {
           }
            // set geofire key 
               // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
-              this.geofireService.setGeofireOrNEWTEST(key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
-              this.afDB.database.ref('geofireOr/' + key).update({
+              this.geofireService.setGeofireOrNEWTEST(this.SignUpService.userUniversity, key, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng );
+              this.afDB.database.ref(this.SignUpService.userUniversity +'/geofireOr/' + key).update({
                 driverId: this.driverInfoNote.userId
               })
               console.log('executed geofire Or')
       })
 
-      this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid + '/' + key).update({
         keyTrip: key 
        })
       })
     }else{
       this.typeOfReserve = 'destination';
 
-      this.afDB.database.ref('/reserves/'+ this.userDriverUid).push({
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid).push({
         driver: this.driverInfoNote,
         car:this.car,
         destination:this.driverInfoNote.destination,
@@ -306,15 +306,15 @@ export class ConfirmpricePage {
               // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
              
         // set geofire key 
-              this.geofireService.setGeofireDestNEWTEST(key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-              this.afDB.database.ref('geofireDest/' + key).update({
+              this.geofireService.setGeofireDestNEWTEST(this.SignUpService.userUniversity, key, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+              this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDest/' + key).update({
                 driverId: this.driverInfoNote.userId
               })
               
               console.log('executed geofire Dest')
       })
 
-      this.afDB.database.ref('/reserves/'+ this.userDriverUid + '/' + key).update({
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/'+ this.userDriverUid + '/' + key).update({
         keyTrip: key 
        })
       })
@@ -331,7 +331,7 @@ export class ConfirmpricePage {
   }  
 
   ionViewDidLeave(){
-    this.geofireService.cancelGeofireOrigin(this.userDriverUid);
+    this.geofireService.cancelGeofireOrigin(this.SignUpService.userUniversity, this.userDriverUid);
   }
 
 }

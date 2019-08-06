@@ -38,17 +38,17 @@ export class ConfirmpopupPage {
       console.log(this.user)
   
          //get origin from driver
-      this.sendCoordsService.getOrigin(this.userDriverUid).takeUntil(this.unsubscribe)
+      this.sendCoordsService.getOrigin(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
       .subscribe( origin => {
         this.locationOrigin = origin;
       })
          //get destination from driver
-      this.sendCoordsService.getDestination(this.userDriverUid).takeUntil(this.unsubscribe)
+      this.sendCoordsService.getDestination(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
         .subscribe( destination => {
           this.locationDestination = destination;
 		})
 		
-		this.SignUpService.getMyInfoDriver(this.userDriverUid).takeUntil(this.unsubscribe)
+		this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			this.pickingUsers = this.userDriver.trips.pickingUsers;
@@ -68,7 +68,7 @@ export class ConfirmpopupPage {
 			if(Object.keys(this.pickingUsers).length + Object.keys(this.pickedUpUsers).length >= 4){
 
 
-				this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
+				this.sendUsersService.removeUsersOnListRideTotal(this.SignUpService.userUniversity, this.userDriverUid);
 				// this.geoFireService.cancelGeoqueryDest();
 				// this.geoFireService.cancelGeoqueryOr();
 				const alert = this.alertCtrl.create({
@@ -78,21 +78,21 @@ export class ConfirmpopupPage {
 				  });
 				  alert.present();
 
-				this.instances.turnOntripUsersFalse(this.user.userId);
+				this.instances.turnOntripUsersFalse(this.SignUpService.userUniversity, this.user.userId);
 			}else{
 
 
 				console.log('before delete')
 				// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 				console.log('after delete')
-				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
-				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
-					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
-					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+				this.sendUsersService.pushDriverOnUsers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
+					this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
+					this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
 		
-					this.instances.turnOntripUsers(this.user.userId);
+					this.instances.turnOntripUsers(this.SignUpService.userUniversity,this.user.userId);
 			//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
-			  this.instances.turnOntripUsers(this.user.userId);
+			  this.instances.turnOntripUsers(this.SignUpService.userUniversity,this.user.userId);
 			  this.accepted = true;
 			  this.dismiss();
 				const toast = this.toastCtrl.create({
@@ -105,7 +105,7 @@ export class ConfirmpopupPage {
 		}else if(Object.keys(this.pickingUsers).length >= 4){
 
 
-			this.sendUsersService.removeUsersOnListRideTotal(this.userDriverUid);
+			this.sendUsersService.removeUsersOnListRideTotal(this.SignUpService.userUniversity, this.userDriverUid);
 				// this.geoFireService.cancelGeoqueryDest();
 				// this.geoFireService.cancelGeoqueryOr();
 				const alert = this.alertCtrl.create({
@@ -114,21 +114,21 @@ export class ConfirmpopupPage {
 					buttons: ['OK']
 				  });
 				  alert.present();
-				  this.instances.turnOntripUsersFalse(this.user.userId);
+				  this.instances.turnOntripUsersFalse(this.SignUpService.userUniversity, this.user.userId);
 
 			
 		}else{
 			console.log('before delete')
 				// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 				console.log('after delete')
-				this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
-				this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car,this.userDriver.about);
-					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
-					this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+				this.sendUsersService.pushPickingUpUsersOnDrivers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+				this.sendUsersService.pushDriverOnUsers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car,this.userDriver.about);
+					this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
+					this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
 		
-					this.instances.turnOntripUsers(this.user.userId);
+					this.instances.turnOntripUsers(this.SignUpService.userUniversity,this.user.userId);
 			//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
-			  this.instances.turnOntripUsers(this.user.userId);
+			  this.instances.turnOntripUsers(this.SignUpService.userUniversity, this.user.userId);
 			  this.accepted = true;
 			  this.dismiss();
 				const toast = this.toastCtrl.create({
@@ -144,14 +144,14 @@ export class ConfirmpopupPage {
 		console.log('before delete')
 			// this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
 			console.log('after delete')
-			this.sendUsersService.pushPickingUpUsersOnDrivers(this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
-			this.sendUsersService.pushDriverOnUsers(this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
-				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
-				this.geoFireService.deleteUserListRide(this.userDriverUid, this.user.userId);
+			this.sendUsersService.pushPickingUpUsersOnDrivers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.user.origin, this.user.destination, this.user.name, this.user.lastname, this.user.phone, this.user.about);
+			this.sendUsersService.pushDriverOnUsers(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId, this.locationOrigin, this.locationDestination, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone,this.userDriver.trips.price,this.userDriver.trips.car, this.userDriver.about);
+				this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
+				this.geoFireService.deleteUserListRide(this.SignUpService.userUniversity,this.userDriverUid, this.user.userId);
 	
-				this.instances.turnOntripUsers(this.user.userId);
+				this.instances.turnOntripUsers(this.SignUpService.userUniversity,this.user.userId);
 		//   this.sendUsersService.removeUsersOnListRide(this.userDriverUid, this.user.userId);
-		  this.instances.turnOntripUsers(this.user.userId);
+		  this.instances.turnOntripUsers(this.SignUpService.userUniversity,this.user.userId);
 		  this.accepted = true;
 		  this.dismiss();
 			const toast = this.toastCtrl.create({

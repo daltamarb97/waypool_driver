@@ -35,7 +35,7 @@ export class ConfirmtripPage {
     this.user= this.navParams.get('user') 
     console.log(this.user)
 
-    this.SignUpServices.getMyInfo(this.userUid)    
+    this.SignUpServices.getMyInfo(this.SignUpServices.userUniversity, this.userUid)    
 		.subscribe(driverInfo => {
       this.driver = driverInfo;
       console.log(this.driver)
@@ -47,15 +47,15 @@ export class ConfirmtripPage {
 
   }
   rejectUser(){
-    this.TripsService.eliminateLastMinuteUser(this.userUid,this.driver.keyTrip,this.user.userId);
+    this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid,this.driver.keyTrip,this.user.userId);
     console.log("nanai kukas")
 
     this.dismiss();
   }
 
   acceptUser(){  
-    this.TripsService.acceptLastMinute(this.userUid,this.driver.keyTrip,this.user);   
-    this.TripsService.eliminateLastMinuteUser(this.userUid,this.driver.keyTrip,this.user.userId); 
+    this.TripsService.acceptLastMinute(this.SignUpServices.userUniversity, this.userUid,this.driver.keyTrip,this.user);   
+    this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid,this.driver.keyTrip,this.user.userId); 
     console.log("bienvenido al combo")
     this.dismiss();
     }

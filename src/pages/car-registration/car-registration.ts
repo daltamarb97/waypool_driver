@@ -52,7 +52,7 @@ export class CarRegistrationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
-    this.SignUpService.getMyInfo(this.driver).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(user=>{
       this.driverInfo = user
       if(this.driverInfo.documents){
         if(this.driverInfo.documents.license == true ){
@@ -103,7 +103,7 @@ export class CarRegistrationPage {
 
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.SignUpService.pushDocsL(this.driver);
+      this.SignUpService.pushDocsL(this.SignUpService.userUniversity, this.driver);
       
 
      }, (err) => {
@@ -133,7 +133,7 @@ export class CarRegistrationPage {
       alert.present();
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.SignUpService.pushDocsId(this.driver);
+      this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
 
       
 

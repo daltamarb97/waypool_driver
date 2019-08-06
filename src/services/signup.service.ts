@@ -7,32 +7,40 @@ import { clearModulesForTest } from "@angular/core/src/linker/ng_module_factory_
 
 @Injectable()
 export class SignUpService {
+    
+    //gloabl variable for university identifaction
+    userUniversity:any;
+
     constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
     }
 
-   public getMyInfo(userId){
-    return this.afDB.object('drivers/'+userId).valueChanges();
+   public getMyInfo(university, userId){
+    return this.afDB.object(university + '/drivers/'+userId).valueChanges();
     }
 
-    public pushDocsL(userId){
-       this.afDB.database.ref('drivers/'+userId+'/documents').update({
+    public getUniversities(){
+        return this.afDB.list('universities/').valueChanges()
+     }
+
+    public pushDocsL(university, userId){
+       this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
            license: false
        })
     }
-    public pushDocsId(userId){
-        this.afDB.database.ref('drivers/'+userId+'/documents').update({
+    public pushDocsId(university, userId){
+        this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
             id: false
         })
      }
-     public emailVerificationMessage(user){
+     public emailVerificationMessage(university, user){
 
-        this.afDB.database.ref('/drivers/' + user).update({
+        this.afDB.database.ref(university + '/drivers/' + user).update({
             emailVerificationMessage: true
         })
     }
 
-    public getMyInfoDriver(userId){
-        return this.afDB.object('drivers/' + userId).valueChanges();
+    public getMyInfoDriver(university, userId){
+        return this.afDB.object(university + '/drivers/' + userId).valueChanges();
     }
     public getInfoUser(userId){
         return this.afDB.object('users/' + userId).valueChanges();
@@ -88,8 +96,8 @@ public addCarProfile(userUid,car){
     this.afDB.database.ref('/drivers/'+userUid+'/cars/').push(car)
 }
  
-public getCar(userId){
-    return this.afDB.list('drivers/'+ userId+'/cars').valueChanges();
+public getCar(university, userId){
+    return this.afDB.list(university + '/drivers/'+ userId+'/cars').valueChanges();
 
 }
 }

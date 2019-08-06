@@ -38,7 +38,7 @@ export class ConfirmreservationPage {
 
   
 
-      this.sendCoordsService.getPendingUsers(this.userDriverUid,this.reserveKey).takeUntil(this.unsubscribe)
+      this.sendCoordsService.getPendingUsers(this.SignUpService.userUniversity,  this.userDriverUid,this.reserveKey).takeUntil(this.unsubscribe)
         .subscribe( users => {
 			this.passengers = users;			
 			console.log(this.passengers);
@@ -47,7 +47,7 @@ export class ConfirmreservationPage {
 }
 
 		deleteUser(userId) {
-		this.sendCoordsService.eraseUser(userId,this.userDriverUid,this.reserveKey );
+		this.sendCoordsService.eraseUser(this.SignUpService.userUniversity, userId,this.userDriverUid,this.reserveKey );
  		}
 
 		 showProfilePassegner(passenger){
