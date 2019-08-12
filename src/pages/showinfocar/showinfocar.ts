@@ -20,7 +20,7 @@ color:string;
 
   constructor( public modalCtrl: ModalController,public SignupService:SignUpService,public navParams: NavParams,public viewCtrl: ViewController,public navCtrl: NavController,public toastCtrl: ToastController,  private AngularFireAuth: AngularFireAuth,private afDB: AngularFireDatabase, public SignUpService: SignUpService) {
     this.user = this.navParams.get('user')
-    this.SignUpService.getCar(this.userUid)
+    this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid)
     .subscribe( car => {
       this.carList = car;
       console.log(this.carList)
@@ -28,7 +28,7 @@ color:string;
     });
   }
   addCar(){
-this.SignUpService.addCar(this.userUid,this.carModel,this.plateNumber,this.color)    
+this.SignUpService.addCar(this.SignUpService.userUniversity, this.userUid,this.carModel,this.plateNumber,this.color)    
   }
  
   dismiss() {

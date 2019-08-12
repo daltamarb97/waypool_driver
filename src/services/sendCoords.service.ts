@@ -37,9 +37,9 @@ constructor(public afDB: AngularFireDatabase){
              
             
         }
-   public pushcoordinatesDrivers(user , dest, or){
+   public pushcoordinatesDrivers(university, user , dest, or){
      
-    this.afDB.database.ref('drivers/'+ user+'/trips').update({
+    this.afDB.database.ref(university + '/drivers/'+ user+'/trips').update({
         origin: or,
         destination: dest,
         
@@ -47,23 +47,23 @@ constructor(public afDB: AngularFireDatabase){
              
             
         }
-    public recordTripOnDriver(userUid,trip){
+    public recordTripOnDriver(university, userUid,trip){
       
 
-        this.afDB.database.ref('/drivers/'+ userUid + '/recordTrips/').push(trip);
+        this.afDB.database.ref(university+ '/drivers/'+ userUid + '/recordTrips/').push(trip);
 
     }
-    public recordTripOnUser(userDriverUid,trip){
+    public recordTripOnUser(university, userDriverUid,trip){
       
      
 
-        this.afDB.database.ref('/users/'+ userDriverUid + '/recordTrips/').push(trip);
+        this.afDB.database.ref(university + '/users/'+ userDriverUid + '/recordTrips/').push(trip);
         
     }
-    public recordTripOnWaypool(trip){ 
+    public recordTripOnWaypool(university, trip){ 
      
 
-        this.afDB.database.ref('/allTrips/').push(trip);
+        this.afDB.database.ref(university + '/allTrips/').push(trip);
         
     }
 
@@ -101,32 +101,32 @@ constructor(public afDB: AngularFireDatabase){
         })
 
     }
-    public endTripDriverPickingUsers(DriverUid){
-        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickingUsers').remove()
+    public endTripDriverPickingUsers(university, DriverUid){
+        this.afDB.database.ref(university + '/drivers/' + DriverUid+'/trips/pickingUsers').remove()
     }
 
-    public eraseChatsUsers(userId,DriverUid){
-        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickingUsers/'+userId+'/chat').remove()
+    public eraseChatsUsers(university, userId,DriverUid){
+        this.afDB.database.ref(university + 'drivers/' + DriverUid+'/trips/pickingUsers/'+userId+'/chat').remove()
     }
     
-    public endTripDriverPickedUpUsers(DriverUid){
-        this.afDB.database.ref('drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
+    public endTripDriverPickedUpUsers(university, DriverUid){
+        this.afDB.database.ref(university + '/drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
     }
     
     public endTripUserPickingUsers(userUid){
         this.afDB.database.ref('users/' + userUid+'/trips/pickingUsers').remove()
     }
-    public endTripUserPickedUpUsers(userUid){
-        this.afDB.database.ref('users/' + userUid+'/trips/pickedUpUsers').remove()
+    public endTripUserPickedUpUsers(university , userUid){
+        this.afDB.database.ref(university + '/users/' + userUid+'/trips/pickedUpUsers').remove()
     }
-    public endTripUserOnTripInstance(userUid){
-        this.afDB.database.ref('users/' + userUid+'/trips/onTrip').remove()
+    public endTripUserOnTripInstance(university, userUid){
+        this.afDB.database.ref(university + '/users/' + userUid+'/trips/onTrip').remove()
     }
-    public endTripUserPickupInstance(userUid){
-        this.afDB.database.ref('users/' + userUid+'/trips/pickedUp').remove()
+    public endTripUserPickupInstance(university, userUid){
+        this.afDB.database.ref(university + '/users/' + userUid+'/trips/pickedUp').remove()
     }
-    public endTripUserDriverListRide(userUid){
-        this.afDB.database.ref('users/' + userUid+'/trips/driverListRide').remove()
+    public endTripUserDriverListRide(university, userUid){
+        this.afDB.database.ref(university + '/users/' + userUid+'/trips/driverListRide').remove()
     }
     public pickUp(DriverUid,userId,user){
        
@@ -186,8 +186,8 @@ constructor(public afDB: AngularFireDatabase){
         });
     }
 
-    public pushOnTripFinalUser(userId){
-        this.afDB.database.ref('/users/'+ userId ).update({
+    public pushOnTripFinalUser(university, userId){
+        this.afDB.database.ref(university + '/users/'+ userId ).update({
             onTripFinal: true
         });
     }

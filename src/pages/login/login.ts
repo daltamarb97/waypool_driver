@@ -7,6 +7,7 @@ import { authenticationService } from '../../services/driverauthentication.servi
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignUpService } from '../../services/signup.service';
+import { Http } from '@angular/http';
 // import * as firebase from 'firebase';
 // import { SignUpService } from '../../services/signup.service';
 
@@ -23,6 +24,7 @@ export class LoginPage {
     auth = this.AngularFireAuth.auth;
     receivedUser;
     private loginGroup: FormGroup;
+    driverInfo:any;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
   constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService,  public platform: Platform) {
@@ -31,7 +33,23 @@ export class LoginPage {
         password: ["", Validators.required]
     })
 
+    if(this.auth.currentUser){
+        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.auth.currentUser.uid).subscribe(driver => {
+            this.driverInfo = driver;
+        })
+    }
     
+    if(this.driverInfo){
+        if(this.auth.currentUser.emailVerified === false){
+            const alert = this.alertCtrl.create({
+                title: 'VERIFICA TU EMAIL',
+                subTitle: 'te hemos enviado un email de verificación a tu correo ',
+                buttons: ['OK']
+              });
+              alert.present();
+        }
+    }
+      
 }
 
   

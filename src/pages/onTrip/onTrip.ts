@@ -48,14 +48,14 @@ export class OnTripPage {
   });
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
-    this.sendUsersService.getPickUpUsers(this.useruid)
+    this.sendUsersService.getPickUpUsers(this.SignupService.userUniversity, this.useruid)
     .subscribe( user => {
     
       this.pickedUpUsers = user;
       console.log(this.pickedUpUsers);
       
     });
-    this.SignUpService.getMyInfoDriver(this.useruid)
+    this.SignUpService.getMyInfoDriver(this.SignupService.userUniversity, this.useruid)
 		.subscribe(userDriver => {
 			this.driver = userDriver;
 			console.log(this.driver);
@@ -63,7 +63,7 @@ export class OnTripPage {
   }
   
   ionViewDidLoad(){ 
-    this.sendCoordsService.getDestination(this.useruid)
+    this.sendCoordsService.getDestination(this.SignupService.userUniversity, this.useruid)
     .subscribe( destination => {
       this.destinationOnTrip = destination;
       console.log(this.destinationOnTrip)
@@ -250,24 +250,24 @@ export class OnTripPage {
         
 
       //erase chat message for every user
-      this.sendCoordsService.eraseChatsUsers(user.userId,this.useruid);  
+      this.sendCoordsService.eraseChatsUsers(this.SignupService.userUniversity, user.userId,this.useruid);  
 
       // save trip in every record of every users
-      this.sendCoordsService.recordTripOnUser(user.userId,user); 
+      this.sendCoordsService.recordTripOnUser(this.SignupService.userUniversity, user.userId,user); 
 
       // this.sendCoordsService.endTripUserPickingUsers(user.userId);
-      this.sendCoordsService.endTripUserPickedUpUsers(user.userId);
-      this.sendCoordsService.endTripUserOnTripInstance(user.userId);
-      this.sendCoordsService.endTripUserPickupInstance(user.userId);
-      this.sendCoordsService.endTripUserDriverListRide(user.userId);      
-      this.sendCoordsService.pushOnTripFinalUser(user.userId);
+      this.sendCoordsService.endTripUserPickedUpUsers(this.SignupService.userUniversity, user.userId);
+      this.sendCoordsService.endTripUserOnTripInstance(this.SignupService.userUniversity, user.userId);
+      this.sendCoordsService.endTripUserPickupInstance(this.SignupService.userUniversity, user.userId);
+      this.sendCoordsService.endTripUserDriverListRide(this.SignupService.userUniversity, user.userId);      
+      this.sendCoordsService.pushOnTripFinalUser(this.SignupService.userUniversity, user.userId);
       })
        //Save trip into RecordTrip on User & Driver
-      this.sendCoordsService.recordTripOnWaypool(this.driver.trips);
-      this.sendCoordsService.recordTripOnDriver(this.useruid,this.driver.trips);        
+      this.sendCoordsService.recordTripOnWaypool(this.SignupService.userUniversity, this.driver.trips);
+      this.sendCoordsService.recordTripOnDriver(this.SignupService.userUniversity, this.useruid,this.driver.trips);        
        //End trip into RecordTrip on User & Driver
-      this.sendCoordsService.endTripDriverPickingUsers(this.useruid);
-      this.sendCoordsService.endTripDriverPickedUpUsers(this.useruid);
+      this.sendCoordsService.endTripDriverPickingUsers(this.SignupService.userUniversity, this.useruid);
+      this.sendCoordsService.endTripDriverPickedUpUsers(this.SignupService.userUniversity, this.useruid);
 
       
       

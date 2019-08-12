@@ -115,8 +115,8 @@ setGeofireDestNEWTEST(university, key, lat, lng){
 }
 
 
-setGeofireOrOnTrip(key, lat, lng){
-  this.dbRef = this.afDB.database.ref('geofireOrTrip/' );
+setGeofireOrOnTrip(university, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(university + '/geofireOrTrip/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -128,8 +128,8 @@ setGeofireOrOnTrip(key, lat, lng){
    
 }
 
-setGeofireDestOnTrip(key, lat, lng){
-  this.dbRef = this.afDB.database.ref('geofireDestTrip/' );
+setGeofireDestOnTrip(university, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(university + '/geofireDestTrip/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -222,8 +222,8 @@ public onTripUserListRide(driverId, userId){
   });
 }
 
-deleteUserGeofireDest(userId){
-  this.afDB.database.ref('geofireDest/' + userId).remove().then(()=>{
+deleteUserGeofireDest(university, userId){
+  this.afDB.database.ref(university + '/geofireDest/' + userId).remove().then(()=>{
       console.log("succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -232,8 +232,8 @@ deleteUserGeofireDest(userId){
   
 }
 
-deleteUserGeofireOr(userId){
-  this.afDB.database.ref('geofireOr/' + userId).remove().then(()=>{
+deleteUserGeofireOr(university, userId){
+  this.afDB.database.ref(university + '/geofireOr/' + userId).remove().then(()=>{
       console.log("succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -292,14 +292,14 @@ setGeofireUniversity(university, radius:number, lat, lng, driverId):void{
     radius: radius
   })
 
-  this.keyEnteredUniversity(driverId);
+  this.keyEnteredUniversity(university, driverId);
 
 console.log('geoquery university added');
 }
 
-keyEnteredUniversity(driverId){
+keyEnteredUniversity(university, driverId){
   this.geoqueryU.on("key_entered", function(key){
-   this.afDB.database.ref('/drivers/' + driverId ).update({
+   this.afDB.database.ref(university + '/drivers/' + driverId ).update({
      geofireOrigin: true
    }).then(()=>{
      console.log('geofireOrigin = true');

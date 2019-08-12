@@ -8,27 +8,27 @@ import { elementClass } from "@angular/core/src/render3/instructions";
 export class TripsService {
     constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
     }
-      public getTrip(keyTrip,driverUid){
+      public getTrip(university, keyTrip,driverUid){
               //get trip in Trip's node
-              return  this.afDB.object('/trips/'+driverUid+'/'+ keyTrip).valueChanges();
+              return  this.afDB.object(university + '/trips/'+driverUid+'/'+ keyTrip).valueChanges();
           } 
-      public getPendingUsers(keyTrip,driverUid){
+      public getPendingUsers(university, keyTrip,driverUid){
             //get trip in Trip's node
-            return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers').valueChanges();
+            return  this.afDB.list(university + '/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers').valueChanges();
         } 
-      public getLastMinuteUsers(keyTrip,driverUid){
+      public getLastMinuteUsers(university, keyTrip,driverUid){
           //get trip in Trip's node
-          return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/lastMinuteUsers').valueChanges();
+          return  this.afDB.list(university + '/trips/'+driverUid+'/'+ keyTrip+'/lastMinuteUsers').valueChanges();
       } 
-      public getPickedUpUsers(keyTrip,driverUid){
+      public getPickedUpUsers(university, keyTrip,driverUid){
           //get trip in Trip's node
-          return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pickedUpUsers').valueChanges();
+          return  this.afDB.list(university + '/trips/'+driverUid+'/'+ keyTrip+'/pickedUpUsers').valueChanges();
       } 
 
-       public startTrip(keyTrip,driverUid,trip){
+       public startTrip(university, keyTrip,driverUid,trip){
                 //create a trip in Trip's node in database
-              this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update(trip);
-              this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
+              this.afDB.database.ref(university+ '/trips/'+driverUid+'/'+ keyTrip).update(trip);
+              this.afDB.database.ref(university+ '/trips/'+driverUid+'/'+ keyTrip).update({
                 onTrip:true
               });
           }   
@@ -42,76 +42,77 @@ export class TripsService {
           //eliminate the user from pendingUsers
             this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip +'/lastMinuteUsers/'+ userId).remove();
       }
-          public deleteReserve(keyTrip,driverUid){
-            this.afDB.database.ref('/reserves/'+driverUid+'/'+ keyTrip).remove();
+          public deleteReserve(university, keyTrip,driverUid){
+            this.afDB.database.ref(university + '/reserves/'+driverUid+'/'+ keyTrip).remove();
 
           }
-        public pushKeyInDriver(keyTrip,DriverUid){
+        public pushKeyInDriver(university, keyTrip,DriverUid){
           //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
-        this.afDB.database.ref('/drivers/'+ DriverUid).update({
+        this.afDB.database.ref(university + '/drivers/'+ DriverUid).update({
           keyTrip:keyTrip
         });
 
     }  
-    public pushOnTripInDriver(DriverUid){
+    public pushOnTripInDriver(university, DriverUid){
       //push a onTrip in Driver's node
-    this.afDB.database.ref('/drivers/'+ DriverUid).update({
+    this.afDB.database.ref(university+ '/drivers/'+ DriverUid).update({
       onTrip:true
     });
   }
-      public eliminatePendingUsers(keyTrip,driverUid,userId){  
+      public eliminatePendingUsers(university, keyTrip,driverUid,userId){  
 
           //eliminate the user from pendingUsers
-            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+ userId).remove();
+            this.afDB.database.ref(university+ '/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+ userId).remove();
       }
-      public pickUp(keyTrip,driverUid,userId,user){
+      public pickUp(university, keyTrip,driverUid,userId,user){
        
 
         // add the driver to pickedUpUsers 
-        this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/pickedUpUsers/'+ userId).update(user);
+        this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip +'/pickedUpUsers/'+ userId).update(user);
  
      }
 
-     public timeFinishedTrip(keyTrip,driverUid,date){
+     public timeFinishedTrip(university, keyTrip,driverUid,date){
       //set time when driver go to destination 
 
-          this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
+          this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip).update({
             DestinationTime:date
           });
           }
-          public endTrip(keyTrip,driverUid){          
+
+          public endTrip(university, keyTrip,driverUid){          
              //erase trip in trip's node
-            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).remove();
+            this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip).remove();
         }
-        public setOnTripFalse(driverUid){           
+        public setOnTripFalse(university, driverUid){           
           // set false to onTrip instance in driver's node
-          this.afDB.database.ref('/drivers/'+driverUid).update({
+          this.afDB.database.ref(university + '/drivers/'+driverUid).update({
             onTrip:false
           });  
         }
-        public saveTripUser(driverUid,keyTrip){           
+        public saveTripUser(university, driverUid,keyTrip){           
           // this instance allows the user to save the trip in his records
-          this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
+          this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip).update({
             saveTrip:true
           });  
         }
-        public eraseKeyTrip(driverUid){           
+        public eraseKeyTrip(university, driverUid){           
           // erase keyTrip in driver's node
-          this.afDB.database.ref('drivers/' + driverUid +'/keyTrip').remove();
+          this.afDB.database.ref(university + '/drivers/' + driverUid +'/keyTrip').remove();
         }
-        public cancelUserFromTrip(driverUid,keyTrip,userId){ 
+        public cancelUserFromTrip(university, driverUid,keyTrip,userId){ 
           // save user in cancelUsers array
-            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/cancelUsers/'+userId).update({
+            this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip +'/cancelUsers/'+userId).update({
               userId:userId
             });            
           //eliminate the user from pendingUsers
           this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+userId).remove();  
           
         }
-        public saveTripOnRecords(driverUid,trip){
+        public saveTripOnRecords(university, driverUid,trip){
           //save trip in recordTrips
           
-        this.afDB.database.ref('/drivers/'+driverUid+'/recordTrips/').push(trip);
+        this.afDB.database.ref(university + '/drivers/'+driverUid+'/recordTrips/').push(trip);
    
        }
   

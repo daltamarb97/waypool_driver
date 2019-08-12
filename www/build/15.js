@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 598:
+/***/ 599:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MorePageModule", function() { return MorePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(752);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(754);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,42 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MorePageModule = /** @class */ (function () {
-    function MorePageModule() {
+var LoginPageModule = /** @class */ (function () {
+    function LoginPageModule() {
     }
-    MorePageModule = __decorate([
+    LoginPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */],
+                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__more__["a" /* MorePage */]
+                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
             ]
         })
-    ], MorePageModule);
-    return MorePageModule;
+    ], LoginPageModule);
+    return LoginPageModule;
 }());
 
-//# sourceMappingURL=more.module.js.map
+//# sourceMappingURL=login.module.js.map
 
 /***/ }),
 
-/***/ 752:
+/***/ 754:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MorePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(190);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,58 +64,121 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// import { UploadPage } from '../upload/upload';
 
 
 
 
-var MorePage = /** @class */ (function () {
-    function MorePage(navCtrl, modalCtrl, AngularFireAuth, authenticationService, SignupService, app) {
+// import * as firebase from 'firebase';
+// import { SignUpService } from '../../services/signup.service';
+var LoginPage = /** @class */ (function () {
+    // userFirebase = this.AngularFireAuth.auth.currentUser;
+    function LoginPage(navCtrl, authenticationService, alertCtrl, AngularFireAuth, navParams, formBuilder, SignUpService, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.modalCtrl = modalCtrl;
-        this.AngularFireAuth = AngularFireAuth;
         this.authenticationService = authenticationService;
-        this.SignupService = SignupService;
-        this.app = app;
-        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.user = {};
-        this.SignupService.getMyInfoForProfile(this.userUid).subscribe(function (user) {
-            _this.user = user;
-            console.log(_this.user);
+        this.alertCtrl = alertCtrl;
+        this.AngularFireAuth = AngularFireAuth;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.SignUpService = SignUpService;
+        this.platform = platform;
+        this.email = '';
+        this.auth = this.AngularFireAuth.auth;
+        this.loginGroup = this.formBuilder.group({
+            email: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
+            password: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required]
         });
+        if (this.auth.currentUser) {
+            this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.auth.currentUser.uid).subscribe(function (driver) {
+                _this.driverInfo = driver;
+            });
+        }
+        if (this.driverInfo) {
+            if (this.auth.currentUser.emailVerified === false) {
+                var alert_1 = this.alertCtrl.create({
+                    title: 'VERIFICA TU EMAIL',
+                    subTitle: 'te hemos enviado un email de verificación a tu correo ',
+                    buttons: ['OK']
+                });
+                alert_1.present();
+            }
+        }
     }
-    MorePage.prototype.profile = function () {
-        this.app.getRootNav().push('ProfilePage');
+    LoginPage.prototype.signup = function () {
+        this.navCtrl.push('SignupPage');
     };
-    MorePage.prototype.showInfoCars = function () {
-        var modal = this.modalCtrl.create('ShowInfoCarPage', { user: this.user });
-        modal.present();
+    ;
+    LoginPage.prototype.resetPassword = function (email) {
+        if (this.loginGroup.controls['email'].value == '') {
+            var alert_2 = this.alertCtrl.create({
+                title: 'no hay ningun email',
+                subTitle: 'ingresa un email para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert_2.present();
+            console.log("reset password email hasn't been sent");
+        }
+        else {
+            this.auth.sendPasswordResetEmail(this.loginGroup.controls['email'].value);
+            var alert_3 = this.alertCtrl.create({
+                title: 'revisa tu email',
+                subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert_3.present();
+            console.log("reset password email has been sent");
+        }
+        ;
     };
-    MorePage.prototype.terms = function () {
-        this.navCtrl.push('TermsPage');
+    ;
+    LoginPage.prototype.logIn = function () {
+        var _this = this;
+        this.receivedUser = this.navParams.data;
+        var email = this.loginGroup.controls['email'].value;
+        var password = this.loginGroup.controls['password'].value;
+        this.authenticationService.loginWithEmail(email, password).then(function (data) {
+            console.log(data);
+            if (data.user.emailVerified == false) {
+                var alert_4 = _this.alertCtrl.create({
+                    title: 'Oops!',
+                    subTitle: 'por favor verifica tu email',
+                    buttons: ['OK']
+                });
+                alert_4.present();
+            }
+            else {
+                var metadata = _this.auth.currentUser.metadata;
+                if (metadata.creationTime == metadata.lastSignInTime) {
+                    console.log(metadata.creationTime);
+                    console.log(metadata.lastSignInTime);
+                    _this.navCtrl.push('CarRegistrationLoginPage');
+                }
+                else {
+                    _this.navCtrl.push('TabsPage');
+                }
+                _this.authenticationService.getStatus;
+            }
+            ;
+        }).catch(function (error) {
+            var alert = _this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'El usuario o la contraseña están incorrectas',
+                buttons: ['OK']
+            });
+            alert.present();
+            console.log(error);
+        });
     };
-    MorePage.prototype.help = function () {
-        this.navCtrl.push('HelpPage');
-    };
-    MorePage.prototype.logout = function () {
-        this.authenticationService.logOut();
-        console.log(__WEBPACK_IMPORTED_MODULE_3_firebase__["auth"]().currentUser);
-        this.app.getRootNav().push('LoginPage');
-    };
-    MorePage.prototype.docs = function () {
-        this.app.getRootNav().push('CarRegistrationPage');
-    };
-    MorePage = __decorate([
+    LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-more',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/more/more.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">PERFIL</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light" >\n    <ion-item>\n        \n                <ion-avatar item-start>\n                        <img src="assets/imgs/userPicture.png">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname |titlecase}}\n                            <ion-icon name="ios-checkmark-circle" class="text-theme"></ion-icon>\n                        </h2>\n                        <p (click)="profile()">Editar Perfil</p>\n                    </div>\n        \n        \n        \n    </ion-item>\n\n    <ion-list no-lines>\n        <!-- <button ion-item (click)="reviews()">\n            <ion-avatar item-start>\n                <ion-icon name="ios-star"></ion-icon>\n            </ion-avatar>\n            Mis calificaciones (Próximamente)\n        </button> -->\n        <button ion-item (click)="showInfoCars()">\n            <ion-avatar item-start>\n                <ion-icon name="car"></ion-icon>\n            </ion-avatar>\n            Mis Vehículos        </button>\n        <button ion-item (click)="terms()">\n            <ion-avatar item-start>\n                <ion-icon name="md-paper"></ion-icon>\n            </ion-avatar>\n            Terminos y Condiciones\n        </button>\n        <button ion-item (click)="docs()">\n            <ion-avatar item-start>\n                <ion-icon name="md-paper"></ion-icon>\n            </ion-avatar>\n            Tus documentos\n        </button>\n        <!-- <button ion-item (click)="earn()">\n            <ion-avatar item-start>\n                <ion-icon name="md-share"></ion-icon>\n            </ion-avatar>\n            Refiérenos y Ganas (Próximamente)\n        </button>\n        <button ion-item (click)="ratevroom()">\n            <ion-avatar item-start>\n                <ion-icon name="md-thumbs-up"></ion-icon>\n            </ion-avatar>\n            Cálifica a Waypool (Próximamente)\n        </button> -->\n        <button ion-item (click)="help()">\n            <ion-avatar item-start>\n                <ion-icon name="md-alert"></ion-icon>\n            </ion-avatar>\n           Soporte \n        </button>\n    </ion-list>\n  \n    \n    <ion-list no-lines>\n        <button ion-item (click)="logout()" text-center><h2 class="text-theme"><strong>Salir de mi cuenta</strong></h2></button>\n\n    </ion-list>\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/more/more.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/login/login.html"*/'<ion-header class="transparent">\n    <ion-navbar hide-tabs>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div class="logo">\n        <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n    </div>\n\n<div class="bg-white login">\n    <div class="">\n     <div [formGroup]="loginGroup" >\n        <ion-list class="form">\n            <ion-item>\n                <ion-label></ion-label>\n                <ion-input type="email"  text-right  formControlName="email" placeholder= "email universitario"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label></ion-label>\n                <ion-input type="password" text-right  formControlName="password" placeholder= "Tú contraseña"></ion-input>\n            </ion-item>\n        </ion-list>\n    </div>\n    <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()" [disabled]="!loginGroup.valid">ENTRAR</button>\n\n\n            <ion-row style="padding-top: 8px;">\n                <ion-col class="col"(click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>\n                <ion-col text-right (click)="resetPassword(email)"><small>Olvidaste tu <strong class="text-theme"> contraseña?</strong></small></ion-col>\n            </ion-row>\n\n\n        </div>\n\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/login/login.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
-    ], MorePage);
-    return MorePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
+    ], LoginPage);
+    return LoginPage;
 }());
 
-//# sourceMappingURL=more.js.map
+//# sourceMappingURL=login.js.map
 
 /***/ })
 

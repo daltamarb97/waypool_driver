@@ -18,7 +18,7 @@ export class MorePage {
      userUid=this.AngularFireAuth.auth.currentUser.uid;
      user:any={};
      constructor(public navCtrl: NavController,public modalCtrl: ModalController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService, public app: App) {
-          this.SignupService.getMyInfoForProfile(this.userUid).subscribe(user=>{
+          this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).subscribe(user=>{
           this.user= user;
             console.log(this.user)
         })

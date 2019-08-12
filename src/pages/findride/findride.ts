@@ -102,78 +102,47 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
-    
-    // set geofire key of university to avoid asking users to put where they are going
-    this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
-      this.university = university
-      this.locationUniversity = this.university.location;
-      this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-    })
 
   }
  
   ionViewDidLoad(){
-    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-      this.userInfo = user;
-      if(this.userInfo.emailVerificationMessage !== true){
+    this.AngularFireAuth.auth.onAuthStateChanged(user=>{
+      if(user.emailVerified == false){
         const alert = this.alertCtrl.create({
-          title: 'VERIFICA TU EMAIL',
-          subTitle: 'te hemos enviado un correo de verificación. Sigue los pasos del correo para empezar a disfrutar de Waypool.',
+          title: 'Por favor verifica tu email',
+          subTitle: 'Estas casi listo para empezar a disfrutar de Waypool',
           buttons: ['OK']
         });
-        alert.present();
-        this.SignUpService.emailVerificationMessage(this.SignUpService.userUniversity, this.user);
-      }else{
-  
+        alert.present(); 
       }
     })
-/// DEPRECATED 
+    if(this.SignUpService.userUniversity == undefined){
 
-    // this.doGeoquery = true;
-    // if(this.doGeoquery === true){
-    //   //here I will try to make the geofire lasts until it is deleted 
-    // this.sendUsersService.getTripsOfReserves(this.user).subscribe(reserves=>{
-    //   this.reserves = reserves;
+      let modal = this.modalCtrl.create('ConfirmUniversityPage');
+      modal.onDidDismiss(readyToStart =>{
+        if(readyToStart){
+            // set geofire key of university to avoid asking users to put where they are going
+            this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
+              this.university = university
+              this.locationUniversity = this.university.location;
+              this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+            })
 
-    //   console.log(this.reserves);
 
-    //   this.reserves.forEach(reserve=>{
-    //     if(reserve.type === 'origin'){
-    //     this.geocoder.geocode({'address': reserve.origin[0][0]}, (results, status)=>{
-    //       if(status==='OK'){
-    //         this.geocoordinatesOr={
-    //           lat:results[0].geometry.location.lat(),
-    //           lng: results[0].geometry.location.lng()
-    //         }
-    //       }
-    //        // turn geofire On
-    //           this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
-    //           console.log('executed geoquery Or in constructor findride')
-    //   })
-    //     }else if(reserve.type === 'destination'){
-    //         // geocoding of addresses that came from findRide
-    //     this.geocoder.geocode({'address': reserve.destination[0][0]}, (results, status)=>{
-    //       if(status==='OK'){
-    //         this.geocoordinatesDest={
-    //           lat:results[0].geometry.location.lat(),
-    //           lng: results[0].geometry.location.lng()
-    //         }
-    //       }
-    //        // turn geofire On
-    //           this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, reserve.geofireKey ,this.user, reserve.keyTrip)
-    //           console.log('executed geoquery Dest in constructor findride')
-    //   })
-    //     }
-    //   })
-    // })
-    // }
+            this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
+              this.userInfo = user;
+            })
+        }
+      })
+      modal.present();
+
+    }
 
     this.loadMap();
   }
+
  
   loadMap(){
-
-  
 
  // this gets current position and set the camera of the map and put a marker in your location
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
@@ -462,8 +431,7 @@ geocodeLatLng(latLng,inputName) {
                 this.directionsDisplay.setDirections({routes: []});
                 this.loadMap();
                } else {
-                this.sendCoordsService.pushcoordinatesDrivers(this.user,this.desFirebase,this.orFirebase)
-              //se hara la geocerca y mostraran hasta 4 users q hayan escogido al driver, despues se le preguntara a dichos users que si tienen direccion, si tienen se le deja pasaral driver y si no no.
+                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
        
                 this.geoInfo1 = this.myLatLng;
                 console.log(this.geoInfo1);

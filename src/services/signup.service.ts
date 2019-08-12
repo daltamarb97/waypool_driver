@@ -42,58 +42,59 @@ export class SignUpService {
     public getMyInfoDriver(university, userId){
         return this.afDB.object(university + '/drivers/' + userId).valueChanges();
     }
-    public getInfoUser(userId){
-        return this.afDB.object('users/' + userId).valueChanges();
+    public getInfoUser(university, userId){
+        return this.afDB.object(university+ '/users/' + userId).valueChanges();
     }
-    public async saveUser(user){
-        this.afDB.database.ref('drivers/'+ user.userId).update(user);
-        this.afDB.database.ref('users/'+ user.userId).update(user);
+    
+    public async saveUser(university, user){
+        this.afDB.database.ref(university + '/drivers/'+ user.userId).update(user);
+        this.afDB.database.ref(university + '/users/'+ user.userId).update(user);
 
     }
 
     
-    public getMyInfoForProfile(userId){
-        return this.afDB.object('drivers/'+ userId).valueChanges();
+    public getMyInfoForProfile(university, userId){
+        return this.afDB.object(university + '/drivers/'+ userId).valueChanges();
         }
 
         
-public saveInfoProfilePhone(userUid,phone){
+public saveInfoProfilePhone(university, userUid,phone){
    //permite configurar la información del perfil
-this.afDB.database.ref('/drivers/'+ userUid).update({
+this.afDB.database.ref(university + '/drivers/'+ userUid).update({
     phone:phone
     });
 }
 
-public saveInfoProfileAbout(userUid,about){
+public saveInfoProfileAbout(university, userUid,about){
     //permite configurar la información del perfil
- this.afDB.database.ref('/drivers/'+ userUid).update({
+ this.afDB.database.ref(university + '/drivers/'+ userUid).update({
      about:about 
      });
  }
 
- public saveInfoProfileUrl(userUid,url){
+ public saveInfoProfileUrl(university, userUid,url){
     //permite configurar la información del perfil
- this.afDB.database.ref('/drivers/'+ userUid).update({
+ this.afDB.database.ref(university + '/drivers/'+ userUid).update({
      url:url
      });
  }
 
 
-public deleteAccount(userUid){
-    this.afDB.database.ref('/drivers/'+userUid).remove();
-    this.afDB.database.ref('/users/'+userUid).remove();
+public deleteAccount(university, userUid){
+    this.afDB.database.ref(university + '/drivers/'+userUid).remove();
+    this.afDB.database.ref(university + '/users/'+userUid).remove();
 }
 
-public addCar(userUid,carModel,plateNumber,color){
-    this.afDB.database.ref('/drivers/'+userUid+'/cars/').push({
+public addCar(university, userUid,carModel,plateNumber,color){
+    this.afDB.database.ref(university + '/drivers/'+userUid+'/cars/').push({
         carModel:carModel,
         plateNumber:plateNumber,
         color:color
     })
 }
 
-public addCarProfile(userUid,car){
-    this.afDB.database.ref('/drivers/'+userUid+'/cars/').push(car)
+public addCarProfile(university, userUid,car){
+    this.afDB.database.ref(university + '/drivers/'+userUid+'/cars/').push(car)
 }
  
 public getCar(university, userId){

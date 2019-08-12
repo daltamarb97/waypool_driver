@@ -25,7 +25,7 @@ title = 'calificacion de viaje';
   }
   
   sendEmail() {
-    this.sendfeedback.sendFeedback(this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
+    this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
     // this.geofireService.cancelGeoqueryDest();
     // this.geofireService.cancelGeoqueryOr();
 

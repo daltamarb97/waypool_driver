@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 602:
+/***/ 608:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RatetripPageModule", function() { return RatetripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationNumberPageModule", function() { return VerificationNumberPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ratetrip__ = __webpack_require__(758);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(763);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,58 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RatetripPageModule = /** @class */ (function () {
-    function RatetripPageModule() {
+var VerificationNumberPageModule = /** @class */ (function () {
+    function VerificationNumberPageModule() {
     }
-    RatetripPageModule = __decorate([
+    VerificationNumberPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]
+                __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]
             ]
         })
-    ], RatetripPageModule);
-    return RatetripPageModule;
+    ], VerificationNumberPageModule);
+    return VerificationNumberPageModule;
 }());
 
-//# sourceMappingURL=ratetrip.module.js.map
+//# sourceMappingURL=verification-number.module.js.map
 
 /***/ }),
 
-/***/ 615:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(32));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9kYXRhYmFzZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLDRDQUF1QyJ9
-
-/***/ }),
-
-/***/ 758:
+/***/ 763:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RatetripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationNumberPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(615);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_email_composer_ngx__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_sendFeedback_service__ = __webpack_require__(339);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(190);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -84,45 +66,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-var RatetripPage = /** @class */ (function () {
-    function RatetripPage(navCtrl, navParams, emailComposer, SignUpServices, afDB, SignUpService, AngularFireAuth, sendfeedback, geofireService) {
+var VerificationNumberPage = /** @class */ (function () {
+    function VerificationNumberPage(navCtrl, navParams, modalCtrl, authenticationService, alertCtrl, AngularFireAuth, signUpService, app) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.emailComposer = emailComposer;
-        this.SignUpServices = SignUpServices;
-        this.afDB = afDB;
-        this.SignUpService = SignUpService;
+        this.modalCtrl = modalCtrl;
+        this.authenticationService = authenticationService;
+        this.alertCtrl = alertCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.sendfeedback = sendfeedback;
-        this.geofireService = geofireService;
-        this.userDriverUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.userDriver = {};
-        this.title = 'calificacion de viaje';
-        this.today = Date.now();
-        this.userDriver = this.navParams.get('user');
+        this.signUpService = signUpService;
+        this.app = app;
+        this.userId = this.navParams.get('userId');
     }
-    RatetripPage.prototype.sendEmail = function () {
-        this.sendfeedback.sendFeedback(this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-        // this.geofireService.cancelGeoqueryDest();
-        // this.geofireService.cancelGeoqueryOr();
+    VerificationNumberPage.prototype.code = function () {
+        var _this = this;
+        this.authenticationService.sendVerificationCodeToFirebase(this.signUpService.userUniversity, this.userId, this.confText);
+        this.signUpService.getMyInfo(this.signUpService.userUniversity, this.userId).subscribe(function (driver) {
+            _this.driverInfo = driver;
+            if (_this.driverInfo.verificationCodeApproval === true) {
+                _this.app.getRootNav().push('LoginPage');
+            }
+        });
+        // this.app.getRootNav().push('LoginPage');
     };
-    RatetripPage.prototype.ionViewWillLeave = function () {
-        // this.geofireService.cancelGeoqueryDest();
-        // this.geofireService.cancelGeoqueryOr();
-    };
-    RatetripPage = __decorate([
+    VerificationNumberPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ratetrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>Viaje Finalizado</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <ion-card class="slip">\n        <div text-center>\n            <h4 class="text-dark">¡Esperamos que hayas tenido un excelente viaje!</h4>\n            <p class="text-light">{{today | date}}\n\n        </p>\n            <h1 class="text-theme">$ {{userDriver.trips.price}}</h1>\n            <h4 class="text-dark">Podrás ver tu pago en el ícono<br>Ganancias</h4>\n        </div>\n    </ion-card>\n    <ion-card class="rate">\n        <div text-center>\n                <h4 class="text-dark">Cuéntanos {{userDriver.name}} como ha sido la experiencia con Waypool</h4>\n\n           \n            <div class="driver">\n                \n                <div class="form">\n                    <ion-list no-lines>\n                        <ion-item>\n                            <ion-textarea [(ngModel)]="experience" type="text" placeholder="Déjanos tu sugerencia" ></ion-textarea>\n                        </ion-item>\n                    </ion-list>\n                </div>\n\n\n                <p padding-top><button navPop (click)="sendEmail()" class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>\n            </div>\n        </div>\n    </ion-card>\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/
+            selector: 'page-verification-number',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/'<ion-header class="transparent">\n  <ion-navbar>\n      <ion-title><span class="text-white">verification</span></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n  <div class="logo">\n      <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n  </div>\n  <div class="bg-white login">\n      <div class="">\n          <p padding text-center>Ingresa el código de confirmación<br>enviado a tu SMS!</p>\n          <br>\n          <ion-list class="form" text-center>\n              <ion-item>\n                  <ion-input type="text" [(ngModel)]=\'confText\' text-right></ion-input>\n              </ion-item>\n          </ion-list>\n          <button ion-button full class="bg-theme text-white btn rounded" (click)="code()">Next</button>\n      </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_email_composer_ngx__["a" /* EmailComposer */], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_6__services_sendFeedback_service__["a" /* sendFeedbackService */], __WEBPACK_IMPORTED_MODULE_7__services_geofire_services__["a" /* geofireService */]])
-    ], RatetripPage);
-    return RatetripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
+    ], VerificationNumberPage);
+    return VerificationNumberPage;
 }());
 
-//# sourceMappingURL=ratetrip.js.map
+//# sourceMappingURL=verification-number.js.map
 
 /***/ })
 

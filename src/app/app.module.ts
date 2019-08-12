@@ -51,6 +51,7 @@ import { sendFeedbackService } from '../services/sendFeedback.service';
 import { ChatsService } from '../services/chat.service';
 import { TripsService } from '../services/trips.service';
 import { MbscModule } from '@mobiscroll/angular-lite';
+import { WindowService } from '../services/window.service';
 
 
 export const firebaseConfig = {
@@ -108,7 +109,8 @@ export const firebaseConfig = {
     EmailComposer,
     sendFeedbackService,
     ChatsService,
-    TripsService
+    TripsService,
+    WindowService
 
   ]
 })

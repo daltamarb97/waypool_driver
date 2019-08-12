@@ -13,8 +13,9 @@ import { SignUpService } from '../../services/signup.service';
 import { AlertController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { WindowService } from '../../services/window.service';
 // import * as firebase from 'firebase';
-
+import * as firebase from 'firebase';
 
 
 @IonicPage()
@@ -22,6 +23,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
+
 export class SignupPage {
 
     @ViewChild(Content) content: Content;
@@ -39,7 +41,11 @@ export class SignupPage {
     showReadonly:boolean = true;
     onlyEmail:any;
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams) {
+
+    windowRef:any;
+    verificationCode:string;
+    
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -60,6 +66,8 @@ export class SignupPage {
         console.log(this.universities);
     })
   }
+
+  
 
   onChange(){
     this.showReadonly = true;
@@ -115,12 +123,49 @@ export class SignupPage {
             name: userName,
             lastname: userLastName,
             email: userEmailComplete,
-            phone: userPhone,
+            phone: '+57'+userPhone,
             university: userUniversity
         };
+
+
+        this.SignUpService.userUniversity = userUniversity;
         
           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
-            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).catch((error)=>{
+            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(() =>{
+                if(!this.user.userId){
+                    this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                        if(user){
+                                   user.getIdToken().then((token)=>{
+                                   this.user.tokenId = token;
+    
+                                })
+                             if(!this.user.userId){
+                                this.user.userId = user.uid;
+                            }
+                            this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
+                            this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
+                            //send text message with code
+                            this.sendVerificationCode(this.user.userId);
+                        }else{
+                            console.log('there is no user');
+                        }
+                    })
+                };
+    
+                //sending email verification and verifying weather email is verified or not
+                this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
+                    if(user){
+                        if(user.emailVerified == false){
+                            user.sendEmailVerification();
+                        console.log("verification email has been sent");
+                        }else{
+                            console.log("verification email has not been sent or the email is already verifyied");
+                        }
+                    }else{
+                        console.log('there is no user');
+                    }
+                }) 
+            }).catch((error)=>{
                 if(error.code === "auth/email-already-in-use"){
                     const alert = this.alertCtrl.create({
                         title: 'ya existe una cuenta con este correo',
@@ -130,40 +175,7 @@ export class SignupPage {
                       alert.present(); 
                 }
             })
-            this.navCtrl.push('LoginPage', this.user);
-        
-            if(!this.user.userId){
-                this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
-                    if(user){
-                               user.getIdToken().then((token)=>{
-                               this.user.tokenId = token;
-
-                            })
-                         if(!this.user.userId){
-                            this.user.userId = user.uid;
-                        }
-                        this.SignUpService.saveUser(this.user);
-                        this.SignUpService.addCarProfile(this.user.userId,this.car);
-                    }else{
-                        console.log('there is no user');
-                    }
-                })
-            };
-
-            // sending email verification and verifying weather email is verified or not
-            this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
-                if(user){
-                    if(user.emailVerified == false){
-                        user.sendEmailVerification();
-                    console.log("verification email has been sent");
-                    }else{
-                        console.log("verification email has not been sent or the email is already verifyied");
-                    }
-                }else{
-                    console.log('there is no user');
-                }
-            })  
-
+            // this.navCtrl.push('LoginPage', this.user);
                
         }else{
             const alert = this.alertCtrl.create({
@@ -200,23 +212,15 @@ export class SignupPage {
             name: userName,
             lastname: userLastName,
             email: userEmail,
-            phone: userPhone,
+            phone: '+57'+userPhone,
             university: userUniversity
         };
+
+        this.SignUpService.userUniversity = userUniversity;
         
           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
-            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).catch((error)=>{
-                if(error.code === "auth/email-already-in-use"){
-                    const alert = this.alertCtrl.create({
-                        title: 'ya existe una cuenta con este correo',
-                        subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
-                        buttons: ['OK']
-                      });
-                      alert.present(); 
-                }
-            })
-            this.navCtrl.push('LoginPage', this.user);
-        
+            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(() => {
+
             if(!this.user.userId){
                 this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
                     if(user){
@@ -227,15 +231,17 @@ export class SignupPage {
                          if(!this.user.userId){
                             this.user.userId = user.uid;
                         }
-                        this.SignUpService.saveUser(this.user);
-                        this.SignUpService.addCarProfile(this.user.userId,this.car);
+                        this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
+                        this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
+                        //send text message with code
+                         this.sendVerificationCode(this.user.userId);
                     }else{
                         console.log('there is no user');
                     }
                 })
             };
 
-            // sending email verification and verifying weather email is verified or not
+           // sending email verification and verifying weather email is verified or not
             this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
                 if(user){
                     if(user.emailVerified == false){
@@ -247,8 +253,17 @@ export class SignupPage {
                 }else{
                     console.log('there is no user');
                 }
-            })  
-
+            })
+            }).catch((error)=>{
+                if(error.code === "auth/email-already-in-use"){
+                    const alert = this.alertCtrl.create({
+                        title: 'ya existe una cuenta con este correo',
+                        subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                        buttons: ['OK']
+                      });
+                      alert.present(); 
+                }
+            })
                
         }else{
             const alert = this.alertCtrl.create({
@@ -264,4 +279,9 @@ export class SignupPage {
 
     }
 
+    sendVerificationCode(userId){
+            this.navCtrl.push('VerificationNumberPage', {userId: userId});
+    }
+
+   
 }

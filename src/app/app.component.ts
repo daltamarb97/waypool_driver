@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase';
 import { SignUpService } from '../services/signup.service';
+import { Http } from '@angular/http';
 
 
 
@@ -22,16 +23,8 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService) {
   this.userUniversity = this.signUpService.userUniversity;
   console.log(this.userUniversity);
+ 
     
-    // firebase.initializeApp({
-    //   apiKey: "AIzaSyAPagXvglCXnK3neJwU50EiZnJPmdd__PM",
-    //   authDomain: "waypoooldemo.firebaseapp.com",
-    //   databaseURL: "https://waypoooldemo.firebaseio.com",
-    //   projectId: "waypoooldemo",
-    //   storageBucket: "waypoooldemo.appspot.com",
-    //   messagingSenderId: "1009109452629"
-    // });
-
    platform.ready().then(()=>{
     statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
      firebase.auth().onAuthStateChanged((user)=>{

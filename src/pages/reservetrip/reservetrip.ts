@@ -43,14 +43,14 @@ export class ReservetripPage{
 
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     
-    this.SignUpService.getMyInfoDriver(this.userUid)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
         //get personal info of the driver
       
-    this.sendUsersService.getTripsOfReserves(this.userUid)
+    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userUid)
     .subscribe( tripsReserves => {
       this.tripsReserves = tripsReserves;
       console.log(this.tripsReserves);
@@ -88,7 +88,7 @@ export class ReservetripPage{
             // }, 600)
             // this.sendUsersService.removeUsersOnListRide(this.userUid, userId);
             // console.log('remove on list')
-            this.sendUsersService.removeUsersOnPickingUsers(this.userUid, userId );
+            this.sendUsersService.removeUsersOnPickingUsers(this.SignUpService.userUniversity, this.userUid, userId );
           }
         }
       ]
@@ -135,16 +135,16 @@ export class ReservetripPage{
             }else{
               console.log(tripKeyTrip)
               console.log(trip)
-               this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
+               this.TripsService.startTrip(this.SignUpService.userUniversity, tripKeyTrip,this.userUid,trip);
 
-               this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
-               this.TripsService.pushOnTripInDriver(this.userUid);              
-               this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
+               this.TripsService.pushKeyInDriver(this.SignUpService.userUniversity, tripKeyTrip,this.userUid);
+               this.TripsService.pushOnTripInDriver(this.SignUpService.userUniversity, this.userUid);              
+               this.TripsService.deleteReserve(this.SignUpService.userUniversity, tripKeyTrip,this.userUid);  
 
 
                // steps needed to get LMU right
-               this.geofireService.deleteUserGeofireDest(tripKeyTrip);
-               this.geofireService.deleteUserGeofireOr(tripKeyTrip);
+               this.geofireService.deleteUserGeofireDest(this.SignUpService.userUniversity, tripKeyTrip);
+               this.geofireService.deleteUserGeofireOr(this.SignUpService.userUniversity, tripKeyTrip);
 
                if(trip.type == 'origin'){
 
@@ -157,8 +157,8 @@ export class ReservetripPage{
                       }
                     }
                     // set geofirekey for LMU
-                      this.geofireService.setGeofireOrOnTrip(tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
-                      this.afDB.database.ref('geofireOrTrip/' + tripKeyTrip).update({
+                      this.geofireService.setGeofireOrOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
+                      this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireOrTrip/' + tripKeyTrip).update({
                       driverId: this.userUid
                     })
                     console.log('executed geofire Or on Trip')
@@ -176,8 +176,8 @@ export class ReservetripPage{
                      }
                    }
                    // set geofirekey for LMU
-                   this.geofireService.setGeofireDestOnTrip(tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-                   this.afDB.database.ref('geofireDestTrip/' + tripKeyTrip).update({
+                   this.geofireService.setGeofireDestOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+                   this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDestTrip/' + tripKeyTrip).update({
                      driverId: this.userUid
                    })
                    console.log('executed geofire Dest on Trip')
@@ -224,19 +224,19 @@ export class ReservetripPage{
       this.geofireService.cancelGeoqueryDest(geofireKey);
     }
 
-    this.afDB.database.ref('/reserves/' + this.userUid + '/' + keyTrip).remove()
+    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userUid + '/' + keyTrip).remove()
   .then(()=>{
     console.log('the reserve which key is '+ keyTrip + ' has been removed');
-    this.afDB.list('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).valueChanges()
+    this.afDB.list(this.SignUpService.userUniversity + '/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).valueChanges()
       .subscribe((userInRsv)=>{
         userInRsv.forEach((user)=>{
           this.userInReserveInfo = user;
 
-          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/availableReserves/' + keyTrip).remove();
-          this.afDB.database.ref('/users/' + this.userInReserveInfo.userId + '/myReserves/' + keyTrip).remove();
+          this.afDB.database.ref(this.SignUpService.userUniversity  + '/users/' + this.userInReserveInfo.userId + '/availableReserves/' + keyTrip).remove();
+          this.afDB.database.ref(this.SignUpService.userUniversity + '/users/' + this.userInReserveInfo.userId + '/myReserves/' + keyTrip).remove();
         })
 
-        this.afDB.database.ref('/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).remove();
+        this.afDB.database.ref(this.SignUpService.userUniversity  + '/reservesInfoInCaseOfCancelling/' + this.userUid + '/' + keyTrip).remove();
       })
   })
 

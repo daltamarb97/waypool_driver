@@ -50,12 +50,12 @@ export class PickupPage {
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
 
-    this.SignUpService.getMyInfoDriver(this.useruid)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.useruid)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
-    this.SignUpService.getInfoUser(this.user.userId)
+    this.SignUpService.getInfoUser(this.SignUpService.userUniversity, this.user.userId)
 		.subscribe(userFirebase => {
       //modificar
       //get info user and observe if user has not canceled
@@ -248,13 +248,16 @@ export class PickupPage {
     notifyDriver(){
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }
+
+
+
     PickUp(){
       
-      this.TripsService.eliminatePendingUsers(this.keyTrip,this.useruid,this.user.userId);
+      this.TripsService.eliminatePendingUsers(this.SignUpService.userUniversity, this.keyTrip,this.useruid,this.user.userId);
 
       // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price)
 
-      this.TripsService.pickUp(this.keyTrip,this.useruid,this.user.userId,this.user);
+      this.TripsService.pickUp(this.SignUpService.userUniversity, this.keyTrip,this.useruid,this.user.userId,this.user);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
       // this.sendCoordsService.pickUpInstance(this.user.userId);
       // moment.locale('es');   

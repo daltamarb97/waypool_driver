@@ -22,10 +22,10 @@ export class WalletPage {
   newNumber:any = 0;
   
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public signupService: SignUpService) {
     
    
-    this.sendUsersService.getRecordTrips(this.userUid)
+    this.sendUsersService.getRecordTrips(this.signupService.userUniversity, this.userUid)
     .subscribe( user => {
     
       this.recordTrips = user;
