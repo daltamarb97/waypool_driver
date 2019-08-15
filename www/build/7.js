@@ -1,6 +1,6 @@
 webpackJsonp([7],{
 
-/***/ 605:
+/***/ 601:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TabsPageModule", function() { return TabsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tabs__ = __webpack_require__(761);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tabs__ = __webpack_require__(755);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var TabsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 761:
+/***/ 755:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -72,7 +72,7 @@ var TabsPage = /** @class */ (function () {
         this.tab5Root = 'MorePage';
     }
     TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/tabs/tabs.html"*/'<ion-tabs #myTabs tabsHideOnSubPages="false">\n    <ion-tab [root]="tab1Root" tabTitle="Pedir Viaje" ></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="Mi Viaje" tabIcon="md-car" ></ion-tab>\n    \n\n    <ion-tab [root]="tab4Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>\n    <ion-tab [root]="tab5Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/tabs/tabs.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\PC\Desktop\WAYPOOL_DRIVER\src\pages\tabs\tabs.html"*/'<ion-tabs #myTabs tabsHideOnSubPages="false">\n\n    <ion-tab [root]="tab1Root" tabTitle="Pedir Viaje" ></ion-tab>\n\n    <ion-tab [root]="tab2Root" tabTitle="Mi Viaje" tabIcon="md-car" ></ion-tab>\n\n    \n\n\n\n    <ion-tab [root]="tab4Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>\n\n    <ion-tab [root]="tab5Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\PC\Desktop\WAYPOOL_DRIVER\src\pages\tabs\tabs.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
     ], TabsPage);

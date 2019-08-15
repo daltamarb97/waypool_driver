@@ -74,7 +74,7 @@ export class FindridePage {
   geoInfo2:any = {};
   markerGeolocation:any;
   markerDest:any;
-
+  universityInfo:any;
   //variables for geofire reserves
   reserves= [];
   geocoordinatesOr:any;
@@ -112,20 +112,46 @@ export class FindridePage {
   }
  
   ionViewDidLoad(){
-    this.SignUpService.getMyInfo(this.user).subscribe(user=>{
-      this.userInfo = user;
-      if(this.userInfo.emailVerificationMessage !== true){
-        const alert = this.alertCtrl.create({
-          title: 'VERIFICA TU EMAIL',
-          subTitle: 'te hemos enviado un correo de verificación. Sigue los pasos del correo para empezar a disfrutar de Waypool.',
-          buttons: ['OK']
-        });
-        alert.present();
-        this.SignUpService.emailVerificationMessage(this.user);
+    this.SignUpService.getMyInfo(this.user).subscribe(user => {
+      this.userInfo = user
+    })
+
+
+    this.SignUpService.getUniversities('uninorte').subscribe(uni => {
+      this.universityInfo = uni;
+
+      if(this.universityInfo.email == undefined){
+        
+        if(this.userInfo.documents){
+          if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
+            let modal = this.modalCtrl.create('VerificationImagesPage');
+            modal.present();
+          }else{
+
+          }
+        }else if(!this.universityInfo.documents) {
+          console.log('no hay docs')
+          let modal = this.modalCtrl.create('VerificationImagesPage');
+            modal.present();
+        } 
       }else{
-  
+
       }
     })
+    //this.SignUpService.getMyInfo(this.user).subscribe(user=>{
+      //this.userInfo = user;
+     // if(this.userInfo.emailVerificationMessage !== true){
+       // const alert = this.alertCtrl.create({
+         // title: 'VERIFICA TU EMAIL',
+          //subTitle: 'te hemos enviado un correo de verificación. Sigue los pasos del correo para empezar a disfrutar de Waypool.',
+          //buttons: ['OK']
+       // });
+       // alert.present();
+       // this.SignUpService.emailVerificationMessage(this.user);
+     // }else{
+  
+     // }
+   // })
 
     this.doGeoquery = true;
     if(this.doGeoquery === true){

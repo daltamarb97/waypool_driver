@@ -19,8 +19,29 @@ export class SignUpService {
            license: false
        })
     }
+
+    //PENDING UNIVERSITY VARIABLE
+    public pushDocsCarne(userId){
+        this.afDB.database.ref('drivers/'+userId+'/documents').update({
+            carne: false
+        })
+        this.afDB.database.ref('users/'+userId+'/documents').update({
+            carne: false
+        })
+     }
+
+
+     //DELETE THIS FUNCTION AFTER MERGE/PC READY
+     public getUniversities(university){
+         return this.afDB.object('/universities/' + university).valueChanges();
+     }
+
+
     public pushDocsId(userId){
         this.afDB.database.ref('drivers/'+userId+'/documents').update({
+            id: false
+        })
+        this.afDB.database.ref('users/'+userId+'/documents').update({
             id: false
         })
      }
