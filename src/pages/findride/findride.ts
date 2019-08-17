@@ -74,7 +74,7 @@ export class FindridePage {
   geoInfo2:any = {};
   markerGeolocation:any;
   markerDest:any;
-
+  universityInfo:any;
   //variables for geofire reserves
   reserves= [];
   geocoordinatesOr:any;
@@ -106,6 +106,7 @@ export class FindridePage {
   }
  
   ionViewDidLoad(){
+
     this.AngularFireAuth.auth.onAuthStateChanged(user=>{
       if(user.emailVerified == false){
         const alert = this.alertCtrl.create({
@@ -132,6 +133,31 @@ export class FindridePage {
             this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
               this.userInfo = user;
             })
+
+            this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+              this.universityInfo = uni;
+
+              if(this.universityInfo.email == undefined){
+        
+                if(this.userInfo.documents){
+                  if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
+                    let modal = this.modalCtrl.create('VerificationImagesPage');
+                    modal.present();
+                  }else{
+        
+                  }
+                }else if(!this.universityInfo.documents) {
+                  console.log('no hay docs')
+                  let modal = this.modalCtrl.create('VerificationImagesPage');
+                    modal.present();
+                } 
+              }else{
+        
+              }
+
+
+            })  
+
         }
       })
       modal.present();

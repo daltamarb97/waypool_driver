@@ -18,8 +18,8 @@ export class SignUpService {
     return this.afDB.object(university + '/drivers/'+userId).valueChanges();
     }
 
-    public getUniversities(){
-        return this.afDB.list('universities/').valueChanges()
+    public getInfoUniversity(university){
+        return this.afDB.list('/universities/' + university).valueChanges()
      }
 
     public pushDocsL(university, userId){
@@ -27,8 +27,25 @@ export class SignUpService {
            license: false
        })
     }
+
+
+    //PENDING UNIVERSITY VARIABLE
+    public pushDocsCarne(userId){
+        this.afDB.database.ref('drivers/'+userId+'/documents').update({
+            carne: false
+        })
+        this.afDB.database.ref('users/'+userId+'/documents').update({
+            carne: false
+        })
+     }
+
+
+
     public pushDocsId(university, userId){
         this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
+            id: false
+        })
+        this.afDB.database.ref(university + '/users/'+userId+'/documents').update({
             id: false
         })
      }
