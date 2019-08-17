@@ -1,14 +1,14 @@
 webpackJsonp([11],{
 
-/***/ 605:
+/***/ 603:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservetripPageModule", function() { return ReservetripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignupPageModule", function() { return SignupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(760);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(760);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,26 +18,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ReservetripPageModule = /** @class */ (function () {
-    function ReservetripPageModule() {
+var SignupPageModule = /** @class */ (function () {
+    function SignupPageModule() {
     }
-    ReservetripPageModule = __decorate([
+    SignupPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__signup__["a" /* SignupPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__signup__["a" /* SignupPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */]
+                __WEBPACK_IMPORTED_MODULE_2__signup__["a" /* SignupPage */]
             ]
         })
-    ], ReservetripPageModule);
-    return ReservetripPageModule;
+    ], SignupPageModule);
+    return SignupPageModule;
 }());
 
-//# sourceMappingURL=reservetrip.module.js.map
+//# sourceMappingURL=signup.module.js.map
 
 /***/ }),
 
@@ -45,18 +45,14 @@ var ReservetripPageModule = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReservetripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_driverauthentication_service__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,173 +64,139 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// import { RiderprofilePage } from '../riderprofile/riderprofile';
-// import { Observable } from 'rxjs';
-// import { AngularFireDatabase} from 'angularfire2/database';
+// import { VerificationPage } from '../verification/verification';
+// import { AngularFireDatabase } from '@angular/fire/database';
 
 
 
 
 
 
-
-
-var ReservetripPage = /** @class */ (function () {
-    function ReservetripPage(navCtrl, SignUpService, TripsService, sendCoordsService, modalCtrl, AngularFireAuth, alertCtrl, geofireService, afDB, instances, sendUsersService, toastCtrl, geoFireService) {
-        var _this = this;
+// import * as firebase from 'firebase';
+var SignupPage = /** @class */ (function () {
+    // userFirebase = this.AngularFireAuth.auth.currentUser;
+    function SignupPage(navCtrl, formBuilder, authenticationService, SignUpService, alertCtrl, AngularFireAuth, navParams) {
         this.navCtrl = navCtrl;
+        this.formBuilder = formBuilder;
+        this.authenticationService = authenticationService;
         this.SignUpService = SignUpService;
-        this.TripsService = TripsService;
-        this.sendCoordsService = sendCoordsService;
-        this.modalCtrl = modalCtrl;
-        this.AngularFireAuth = AngularFireAuth;
         this.alertCtrl = alertCtrl;
-        this.geofireService = geofireService;
-        this.afDB = afDB;
-        this.instances = instances;
-        this.sendUsersService = sendUsersService;
-        this.toastCtrl = toastCtrl;
-        this.geoFireService = geoFireService;
-        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.usersFindingTrip = [];
-        this.user = [];
-        this.usersOnListRide = [];
-        this.text = 'Aceptar viaje';
-        this.tripsReserves = [];
-        this.SignUpService.getMyInfoDriver(this.userUid)
-            .subscribe(function (userDriver) {
-            _this.userDriver = userDriver;
-            console.log(_this.userDriver);
-        });
-        //get personal info of the driver
-        this.sendUsersService.getTripsOfReserves(this.userUid)
-            .subscribe(function (tripsReserves) {
-            _this.tripsReserves = tripsReserves;
-            console.log(_this.tripsReserves);
+        this.AngularFireAuth = AngularFireAuth;
+        this.navParams = navParams;
+        this.user = {};
+        this.car = {};
+        this.tokenId = '';
+        this.userId = '';
+        this.isReadonly = true;
+        this.signupGroup = this.formBuilder.group({
+            name: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            lastname: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            email: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            fixedemail: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            password: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            passwordconf: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            phone: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            carModel: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            plateNumber: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            color: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
         });
     }
-    ReservetripPage.prototype.ionViewDidLoad = function () {
+    SignupPage.prototype.scrolling = function () {
+        this.content.scrollTo(30, 0);
     };
-    ReservetripPage.prototype.deleteUser = function (userId, nameUser) {
+    ;
+    SignupPage.prototype.login = function () {
+        this.navCtrl.push('LoginPage');
+    };
+    SignupPage.prototype.verification = function () {
         var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Eliminar Usuario',
-            message: "\u00BFEstas que deseas eliminar a este a " + nameUser + " de tus posibles compa\u00F1eros de viaje?",
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('holi');
+        //creating user on firebase
+        //   let userName = this.signupGroup.controls['name'].value;
+        //   let userLastName = this.signupGroup.controls['lastname'].value;
+        var userEmail = this.signupGroup.controls['email'].value;
+        var userFixedemail = this.signupGroup.controls['fixedemail'].value;
+        var userEmailComplete = userEmail + userFixedemail;
+        var userPassword = this.signupGroup.controls['password'].value;
+        var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
+        //   let userPhone = this.signupGroup.controls['phone'].value;
+        var userCarModel = this.signupGroup.controls['carModel'].value;
+        var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+        var usercarColor = this.signupGroup.controls['color'].value;
+        this.user = this.signupGroup.value;
+        this.car = {
+            carModel: userCarModel,
+            plateNumber: userPlateNumber,
+            color: usercarColor
+        };
+        if (userPassword === userPasswordconf) {
+            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).catch(function (error) {
+                if (error.code === "auth/email-already-in-use") {
+                    var alert_1 = _this.alertCtrl.create({
+                        title: 'ya existe una cuenta con este correo',
+                        subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                        buttons: ['OK']
+                    });
+                    alert_1.present();
+                }
+            });
+            this.navCtrl.push('LoginPage', this.user);
+            if (!this.user.userId) {
+                this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                    if (user) {
+                        user.getIdToken().then(function (token) {
+                            _this.user.tokenId = token;
+                        });
+                        if (!_this.user.userId) {
+                            _this.user.userId = user.uid;
+                        }
+                        _this.SignUpService.saveUser(_this.user);
+                        _this.SignUpService.addCarProfile(_this.user.userId, _this.car);
                     }
-                },
-                {
-                    text: 'Eliminar',
-                    handler: function () {
-                        console.log('user eliminado');
-                        // setTimeout(()=>{
-                        //   //REVISAR
-                        //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-                        //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
-                        // }, 600)
-                        // this.sendUsersService.removeUsersOnListRide(this.userUid, userId);
-                        // console.log('remove on list')
-                        _this.sendUsersService.removeUsersOnPickingUsers(_this.userUid, userId);
+                    else {
+                        console.log('there is no user');
+                    }
+                });
+            }
+            ;
+            // sending email verification and verifying weather email is verified or not
+            this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                if (user) {
+                    if (user.emailVerified == false) {
+                        user.sendEmailVerification();
+                        console.log("verification email has been sent");
+                    }
+                    else {
+                        console.log("verification email has not been sent or the email is already verifyied");
                     }
                 }
-            ]
-        });
-        alert.present();
-    };
-    ReservetripPage.prototype.startTrip = function (tripKeyTrip, trip) {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Iniciar Viaje',
-            message: "\u00BFEstas que seguro deseas iniciar viaje?",
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('holi');
-                    }
-                },
-                {
-                    text: 'Sí',
-                    handler: function () {
-                        //check if driver has an active trip
-                        if (_this.userDriver.onTrip === true) {
-                            var toast = _this.toastCtrl.create({
-                                message: 'No puedes iniciar otro viaje porque tienes un viaje en curso',
-                                showCloseButton: true,
-                                closeButtonText: 'OK',
-                                position: 'middle'
-                            });
-                            toast.present();
-                        }
-                        else {
-                            //check if there is someone in the trip
-                            if (trip.pendingUsers === null || trip.pendingUsers === undefined) {
-                                //do nothing because there is no one in the trip
-                                var toast = _this.toastCtrl.create({
-                                    message: 'No puedes iniciar un viaje sin ningún usuario a quien recoger',
-                                    showCloseButton: true,
-                                    closeButtonText: 'OK',
-                                    position: 'middle'
-                                });
-                                toast.present();
-                            }
-                            else {
-                                console.log(tripKeyTrip);
-                                console.log(trip);
-                                _this.TripsService.startTrip(tripKeyTrip, _this.userUid, trip);
-                                _this.TripsService.pushKeyInDriver(tripKeyTrip, _this.userUid);
-                                _this.TripsService.pushOnTripInDriver(_this.userUid);
-                                _this.TripsService.deleteReserve(tripKeyTrip, _this.userUid);
-                            }
-                        }
-                    }
+                else {
+                    console.log('there is no user');
                 }
-            ]
-        });
-        alert.present();
-    };
-    ReservetripPage.prototype.seePassengers = function (KeyTrip) {
-        var modal = this.modalCtrl.create('ConfirmreservationPage', { reserveKey: KeyTrip });
-        modal.present();
-        // this.usersFindingTrip.pop();
-        // this.subscribe.unsubscribe();
-    };
-    ReservetripPage.prototype.cancelReserve = function (typeOfReserve, geofireKey, keyTrip) {
-        //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
-        if (typeOfReserve == 'origin') {
-            this.geofireService.cancelGeoqueryOr(geofireKey);
+            });
         }
-        else if (typeOfReserve == 'destination') {
-            this.geofireService.cancelGeoqueryDest(geofireKey);
+        else {
+            var alert_2 = this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'las contraseñas no coinciden, intenta de nuevo',
+                buttons: ['OK']
+            });
+            alert_2.present();
         }
-        this.TripsService.cancelReserve(this.userUid, keyTrip);
-        //eliminate reserve
     };
-    ReservetripPage.prototype.help = function () {
-        var toast = this.toastCtrl.create({
-            message: 'Aquí te saldrán las personas que quieren irse contigo',
-            showCloseButton: true,
-            closeButtonText: 'OK',
-            position: 'top'
-        });
-        toast.present();
-    };
-    ReservetripPage = __decorate([
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
+    ], SignupPage.prototype, "content", void 0);
+    SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-reservetrip',template:/*ion-inline-start:"C:\Users\daniel altamar\Documents\waypoolApp\driver-test\waypool_driver\src\pages\reservetrip\reservetrip.html"*/'<ion-header class="bg-theme title">\n\n    <ion-navbar >\n\n        <ion-title >Mis Reservas\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content class="bg-light" class="hideLongText">\n\n\n\n    <ion-row class="center-align bg-white flow-ride">\n\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n\n            <h2>Mi Origen:</h2> {{origin}}\n\n\n\n        </ion-col>\n\n      \n\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n\n            <h2>Mi Destino:</h2> {{destination}}\n\n        </ion-col>\n\n\n\n    </ion-row>\n\n    <div class="iconHelp">\n\n        <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>\n\n    </div>\n\n\n\n    <ion-card *ngFor = "let trip of tripsReserves">\n\n        \n\n                <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2>Inicio de viaje: {{trip.startHour |titlecase}} \n\n            \n\n                            </h2>\n\n                        </div>\n\n                        <div class="more">\n\n                              \n\n                                        <h2 class="text text-theme">                        \n\n                                            $ {{trip.price}}                          \n\n                                        </h2>                        \n\n                                 \n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p  >\n\n                                <span class="icon-location bg-theme"></span>{{trip.origin}}</p>\n\n                            <p > \n\n                                <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>\n\n                        </div>\n\n                        <ion-row class="center-align">\n\n                            <!-- <ion-col col-3 class="detail-text text-theme">\n\n                                3 seats\n\n                            </ion-col> -->\n\n                            <ion-col col-2 class="detail-text text-theme">\n\n                            </ion-col>\n\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                                <button class="btn bg-theme rounded full text-white" (click)="startTrip(trip.keyTrip,trip)">\n\n                                    <ion-icon class="icon" name="play"></ion-icon> Iniciar viaje\n\n                                </button>\n\n                             </ion-col>\n\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                                <button class="btn bg-theme rounded full text-white" (click)="seePassengers(trip.keyTrip)">Detalles</button>\n\n                            </ion-col>\n\n                            <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                                </ion-col>\n\n                        </ion-row>\n\n                    </ion-card-content>\n\n               \n\n        \n\n        \n\n    </ion-card>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\daniel altamar\Documents\waypoolApp\driver-test\waypool_driver\src\pages\reservetrip\reservetrip.html"*/
+            selector: 'page-signup',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\test\waypool_driver\waypool_driver\src\pages\signup\signup.html"*/'<ion-header class="transparent">\n\n    <ion-navbar>\n\n        <ion-title><span class="text-theme"></span></ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n\n\n\n\n    <ion-content>\n\n\n\n        <form [formGroup]="signupGroup" (ngSubmit)="verification()">\n\n        <div>\n\n            <div class="">\n\n                <ion-row>\n\n                    <ion-col class="name-fild">\n\n                        <ion-list class="form" style="margin-bottom: 0">\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input  type="text"  text-right formControlName="name" placeholder= "Tú nombre"></ion-input>\n\n                            </ion-item>\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>\n\n                            </ion-item>\n\n                        </ion-list>\n\n                    </ion-col>\n\n                </ion-row>\n\n                <ion-row>\n\n                    <ion-col class="name-fild-2">\n\n                        <ion-list class="form">\n\n                            <ion-item class="editable-email">\n\n                                    <ion-label></ion-label>\n\n                                        <ion-input type="text" text-right formControlName="email" placeholder= "email"></ion-input>\n\n                                    </ion-item>\n\n                            </ion-list>\n\n                    </ion-col>\n\n                    <ion-col class="name-fild-2">\n\n                        <ion-list class="form">\n\n                            <ion-item  class="nonEditable-email">\n\n                                    <!-- <ion-input type="email" value="@uninorte.edu.co"  text-right formControlName="fixedemail" [readonly]="isReadonly"></ion-input> -->\n\n                                    \n\n                                    <ion-select formControlName="fixedemail" placeholder="@uninorte.edu.co" type="email">\n\n                                            <ion-option value="@uninorte.edu.co">@uninorte.edu.co</ion-option>\n\n                                        </ion-select>\n\n                            </ion-item>\n\n                        </ion-list>\n\n                    </ion-col>\n\n                </ion-row>\n\n                <ion-list class="form" style="margin-bottom: 0">\n\n                    <ion-item>\n\n                            <ion-label  fixed><span style="font-weight: bold; color: red;">(mínimo 6 caracteres)</span></ion-label>\n\n                            <ion-input type="password"  text-right formControlName="password" placeholder= "Escribe tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="password"  text-right formControlName="passwordconf" placeholder= "confirma tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="text" text-right formControlName="phone" placeholder= "Tú número de celular"></ion-input>\n\n                    </ion-item>\n\n                </ion-list>\n\n                <ion-list>\n\n\n\n                    <ion-row class="col-car">\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="carModel">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right formControlName="carModel" placeholder= "marca de carro"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="plateNumber">\n\n                                        <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>\n\n                                </ion-item>\n\n                            </ion-list>\n\n                        </ion-col>               \n\n                    </ion-row>     \n\n                            <ion-list class="form">\n\n                                    <ion-item class="form" class="plateNumber" >\n\n                                            <ion-input type="text"  text-right formControlName="color" placeholder= "Color de carro" class="name-fild-2"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                   \n\n                </ion-list>\n\n                        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>\n\n                        <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Inicia Sesión</strong></p>\n\n            </div>\n\n        </div>\n\n    </form>\n\n    </ion-content>\n\n    \n\n\n\n\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\test\waypool_driver\waypool_driver\src\pages\signup\signup.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */]])
-    ], ReservetripPage);
-    return ReservetripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    ], SignupPage);
+    return SignupPage;
 }());
 
-//# sourceMappingURL=reservetrip.js.map
+//# sourceMappingURL=signup.js.map
 
 /***/ })
 

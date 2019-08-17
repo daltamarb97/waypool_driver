@@ -17,6 +17,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { instancesService } from '../../services/instances.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
+import * as moment from 'moment';
+import { stringify } from '@angular/core/src/render3/util';
 
 @IonicPage()
 @Component({
@@ -33,10 +35,9 @@ export class ReservetripPage{
   text = 'Aceptar viaje';
   userDriver;
   tripsReserves:any =[];
-
+  reserveUser:any = [];
   userInReserveInfo:any;
-
-
+  reserveTime:any;
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     
     this.SignUpService.getMyInfoDriver(this.userUid)
@@ -49,48 +50,51 @@ export class ReservetripPage{
     this.sendUsersService.getTripsOfReserves(this.userUid)
     .subscribe( tripsReserves => {
       this.tripsReserves = tripsReserves;
+
       console.log(this.tripsReserves);
-    })    
-    
-        
+      //check if reserve  
+      moment.locale('es');   
+      let currentDate:any = moment().format(' HH:mm ');
+      console.log(currentDate);
+      this.tripsReserves.forEach(reserve => {   
+     
+        this.reserveTime = moment(JSON.stringify(reserve.startHour), 'HH:mm')
+        console.log(this.reserveTime)
+        //confirmar si la reserva ha pasado el tiempo
+        if(moment().isBefore(this.reserveTime)=== true){
+          console.log("esta a tiempo");
+          
+        }else{
+          if(reserve.isLate === true){
+            //check if driver has passengers .
+            if(reserve.pendingUsers === undefined||reserve.pendingUsers.length === 0 || reserve.pendingUsers === null ){
+              this.TripsService.cancelReserve(this.userUid,reserve.keyTrip);
+      
+              console.log("cate que no lo vi")   
+      
+              // this.navCtrl.pop();
+      
+            }else{
+              // this.lateReserve(reserve.KeyTrip,reserve);
+
+            }
+
+          }
+          //esperar 5 minutos para iniciar el viaje o eliminarlo
+          // setTimeout(()=>{
+          // this.TripsService.cancelReserve(this.userUid,reserve.keyTrip);   
+          // // TO-DO: PUSH NOTIFICATION
+          // this.navCtrl.pop();
+          //         }, 300000) 
+          console.log("Se le olvido la reserva")
+
+        }
+      });
+    }) 
   }
 
   ionViewDidLoad(){
- 
-  }
-    
-  deleteUser(userId,nameUser){
-  
-    let alert = this.alertCtrl.create({
-      title: 'Eliminar Usuario',
-      message: `¿Estas que deseas eliminar a este a ${nameUser} de tus posibles compañeros de viaje?`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('holi');
-          }
-        },
-        {
-          text: 'Eliminar',
-          handler: () => {
-            console.log('user eliminado');
-            // setTimeout(()=>{
-            //   //REVISAR
-            //   this.sendUsersService.removeUsersOnListRide(this.driver, userId);
-            //   this.sendUsersService.removeUsersOnPickingUsers(this.driver, userId );
-            // }, 600)
-            // this.sendUsersService.removeUsersOnListRide(this.userUid, userId);
-            // console.log('remove on list')
-            this.sendUsersService.removeUsersOnPickingUsers(this.userUid, userId );
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
+  }  
  startTrip(tripKeyTrip,trip){
   let alert = this.alertCtrl.create({
     title: 'Iniciar Viaje',
@@ -128,31 +132,39 @@ export class ReservetripPage{
                  });
             toast.present();
             }else{
-              console.log(tripKeyTrip)
-              console.log(trip)
-               this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);
-               this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
-               this.TripsService.pushOnTripInDriver(this.userUid);              
-               this.TripsService.deleteReserve(tripKeyTrip,this.userUid);  
-
-            }
-           
-            
+              this.TripsService.getReserveUsers(tripKeyTrip,this.userUid).
+              subscribe( reservesUser => {
+                this.reserveUser = reservesUser;
+                console.log(this.reserveUser);
+                //push the keyTrip,driverId on every User and onTrip = true 
+                this.reserveUser.forEach(user => {
+                  this.TripsService.startTripForUsers(tripKeyTrip,user.userId,this.userUid);
+                });    
+                //debería ser en vez de navPop, una funcion que te lleve a myRide y te muestre el viaje
+              })
+              this.TripsService.pushKeyInDriver(tripKeyTrip,this.userUid);
+              this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);   
+              this.TripsService.createTripState(tripKeyTrip,this.userUid);
+              this.TripsService.deleteReserve(tripKeyTrip,this.userUid); 
+              this.navCtrl.pop();
+            }           
           }
-   
- 
         }
       }
     ]
   });
   alert.present();
-  
  }
 
+ lateReserve(keyTrip,reserve){
+  
+   let modal = this.modalCtrl.create('ReserveReminderPage', {keyTrip:keyTrip,trip:reserve});
+ 
+   modal.present();
 
+}
 
-  seePassengers(KeyTrip){
-       
+  seePassengers(KeyTrip){    
         
     let modal = this.modalCtrl.create('ConfirmreservationPage',{reserveKey:KeyTrip});
     modal.present();
@@ -170,11 +182,8 @@ export class ReservetripPage{
     }else if(typeOfReserve == 'destination'){
       this.geofireService.cancelGeoqueryDest(geofireKey);
     }
-    this.TripsService.cancelReserve(this.userUid,keyTrip);
-  
-
+    this.TripsService.cancelReserve(this.userUid,keyTrip);  
   //eliminate reserve
-
   }
   
   help(){

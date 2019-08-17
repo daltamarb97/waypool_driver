@@ -11,7 +11,7 @@ export class priceService {
 
     
 
-    public setPriceAndNote(user,price,note,car, hour, nowHour){
+    public setPriceAndNote(user,price,note,car){
         
         firebase.database().ref('drivers/' + user+'/trips').update({
           //set important information with note
@@ -19,17 +19,15 @@ export class priceService {
            price:price ,
            note:note,
            car:car,
-           hour:hour,
-           nowHour: nowHour
+           
         })
    }    
-    public setPrice(user,price,car,hour, nowHour){
+    public setPrice(user,price,car,){
         
       firebase.database().ref('drivers/' + user+'/trips').update({
          price:price, 
          car:car,
-         hour:hour,
-         nowHour:nowHour
+        
       })
      }
 

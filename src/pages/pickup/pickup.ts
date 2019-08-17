@@ -249,18 +249,15 @@ export class PickupPage {
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }
     PickUp(){
-      
-      this.TripsService.eliminatePendingUsers(this.keyTrip,this.useruid,this.user.userId);
-
-      // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price)
-
       this.TripsService.pickUp(this.keyTrip,this.useruid,this.user.userId,this.user);
+      this.TripsService.eliminatePendingUsers(this.keyTrip,this.useruid,this.user.userId);
+      // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
       // this.sendCoordsService.pickUpInstance(this.user.userId);
-      // moment.locale('es');   
-      // let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-      //   this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId)
-      //   this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate)
+      moment.locale('es');   
+      let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+      this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId);
+      this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
     }
     

@@ -25930,12 +25930,12 @@ page-canceltrip .content {
 }
 
 page-canceltrip .card {
-  border-style: outset;
+  border-style: solid;
   border-width: 5px;
-  border-color: #F3705A;
+  border-color: #960707;
   width: 80%;
   margin: auto;
-  height: 420px;
+  height: 320px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26118,6 +26118,10 @@ page-canceltrip .center {
 
 page-canceltrip .hot-title {
   color: #F3705A;
+}
+
+page-canceltrip .text {
+  font-size: 1.5rem;
 }
 
 page-car-registration p {

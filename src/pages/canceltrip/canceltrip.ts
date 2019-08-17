@@ -16,18 +16,9 @@ import { SignUpService } from '../../services/signup.service';
   templateUrl: 'canceltrip.html'
 })
 export class CanceltripPage {
+  accepted
 
-  usersOnTrip:any;
-  accepted: boolean;
-  reserve:any;
-  user:any ={};
-  hideButton:boolean = true;
-  hideText:boolean = false;
-  userUid=this.AngularFireAuth.auth.currentUser.uid;
-  unsubscribe = new Subject;
-  trip:any;
-  driver:any;
-  constructor(public navCtrl: NavController,public SignUpServices:SignUpService ,public sendUsersService:sendUsersService,public TripsService:TripsService,public toastCtrl: ToastController,public viewCtrl: ViewController,private afDB: AngularFireDatabase, public sendCoordsService: sendCoordsService,public navParams: NavParams,public AngularFireAuth: AngularFireAuth, public instances: instancesService) {
+  constructor(public navCtrl: NavController,public viewCtrl: ViewController) {
     
     
        

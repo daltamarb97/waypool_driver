@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 610:
+/***/ 612:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyridePageModule", function() { return MyridePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservetripPageModule", function() { return ReservetripPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(765);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(769);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,26 +18,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MyridePageModule = /** @class */ (function () {
-    function MyridePageModule() {
+var ReservetripPageModule = /** @class */ (function () {
+    function ReservetripPageModule() {
     }
-    MyridePageModule = __decorate([
+    ReservetripPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__myride__["a" /* MyridePage */],
+                __WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__myride__["a" /* MyridePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__myride__["a" /* MyridePage */]
+                __WEBPACK_IMPORTED_MODULE_2__reservetrip__["a" /* ReservetripPage */]
             ]
         })
-    ], MyridePageModule);
-    return MyridePageModule;
+    ], ReservetripPageModule);
+    return ReservetripPageModule;
 }());
 
-//# sourceMappingURL=myride.module.js.map
+//# sourceMappingURL=reservetrip.module.js.map
 
 /***/ }),
 
@@ -1896,7 +1896,7 @@ var MyridePageModule = /** @class */ (function () {
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(767)("./" + name);
+                __webpack_require__(744)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4647,11 +4647,11 @@ var MyridePageModule = /** @class */ (function () {
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(766)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(743)(module)))
 
 /***/ }),
 
-/***/ 616:
+/***/ 615:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4729,7 +4729,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 617:
+/***/ 616:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4869,7 +4869,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 618:
+/***/ 617:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4933,7 +4933,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 619:
+/***/ 618:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4997,7 +4997,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 620:
+/***/ 619:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5124,7 +5124,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 621:
+/***/ 620:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5188,7 +5188,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 622:
+/***/ 621:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5297,7 +5297,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 623:
+/***/ 622:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5361,7 +5361,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 624:
+/***/ 623:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5471,7 +5471,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 625:
+/***/ 624:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5608,7 +5608,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 626:
+/***/ 625:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5703,7 +5703,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 627:
+/***/ 626:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5766,7 +5766,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 628:
+/***/ 627:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5890,7 +5890,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 629:
+/***/ 628:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6014,7 +6014,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 630:
+/***/ 629:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6127,7 +6127,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 631:
+/***/ 630:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6283,7 +6283,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 632:
+/***/ 631:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6376,7 +6376,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 633:
+/***/ 632:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6553,7 +6553,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 634:
+/***/ 633:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6621,7 +6621,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 635:
+/***/ 634:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6706,7 +6706,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 636:
+/***/ 635:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6771,7 +6771,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 637:
+/***/ 636:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6852,7 +6852,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 638:
+/***/ 637:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6933,7 +6933,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 639:
+/***/ 638:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7014,7 +7014,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 640:
+/***/ 639:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7118,7 +7118,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 641:
+/***/ 640:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7223,7 +7223,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 642:
+/***/ 641:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7295,7 +7295,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 643:
+/***/ 642:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7367,7 +7367,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 644:
+/***/ 643:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7435,7 +7435,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 645:
+/***/ 644:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7507,7 +7507,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 646:
+/***/ 645:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7579,7 +7579,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 647:
+/***/ 646:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7646,7 +7646,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 648:
+/***/ 647:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7718,7 +7718,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 649:
+/***/ 648:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7794,7 +7794,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 650:
+/***/ 649:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7891,7 +7891,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 651:
+/***/ 650:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7988,7 +7988,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 652:
+/***/ 651:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8085,7 +8085,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 653:
+/***/ 652:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8170,7 +8170,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 654:
+/***/ 653:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8241,7 +8241,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 655:
+/***/ 654:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8352,7 +8352,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 656:
+/***/ 655:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8466,7 +8466,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 657:
+/***/ 656:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8531,7 +8531,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 658:
+/***/ 657:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8619,7 +8619,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 659:
+/***/ 658:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8698,7 +8698,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 660:
+/***/ 659:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8781,7 +8781,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 661:
+/***/ 660:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8861,7 +8861,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 662:
+/***/ 661:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8943,7 +8943,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 663:
+/***/ 662:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9024,7 +9024,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 664:
+/***/ 663:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9106,7 +9106,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 665:
+/***/ 664:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9234,7 +9234,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 666:
+/***/ 665:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9363,7 +9363,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 667:
+/***/ 666:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9465,7 +9465,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 668:
+/***/ 667:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9594,7 +9594,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 669:
+/***/ 668:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9753,7 +9753,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 670:
+/***/ 669:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9868,7 +9868,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 671:
+/***/ 670:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9968,7 +9968,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 672:
+/***/ 671:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10055,7 +10055,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 673:
+/***/ 672:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10192,7 +10192,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 674:
+/***/ 673:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10266,7 +10266,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 675:
+/***/ 674:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10340,7 +10340,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 676:
+/***/ 675:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10437,7 +10437,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 677:
+/***/ 676:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10524,7 +10524,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 678:
+/***/ 677:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10618,7 +10618,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 679:
+/***/ 678:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10710,7 +10710,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 680:
+/***/ 679:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10825,7 +10825,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 681:
+/***/ 680:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10956,7 +10956,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 682:
+/***/ 681:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11042,7 +11042,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 683:
+/***/ 682:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11166,7 +11166,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 684:
+/***/ 683:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11258,7 +11258,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 685:
+/***/ 684:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11399,7 +11399,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 686:
+/***/ 685:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11474,7 +11474,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 687:
+/***/ 686:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11597,7 +11597,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 688:
+/***/ 687:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11699,7 +11699,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 689:
+/***/ 688:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11816,7 +11816,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 690:
+/***/ 689:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11885,7 +11885,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 691:
+/***/ 690:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11980,7 +11980,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 692:
+/***/ 691:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12066,7 +12066,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 693:
+/***/ 692:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12175,7 +12175,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 694:
+/***/ 693:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12340,7 +12340,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 695:
+/***/ 694:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12427,7 +12427,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 696:
+/***/ 695:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12514,7 +12514,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 697:
+/***/ 696:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12579,7 +12579,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 698:
+/***/ 697:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12677,7 +12677,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 699:
+/***/ 698:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12744,7 +12744,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 700:
+/***/ 699:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12872,7 +12872,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 701:
+/***/ 700:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12964,7 +12964,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 702:
+/***/ 701:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13056,7 +13056,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 703:
+/***/ 702:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13121,7 +13121,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 704:
+/***/ 703:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13250,7 +13250,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 705:
+/***/ 704:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13381,7 +13381,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 706:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13451,7 +13451,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 707:
+/***/ 706:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13517,7 +13517,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 708:
+/***/ 707:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13597,7 +13597,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 709:
+/***/ 708:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13784,7 +13784,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 710:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13887,7 +13887,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 711:
+/***/ 710:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13952,7 +13952,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 712:
+/***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14028,7 +14028,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 713:
+/***/ 712:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14189,7 +14189,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 714:
+/***/ 713:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14367,7 +14367,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 715:
+/***/ 714:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14440,7 +14440,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 716:
+/***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14556,7 +14556,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 717:
+/***/ 716:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14672,7 +14672,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 718:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14765,7 +14765,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 719:
+/***/ 718:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14839,7 +14839,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 720:
+/***/ 719:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14903,7 +14903,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 721:
+/***/ 720:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15037,7 +15037,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 722:
+/***/ 721:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15131,7 +15131,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 723:
+/***/ 722:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15203,7 +15203,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 724:
+/***/ 723:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15324,7 +15324,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 725:
+/***/ 724:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15396,7 +15396,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 726:
+/***/ 725:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15463,7 +15463,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 727:
+/***/ 726:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15590,7 +15590,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 728:
+/***/ 727:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -15689,7 +15689,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 729:
+/***/ 728:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15785,7 +15785,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 730:
+/***/ 729:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15848,7 +15848,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 731:
+/***/ 730:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15911,7 +15911,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 732:
+/***/ 731:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
@@ -16035,7 +16035,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 733:
+/***/ 732:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16194,7 +16194,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 734:
+/***/ 733:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16297,7 +16297,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 735:
+/***/ 734:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16360,7 +16360,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 736:
+/***/ 735:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16423,7 +16423,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 737:
+/***/ 736:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16507,7 +16507,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 738:
+/***/ 737:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16580,7 +16580,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 739:
+/***/ 738:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16645,7 +16645,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 740:
+/***/ 739:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16760,7 +16760,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 741:
+/***/ 740:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16868,7 +16868,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 742:
+/***/ 741:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16976,280 +16976,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 765:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyridePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_signup_service__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(614);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(334);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-var MyridePage = /** @class */ (function () {
-    function MyridePage(navCtrl, SignUpService, TripsService, modalCtrl, toastCtrl, alertCtrl, navParams, callNumber, sendCoordsService, AngularFireAuth, sendUsersService, geofireServices) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.SignUpService = SignUpService;
-        this.TripsService = TripsService;
-        this.modalCtrl = modalCtrl;
-        this.toastCtrl = toastCtrl;
-        this.alertCtrl = alertCtrl;
-        this.navParams = navParams;
-        this.callNumber = callNumber;
-        this.sendCoordsService = sendCoordsService;
-        this.AngularFireAuth = AngularFireAuth;
-        this.sendUsersService = sendUsersService;
-        this.geofireServices = geofireServices;
-        this.hideImage = false;
-        this.pendingUsers = [];
-        this.pickedUpUsers = [];
-        this.ride = "today";
-        this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.onTrip = false;
-        this.lastMinuteUsers = [];
-        console.log(this.onTrip);
-        //get driver information to get the keyTrip
-        this.SignUpService.getMyInfoDriver(this.driverUid)
-            .subscribe(function (userDriver) {
-            _this.userDriver = userDriver;
-            if (_this.userDriver.keyTrip === null) {
-                //do nothing
-                console.log("que dijiste corone");
-                console.log(_this.userDriver.keyTrip);
-            }
-            else {
-                _this.getTrip(_this.userDriver.keyTrip, _this.userDriver.userId); //get keyTrip  
-                _this.getLastMinuteUsers(_this.userDriver.keyTrip, _this.userDriver.userId);
-                // corregir esta vuelta, no debiera estar ontrip true
-            }
-        });
-    }
-    MyridePage.prototype.getLastMinuteUsers = function (keyTrip, driverUid) {
-        var _this = this;
-        this.TripsService.getLastMinuteUsers(keyTrip, driverUid)
-            .subscribe(function (user) {
-            _this.lastMinuteUsers = user;
-            //verify if user info exist 
-            if (_this.lastMinuteUsers.length === 0) {
-                // do nothing
-            }
-            else {
-                _this.lastMinuteUsers.forEach(function (userLastMinute) {
-                    console.log(userLastMinute);
-                    var modal = _this.modalCtrl.create('ConfirmtripPage', {
-                        user: userLastMinute
-                    });
-                    modal.present();
-                });
-                // if(this.lastMinuteUsers.length === 0){
-                //   //do nothing
-                // }else{
-                //   this.navCtrl.push('ConfirmtripPage',{user:user,keyTrip:this.userDriver.keyTrip});
-                // }
-            }
-        });
-    };
-    MyridePage.prototype.getTrip = function (keyTrip, driverUid) {
-        var _this = this;
-        this.TripsService.getTrip(keyTrip, driverUid)
-            .subscribe(function (trip) {
-            console.log(_this.onTrip);
-            _this.trip = trip;
-            if (_this.trip === undefined || _this.trip === null) {
-                _this.onTrip = false;
-            }
-            else {
-                _this.onTrip = true;
-                _this.getPendingAndPickedUpUsers(keyTrip, driverUid);
-            }
-            // after getting trip from node, get pending and pickedUp arrays
-            console.log(_this.trip);
-        });
-    };
-    MyridePage.prototype.getPendingAndPickedUpUsers = function (keyTrip, driverUid) {
-        var _this = this;
-        this.TripsService.getPendingUsers(keyTrip, driverUid)
-            .subscribe(function (user) {
-            _this.pendingUsers = user;
-            console.log(_this.pendingUsers);
-        });
-        this.TripsService.getPickedUpUsers(keyTrip, driverUid)
-            .subscribe(function (user) {
-            _this.pickedUpUsers = user;
-            console.log(_this.pickedUpUsers);
-        });
-        if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
-            // erase trip because driver decide to cancel
-            this.onTrip = false;
-            this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
-            this.TripsService.eraseKeyTrip(this.driverUid);
-            this.TripsService.setOnTripFalse(this.driverUid);
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            var modal = this.modalCtrl.create('CanceltripPage');
-            modal.present();
-        }
-        if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
-            // erase trip because there is no one to picked Up
-            this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
-            this.onTrip = false;
-            this.TripsService.eraseKeyTrip(this.driverUid);
-            this.TripsService.setOnTripFalse(this.driverUid);
-            this.navCtrl.setRoot(this.navCtrl.getActive().component);
-            this.onTrip = false;
-            var modal = this.modalCtrl.create('CanceltripPage');
-            modal.present();
-            console.log(this.onTrip);
-        }
-    };
-    MyridePage.prototype.callUser = function (number) {
-        var _this = this;
-        this.callNumber.callNumber(number, true)
-            .then(function (res) { return console.log('Launched dialer!', res); })
-            .catch(function (err) {
-            var alert = _this.alertCtrl.create({
-                title: 'error de llamada',
-                subTitle: 'hubo un error en la llamada, si persiste el problema envíanos un correo a waypooltec@gmail.com',
-                buttons: ['OK']
-            });
-            alert.present();
-            console.log('Error launching dialer', err);
-        });
-    };
-    MyridePage.prototype.goToRide = function (user) {
-        this.navCtrl.push('PickupPage', {
-            user: user,
-            keyTrip: this.userDriver.keyTrip
-        });
-    };
-    MyridePage.prototype.endTrip = function () {
-        var _this = this;
-        // se cambiara a finalizar viaje
-        if (this.pendingUsers.length == 0 && this.pickedUpUsers.length !== 0) {
-            var alert_1 = this.alertCtrl.create({
-                title: 'Ir a mi destino',
-                message: "\u00BFEstas seguro que deseas finalizar tu viaje?",
-                buttons: [{
-                        text: 'Cancelar',
-                        role: 'cancel',
-                        handler: function () {
-                        }
-                    },
-                    {
-                        text: 'Si',
-                        handler: function () {
-                            _this.onTrip = false;
-                            __WEBPACK_IMPORTED_MODULE_8_moment__["locale"]('es'); //to make the date be in spanish  
-                            // this.geofireServices.cancelGeoqueryOr()
-                            // this.geofireServices.cancelGeoqueryDest()
-                            var today = __WEBPACK_IMPORTED_MODULE_8_moment__().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
-                            _this.TripsService.timeFinishedTrip(_this.userDriver.keyTrip, _this.driverUid, today);
-                            _this.TripsService.saveTripUser(_this.driverUid, _this.userDriver.keyTrip);
-                            _this.TripsService.saveTripOnRecords(_this.driverUid, _this.trip);
-                            _this.TripsService.endTrip(_this.userDriver.keyTrip, _this.driverUid);
-                            _this.TripsService.eraseKeyTrip(_this.driverUid);
-                            _this.TripsService.setOnTripFalse(_this.driverUid);
-                            _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
-                            _this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle');
-                            //TO-DO: AQUI FALTA RATETRIPPAGE
-                        }
-                    }
-                ]
-            });
-            alert_1.present();
-        }
-        else {
-            this.presentAlert('Viaje Incompleto', 'Por favor termina de recoger a todos los usuarios o cancélalos', 'Ok');
-        }
-    };
-    MyridePage.prototype.presentToast = function (message, duration, position) {
-        var toast = this.toastCtrl.create({
-            message: message,
-            duration: duration,
-            position: position
-        });
-        toast.present();
-    };
-    MyridePage.prototype.presentAlert = function (title, text, button) {
-        var alert = this.alertCtrl.create({
-            title: title,
-            subTitle: text,
-            buttons: [button]
-        });
-        alert.present();
-    };
-    MyridePage.prototype.deleteUser = function (userId, nameUser) {
-        var _this = this;
-        console.log(this.onTrip);
-        var alert = this.alertCtrl.create({
-            title: 'Eliminar Usuario',
-            message: "\u00BFEstas que deseas eliminar a este a " + nameUser + " de tu viaje?,borrar muchos usuarios por d\u00EDa/semana esta en contra de nuestras pol\u00EDticas",
-            buttons: [{
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: function () {
-                    }
-                },
-                {
-                    text: 'Eliminar',
-                    handler: function () {
-                        _this.TripsService.cancelUserFromTrip(_this.driverUid, _this.trip.keyTrip, userId);
-                        _this.presentToast("Haz eliminado a " + nameUser + " de tu viaje", 3000, 'bottom');
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
-    MyridePage.prototype.help = function () {
-        var toast = this.toastCtrl.create({
-            message: 'En esta página podrás recoger, llamar, chatear (próximamente), a los compañeros que hayas escogido',
-            showCloseButton: true,
-            closeButtonText: 'OK',
-            position: 'top'
-        });
-        toast.present();
-    };
-    MyridePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-myride',template:/*ion-inline-start:"C:\Users\daniel altamar\Documents\waypoolApp\driver-test\waypool_driver\src\pages\myride\myride.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">MI VIAJE\n\n           \n\n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n\n\n\n    </ion-navbar>\n\n    \n\n</ion-header>\n\n\n\n<ion-content class="bg-light"> \n\n        <ion-list >\n\n            <ion-card *ngFor = "let user of pendingUsers">\n\n                <ion-item>\n\n                    <ion-avatar item-start>\n\n                        <img src="assets/imgs/userPicture.png">\n\n                    </ion-avatar>\n\n                    <div class="name">\n\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                        </h2>\n\n                        <p>{{user.about}}</p>\n\n                    </div>\n\n                    <div class="more">\n\n                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>\n\n                    </div>\n\n                </ion-item>\n\n                <ion-card-content>\n\n                    <div class="ride-detail">\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                    </div>\n\n                    <ion-row>\n\n                          \n\n                                <ion-col class="detail-text">\n\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n\n            \n\n                                    </ion-col>\n\n                        <ion-col col-5>\n\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-card-content>         \n\n\n\n                \n\n            </ion-card>\n\n            \n\n            \n\n            \n\n            <ion-card *ngFor = "let user of pickedUpUsers">\n\n                    <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                            </h2>\n\n                      \n\n                        </div>\n\n                        <div class="more">                       \n\n                                <ion-badge color="secondary" class="badge">RECOGIDO</ion-badge>                                  \n\n                                    \n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p>\n\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                            <p>\n\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                        </div>\n\n                       \n\n                    </ion-card-content>\n\n                   \n\n        \n\n                    \n\n                </ion-card> \n\n\n\n\n\n                <ion-row>\n\n                \n\n                    <ion-col class="detail-text">\n\n                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Cancelar Viaje</button>\n\n                    </ion-col>\n\n                    <ion-col class="detail-text">\n\n                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>\n\n                    </ion-col>\n\n               \n\n                </ion-row>\n\n        </ion-list>\n\n       \n\n\n\n            \n\n            \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\daniel altamar\Documents\waypoolApp\driver-test\waypool_driver\src\pages\myride\myride.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */]])
-    ], MyridePage);
-    return MyridePage;
-}());
-
-//# sourceMappingURL=myride.js.map
-
-/***/ }),
-
-/***/ 766:
+/***/ 743:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17278,264 +17005,264 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 767:
+/***/ 744:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 616,
-	"./af.js": 616,
-	"./ar": 617,
-	"./ar-dz": 618,
-	"./ar-dz.js": 618,
-	"./ar-kw": 619,
-	"./ar-kw.js": 619,
-	"./ar-ly": 620,
-	"./ar-ly.js": 620,
-	"./ar-ma": 621,
-	"./ar-ma.js": 621,
-	"./ar-sa": 622,
-	"./ar-sa.js": 622,
-	"./ar-tn": 623,
-	"./ar-tn.js": 623,
-	"./ar.js": 617,
-	"./az": 624,
-	"./az.js": 624,
-	"./be": 625,
-	"./be.js": 625,
-	"./bg": 626,
-	"./bg.js": 626,
-	"./bm": 627,
-	"./bm.js": 627,
-	"./bn": 628,
-	"./bn.js": 628,
-	"./bo": 629,
-	"./bo.js": 629,
-	"./br": 630,
-	"./br.js": 630,
-	"./bs": 631,
-	"./bs.js": 631,
-	"./ca": 632,
-	"./ca.js": 632,
-	"./cs": 633,
-	"./cs.js": 633,
-	"./cv": 634,
-	"./cv.js": 634,
-	"./cy": 635,
-	"./cy.js": 635,
-	"./da": 636,
-	"./da.js": 636,
-	"./de": 637,
-	"./de-at": 638,
-	"./de-at.js": 638,
-	"./de-ch": 639,
-	"./de-ch.js": 639,
-	"./de.js": 637,
-	"./dv": 640,
-	"./dv.js": 640,
-	"./el": 641,
-	"./el.js": 641,
-	"./en-SG": 642,
-	"./en-SG.js": 642,
-	"./en-au": 643,
-	"./en-au.js": 643,
-	"./en-ca": 644,
-	"./en-ca.js": 644,
-	"./en-gb": 645,
-	"./en-gb.js": 645,
-	"./en-ie": 646,
-	"./en-ie.js": 646,
-	"./en-il": 647,
-	"./en-il.js": 647,
-	"./en-nz": 648,
-	"./en-nz.js": 648,
-	"./eo": 649,
-	"./eo.js": 649,
-	"./es": 650,
-	"./es-do": 651,
-	"./es-do.js": 651,
-	"./es-us": 652,
-	"./es-us.js": 652,
-	"./es.js": 650,
-	"./et": 653,
-	"./et.js": 653,
-	"./eu": 654,
-	"./eu.js": 654,
-	"./fa": 655,
-	"./fa.js": 655,
-	"./fi": 656,
-	"./fi.js": 656,
-	"./fo": 657,
-	"./fo.js": 657,
-	"./fr": 658,
-	"./fr-ca": 659,
-	"./fr-ca.js": 659,
-	"./fr-ch": 660,
-	"./fr-ch.js": 660,
-	"./fr.js": 658,
-	"./fy": 661,
-	"./fy.js": 661,
-	"./ga": 662,
-	"./ga.js": 662,
-	"./gd": 663,
-	"./gd.js": 663,
-	"./gl": 664,
-	"./gl.js": 664,
-	"./gom-latn": 665,
-	"./gom-latn.js": 665,
-	"./gu": 666,
-	"./gu.js": 666,
-	"./he": 667,
-	"./he.js": 667,
-	"./hi": 668,
-	"./hi.js": 668,
-	"./hr": 669,
-	"./hr.js": 669,
-	"./hu": 670,
-	"./hu.js": 670,
-	"./hy-am": 671,
-	"./hy-am.js": 671,
-	"./id": 672,
-	"./id.js": 672,
-	"./is": 673,
-	"./is.js": 673,
-	"./it": 674,
-	"./it-ch": 675,
-	"./it-ch.js": 675,
-	"./it.js": 674,
-	"./ja": 676,
-	"./ja.js": 676,
-	"./jv": 677,
-	"./jv.js": 677,
-	"./ka": 678,
-	"./ka.js": 678,
-	"./kk": 679,
-	"./kk.js": 679,
-	"./km": 680,
-	"./km.js": 680,
-	"./kn": 681,
-	"./kn.js": 681,
-	"./ko": 682,
-	"./ko.js": 682,
-	"./ku": 683,
-	"./ku.js": 683,
-	"./ky": 684,
-	"./ky.js": 684,
-	"./lb": 685,
-	"./lb.js": 685,
-	"./lo": 686,
-	"./lo.js": 686,
-	"./lt": 687,
-	"./lt.js": 687,
-	"./lv": 688,
-	"./lv.js": 688,
-	"./me": 689,
-	"./me.js": 689,
-	"./mi": 690,
-	"./mi.js": 690,
-	"./mk": 691,
-	"./mk.js": 691,
-	"./ml": 692,
-	"./ml.js": 692,
-	"./mn": 693,
-	"./mn.js": 693,
-	"./mr": 694,
-	"./mr.js": 694,
-	"./ms": 695,
-	"./ms-my": 696,
-	"./ms-my.js": 696,
-	"./ms.js": 695,
-	"./mt": 697,
-	"./mt.js": 697,
-	"./my": 698,
-	"./my.js": 698,
-	"./nb": 699,
-	"./nb.js": 699,
-	"./ne": 700,
-	"./ne.js": 700,
-	"./nl": 701,
-	"./nl-be": 702,
-	"./nl-be.js": 702,
-	"./nl.js": 701,
-	"./nn": 703,
-	"./nn.js": 703,
-	"./pa-in": 704,
-	"./pa-in.js": 704,
-	"./pl": 705,
-	"./pl.js": 705,
-	"./pt": 706,
-	"./pt-br": 707,
-	"./pt-br.js": 707,
-	"./pt.js": 706,
-	"./ro": 708,
-	"./ro.js": 708,
-	"./ru": 709,
-	"./ru.js": 709,
-	"./sd": 710,
-	"./sd.js": 710,
-	"./se": 711,
-	"./se.js": 711,
-	"./si": 712,
-	"./si.js": 712,
-	"./sk": 713,
-	"./sk.js": 713,
-	"./sl": 714,
-	"./sl.js": 714,
-	"./sq": 715,
-	"./sq.js": 715,
-	"./sr": 716,
-	"./sr-cyrl": 717,
-	"./sr-cyrl.js": 717,
-	"./sr.js": 716,
-	"./ss": 718,
-	"./ss.js": 718,
-	"./sv": 719,
-	"./sv.js": 719,
-	"./sw": 720,
-	"./sw.js": 720,
-	"./ta": 721,
-	"./ta.js": 721,
-	"./te": 722,
-	"./te.js": 722,
-	"./tet": 723,
-	"./tet.js": 723,
-	"./tg": 724,
-	"./tg.js": 724,
-	"./th": 725,
-	"./th.js": 725,
-	"./tl-ph": 726,
-	"./tl-ph.js": 726,
-	"./tlh": 727,
-	"./tlh.js": 727,
-	"./tr": 728,
-	"./tr.js": 728,
-	"./tzl": 729,
-	"./tzl.js": 729,
-	"./tzm": 730,
-	"./tzm-latn": 731,
-	"./tzm-latn.js": 731,
-	"./tzm.js": 730,
-	"./ug-cn": 732,
-	"./ug-cn.js": 732,
-	"./uk": 733,
-	"./uk.js": 733,
-	"./ur": 734,
-	"./ur.js": 734,
-	"./uz": 735,
-	"./uz-latn": 736,
-	"./uz-latn.js": 736,
-	"./uz.js": 735,
-	"./vi": 737,
-	"./vi.js": 737,
-	"./x-pseudo": 738,
-	"./x-pseudo.js": 738,
-	"./yo": 739,
-	"./yo.js": 739,
-	"./zh-cn": 740,
-	"./zh-cn.js": 740,
-	"./zh-hk": 741,
-	"./zh-hk.js": 741,
-	"./zh-tw": 742,
-	"./zh-tw.js": 742
+	"./af": 615,
+	"./af.js": 615,
+	"./ar": 616,
+	"./ar-dz": 617,
+	"./ar-dz.js": 617,
+	"./ar-kw": 618,
+	"./ar-kw.js": 618,
+	"./ar-ly": 619,
+	"./ar-ly.js": 619,
+	"./ar-ma": 620,
+	"./ar-ma.js": 620,
+	"./ar-sa": 621,
+	"./ar-sa.js": 621,
+	"./ar-tn": 622,
+	"./ar-tn.js": 622,
+	"./ar.js": 616,
+	"./az": 623,
+	"./az.js": 623,
+	"./be": 624,
+	"./be.js": 624,
+	"./bg": 625,
+	"./bg.js": 625,
+	"./bm": 626,
+	"./bm.js": 626,
+	"./bn": 627,
+	"./bn.js": 627,
+	"./bo": 628,
+	"./bo.js": 628,
+	"./br": 629,
+	"./br.js": 629,
+	"./bs": 630,
+	"./bs.js": 630,
+	"./ca": 631,
+	"./ca.js": 631,
+	"./cs": 632,
+	"./cs.js": 632,
+	"./cv": 633,
+	"./cv.js": 633,
+	"./cy": 634,
+	"./cy.js": 634,
+	"./da": 635,
+	"./da.js": 635,
+	"./de": 636,
+	"./de-at": 637,
+	"./de-at.js": 637,
+	"./de-ch": 638,
+	"./de-ch.js": 638,
+	"./de.js": 636,
+	"./dv": 639,
+	"./dv.js": 639,
+	"./el": 640,
+	"./el.js": 640,
+	"./en-SG": 641,
+	"./en-SG.js": 641,
+	"./en-au": 642,
+	"./en-au.js": 642,
+	"./en-ca": 643,
+	"./en-ca.js": 643,
+	"./en-gb": 644,
+	"./en-gb.js": 644,
+	"./en-ie": 645,
+	"./en-ie.js": 645,
+	"./en-il": 646,
+	"./en-il.js": 646,
+	"./en-nz": 647,
+	"./en-nz.js": 647,
+	"./eo": 648,
+	"./eo.js": 648,
+	"./es": 649,
+	"./es-do": 650,
+	"./es-do.js": 650,
+	"./es-us": 651,
+	"./es-us.js": 651,
+	"./es.js": 649,
+	"./et": 652,
+	"./et.js": 652,
+	"./eu": 653,
+	"./eu.js": 653,
+	"./fa": 654,
+	"./fa.js": 654,
+	"./fi": 655,
+	"./fi.js": 655,
+	"./fo": 656,
+	"./fo.js": 656,
+	"./fr": 657,
+	"./fr-ca": 658,
+	"./fr-ca.js": 658,
+	"./fr-ch": 659,
+	"./fr-ch.js": 659,
+	"./fr.js": 657,
+	"./fy": 660,
+	"./fy.js": 660,
+	"./ga": 661,
+	"./ga.js": 661,
+	"./gd": 662,
+	"./gd.js": 662,
+	"./gl": 663,
+	"./gl.js": 663,
+	"./gom-latn": 664,
+	"./gom-latn.js": 664,
+	"./gu": 665,
+	"./gu.js": 665,
+	"./he": 666,
+	"./he.js": 666,
+	"./hi": 667,
+	"./hi.js": 667,
+	"./hr": 668,
+	"./hr.js": 668,
+	"./hu": 669,
+	"./hu.js": 669,
+	"./hy-am": 670,
+	"./hy-am.js": 670,
+	"./id": 671,
+	"./id.js": 671,
+	"./is": 672,
+	"./is.js": 672,
+	"./it": 673,
+	"./it-ch": 674,
+	"./it-ch.js": 674,
+	"./it.js": 673,
+	"./ja": 675,
+	"./ja.js": 675,
+	"./jv": 676,
+	"./jv.js": 676,
+	"./ka": 677,
+	"./ka.js": 677,
+	"./kk": 678,
+	"./kk.js": 678,
+	"./km": 679,
+	"./km.js": 679,
+	"./kn": 680,
+	"./kn.js": 680,
+	"./ko": 681,
+	"./ko.js": 681,
+	"./ku": 682,
+	"./ku.js": 682,
+	"./ky": 683,
+	"./ky.js": 683,
+	"./lb": 684,
+	"./lb.js": 684,
+	"./lo": 685,
+	"./lo.js": 685,
+	"./lt": 686,
+	"./lt.js": 686,
+	"./lv": 687,
+	"./lv.js": 687,
+	"./me": 688,
+	"./me.js": 688,
+	"./mi": 689,
+	"./mi.js": 689,
+	"./mk": 690,
+	"./mk.js": 690,
+	"./ml": 691,
+	"./ml.js": 691,
+	"./mn": 692,
+	"./mn.js": 692,
+	"./mr": 693,
+	"./mr.js": 693,
+	"./ms": 694,
+	"./ms-my": 695,
+	"./ms-my.js": 695,
+	"./ms.js": 694,
+	"./mt": 696,
+	"./mt.js": 696,
+	"./my": 697,
+	"./my.js": 697,
+	"./nb": 698,
+	"./nb.js": 698,
+	"./ne": 699,
+	"./ne.js": 699,
+	"./nl": 700,
+	"./nl-be": 701,
+	"./nl-be.js": 701,
+	"./nl.js": 700,
+	"./nn": 702,
+	"./nn.js": 702,
+	"./pa-in": 703,
+	"./pa-in.js": 703,
+	"./pl": 704,
+	"./pl.js": 704,
+	"./pt": 705,
+	"./pt-br": 706,
+	"./pt-br.js": 706,
+	"./pt.js": 705,
+	"./ro": 707,
+	"./ro.js": 707,
+	"./ru": 708,
+	"./ru.js": 708,
+	"./sd": 709,
+	"./sd.js": 709,
+	"./se": 710,
+	"./se.js": 710,
+	"./si": 711,
+	"./si.js": 711,
+	"./sk": 712,
+	"./sk.js": 712,
+	"./sl": 713,
+	"./sl.js": 713,
+	"./sq": 714,
+	"./sq.js": 714,
+	"./sr": 715,
+	"./sr-cyrl": 716,
+	"./sr-cyrl.js": 716,
+	"./sr.js": 715,
+	"./ss": 717,
+	"./ss.js": 717,
+	"./sv": 718,
+	"./sv.js": 718,
+	"./sw": 719,
+	"./sw.js": 719,
+	"./ta": 720,
+	"./ta.js": 720,
+	"./te": 721,
+	"./te.js": 721,
+	"./tet": 722,
+	"./tet.js": 722,
+	"./tg": 723,
+	"./tg.js": 723,
+	"./th": 724,
+	"./th.js": 724,
+	"./tl-ph": 725,
+	"./tl-ph.js": 725,
+	"./tlh": 726,
+	"./tlh.js": 726,
+	"./tr": 727,
+	"./tr.js": 727,
+	"./tzl": 728,
+	"./tzl.js": 728,
+	"./tzm": 729,
+	"./tzm-latn": 730,
+	"./tzm-latn.js": 730,
+	"./tzm.js": 729,
+	"./ug-cn": 731,
+	"./ug-cn.js": 731,
+	"./uk": 732,
+	"./uk.js": 732,
+	"./ur": 733,
+	"./ur.js": 733,
+	"./uz": 734,
+	"./uz-latn": 735,
+	"./uz-latn.js": 735,
+	"./uz.js": 734,
+	"./vi": 736,
+	"./vi.js": 736,
+	"./x-pseudo": 737,
+	"./x-pseudo.js": 737,
+	"./yo": 738,
+	"./yo.js": 738,
+	"./zh-cn": 739,
+	"./zh-cn.js": 739,
+	"./zh-hk": 740,
+	"./zh-hk.js": 740,
+	"./zh-tw": 741,
+	"./zh-tw.js": 741
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -17551,7 +17278,223 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 767;
+webpackContext.id = 744;
+
+/***/ }),
+
+/***/ 769:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReservetripPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_instances_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment__ = __webpack_require__(614);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_moment__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+// import { RiderprofilePage } from '../riderprofile/riderprofile';
+// import { Observable } from 'rxjs';
+// import { AngularFireDatabase} from 'angularfire2/database';
+
+
+
+
+
+
+
+
+
+var ReservetripPage = /** @class */ (function () {
+    function ReservetripPage(navCtrl, SignUpService, TripsService, sendCoordsService, modalCtrl, AngularFireAuth, alertCtrl, geofireService, afDB, instances, sendUsersService, toastCtrl, geoFireService) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.SignUpService = SignUpService;
+        this.TripsService = TripsService;
+        this.sendCoordsService = sendCoordsService;
+        this.modalCtrl = modalCtrl;
+        this.AngularFireAuth = AngularFireAuth;
+        this.alertCtrl = alertCtrl;
+        this.geofireService = geofireService;
+        this.afDB = afDB;
+        this.instances = instances;
+        this.sendUsersService = sendUsersService;
+        this.toastCtrl = toastCtrl;
+        this.geoFireService = geoFireService;
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.usersFindingTrip = [];
+        this.user = [];
+        this.usersOnListRide = [];
+        this.text = 'Aceptar viaje';
+        this.tripsReserves = [];
+        this.reserveUser = [];
+        this.SignUpService.getMyInfoDriver(this.userUid)
+            .subscribe(function (userDriver) {
+            _this.userDriver = userDriver;
+            console.log(_this.userDriver);
+        });
+        //get personal info of the driver
+        this.sendUsersService.getTripsOfReserves(this.userUid)
+            .subscribe(function (tripsReserves) {
+            _this.tripsReserves = tripsReserves;
+            console.log(_this.tripsReserves);
+            //check if reserve  
+            __WEBPACK_IMPORTED_MODULE_10_moment__["locale"]('es');
+            var currentDate = __WEBPACK_IMPORTED_MODULE_10_moment__().format(' HH:mm ');
+            console.log(currentDate);
+            _this.tripsReserves.forEach(function (reserve) {
+                _this.reserveTime = __WEBPACK_IMPORTED_MODULE_10_moment__(JSON.stringify(reserve.startHour), 'HH:mm');
+                console.log(_this.reserveTime);
+                //confirmar si la reserva ha pasado el tiempo
+                if (__WEBPACK_IMPORTED_MODULE_10_moment__().isBefore(_this.reserveTime) === true) {
+                    console.log("esta a tiempo");
+                }
+                else {
+                    if (reserve.isLate === true) {
+                        //check if driver has passengers .
+                        if (reserve.pendingUsers === undefined || reserve.pendingUsers.length === 0 || reserve.pendingUsers === null) {
+                            _this.TripsService.cancelReserve(_this.userUid, reserve.keyTrip);
+                            console.log("cate que no lo vi");
+                            // this.navCtrl.pop();
+                        }
+                        else {
+                            // this.lateReserve(reserve.KeyTrip,reserve);
+                        }
+                    }
+                    //esperar 5 minutos para iniciar el viaje o eliminarlo
+                    // setTimeout(()=>{
+                    // this.TripsService.cancelReserve(this.userUid,reserve.keyTrip);   
+                    // // TO-DO: PUSH NOTIFICATION
+                    // this.navCtrl.pop();
+                    //         }, 300000) 
+                    console.log("Se le olvido la reserva");
+                }
+            });
+        });
+    }
+    ReservetripPage.prototype.ionViewDidLoad = function () {
+    };
+    ReservetripPage.prototype.startTrip = function (tripKeyTrip, trip) {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Iniciar Viaje',
+            message: "\u00BFEstas que seguro deseas iniciar viaje?",
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('holi');
+                    }
+                },
+                {
+                    text: 'Sí',
+                    handler: function () {
+                        //check if driver has an active trip
+                        if (_this.userDriver.onTrip === true) {
+                            var toast = _this.toastCtrl.create({
+                                message: 'No puedes iniciar otro viaje porque tienes un viaje en curso',
+                                showCloseButton: true,
+                                closeButtonText: 'OK',
+                                position: 'middle'
+                            });
+                            toast.present();
+                        }
+                        else {
+                            //check if there is someone in the trip
+                            if (trip.pendingUsers === null || trip.pendingUsers === undefined) {
+                                //do nothing because there is no one in the trip
+                                var toast = _this.toastCtrl.create({
+                                    message: 'No puedes iniciar un viaje sin ningún usuario a quien recoger',
+                                    showCloseButton: true,
+                                    closeButtonText: 'OK',
+                                    position: 'middle'
+                                });
+                                toast.present();
+                            }
+                            else {
+                                _this.TripsService.getReserveUsers(tripKeyTrip, _this.userUid).
+                                    subscribe(function (reservesUser) {
+                                    _this.reserveUser = reservesUser;
+                                    console.log(_this.reserveUser);
+                                    //push the keyTrip,driverId on every User and onTrip = true 
+                                    _this.reserveUser.forEach(function (user) {
+                                        _this.TripsService.startTripForUsers(tripKeyTrip, user.userId, _this.userUid);
+                                    });
+                                    //debería ser en vez de navPop, una funcion que te lleve a myRide y te muestre el viaje
+                                });
+                                _this.TripsService.pushKeyInDriver(tripKeyTrip, _this.userUid);
+                                _this.TripsService.startTrip(tripKeyTrip, _this.userUid, trip);
+                                _this.TripsService.createTripState(tripKeyTrip, _this.userUid);
+                                _this.TripsService.deleteReserve(tripKeyTrip, _this.userUid);
+                                _this.navCtrl.pop();
+                            }
+                        }
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    ReservetripPage.prototype.lateReserve = function (keyTrip, reserve) {
+        var modal = this.modalCtrl.create('ReserveReminderPage', { keyTrip: keyTrip, trip: reserve });
+        modal.present();
+    };
+    ReservetripPage.prototype.seePassengers = function (KeyTrip) {
+        var modal = this.modalCtrl.create('ConfirmreservationPage', { reserveKey: KeyTrip });
+        modal.present();
+        // this.usersFindingTrip.pop();
+        // this.subscribe.unsubscribe();
+    };
+    ReservetripPage.prototype.cancelReserve = function (typeOfReserve, geofireKey, keyTrip) {
+        //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
+        if (typeOfReserve == 'origin') {
+            this.geofireService.cancelGeoqueryOr(geofireKey);
+        }
+        else if (typeOfReserve == 'destination') {
+            this.geofireService.cancelGeoqueryDest(geofireKey);
+        }
+        this.TripsService.cancelReserve(this.userUid, keyTrip);
+        //eliminate reserve
+    };
+    ReservetripPage.prototype.help = function () {
+        var toast = this.toastCtrl.create({
+            message: 'Aquí te saldrán las personas que quieren irse contigo',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
+    };
+    ReservetripPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-reservetrip',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\test\waypool_driver\waypool_driver\src\pages\reservetrip\reservetrip.html"*/'<ion-header class="bg-theme title">\n\n    <ion-navbar >\n\n        <ion-title >Mis Reservas\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content class="bg-light" class="hideLongText">\n\n\n\n    <ion-row class="center-align bg-white flow-ride">\n\n        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>\n\n            <h2>Mi Origen:</h2> {{origin}}\n\n\n\n        </ion-col>\n\n      \n\n        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>\n\n            <h2>Mi Destino:</h2> {{destination}}\n\n        </ion-col>\n\n\n\n    </ion-row>\n\n    <div class="iconHelp">\n\n        <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>\n\n    </div>\n\n\n\n    <ion-card *ngFor = "let trip of tripsReserves">\n\n        <ng-container *ngIf="trip.isLate; else noLateBlock">\n\n            <ion-item>\n\n                <ion-avatar item-start>\n\n                    <img class="animated infinite pulse" src="assets/imgs/flame.png">\n\n                </ion-avatar>\n\n               \n\n                <div class="name">\n\n                   \n\n                    <h2>{{trip.driver.name| titlecase}} {{trip.driver.lastname| titlecase | slice:0:1}}\n\n                        <ion-icon name="ios-checkmark-circle" class="text-hot"></ion-icon>\n\n                    </h2>\n\n                    <p>{{trip.car}}</p>\n\n                </div>\n\n                <div class="more">\n\n                    <h2 class="text text-hot">                        \n\n                     $ {{trip.price}}                          \n\n                    </h2>\n\n                   \n\n                </div>\n\n            </ion-item>\n\n            <ion-card-content >\n\n                <div  class="ride-detail">\n\n                    <p>\n\n                        <span class="icon-location bg-theme"></span>{{trip.origin}}</p>\n\n                    <p>\n\n                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>\n\n                </div>\n\n                <ion-row class="center-align">  \n\n                    <ion-col center text-center col-6 text-right style="margin-left: auto;">\n\n                            <h2 class="text text-hot animated infinite pulse">                        \n\n                                    Viaje en curso                         \n\n                                 </h2>  \n\n                                           \n\n                    </ion-col>                \n\n                    \n\n                    <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                        <button class="btn bg-hot rounded full text-white" (click)="enterTrip(trip)">Unirme</button>\n\n                            </ion-col>\n\n                </ion-row>\n\n            </ion-card-content>\n\n        </ng-container>\n\n        <ng-template #noLateBlock>\n\n            <ion-item>\n\n                <ion-avatar item-start>\n\n                    <img src="assets/imgs/userPicture.png">\n\n                </ion-avatar>\n\n                <div class="name">\n\n                    <h2>Inicio de viaje: {{trip.startHour}}            \n\n                    </h2>\n\n                </div>\n\n                <div class="more">                              \n\n                                <h2 class="text text-theme">                        \n\n                                    $ {{trip.price}}                          \n\n                                </h2>                       \n\n                         \n\n                </div>\n\n            </ion-item>\n\n            <ion-card-content>\n\n                <div class="ride-detail">\n\n                    <p  >\n\n                        <span class="icon-location bg-theme"></span>{{trip.origin}}</p>\n\n                    <p > \n\n                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>\n\n                </div>\n\n                <ion-row class="center-align">\n\n                    <!-- <ion-col col-3 class="detail-text text-theme">\n\n                        3 seats\n\n                    </ion-col> -->\n\n                    <ion-col col-2 class="detail-text text-theme">\n\n                    </ion-col>\n\n                    <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                        <button class="btn bg-theme rounded full text-white" (click)="startTrip(trip.keyTrip,trip)">\n\n                            <ion-icon class="icon" name="play"></ion-icon> Iniciar viaje\n\n                        </button>\n\n                     </ion-col>\n\n                    <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                        <button class="btn bg-theme rounded full text-white" (click)="seePassengers(trip.keyTrip)">Detalles</button>\n\n                    </ion-col>\n\n                    <ion-col center text-center col-4 text-right style="margin-left: auto;">\n\n                        </ion-col>\n\n                </ion-row>\n\n            </ion-card-content>\n\n        </ng-template>\n\n              \n\n               \n\n        \n\n        \n\n    </ion-card>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\test\waypool_driver\waypool_driver\src\pages\reservetrip\reservetrip.html"*/
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_fire_database__["AngularFireDatabase"]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_instances_service__["a" /* instancesService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */]) === "function" && _o || Object])
+    ], ReservetripPage);
+    return ReservetripPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+}());
+
+//# sourceMappingURL=reservetrip.js.map
 
 /***/ })
 

@@ -483,8 +483,7 @@ geocodeLatLng(latLng,inputName) {
                 console.log("AQUIIIIIIIIIIIIIII")
                 console.log(this.geoInfo2.lat);
                 //turn on geoquery university to determine wether the user is in university
-                this.geofireService.setGeofireUniversity(0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
-               //
+                this.geofireService.setGeofireUniversity(0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);              
                 this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       
               }
