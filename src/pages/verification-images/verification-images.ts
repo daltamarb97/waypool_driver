@@ -7,14 +7,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 
 
-
-/**
- * Generated class for the CarRegistrationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-verification-images',
@@ -52,7 +44,7 @@ export class VerificationImagesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
-    this.SignUpService.getMyInfo(this.driver).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(user=>{
       this.driverInfo = user
       if(this.driverInfo.documents){
         if(this.driverInfo.documents.license == true ){
@@ -92,10 +84,7 @@ export class VerificationImagesPage {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-
-
-      // IMPORTANT: pending the University global variable in the path
-      const picturesDrivers = storage().ref('verificationDocuments/' + this.driver + '/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data);
 
 
       
@@ -110,7 +99,7 @@ export class VerificationImagesPage {
 
       this.picToViewCarne = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.SignUpService.pushDocsCarne(this.driver);
+      this.SignUpService.pushDocsCarne(this.SignUpService.userUniversity, this.driver);
       
 
      }, (err) => {
@@ -130,9 +119,7 @@ export class VerificationImagesPage {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-
-            // IMPORTANT: pending the University global variable in the path
-      const picturesDrivers = storage().ref('verificationDocuments/' + this.driver + '/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data);
 
 
 
@@ -146,7 +133,7 @@ export class VerificationImagesPage {
       alert.present();
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.SignUpService.pushDocsId(this.driver);
+      this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
 
       
 

@@ -23,17 +23,30 @@ export class VerificationNumberPage {
   }
 
   code(){
+    this.authenticationService.deleteVerificationCode(this.signUpService.userUniversity, this.userId);
     this.authenticationService.sendVerificationCodeToFirebase(this.signUpService.userUniversity, this.userId, this.confText);
     this.signUpService.getMyInfo(this.signUpService.userUniversity, this.userId).subscribe(driver => {
       this.driverInfo = driver;
 
       if(this.driverInfo.verificationCodeApproval === true){
         this.app.getRootNav().push('LoginPage');
+        this.authenticationService.deleteVerificationCode(this.signUpService.userUniversity, this.userId);
+      }else if(this.driverInfo.verificationCodeApproval === false){
+        let alert = this.alertCtrl.create({
+          title: 'Código Errado',
+          subTitle: 'el código de verificacón está errado',
+          buttons: ['OK']
+        });
+        alert.present();
       }
+      // this.authenticationService.deleteVerificationCode(this.signUpService.userUniversity, this.userId);
+
     })
 
-    // this.app.getRootNav().push('LoginPage');
+  }
 
+  resendCode(){
+    this.authenticationService.resendVerificationCode(this.signUpService.userUniversity, this.userId);
   }
 
      

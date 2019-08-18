@@ -22,6 +22,10 @@ export class SignUpService {
         return this.afDB.list('/universities/' + university).valueChanges()
      }
 
+     public getUniversities(){
+        return this.afDB.list('universities/').valueChanges()
+     }
+
     public pushDocsL(university, userId){
        this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
            license: false
@@ -29,12 +33,11 @@ export class SignUpService {
     }
 
 
-    //PENDING UNIVERSITY VARIABLE
-    public pushDocsCarne(userId){
-        this.afDB.database.ref('drivers/'+userId+'/documents').update({
+    public pushDocsCarne(university, userId){
+        this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
             carne: false
         })
-        this.afDB.database.ref('users/'+userId+'/documents').update({
+        this.afDB.database.ref(university + '/users/'+userId+'/documents').update({
             carne: false
         })
      }

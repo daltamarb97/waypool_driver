@@ -23,6 +23,16 @@ export class authenticationService{
          })
      }
 
+     deleteVerificationCode(university, userId){
+        this.afDB.database.ref(university + '/drivers/' + userId + '/verificationCode/' ).remove();
+     }
+
+     resendVerificationCode(university, userId){
+        this.afDB.database.ref(university + '/drivers/' + userId).update({
+            resendVerificationCode: true
+        })
+    }
+
      
      registerWithEmail(email:string, password:string){
          return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);

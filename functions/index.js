@@ -19,6 +19,13 @@ function validE164(num){
 
 
 
+
+
+
+
+
+
+
 exports.sendCodeToUserCreated = functions.database.ref(`/uninorte/drivers/{userId}`).onCreate(event =>{
     const userId = event._data.userId;
     return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver =>{
@@ -39,10 +46,13 @@ exports.sendCodeToUserCreated = functions.database.ref(`/uninorte/drivers/{userI
 })
 
 
-exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}/`).onUpdate(event =>{
+
+
+
+
+exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}`).onUpdate( event =>{
 
     const userId = event.after._data.userId
-
     return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
         const verificationCode = driver.verificationCode
         const phone = driver.phone
@@ -60,26 +70,46 @@ exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}/
          .then(verification_check => {
             console.log(verification_check.status)
             if(verification_check.status === 'approved'){
-                return event.after._data.child('verificationCodeApproval').set(true);
+                return event.after.ref.child('verificationCodeApproval').set(true);
             }else{
-                return event.after._data.ref.child('verificationCodeApproval').set(false);
+                return event.after.ref.child('verificationCodeApproval').set(false);
             }
         
         })
         .catch(error => console.log(error))
     })
 
+})
 
-    // .then(verification_check => {
-    //     console.log(verification_check.status)
-    //     if(verification_check.status === 'approved'){
-    //         return event._data.ref.parent.child('verificationCodeApproval').set(true);
-    //     }else{
-    //         return event._data.ref.parent.child('verificationCodeApproval').set(false);
-    //     }
-    
-    // })
-    // .catch(error => console.log(error))
+
+
+
+
+
+exports.resendVerificationCode = functions.database.ref(`/uninorte/drivers/{userId}/`).onUpdate( event =>{
+
+    const userId = event.after._data.userId
+    return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
+        const resendVerificationCode = driver.resendVerificationCode
+        const phone = driver.phone
+
+        if(!validE164(phone)){
+            throw new Error('number is in incorrect format')
+        }
+
+        const infoReceived ={
+            to: phone,
+            channel: 'sms'
+        }
+        if(resendVerificationCode === true){
+            return client.verify.services('VA8ff48292f53b52d13635dda53d946922').verifications.create(infoReceived)
+        }
+        return null;
+
+    })
+    .then(verification => console.log(verification.sid, 'success'))
+    .catch(error => console.log(error))
+
 })
 
 

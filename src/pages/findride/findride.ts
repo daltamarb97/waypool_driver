@@ -132,33 +132,33 @@ export class FindridePage {
 
             this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
               this.userInfo = user;
-            })
-
-            this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-              this.universityInfo = uni;
-
-              if(this.universityInfo.email == undefined){
-        
-                if(this.userInfo.documents){
-                  if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
-                    let modal = this.modalCtrl.create('VerificationImagesPage');
-                    modal.present();
-                  }else{
-        
-                  }
-                }else if(!this.universityInfo.documents) {
-                  console.log('no hay docs')
-                  let modal = this.modalCtrl.create('VerificationImagesPage');
-                    modal.present();
-                } 
-              }else{
-        
-              }
-
-
-            })  
+            })        
 
         }
+
+        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+          this.universityInfo = uni;
+
+          if(this.universityInfo.email == undefined){
+    
+            if(this.userInfo.documents){
+              if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
+                let modal = this.modalCtrl.create('VerificationImagesPage');
+                modal.present();
+              }else{
+    
+              }
+            }else if(!this.universityInfo.documents) {
+              console.log('no hay docs')
+              let modal = this.modalCtrl.create('VerificationImagesPage');
+                modal.present();
+            } 
+          }else{
+    
+          }
+
+
+        }) 
       })
       modal.present();
 
