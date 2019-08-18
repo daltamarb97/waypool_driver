@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 611:
+/***/ 613:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyridePageModule", function() { return MyridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(767);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(769);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1896,7 +1896,7 @@ var MyridePageModule = /** @class */ (function () {
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(769)("./" + name);
+                __webpack_require__(771)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4647,7 +4647,7 @@ var MyridePageModule = /** @class */ (function () {
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(768)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(770)(module)))
 
 /***/ }),
 
@@ -16976,7 +16976,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 767:
+/***/ 769:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17242,7 +17242,7 @@ var MyridePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 768:
+/***/ 770:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17271,7 +17271,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 769:
+/***/ 771:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -17544,7 +17544,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 769;
+webpackContext.id = 771;
 
 /***/ })
 

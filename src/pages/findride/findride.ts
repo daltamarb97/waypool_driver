@@ -138,7 +138,6 @@ export class FindridePage {
 
         this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
           this.universityInfo = uni;
-
           if(this.universityInfo.email == undefined){
     
             if(this.userInfo.documents){

@@ -26,10 +26,11 @@ function validE164(num){
 
 
 
-exports.sendCodeToUserCreated = functions.database.ref(`/uninorte/drivers/{userId}`).onCreate(event =>{
-    const userId = event._data.userId;
-    return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver =>{
-        const phoneNumber = driver.phone
+exports.sendCodeToUserCreated = functions.database.ref(`{university}/drivers/{userId}`).onCreate((snap, context) =>{
+    const userId = context.params.userId;
+    const univeristy = context.params.univeristy;
+    return admin.database().ref(`${univeristy}/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver =>{
+        const phoneNumber = snap.val().phone;
         if(!validE164(phoneNumber)){
             throw new Error('number is in incorrect format')
         }
@@ -50,11 +51,11 @@ exports.sendCodeToUserCreated = functions.database.ref(`/uninorte/drivers/{userI
 
 
 
-exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}`).onUpdate( event =>{
-
-    const userId = event.after._data.userId
-    return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
-        const verificationCode = driver.verificationCode
+exports.verifyProvidedCode = functions.database.ref(`/{university}/drivers/{userId}/verificationCode`).onCreate( (snap, context) =>{
+    const university = context.params.university;
+    const userId = context.params.userId;
+    return admin.database().ref(`${university}/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
+        const verificationCode = snap.val();
         const phone = driver.phone
 
         if(!validE164(phone)){
@@ -70,9 +71,9 @@ exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}`
          .then(verification_check => {
             console.log(verification_check.status)
             if(verification_check.status === 'approved'){
-                return event.after.ref.child('verificationCodeApproval').set(true);
+                return snap.ref.parent.child('verificationCodeApproval').set(true);
             }else{
-                return event.after.ref.child('verificationCodeApproval').set(false);
+                return snap.ref.parent.child('verificationCodeApproval').set(false);
             }
         
         })
@@ -86,11 +87,11 @@ exports.verifyProvidedCode = functions.database.ref(`/uninorte/drivers/{userId}`
 
 
 
-exports.resendVerificationCode = functions.database.ref(`/uninorte/drivers/{userId}/`).onUpdate( event =>{
-
-    const userId = event.after._data.userId
-    return admin.database().ref(`/uninorte/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
-        const resendVerificationCode = driver.resendVerificationCode
+exports.resendVerificationCode = functions.database.ref(`/{university}/drivers/{userId}/resendVerificationCode`).onCreate( (snap, context) =>{
+    const university = context.params.university;
+    const userId = context.params.userId;
+    return admin.database().ref(`${university}/drivers/${userId}`).once('value').then(snap => snap.val()).then(driver => {
+        const resendVerificationCode = snap.val()
         const phone = driver.phone
 
         if(!validE164(phone)){

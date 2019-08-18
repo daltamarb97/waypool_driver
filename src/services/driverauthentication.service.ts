@@ -33,6 +33,15 @@ export class authenticationService{
         })
     }
 
+
+    deleteverificationCodeApproval(university, userId){
+        this.afDB.database.ref(university + '/drivers/' + userId + '/verificationCodeApproval/' ).remove();
+     }
+
+     deleteResendCode(university, userId){
+        this.afDB.database.ref(university + '/drivers/' + userId + '/resendVerificationCode/' ).remove();
+     }
+
      
      registerWithEmail(email:string, password:string){
          return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);

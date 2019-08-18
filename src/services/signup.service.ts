@@ -19,7 +19,7 @@ export class SignUpService {
     }
 
     public getInfoUniversity(university){
-        return this.afDB.list('/universities/' + university).valueChanges()
+        return this.afDB.object('/universities/' + university).valueChanges()
      }
 
      public getUniversities(){

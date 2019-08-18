@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
-import { FindridePage } from '../findride/findride';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
