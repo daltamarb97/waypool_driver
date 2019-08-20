@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypoolcars" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waypoolsas.waypoolcars2" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Waypool Cars</name>
     <description>Waypool for students with car</description>
     <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
@@ -20,6 +20,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
+        <resource-file src="google-services.json" />
         <allow-intent href="market:*" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi/icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi/icon.png" />
@@ -33,8 +34,11 @@
         <splash density="port-xxhdpi" src="resources/android/splash/splash.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/splash.png" />
     </platform>
+    <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" />
+    </platform>
+    <engine name="android" spec="6.3.0" />
     <engine name="ios" spec="4.5.5" />
-    <engine name="android" spec="7.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
@@ -57,4 +61,5 @@
     <plugin name="call-number" spec="^1.0.1" />
     <plugin name="cordova-plugin-badge" spec="^0.8.8" />
     <plugin name="cordova-sqlite-storage" spec="^3.2.0" />
+    <plugin name="cordova-plugin-firebase" spec="^2.0.5" />
 </widget>

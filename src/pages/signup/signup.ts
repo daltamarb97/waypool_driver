@@ -124,7 +124,8 @@ export class SignupPage {
             lastname: userLastName,
             email: userEmailComplete,
             phone: '+57'+userPhone,
-            university: userUniversity
+            university: userUniversity,
+            createdBy: 'driver'
         };
 
 
@@ -213,7 +214,8 @@ export class SignupPage {
             lastname: userLastName,
             email: userEmail,
             phone: '+57'+userPhone,
-            university: userUniversity
+            university: userUniversity,
+            createdBy: 'driver'
         };
 
         this.SignUpService.userUniversity = userUniversity;
