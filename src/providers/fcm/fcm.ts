@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Platform } from 'ionic-angular/umd';
-import {Firebase} from '@ionic-native/firebase/ngx'
+import { Platform } from 'ionic-angular';
+import { Firebase } from '@ionic-native/firebase/ngx'
 import { AngularFireAuth } from 'angularfire2/auth';
 /*
   Generated class for the FcmProvider provider.
@@ -15,10 +15,9 @@ export class FcmProvider {
   token:any;
   userId:any;
   constructor(public firebase: Firebase, public afDB: AngularFireDatabase, private platfrom: Platform, public angularFireAuth: AngularFireAuth) {
-      this.userId = this.angularFireAuth.auth.currentUser.uid;
   }
 
-  async getToken(){
+  async getToken(userId){
 
     if(this.platfrom.is('android')){
       this.token = await this.firebase.getToken();
@@ -30,15 +29,15 @@ export class FcmProvider {
       await this.firebase.grantPermission();
     }
 
-    return this.saveTokenToFirebase(this.token);
+    return this.saveTokenToFirebase(this.token, userId);
 
   }
 
 
-  private saveTokenToFirebase(token){
+  private saveTokenToFirebase(token, userId){
     if(!token) return;
 
-    const devicesRef = this.afDB.database.ref('/devices/' + this.userId);
+    const devicesRef = this.afDB.database.ref('/devices/' + userId);
 
     const docData = {
       token: token

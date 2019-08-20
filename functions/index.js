@@ -120,4 +120,30 @@ exports.resendVerificationCode = functions.database.ref(`/{university}/drivers/{
 
 
 
+exports.newReserveNotification = functions.database.ref(`/{university}/reserves/{userId}/{reserveKey}`).onCreate((snap, context) => {
+    const university = context.params.university;
+    const userId = context.params.userId;
+    const reserveId = context.params.reserveKey;
+
+    return admin.database().ref(`/devices/${userId}/`).once('value').then(snapshot => snapshot.val()).then(device => {
+       //check this, I am not sure
+        const deviceToken = device
+        //
+
+        const payload = {
+            notification: {
+                title: 'new Reserve',
+                body: `${userId} has created a reserve`
+            }
+        }
+
+        return admin.messaging().sendToDevice(deviceToken, payload)
+
+
+    })
+    
+})
+
+
+
 

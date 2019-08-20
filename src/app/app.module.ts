@@ -53,6 +53,7 @@ import { TripsService } from '../services/trips.service';
 import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
 import { FcmProvider } from '../providers/fcm/fcm';
+import { Firebase } from '@ionic-native/firebase/ngx'
 
 
 
@@ -82,7 +83,8 @@ export const firebaseConfig = {
     AngularFireAuthModule,
     HttpClientModule,
     HttpModule,
-    MbscModule
+    MbscModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -113,7 +115,8 @@ export const firebaseConfig = {
     ChatsService,
     TripsService,
     WindowService,
-    FcmProvider   
+    FcmProvider,
+    Firebase
 
   ]
 })

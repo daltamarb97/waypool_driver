@@ -181,6 +181,7 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+        minSdkVersion = "16"
     }
 
     lintOptions {
@@ -253,6 +254,9 @@ android {
     if (cdvDebugSigningPropertiesFile) {
         addSigningProps(cdvDebugSigningPropertiesFile, signingConfigs.debug)
     }
+    buildToolsVersion '28.0.3'
+
+
 }
 
 dependencies {

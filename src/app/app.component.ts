@@ -24,8 +24,14 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, public fcm: FcmProvider, public toastCtrl: ToastController) {
   this.userUniversity = this.signUpService.userUniversity;
   console.log(this.userUniversity);
-  //get Token of the device for push notification
-    this.fcm.getToken()
+  
+    
+   platform.ready().then(()=>{
+    statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
+     firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        //get Token of the device for push notification
+    this.fcm.getToken(user.uid)
 
     this.fcm.listenToNotifications().pipe(
       tap(message => {
@@ -36,11 +42,8 @@ export class MyApp {
         toast.present();
       })
     ).subscribe()
+
     
-   platform.ready().then(()=>{
-    statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
-     firebase.auth().onAuthStateChanged((user)=>{
-      if(user){
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
