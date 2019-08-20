@@ -25706,6 +25706,10 @@ li,
   color: #001127;
 }
 
+.text-theme {
+  color: #29374f;
+}
+
 .text-dark {
   color: #4c4c4c;
 }
@@ -25715,7 +25719,15 @@ li,
 }
 
 .text-hot {
-  color: #F3705A;
+  color: #3fb1df;
+}
+
+.text-darkblue {
+  color: #0081ad;
+}
+
+.text-red {
+  color: #df3f3f;
 }
 
 .text-light {
@@ -25724,6 +25736,10 @@ li,
 
 .bg-theme {
   background: #001127;
+}
+
+.bg-2theme {
+  background: #29374f;
 }
 
 .bg-light {
@@ -25735,7 +25751,11 @@ li,
 }
 
 .bg-hot {
-  background: #F3705A;
+  background: #3fb1df;
+}
+
+.bg-darkblue {
+  background: #0081ad;
 }
 
 .bg-white {
@@ -25766,7 +25786,7 @@ li,
 
 .btn {
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 1px;
   height: 40px;
   -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
@@ -25776,7 +25796,7 @@ li,
 .btn.small {
   font-size: 1.2rem;
   height: 35px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0px;
   text-transform: capitalize;
 }
@@ -26715,17 +26735,6 @@ page-confirmprice ion-card-content .ride-detail p .icon-location {
   color: #9E9E9E;
 }
 
-page-confirmprice ion-card-content .ride-detail::before {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 60px;
-  background: #555;
-  position: absolute;
-  left: 5px;
-  bottom: 25px;
-}
-
 page-confirmprice ion-card-content .ride-detail.no-before::before {
   display: none;
 }
@@ -27260,11 +27269,25 @@ page-findride .alert {
   font-weight: bold;
 }
 
-page-findride .btn-footer {
-  width: 90%;
-  position: absolute;
-  bottom: 18px;
-  left: 12px;
+page-findride .btn-left {
+  margin-right: 5px;
+  width: 49%;
+}
+
+page-findride .btn-right {
+  width: 49%;
+}
+
+page-findride .rowOfButtons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 page-help p {
@@ -27480,7 +27503,7 @@ page-myride .card ion-item .name {
 }
 
 page-myride .card ion-item .name h2 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
@@ -28861,7 +28884,7 @@ page-reservetrip .card ion-item .name {
 }
 
 page-reservetrip .card ion-item .name h2 {
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 600;
 }
 
@@ -28962,7 +28985,7 @@ page-reservetrip ion-card-content .full.btn {
   width: 100%;
   text-transform: capitalize;
   letter-spacing: 0px;
-  font-weight: 400;
+  font-weight: 600;
   height: 35px;
   font-size: 1.2rem;
 }
@@ -29242,6 +29265,13 @@ page-showinfocar .form .name-fild {
 
 page-showinfocar .form .input {
   width: 100% !important;
+}
+
+page-showinfocar .form .car {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 page-signup .login {

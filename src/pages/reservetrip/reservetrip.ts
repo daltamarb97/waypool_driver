@@ -54,7 +54,7 @@ export class ReservetripPage{
       console.log(this.tripsReserves);
       //check if reserve  
       moment.locale('es');   
-      let currentDate:any = moment().format(' HH:mm ');
+      let currentDate:string = moment().format(' HH:mm ');
       console.log(currentDate);
       this.tripsReserves.forEach(reserve => {   
      
@@ -68,15 +68,11 @@ export class ReservetripPage{
           if(reserve.isLate === true){
             //check if driver has passengers .
             if(reserve.pendingUsers === undefined||reserve.pendingUsers.length === 0 || reserve.pendingUsers === null ){
-              this.TripsService.cancelReserve(this.userUid,reserve.keyTrip);
+              // this.TripsService.cancelReserve(this.userUid,reserve.keyTrip);
       
               console.log("cate que no lo vi")   
       
-              // this.navCtrl.pop();
       
-            }else{
-              // this.lateReserve(reserve.KeyTrip,reserve);
-
             }
 
           }
@@ -146,7 +142,8 @@ export class ReservetripPage{
               this.TripsService.startTrip(tripKeyTrip,this.userUid,trip);   
               this.TripsService.createTripState(tripKeyTrip,this.userUid);
               this.TripsService.deleteReserve(tripKeyTrip,this.userUid); 
-              this.navCtrl.pop();
+              // this.navCtrl.pop();
+              this.navCtrl.push('MyridePage');
             }           
           }
         }
@@ -188,7 +185,7 @@ export class ReservetripPage{
   
   help(){
     const toast = this.toastCtrl.create({
-      message: 'Aquí te saldrán las personas que quieren irse contigo',
+      message: 'Aquí te mostraremos tus reservas, presiona detalles para ver tus compañeros que se unan en tu viaje, después de 5 minutos de pasado el tiempo de la reserva, se cancelará automaticamente, la app te recordará con una notificación',
       showCloseButton:true,
       closeButtonText: 'OK',
       position:'top'

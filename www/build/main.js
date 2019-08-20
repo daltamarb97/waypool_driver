@@ -47,7 +47,7 @@ var map = {
 	],
 	"../pages/confirmprice/confirmprice.module": [
 		608,
-		6
+		0
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
 		594,
@@ -55,7 +55,7 @@ var map = {
 	],
 	"../pages/confirmtrip/confirmtrip.module": [
 		595,
-		5
+		6
 	],
 	"../pages/findride/findride.module": [
 		613,
@@ -75,7 +75,7 @@ var map = {
 	],
 	"../pages/myride/myride.module": [
 		609,
-		2
+		3
 	],
 	"../pages/onTrip/onTrip.module": [
 		610,
@@ -83,7 +83,7 @@ var map = {
 	],
 	"../pages/pickup/pickup.module": [
 		611,
-		1
+		2
 	],
 	"../pages/profile/profile.module": [
 		599,
@@ -95,15 +95,15 @@ var map = {
 	],
 	"../pages/ratetrip/ratetrip.module": [
 		601,
-		4
+		5
 	],
 	"../pages/reservetrip/reservetrip.module": [
 		612,
-		0
+		1
 	],
 	"../pages/showinfocar/showinfocar.module": [
 		602,
-		3
+		4
 	],
 	"../pages/signup/signup.module": [
 		603,
@@ -261,12 +261,21 @@ var SignUpService = /** @class */ (function () {
         this.afDB.database.ref('/drivers/' + userUid).remove();
         this.afDB.database.ref('/users/' + userUid).remove();
     };
-    SignUpService.prototype.addCar = function (userUid, carModel, plateNumber, color) {
-        this.afDB.database.ref('/drivers/' + userUid + '/cars/').push({
+    SignUpService.prototype.addCar = function (DriverUid, carModel, plateNumber, color) {
+        var _this = this;
+        this.afDB.database.ref('/drivers/' + DriverUid + '/cars/').push({
             carModel: carModel,
             plateNumber: plateNumber,
             color: color
+        }).then(function (snap) {
+            var key = snap.key;
+            _this.afDB.database.ref('/drivers/' + DriverUid + '/cars/' + key).update({
+                keyCar: key
+            });
         });
+    };
+    SignUpService.prototype.deleteCar = function (driverUid, carKey) {
+        this.afDB.database.ref('/drivers/' + driverUid + '/cars/' + carKey).remove();
     };
     SignUpService.prototype.addCarProfile = function (userUid, car) {
         this.afDB.database.ref('/drivers/' + userUid + '/cars/').push(car);
@@ -893,9 +902,20 @@ var TripsService = /** @class */ (function () {
         //get trip in Trip's node
         return this.afDB.object('/trips/' + driverUid + '/' + keyTrip).valueChanges();
     };
+    TripsService.prototype.getKeyTrip = function (driverUid) {
+        //get key of driver's trip
+        return this.afDB.object('/drivers/' + driverUid + '/keyTrip').valueChanges();
+    };
+    TripsService.prototype.getOnTrip = function (userUid) {
+        return this.afDB.object('/drivers/' + userUid + '/onTrip').valueChanges();
+    };
     TripsService.prototype.getPendingUsers = function (keyTrip, driverUid) {
         //get trip in Trip's node
         return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
+    };
+    TripsService.prototype.getSpecificUser = function (keyTrip, driverUid, userId) {
+        //get trip in Trip's node
+        return this.afDB.list('/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).valueChanges();
     };
     TripsService.prototype.getReserveUsers = function (keyTrip, driverUid) {
         //get trip in Trip's node
@@ -923,6 +943,9 @@ var TripsService = /** @class */ (function () {
         //create a trip in Trip's node in database
         this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update(trip);
         this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).update({
+            onTrip: true
+        });
+        this.afDB.database.ref('/drivers/' + driverUid + '/').update({
             onTrip: true
         });
     };
@@ -973,6 +996,10 @@ var TripsService = /** @class */ (function () {
     TripsService.prototype.endTrip = function (keyTrip, driverUid) {
         //erase trip in trip's node
         this.afDB.database.ref('/trips/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.endTripForUsers = function (keyTrip, userId) {
+        //erase trip in users's node
+        this.afDB.database.ref('/users/' + userId + '/keyTrip').remove();
     };
     TripsService.prototype.setOnTripFalse = function (driverUid) {
         // set false to onTrip instance in driver's node

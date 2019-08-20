@@ -12,10 +12,23 @@ export class TripsService {
               //get trip in Trip's node
               return  this.afDB.object('/trips/'+driverUid+'/'+ keyTrip).valueChanges();
           } 
+          getKeyTrip(driverUid){
+            //get key of driver's trip
+            return  this.afDB.object('/drivers/'+driverUid+'/keyTrip').valueChanges();
+        }
+         
+       public getOnTrip(userUid){
+        return  this.afDB.object('/drivers/'+ userUid+'/onTrip').valueChanges();
+
+       }
       public getPendingUsers(keyTrip,driverUid){
             //get trip in Trip's node
             return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers').valueChanges();
         } 
+        public getSpecificUser(keyTrip,driverUid,userId){
+          //get trip in Trip's node
+          return  this.afDB.list('/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+userId).valueChanges();
+      } 
         public getReserveUsers(keyTrip,driverUid){
           //get trip in Trip's node
           return  this.afDB.list('/reserves/'+driverUid+'/'+ keyTrip+'/pendingUsers').valueChanges();
@@ -42,6 +55,9 @@ export class TripsService {
                 //create a trip in Trip's node in database
               this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update(trip);
               this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).update({
+                onTrip:true
+              });
+              this.afDB.database.ref('/drivers/'+driverUid+'/').update({
                 onTrip:true
               });
           }   
@@ -105,8 +121,14 @@ export class TripsService {
           }
        public endTrip(keyTrip,driverUid){          
              //erase trip in trip's node
-            this.afDB.database.ref('/trips/'+driverUid+'/'+ keyTrip).remove();
-        }
+            this.afDB.database.ref('/trips/'+driverUid+'/'+keyTrip).remove();
+
+        } 
+          public endTripForUsers(keyTrip,userId){          
+          //erase trip in users's node
+          
+         this.afDB.database.ref('/users/'+userId+'/keyTrip').remove();
+     }
        public setOnTripFalse(driverUid){           
           // set false to onTrip instance in driver's node
           this.afDB.database.ref('/drivers/'+driverUid).update({
@@ -123,6 +145,7 @@ export class TripsService {
           return  this.afDB.object('/tripsState/'+driverId+'/'+reserveId+'/').valueChanges();
       
         }
+       
        public eraseKeyTrip(driverUid){           
           // erase keyTrip in driver's node
           this.afDB.database.ref('drivers/' + driverUid +'/keyTrip').remove();

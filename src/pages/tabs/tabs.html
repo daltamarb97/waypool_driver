@@ -1,8 +1,8 @@
-<ion-tabs #myTabs tabsHideOnSubPages="false">
-    <ion-tab [root]="tab1Root" tabTitle="Pedir Viaje" ></ion-tab>
-    <ion-tab [root]="tab2Root" tabTitle="Mi Viaje" tabIcon="md-car" ></ion-tab>
+<ion-tabs #myTabs tabsHideOnSubPages="false" [selectedIndex]="1">
+   <ion-tab [root]="tab1Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>
+
+    <ion-tab [root]="tab2Root" tabTitle="Unirme" tabIcon="md-car"></ion-tab>
     
 
-    <ion-tab [root]="tab4Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>
-    <ion-tab [root]="tab5Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>
 </ion-tabs>

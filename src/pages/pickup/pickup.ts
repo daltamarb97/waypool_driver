@@ -11,6 +11,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import * as moment from 'moment';
 import { geofireService } from '../../services/geofire.services';
 import { TripsService } from '../../services/trips.service';
+import { Subject } from 'rxjs';
 
 declare var google; 
 @IonicPage()
@@ -31,17 +32,26 @@ export class PickupPage {
   geocoder:any;
   addressOrigin:any;
   updatelocation:any;
-  useruid=this.AngularFireAuth.auth.currentUser.uid;
+  driverUid=this.AngularFireAuth.auth.currentUser.uid;
   userDriver:any;
   userFirebase:any;
   keyTrip:string;
+  unsubscribe = new Subject;
+
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public TripsService:TripsService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
     this.markers = [];
     //we get the info of the users with navParams
-    this.user= this.navParams.get('user') 
-    this.keyTrip= this.navParams.get('keyTrip') 
-    console.log(this.user)
-    console.log(this.keyTrip)
+    this.user= this.navParams.get('user');
+    this.keyTrip= this.navParams.get('keyTrip'); 
+    this.TripsService.getSpecificUser(this.keyTrip,this.driverUid,this.user.userId).takeUntil(this.unsubscribe)
+      .subscribe((user)=>{
+        user
+        if(user === undefined || user === null){
+          this.navCtrl.pop();
+          console.log("me fui")
+        }
+      })
+       
 
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer({
@@ -50,7 +60,7 @@ export class PickupPage {
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
 
-    this.SignUpService.getMyInfoDriver(this.useruid)
+    this.SignUpService.getMyInfoDriver(this.driverUid)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
@@ -244,19 +254,22 @@ export class PickupPage {
       this.clearMarkers();
       this.markers = [];
     }
-    
+    unSubscribeServices(){
+      this.unsubscribe.next();
+      this.unsubscribe.complete();
+    }    
     notifyDriver(){
       this.presentToast(`Se le ha notificado a ${this.user.name} que ya llegaste`,3000,'top');
     }
     PickUp(){
-      this.TripsService.pickUp(this.keyTrip,this.useruid,this.user.userId,this.user);
-      this.TripsService.eliminatePendingUsers(this.keyTrip,this.useruid,this.user.userId);
+      this.TripsService.pickUp(this.keyTrip,this.driverUid,this.user.userId,this.user);
+      this.TripsService.eliminatePendingUsers(this.keyTrip,this.driverUid,this.user.userId);
       // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
       // this.sendCoordsService.pickUpInstance(this.user.userId);
       moment.locale('es');   
       let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-      this.sendCoordsService.timeOfPickedUpDriver(this.useruid,currDate,this.user.userId);
+      this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
       this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
     }

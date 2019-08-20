@@ -33,17 +33,15 @@ driverUid=this.AngularFireAuth.auth.currentUser.uid;
 
 userInfo;
 userDriver:any;
-onTrip:boolean = false;
 unsubscribe:any;
 lastMinuteUsers:any =[];
 tripState:any;
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
-  	console.log(this.onTrip);
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.driverUid)
 			.subscribe(userDriver => {
 				this.userDriver = userDriver;
-				if (this.userDriver.keyTrip === null && this.userDriver.onTrip === true) {
+				if (this.userDriver.keyTrip === null || this.userDriver.onTrip === false) {
 					//do nothing
 					console.log("que dijiste corone");
 					console.log(this.userDriver.keyTrip);
@@ -93,9 +91,7 @@ tripState:any;
 			
 				this.trip = trip;
 				if (this.trip === undefined || this.trip === null) {
-					this.onTrip = false;
 				} else {
-					this.onTrip = true;
 				// after getting trip from node, get pending and pickedUp arrays
 					this.getPendingAndPickedUpUsers(keyTrip, driverUid);
 				}
@@ -118,26 +114,27 @@ tripState:any;
 
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
 			// erase trip because driver decide to cancel
-			this.onTrip = false;
 			this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
 			this.TripsService.eraseKeyTrip(this.driverUid);
 			this.TripsService.setOnTripFalse(this.driverUid);
+			this.navCtrl.pop();
 			// this.navCtrl.setRoot(this.navCtrl.getActive().component);
 			let modal = this.modalCtrl.create('CanceltripPage');
 			modal.present();
+			console.log("me reproduci 1")
+
       
     }
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
 		// erase trip because there is no one to picked Up
 		this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
-		this.onTrip = false;
 		this.TripsService.eraseKeyTrip(this.driverUid);
 		this.TripsService.setOnTripFalse(this.driverUid);
-		this.navCtrl.setRoot(this.navCtrl.getActive().component);
-		this.onTrip = false;
+		this.navCtrl.pop();
+		console.log("me reproduci 2")
+
 		let modal = this.modalCtrl.create('CanceltripPage');
 		modal.present();
-		console.log(this.onTrip)
 
 		}           
 	}
@@ -180,7 +177,6 @@ tripState:any;
 						text: 'Si',
 						handler: () => {
 
-							this.onTrip = false;
 
 							moment.locale('es'); //to make the date be in spanish  
 
@@ -194,15 +190,18 @@ tripState:any;
 							this.TripsService.timeFinishedTrip(this.userDriver.keyTrip, this.driverUid, today);
 							this.TripsService.saveTripUser(this.driverUid, this.userDriver.keyTrip);
 							this.TripsService.saveTripOnRecords(this.driverUid, this.trip);
-							
+							this.pickedUpUsers.forEach(user => {
+								this.TripsService.endTripForUsers(this.userDriver.keyTrip,user.userId);
+							});
 							setTimeout(() => {
 								this.TripsService.endTrip(this.userDriver.keyTrip, this.driverUid);
 							this.TripsService.eraseKeyTrip(this.driverUid);
 							this.TripsService.setOnTripFalse(this.driverUid);
 							this.TripsService.eliminateTripState(this.userDriver.keyTrip,this.driverUid);				
-							}, 1200);
+							}, 1000);
 							this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle');
 							//TO-DO: AQUI FALTA RATETRIPPAGE
+							this.navCtrl.pop();
 						}
 					}
 				]
@@ -234,7 +233,6 @@ tripState:any;
 		alert.present();
 	}
 	deleteUser(userId, nameUser) {
-    console.log(this.onTrip)
 
 		let alert = this.alertCtrl.create({
 			title: 'Eliminar Usuario',

@@ -76,14 +76,22 @@ public deleteAccount(userUid){
     this.afDB.database.ref('/users/'+userUid).remove();
 }
 
-public addCar(userUid,carModel,plateNumber,color){
-    this.afDB.database.ref('/drivers/'+userUid+'/cars/').push({
+public addCar(DriverUid,carModel,plateNumber,color){
+    this.afDB.database.ref('/drivers/'+DriverUid+'/cars/').push({
         carModel:carModel,
         plateNumber:plateNumber,
         color:color
+    }).then((snap)=>{
+        const key = snap.key;
+        this.afDB.database.ref('/drivers/'+ DriverUid + '/cars/' + key).update({
+            keyCar: key 
+        })
+
     })
 }
-
+public deleteCar(driverUid,carKey){
+    this.afDB.database.ref('/drivers/'+driverUid +'/cars/'+ carKey).remove();
+}
 public addCarProfile(userUid,car){
     this.afDB.database.ref('/drivers/'+userUid+'/cars/').push(car)
 }

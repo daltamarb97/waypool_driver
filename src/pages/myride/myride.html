@@ -1,6 +1,6 @@
 <ion-header class="bg-theme">
     <ion-navbar>
-        <ion-title class="text-center">MI VIAJE
+        <ion-title class="text-center">VIAJE EN CURSO
            
             <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> 
         </ion-title>
@@ -18,6 +18,8 @@
                     </ion-avatar>
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
+                          <ion-icon name="ios-checkmark-circle" class="text-darkblue"></ion-icon>
+
                         </h2>
                         <p>{{user.about}}</p>
                     </div>
@@ -81,16 +83,16 @@
 
                 <ion-row>
                 
+                   
                     <ion-col class="detail-text">
-                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Cancelar Viaje</button>
-                    </ion-col>
-                    <ion-col class="detail-text">
-                        <button class="btn bg-theme text-white rounded" *ngIf="onTrip" (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
+                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
                     </ion-col>
                
                 </ion-row>
         </ion-list>
-       
+        
+
+
 
             
             

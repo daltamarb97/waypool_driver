@@ -18,6 +18,7 @@ import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
+import { TripsService } from '../../services/trips.service';
 
 
 
@@ -83,7 +84,9 @@ export class FindridePage {
   locationUniversity:any ={};
 
   doGeoquery:boolean;
-  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
+  keyTrip:any;
+  onTrip:any;
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -108,9 +111,63 @@ export class FindridePage {
       this.locationUniversity = location;
       this.geofireService.setLocationUniversity("some_key", this.locationUniversity.lat, this.locationUniversity.lng);
     })
+    
+   //search keyTrip
+   this.TripsService.getKeyTrip(this.user)
+    .subscribe(keyTrip=>{
+     this.keyTrip =keyTrip;
+     console.log(this.keyTrip)
+     //if key its deleted don't show VIAJE EN CURSO  
+     if(this.keyTrip === undefined || this.keyTrip === null){
+      this.onTrip=false;
+      //  this.TripsService.eraseKeyTrip(this.user);
+      //  this.TripsService.setOnTripFalse(this.user);
+       console.log("llegue adonde era")
+     }else{
+       //confirm that trip exist and get it
+       this.getTrip();
+       
+     }
+    
+   })
+ } // END OF CONSTRUCTOR
+ getTrip(){
+   this.TripsService.getTrip(this.keyTrip,this.user)
+     .subscribe(trip=>{
+       this.trip = trip
+       console.log(this.trip)
+       //if there is no trip, eliminate key
+       if(this.trip === null || this.trip === undefined){
+       console.log("borre")
+         
+      //  this.TripsService.eraseKeyTrip(this.user);
+      //  this.TripsService.setOnTripFalse(this.user);
 
+       }else{
+         this.getOnTrip();
+       }
+     })
+    
+ } 
+
+
+ getOnTrip(){
+   this.TripsService.getOnTrip(this.user)
+   .subscribe(onTrip=>{
+     this.onTrip =onTrip;
+     console.log(this.onTrip)
+    
+   })
+ }
+ goToTrip(){
+  if (this.onTrip === true) {
+    console.log('DISPARADOR')
+    let modal = this.modalCtrl.create('MyridePage');                      
+    modal.present();
+  }else{
+    this.presentAlert('Error en el viaje','Intenta entrar otra vez, si el error persiste hay un problema con el viaje, porfavor elimina el viaje en Mis reservas','OK')
   }
- 
+ }
   ionViewDidLoad(){
     this.SignUpService.getMyInfo(this.user).subscribe(user=>{
       this.userInfo = user;

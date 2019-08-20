@@ -73,10 +73,17 @@ page-findride {
 .alert{
     font-weight: bold;
 }
-.btn-footer{
-    width: 90%;
-    position: absolute;
-    bottom: 18px;
-    left: 12px;
-}
+.btn-left{
+    margin-right: 5px;
+    width: 49%;
+
+  }
+  .btn-right{
+          
+    width: 49%;
+  }
+.rowOfButtons{
+    display: flex;
+    flex-direction:row; 
+  }
       }

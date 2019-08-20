@@ -94,16 +94,7 @@ page-confirmprice {
                     color: #9E9E9E;
                 }
             }
-            &::before {
-                content: '';
-                display: block;
-                width: 1px;
-                height: 60px;
-                background: #555;
-                position: absolute;
-                left: 5px;
-                bottom: 25px;
-            }
+        
             &.no-before {
                 &::before {
                     display: none;
