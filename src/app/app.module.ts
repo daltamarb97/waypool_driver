@@ -34,7 +34,7 @@ import { Geofence } from '@ionic-native/geofence';
 import { geofireService } from '../services/geofire.services';
 import { instancesService } from '../services/instances.service';
 
-import { OnTripPage } from '../pages/onTrip/onTrip';
+ 
 import { CallNumber } from '@ionic-native/call-number';
 import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';

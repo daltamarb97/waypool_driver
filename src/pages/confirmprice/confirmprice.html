@@ -1,23 +1,14 @@
 <ion-content>
     <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
     <ion-card>
-        <h6 class="text-theme">Detalles del Viaje</h6>
-       
+            <img src="assets/imgs/detallesviaje.png" width="100px" style="display:inline-block" height="150px"/>
+
         <ion-card-content>
             <div class="ride-detail">
                 <ion-item class="form">
                     <ion-label floating>Precio Por Persona</ion-label>
                     <ion-input type="number" [(ngModel)]="precio"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <div class="form">
-                        <ion-list no-lines>
-                            <ion-item>
-                                <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota para tus compañeros (Opcional)" ></ion-textarea>
-                            </ion-item>
-                        </ion-list>
-                    </div>
-                  </ion-item>
+                  </ion-item>                
             </div>
         </ion-card-content>
 
@@ -48,10 +39,19 @@
                     <ion-list>
                         <ion-item>
                                 <ion-label>Hora de inicio de viaje:</ion-label>
-                        <ion-datetime displayFormat="hmm A" picker-format="hmm A" [(ngModel)]="hour"></ion-datetime>
+                        <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>
                         </ion-item>
-                    </ion-list>
+                    </ion-list>                    
                 </ion-row>
+                <ion-item>
+                        <div class="form">
+                                <ion-list no-lines>
+                                    <ion-item>
+                                        <ion-textarea [(ngModel)]="note" type="text" placeholder="Deja una nota (opcional)" ></ion-textarea>
+                                    </ion-item>
+                                </ion-list>
+                            </div>
+                  </ion-item>
             <div class="seats">
                 
                 <ion-row style="margin-top: 14px;    display: flex;
@@ -61,7 +61,7 @@
                         <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="setPriceDriver()">Aceptar Viaje</button>
                     </ion-col>
                 </ion-row>
-
+               
 
             </div>
         </ion-card-content>

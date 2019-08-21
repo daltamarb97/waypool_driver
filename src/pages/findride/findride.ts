@@ -18,6 +18,7 @@ import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
+import { TripsService } from '../../services/trips.service';
 
 
 
@@ -83,7 +84,9 @@ export class FindridePage {
   locationUniversity:any ={};
   university:any;
   doGeoquery:boolean;
-  constructor( private geofireService: geofireService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
+  keyTrip:any;
+  onTrip:any;
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -102,69 +105,131 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
+    
+    
+   
+ } // END OF CONSTRUCTOR
 
-  }
- 
-  ionViewDidLoad(){
 
-    this.AngularFireAuth.auth.onAuthStateChanged(user=>{
-      if(user.emailVerified == false){
-        const alert = this.alertCtrl.create({
-          title: 'Por favor verifica tu email',
-          subTitle: 'Estas casi listo para empezar a disfrutar de Waypool',
-          buttons: ['OK']
-        });
-        alert.present(); 
+ ionViewDidLoad(){
+
+  this.AngularFireAuth.auth.onAuthStateChanged(user=>{
+    if(user.emailVerified == false){
+      const alert = this.alertCtrl.create({
+        title: 'Por favor verifica tu email',
+        subTitle: 'Estas casi listo para empezar a disfrutar de Waypool',
+        buttons: ['OK']
+      });
+      alert.present(); 
+    }
+  })
+  if(this.SignUpService.userUniversity == undefined){
+
+    let modal = this.modalCtrl.create('ConfirmUniversityPage');
+    modal.onDidDismiss(readyToStart =>{
+      if(readyToStart){
+        //search keyTrip
+        this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
+        .subscribe(keyTrip=>{
+          this.keyTrip =keyTrip;
+          console.log(this.user)
+          console.log(this.keyTrip)
+          //if key its deleted don't show VIAJE EN CURSO  
+          if(this.keyTrip === undefined || this.keyTrip === null){
+          this.onTrip=false;
+          //  this.TripsService.eraseKeyTrip(this.user);
+          //  this.TripsService.setOnTripFalse(this.user);
+            console.log("llegue adonde era")
+          }else{
+            //confirm that trip exist and get it
+            this.getTrip();
+            
+          }
+   
+  })
+          // set geofire key of university to avoid asking users to put where they are going
+          this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
+            this.university = university
+            this.locationUniversity = this.university.location;
+            this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+          })
+
+
+          this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
+            this.userInfo = user;
+          })        
+
       }
-    })
-    if(this.SignUpService.userUniversity == undefined){
 
-      let modal = this.modalCtrl.create('ConfirmUniversityPage');
-      modal.onDidDismiss(readyToStart =>{
-        if(readyToStart){
-            // set geofire key of university to avoid asking users to put where they are going
-            this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
-              this.university = university
-              this.locationUniversity = this.university.location;
-              this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-            })
-
-
-            this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-              this.userInfo = user;
-            })        
-
+      this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+        this.universityInfo = uni;
+        if(this.universityInfo.email == undefined){
+  
+          if(this.userInfo.documents){
+            if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
+              let modal = this.modalCtrl.create('VerificationImagesPage');
+              modal.present();
+            }else{
+  
+            }
+          }else if(!this.universityInfo.documents) {
+            console.log('no hay docs')
+            let modal = this.modalCtrl.create('VerificationImagesPage');
+              modal.present();
+          } 
+        }else{
+  
         }
 
-        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-          this.universityInfo = uni;
-          if(this.universityInfo.email == undefined){
-    
-            if(this.userInfo.documents){
-              if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
-                let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-              }else{
-    
-              }
-            }else if(!this.universityInfo.documents) {
-              console.log('no hay docs')
-              let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-            } 
-          }else{
-    
-          }
 
+      }) 
+    })
+    modal.present();
 
-        }) 
-      })
-      modal.present();
-
-    }
-
-    this.loadMap();
   }
+
+  this.loadMap();
+}
+
+
+ getTrip(){
+   this.TripsService.getTrip(this.SignUpService.userUniversity, this.keyTrip,this.user)
+     .subscribe(trip=>{
+       this.trip = trip
+       console.log(this.trip)
+       //if there is no trip, eliminate key
+       if(this.trip === null || this.trip === undefined){
+       console.log("borre")
+         
+      //  this.TripsService.eraseKeyTrip(this.user);
+      //  this.TripsService.setOnTripFalse(this.user);
+
+       }else{
+         this.getOnTrip();
+       }
+     })
+    
+ } 
+
+
+ getOnTrip(){
+   this.TripsService.getOnTrip(this.SignUpService.userUniversity, this.user)
+   .subscribe(onTrip=>{
+     this.onTrip =onTrip;
+     console.log(this.onTrip)
+    
+   })
+ }
+ goToTrip(){
+  if (this.onTrip === true) {
+    console.log('DISPARADOR')
+    let modal = this.modalCtrl.create('MyridePage');                      
+    modal.present();
+  }else{
+    this.presentAlert('Error en el viaje','Intenta entrar otra vez, si el error persiste hay un problema con el viaje, porfavor elimina el viaje en Mis reservas','OK')
+  }
+ }
+ 
 
  
   loadMap(){
@@ -460,13 +525,18 @@ geocodeLatLng(latLng,inputName) {
        
                 this.geoInfo1 = this.myLatLng;
                 console.log(this.geoInfo1);
-      
+               
+
+
       
                 this.geoInfo2 = {
                   lat: this.myLatLngDest.lat(),
                   lng: this.myLatLngDest.lng()
                 }
-                
+               
+
+                console.log("AQUIIIIIIIIIIIIIII")
+                console.log(this.geoInfo2.lat);
                 //turn on geoquery university to determine wether the user is in university
                 this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
                //
@@ -477,8 +547,14 @@ geocodeLatLng(latLng,inputName) {
              }
              
           catch(error) {
-            console.log(error)
-            this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+            console.log(error);
+            if(this.geoInfo2.lat === null || this.geoInfo2.lat === undefined ){
+              //this is to tell the user to select a place before publishing a trip
+              this.presentAlert('Información Incompleta','no puedes publicar un viaje sin antes seleccionar un lugar de la lista.','Ok') 
+            }else {
+              this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+
+            }
             }
       
             console.log(this.orFirebase);

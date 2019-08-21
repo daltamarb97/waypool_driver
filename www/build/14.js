@@ -1,20 +1,57 @@
 webpackJsonp([14],{
 
-/***/ 1028:
+/***/ 603:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OnTripPage; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(530);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(531);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__ = __webpack_require__(537);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__ = __webpack_require__(536);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(761);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var ProfilePageModule = /** @class */ (function () {
+    function ProfilePageModule() {
+    }
+    ProfilePageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */]),
+            ],
+            exports: [
+                __WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */]
+            ]
+        })
+    ], ProfilePageModule);
+    return ProfilePageModule;
+}());
+
+//# sourceMappingURL=profile.module.js.map
+
+/***/ }),
+
+/***/ 761:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__ = __webpack_require__(334);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -29,295 +66,148 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-
-var OnTripPage = /** @class */ (function () {
-    function OnTripPage(navCtrl, alertCtrl, sendUsersService, SignupService, toastCtrl, callNumber, navParams, SignUpService, authenticationService, geolocation, zone, sendCoordsService, AngularFireAuth, app) {
+var ProfilePage = /** @class */ (function () {
+    function ProfilePage(navCtrl, modalCtrl, toastCtrl, alertCtrl, AngularFireAuth, authenticationService, SignupService) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.alertCtrl = alertCtrl;
-        this.sendUsersService = sendUsersService;
-        this.SignupService = SignupService;
+        this.modalCtrl = modalCtrl;
         this.toastCtrl = toastCtrl;
-        this.callNumber = callNumber;
-        this.navParams = navParams;
-        this.SignUpService = SignUpService;
-        this.authenticationService = authenticationService;
-        this.geolocation = geolocation;
-        this.zone = zone;
-        this.sendCoordsService = sendCoordsService;
+        this.alertCtrl = alertCtrl;
         this.AngularFireAuth = AngularFireAuth;
-        this.app = app;
-        this.directionsService = null;
-        this.directionsDisplay = null;
-        this.bounds = null;
-        this.pickedUpUsers = [];
-        this.useruid = this.AngularFireAuth.auth.currentUser.uid;
-        this.markers = [];
-        //we get the info of the users with navParams
-        this.directionsService = new google.maps.DirectionsService();
-        this.directionsDisplay = new google.maps.DirectionsRenderer({
-            suppressMarkers: true,
-        });
-        this.bounds = new google.maps.LatLngBounds();
-        this.geocoder = new google.maps.Geocoder();
-        this.sendUsersService.getPickUpUsers(this.SignupService.userUniversity, this.useruid)
-            .subscribe(function (user) {
-            _this.pickedUpUsers = user;
-            console.log(_this.pickedUpUsers);
-        });
-        this.SignUpService.getMyInfoDriver(this.SignupService.userUniversity, this.useruid)
-            .subscribe(function (userDriver) {
-            _this.driver = userDriver;
-            console.log(_this.driver);
+        this.authenticationService = authenticationService;
+        this.SignupService = SignupService;
+        this.myprofile = "about";
+        this.userForDelete = this.AngularFireAuth.auth.currentUser;
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.emailUser = this.AngularFireAuth.auth.currentUser.email;
+        this.user = {};
+        this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).subscribe(function (user) {
+            _this.user = user;
+            console.log(_this.user);
+            _this.showInfoProfile(user);
         });
     }
-    OnTripPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.sendCoordsService.getDestination(this.SignupService.userUniversity, this.useruid)
-            .subscribe(function (destination) {
-            _this.destinationOnTrip = destination;
-            console.log(_this.destinationOnTrip);
-            _this.loadMap();
-        });
-    };
-    OnTripPage.prototype.loadMap = function () {
-        // this gets current position and set the camera of the map and put a marker in your location
-        var _this = this;
-        this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(function (position) {
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            var mapOptions = {
-                center: latLng,
-                zoom: 17,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                zoomControl: false,
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: true,
-                rotateControl: false,
-                fullscreenControl: false,
-                styles: [
-                    {
-                        featureType: 'poi',
-                        elementType: 'labels.icon',
-                        stylers: [
-                            {
-                                visibility: 'off'
-                            }
-                        ]
-                    }
-                ]
-            };
-            _this.myLatLng = { lat: position.coords.latitude, lng: position.coords.longitude };
-            //creates the map and give options
-            _this.map = new google.maps.Map(_this.mapElement.nativeElement, mapOptions);
-            _this.geocodeLatLng(latLng);
-            _this.geocodeAddress(_this.destinationOnTrip);
-            var marker = new google.maps.Marker({
-                map: _this.map,
-                animation: google.maps.Animation.DROP,
-                position: latLng,
-                icon: { url: "assets/imgs/marker-origin-driver.png",
-                    scaledSize: new google.maps.Size(90, 90)
-                }
-            });
-            _this.markers.push(marker);
-        }, function (err) {
-            console.log(err);
-        });
-        //transform the position of the user into an adress
-    };
-    // watch: track the position of the user
-    //   let watch = this.geolocation.watchPosition();
-    //   watch.subscribe((data) => {
-    //   this.deleteMarkers();
-    //   this.updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
-    //   this.geocodeLatLng(this.updatelocation);
-    //   console.log(this.updatelocation)
-    //   this.sendCoordsService.updateGeolocationOrigin(this.useruid,this.addressOrigin)
-    //   this.addMarker(this.updatelocation);
-    //   this.setMapOnAll(this.map); //nose de esta funcion
-    // });   
-    OnTripPage.prototype.geocodeAddress = function (destinationDriver) {
-        var _this = this;
-        this.geocoder.geocode({ 'address': JSON.stringify(destinationDriver) }, function (results, status) {
-            if (status == 'OK') {
-                var marker = new google.maps.Marker({
-                    map: _this.map,
-                    position: results[0].geometry.location,
-                    icon: { url: "assets/imgs/marker-destination.png",
-                        scaledSize: new google.maps.Size(90, 90)
-                    }
-                });
-                _this.directionsDisplay.setMap(_this.map);
-                _this.calculateRoute(results[0].geometry.location);
-            }
-            else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-    };
-    OnTripPage.prototype.geocodeLatLng = function (latLng) {
-        var _this = this;
-        this.geocoder.geocode({ 'location': latLng }, function (results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    _this.addressOrigin = results[0].formatted_address;
-                }
-                else {
-                    alert('No results found');
-                }
-            }
-            else {
-                alert('Geocoder failed due to: ' + status);
-            }
-        });
-    };
-    OnTripPage.prototype.calculateRoute = function (destinationOnTrip) {
-        //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
-        var _this = this;
-        this.bounds.extend(this.myLatLng);
-        this.map.fitBounds(this.bounds);
-        this.directionsService.route({
-            origin: new google.maps.LatLng(this.myLatLng.lat, this.myLatLng.lng),
-            destination: destinationOnTrip,
-            travelMode: google.maps.TravelMode.DRIVING,
-            avoidTolls: true
-        }, function (response, status) {
-            //render
-            if (status === google.maps.DirectionsStatus.OK) {
-                _this.directionsDisplay.setDirections(response);
-            }
-            else {
-                alert('Could not display directions due to: ' + status);
-            }
-        });
-    };
-    OnTripPage.prototype.addMarker = function (location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: this.map,
-        });
-        this.markers.push(marker);
-    };
-    OnTripPage.prototype.setMapOnAll = function (map) {
-        for (var i = 0; i < this.markers.length; i++) {
-            this.markers[i].setMap(map);
+    ProfilePage.prototype.saveChanges = function () {
+        if (this.phone == null && this.user.about == null && this.user.url == null) {
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone == null && this.user.about == null && this.user.url != null) {
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone == null && this.user.about != null && this.user.url == null) {
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone != null && this.user.about == null && this.user.url == null) {
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone != null && this.user.about != null && this.user.url == null) {
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone != null && this.user.about == null && this.user.url != null) {
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone == null && this.user.about != null && this.user.url != null) {
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else if (this.phone != null && this.user.about != null && this.user.url != null) {
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.toastConfirmation();
+            this.navCtrl.pop();
+        }
+        else {
+            console.log('go to the f*cking hell');
         }
     };
-    OnTripPage.prototype.clearMarkers = function () {
-        this.setMapOnAll(null);
-    };
-    OnTripPage.prototype.deleteMarkers = function () {
-        this.clearMarkers();
-        this.markers = [];
-    };
-    OnTripPage.prototype.endTrip = function () {
-        //let user rate the trip
-        var _this = this;
-        this.app.getRootNav().push('RatetripPage', { user: this.driver });
-        this.pickedUpUsers.forEach(function (user) {
-            //erase chat message for every user
-            _this.sendCoordsService.eraseChatsUsers(_this.SignupService.userUniversity, user.userId, _this.useruid);
-            // save trip in every record of every users
-            _this.sendCoordsService.recordTripOnUser(_this.SignupService.userUniversity, user.userId, user);
-            // this.sendCoordsService.endTripUserPickingUsers(user.userId);
-            _this.sendCoordsService.endTripUserPickedUpUsers(_this.SignupService.userUniversity, user.userId);
-            _this.sendCoordsService.endTripUserOnTripInstance(_this.SignupService.userUniversity, user.userId);
-            _this.sendCoordsService.endTripUserPickupInstance(_this.SignupService.userUniversity, user.userId);
-            _this.sendCoordsService.endTripUserDriverListRide(_this.SignupService.userUniversity, user.userId);
-            _this.sendCoordsService.pushOnTripFinalUser(_this.SignupService.userUniversity, user.userId);
-        });
-        //Save trip into RecordTrip on User & Driver
-        this.sendCoordsService.recordTripOnWaypool(this.SignupService.userUniversity, this.driver.trips);
-        this.sendCoordsService.recordTripOnDriver(this.SignupService.userUniversity, this.useruid, this.driver.trips);
-        //End trip into RecordTrip on User & Driver
-        this.sendCoordsService.endTripDriverPickingUsers(this.SignupService.userUniversity, this.useruid);
-        this.sendCoordsService.endTripDriverPickedUpUsers(this.SignupService.userUniversity, this.useruid);
-        this.presentAlert('Viaje Terminado', '¡No olvides seguirnos en Instagram y Twitter para obtener tips y bonos!', 'OK');
-    };
-    OnTripPage.prototype.presentToast = function (message, duration, position) {
+    ProfilePage.prototype.toastConfirmation = function () {
         var toast = this.toastCtrl.create({
-            message: message,
-            duration: duration,
-            position: position
+            message: 'Información actualizada',
+            duration: 1000,
+            position: 'bottom'
         });
         toast.present();
     };
-    OnTripPage.prototype.presentAlert = function (title, text, button) {
+    ProfilePage.prototype.deleteAccount = function () {
+        var _this = this;
         var alert = this.alertCtrl.create({
-            title: title,
-            subTitle: text,
-            buttons: [button]
+            title: 'Eliminar Cuenta',
+            message: "\u00BFEstas segur@ que deseas eliminar esta cuenta?, si tienes cuenta en WAYPOOL USER tambi\u00E9n se eliminar\u00E1",
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    handler: function () {
+                        _this.SignupService.deleteAccount(_this.SignupService.userUniversity, _this.userUid);
+                        _this.AngularFireAuth.auth.currentUser.delete().then(function () {
+                            console.log('user has been deleted');
+                        }).catch(function (error) {
+                            console.log('error:', error);
+                        });
+                        _this.navCtrl.setRoot('LoginPage');
+                        var toast = _this.toastCtrl.create({
+                            message: "Acabas de eliminar esta cuenta, si deseas volver a ser parte de la comunidad por favor reg\u00EDstrate de nuevo",
+                            showCloseButton: true,
+                            closeButtonText: 'Ok'
+                        });
+                        toast.present();
+                    }
+                }
+            ]
         });
         alert.present();
     };
-    OnTripPage.prototype.help = function () {
-        var toast = this.toastCtrl.create({
-            message: 'En esta página podrás dirigirte hacia la universidad y ver en el mapa el camino que puedes tomar, cuando hayas llegado presiona el botón finalizar viaje y cuentanos tu experiencia con Waypool.',
-            showCloseButton: true,
-            closeButtonText: 'OK',
-            position: 'top'
-        });
-        toast.present();
+    ProfilePage.prototype.showInfoProfile = function (user) {
+        this.name = user.name;
+        this.lastname = user.lastname;
+        this.url = user.url;
+        this.about = user.about;
+        this.emailComplete = user.email + user.fixedemail;
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
-    ], OnTripPage.prototype, "mapElement", void 0);
-    OnTripPage = __decorate([
+    ProfilePage.prototype.changePassword = function () {
+        var _this = this;
+        this.AngularFireAuth.auth.sendPasswordResetEmail(this.emailUser).then(function () {
+            var alert = _this.alertCtrl.create({
+                title: 'Revisa tu email',
+                subTitle: 'te enviamos un correo donde podras reestablecer tu contraseña',
+                buttons: ['OK']
+            });
+            alert.present();
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+    ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ontrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/onTrip/onTrip.html"*/'<ion-header class="bg-theme">\n    <ion-navbar hideBackButton >\n        <ion-title>IR A MI DESTINO\n                <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n        <ion-card class="cardOnTrip">\n                \n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p>\n                            <span class="icon-location bg-theme"></span>{{addressOrigin}}</p>\n                        <p>\n                            <span class="icon-location bg-yellow"></span>{{destinationOnTrip}}</p>\n                    </div>\n                    <ion-row class="endTripButton">\n                        \n                        \n                        <ion-col col-5>\n                            <button navPop class="btn bg-theme rounded full text-white" (click)="endTrip()" >Finalizar viaje</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>\n               \n            </ion-card>\n    <div #map id="map"></div>  \n   \n\n\n   \n\n\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/onTrip/onTrip.html"*/
+            selector: 'page-profile',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/profile/profile.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>MI PERFIL</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <ion-item style="position: relative;z-index: 2;">\n        <ion-avatar item-start>\n            <img src="assets/imgs/userPicture.png">\n        </ion-avatar>\n        <div class="name">\n            <h2>{{user.name |titlecase}} {{user.lastname |titlecase}}\n            </h2>\n            \n        </div>\n        \n    </ion-item>\n    \n    <div>\n        <ion-list>\n              \n                     \n            <div class="bg-white" padding>\n                  \n\n                <ion-list no-lines class="form-list">\n                    <ion-item>\n                        <ion-label floating >Nombre</ion-label>\n                        <ion-input type="text" [(ngModel)]="user.name" readonly></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label floating >Apellido</ion-label>\n                        <ion-input type="text" [(ngModel)]="user.lastname" readonly></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label floating>Número Telefónico Actual</ion-label>\n                        <ion-input type="number"  [(ngModel)]="user.phone" readonly></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label stacked>Número Telefónico Nuevo</ion-label>\n                        <ion-input type="number" placeholder="modifica aqui tu número" [(ngModel)]="phone"></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label floating>Email</ion-label>\n                        <ion-input type="text"  [(ngModel)]="emailComplete"  readonly></ion-input>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label stacked >Sobre mi</ion-label>\n                        <ion-textarea placeholder="tu carrera, pasiones, skills"  [(ngModel)]="user.about"></ion-textarea>\n                    </ion-item>\n                    <ion-item>\n                        <ion-label stacked>URL de interés</ion-label>\n                        <ion-input type="text" placeholder="¿qué quieres que vean sobre ti?" [(ngModel)]="user.url" ></ion-input>\n                    </ion-item>\n                   \n                </ion-list>\n            </div>\n            <div padding-top padding-left padding-right text-center>\n                <p>\n                    <button class="btn text-white rounded bg-theme" style="width: 100%;margin-bottom: 8px;" (click)="saveChanges()">Guardar Cambios</button>\n\n                    <button class="btn text-theme rounded bg-white" style="width: 100%;    margin-bottom: 8px;" (click)="changePassword()">Cambiar Contraseña</button>\n                    <button class="btn text-white rounded bg-red" style="width: 100%;    margin-bottom: 8px;" (click)="deleteAccount()">Eliminar Cuenta</button>\n              \n                </p>\n\n            </div>\n        </ion-list>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/profile/profile.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_8__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
-    ], OnTripPage);
-    return OnTripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */]])
+    ], ProfilePage);
+    return ProfilePage;
 }());
 
-//# sourceMappingURL=onTrip.js.map
-
-/***/ }),
-
-/***/ 870:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OnTripPageModule", function() { return OnTripPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__onTrip__ = __webpack_require__(1028);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var OnTripPageModule = /** @class */ (function () {
-    function OnTripPageModule() {
-    }
-    OnTripPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */]),
-            ],
-            exports: [
-                __WEBPACK_IMPORTED_MODULE_2__onTrip__["a" /* OnTripPage */]
-            ]
-        })
-    ], OnTripPageModule);
-    return OnTripPageModule;
-}());
-
-//# sourceMappingURL=onTrip.module.js.map
+//# sourceMappingURL=profile.js.map
 
 /***/ })
 

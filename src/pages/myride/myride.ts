@@ -13,6 +13,7 @@ import { geofireService } from '../../services/geofire.services';
 import { SignUpService } from '../../services/signup.service';
 import * as moment from 'moment';
 import { TripsService } from '../../services/trips.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @IonicPage()
 @Component({
@@ -32,103 +33,110 @@ driverUid=this.AngularFireAuth.auth.currentUser.uid;
 
 userInfo;
 userDriver:any;
-onTrip:boolean = false;
 unsubscribe:any;
 lastMinuteUsers:any =[];
+tripState:any;
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
-  	console.log(this.onTrip)
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid)
 			.subscribe(userDriver => {
 				this.userDriver = userDriver;
-				if (this.userDriver.keyTrip === null) {
+				if (this.userDriver.keyTrip === null || this.userDriver.onTrip === false) {
 					//do nothing
-					console.log("que dijiste corone")
-					console.log(this.userDriver.keyTrip)
+					console.log("que dijiste corone");
+					console.log(this.userDriver.keyTrip);
 				} else {
-					this.getTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.userDriver.userId); //get keyTrip  
-					this.getLastMinuteUsers(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.userDriver.userId);
+					this.getTrip( this.userDriver.keyTrip, this.userDriver.userId); //get keyTrip  
 					// corregir esta vuelta, no debiera estar ontrip true
 				}
-
+				
 			});
 
 
 	}
-	getLastMinuteUsers(university, keyTrip, driverUid) {
-		this.TripsService.getLastMinuteUsers(university, keyTrip, driverUid)
-			.subscribe(user => {
-				this.lastMinuteUsers = user;
+	getLastMinuteUsers(keyTrip, driverUid) {
+		// this.lastMinuteUsers = [];
+		console.log(this.lastMinuteUsers)
+		console.log("1")
+
+		this.TripsService.getLastMinuteUsers(this.SignUpService.userUniversity, keyTrip,driverUid)
+			.subscribe(users => {
+				this.lastMinuteUsers = users;
 				//verify if user info exist 
+				console.log(this.lastMinuteUsers)
+				console.log("2")
+
 				if (this.lastMinuteUsers.length === 0) {
 					// do nothing
 				} else {
 					this.lastMinuteUsers.forEach(userLastMinute => {
 						console.log(userLastMinute);
+						console.log(this.lastMinuteUsers)
+						console.log("3")
+
 						let modal = this.modalCtrl.create('ConfirmtripPage', {
 							user: userLastMinute
 						});
 						modal.present();
-					});
+					});				
 				}
-
-			});
+			});			
 	}
-	getTrip(university,keyTrip, driverUid) {
-		this.TripsService.getTrip(university, keyTrip, driverUid)
+	getTrip( keyTrip, driverUid) {
+		// this.getLastMinuteUsers(this.userDriver.keyTrip, this.userDriver.userId);
+		this.getLastMinuteUsers(keyTrip, driverUid);
+		this.TripsService.getTrip(this.SignUpService.userUniversity, keyTrip, driverUid)
 			.subscribe(trip => {
-        console.log(this.onTrip)
-
+        console.log('se repitio?')
+			
 				this.trip = trip;
 				if (this.trip === undefined || this.trip === null) {
-					this.onTrip = false;
 				} else {
-					this.onTrip = true;
-					this.getPendingAndPickedUpUsers(university, keyTrip, driverUid);
-				}
 				// after getting trip from node, get pending and pickedUp arrays
-
-
-				console.log(this.trip);
-
+					this.getPendingAndPickedUpUsers( keyTrip, driverUid);
+				}
 
 			});
 
 	}
-	getPendingAndPickedUpUsers(university, keyTrip, driverUid) {
-		this.TripsService.getPendingUsers(university, keyTrip, driverUid)
+	
+	getPendingAndPickedUpUsers(keyTrip, driverUid) {
+		this.TripsService.getPendingUsers(this.SignUpService.userUniversity, keyTrip, driverUid)
 			.subscribe(user => {
 				this.pendingUsers = user;
 				console.log(this.pendingUsers);
 			});
-		this.TripsService.getPickedUpUsers(university, keyTrip, driverUid)
+		this.TripsService.getPickedUpUsers(this.SignUpService.userUniversity, keyTrip, driverUid)
 			.subscribe(user => {
 				this.pickedUpUsers = user;
 				console.log(this.pickedUpUsers);
 			});
 
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
-			// erase trip because there is no one to picked Up
-			this.onTrip = false;
+			// erase trip because driver decide to cancel
 			this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
-			this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
-			this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
-			this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      this.presentToast(' tu compañero te ha cancelado el viaje', 5000, 'middle');
+			this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
+			this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
+			this.navCtrl.pop();
+			// this.navCtrl.setRoot(this.navCtrl.getActive().component);
+			let modal = this.modalCtrl.create('CanceltripPage');
+			modal.present();
+			console.log("me reproduci 1")
+
       
     }
-    if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
-      // erase trip because there is no one to picked Up
-      this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
-      this.onTrip = false;
-      this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
-      this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
-      this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      this.onTrip = false;
-      console.log(this.onTrip)
+		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
+		// erase trip because there is no one to picked Up
+		this.TripsService.endTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid);
+		this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
+		this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
+		this.navCtrl.pop();
+		console.log("me reproduci 2")
 
-    } else {
-    }            
+		let modal = this.modalCtrl.create('CanceltripPage');
+		modal.present();
+
+		}           
 	}
 
 	callUser(number) {
@@ -156,7 +164,7 @@ lastMinuteUsers:any =[];
 		// se cambiara a finalizar viaje
 		if (this.pendingUsers.length == 0 && this.pickedUpUsers.length !== 0) {
 			let alert = this.alertCtrl.create({
-				title: 'Ir a mi destino',
+				title: 'Finalizar Viaje',
 				message: `¿Estas seguro que deseas finalizar tu viaje?`,
 				buttons: [{
 						text: 'Cancelar',
@@ -169,7 +177,6 @@ lastMinuteUsers:any =[];
 						text: 'Si',
 						handler: () => {
 
-							this.onTrip = false;
 
 							moment.locale('es'); //to make the date be in spanish  
 
@@ -177,19 +184,24 @@ lastMinuteUsers:any =[];
 
 							// this.geofireServices.cancelGeoqueryDest()
 
-
+							
 							let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
 
-							this.TripsService.timeFinishedTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid, today);
-							this.TripsService.saveTripUser(this.SignUpService.userUniversity, this.driverUid, this.userDriver.keyTrip)
-
-
-							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity, this.driverUid, this.trip);
-							this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
-							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
-							this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
-							this.navCtrl.setRoot(this.navCtrl.getActive().component);
-							this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle')
+							this.TripsService.timeFinishedTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid, today);
+							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
+							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
+							this.pickedUpUsers.forEach(user => {
+								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
+							});
+							setTimeout(() => {
+								this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
+							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
+							this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
+							this.TripsService.eliminateTripState(this.SignUpService.userUniversity, this.userDriver.keyTrip,this.driverUid);				
+							}, 1000);
+							this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle');
+							//TO-DO: AQUI FALTA RATETRIPPAGE
+							this.navCtrl.pop();
 						}
 					}
 				]
@@ -221,7 +233,6 @@ lastMinuteUsers:any =[];
 		alert.present();
 	}
 	deleteUser(userId, nameUser) {
-    console.log(this.onTrip)
 
 		let alert = this.alertCtrl.create({
 			title: 'Eliminar Usuario',
@@ -255,8 +266,5 @@ lastMinuteUsers:any =[];
 		toast.present();
 	}
 
-	// ionViewDidLeave(){
-	//   this.unsubscribe.next();
-	//   this.unsubscribe.complete();
-	// }
+	
 }

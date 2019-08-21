@@ -181,6 +181,10 @@ export class CarRegistrationLoginPage {
  
   };
 
+  findRide(){
+    this.navCtrl.pop();
+  }
+
 
 
 }

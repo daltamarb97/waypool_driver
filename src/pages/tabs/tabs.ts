@@ -9,13 +9,11 @@ import { SignUpService } from '../../services/signup.service';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
+  tab1Root = 'WalletPage';
 
-  tab1Root = 'FindridePage';
-  tab2Root = 'MyridePage';
-  
+  tab2Root = 'FindridePage';
 
-  tab4Root = 'WalletPage';
-  tab5Root = 'MorePage';
+  tab3Root = 'MorePage';
 
   constructor(public signUpService: SignUpService, public angularFireAuth: AngularFireAuth) {
 

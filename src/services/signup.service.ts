@@ -105,14 +105,22 @@ public deleteAccount(university, userUid){
     this.afDB.database.ref(university + '/users/'+userUid).remove();
 }
 
-public addCar(university, userUid,carModel,plateNumber,color){
-    this.afDB.database.ref(university + '/drivers/'+userUid+'/cars/').push({
+public addCar(university, DriverUid,carModel,plateNumber,color){
+    this.afDB.database.ref(university + '/drivers/'+DriverUid+'/cars/').push({
         carModel:carModel,
         plateNumber:plateNumber,
         color:color
+    }).then((snap)=>{
+        const key = snap.key;
+        this.afDB.database.ref(university + '/drivers/'+ DriverUid + '/cars/' + key).update({
+            keyCar: key 
+        })
+
     })
 }
-
+public deleteCar(university, driverUid,carKey){
+    this.afDB.database.ref(university + '/drivers/'+driverUid +'/cars/'+ carKey).remove();
+}
 public addCarProfile(university, userUid,car){
     this.afDB.database.ref(university + '/drivers/'+userUid+'/cars/').push(car)
 }

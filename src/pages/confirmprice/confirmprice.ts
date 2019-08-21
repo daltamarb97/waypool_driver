@@ -9,6 +9,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { priceService } from '../../services/price.service';
 import { geofireService } from '../../services/geofire.services';
 import { Subscription, Subject } from 'rxjs';
+import * as moment from 'moment';
 
 
 declare var google;
@@ -61,7 +62,7 @@ export class ConfirmpricePage {
    goefireKey:any;
    typeOfReserve:any;
    reserve:any;
-
+   startHour:any;
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
@@ -83,8 +84,6 @@ export class ConfirmpricePage {
       this.driverInfo.userId = this.driver.userId
       this.driverInfo.car = this.driver.trips.car
       this.driverInfo.price = this.driver.trips.price
-      this.driverInfo.currentHour = this.driver.trips.nowHour
-      this.driverInfo.startHour = this.driver.trips.hour
       this.driverInfo.note = 'No hay nota.'
       console.log('got info here');
  })
@@ -101,8 +100,6 @@ export class ConfirmpricePage {
      this.driverInfoNote.userId = this.driver2.userId
      this.driverInfoNote.car = this.driver2.trips.car
      this.driverInfoNote.price = this.driver2.trips.price
-     this.driverInfoNote.currentHour = this.driver2.trips.nowHour
-     this.driverInfoNote.startHour = this.driver2.trips.hour
      this.driverInfoNote.note = this.driver2.trips.note
 
   
@@ -119,8 +116,11 @@ export class ConfirmpricePage {
 
 
     setPriceDriver(){
-  
-      if(this.precio == null || this.precio == '' || this.car == null || this.car=='' || this.hour == null || this.hour == ''){
+     let reserveDate = moment(JSON.stringify(this.startHour), 'HH:mm')
+      console.log(reserveDate);      
+      console.log(moment().isBefore(reserveDate));
+      if(moment().isBefore(reserveDate) === true){
+      if(this.precio == null || this.precio == '' || this.car == null || this.car=='' || this.startHour == null || this.startHour == ''){
         const alert = this.alertCtrl.create({
             title: 'Informacion Incompleta',
             subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu viaje, no haz especificado en que carro te moverás o no haz puesto la hora del inicio del viaje',
@@ -129,7 +129,7 @@ export class ConfirmpricePage {
           alert.present();
     }else if(this.note == null || this.note == '' ){
         this.hourToSend = this.nowHour.getHours()+":"+this.nowHour.getMinutes();
-        this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.car, this.hour, this.hourToSend);
+        this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.car);
         this.accepted = true;
         this.dismiss();
         // this.goefireKey = Date.now();
@@ -147,8 +147,8 @@ export class ConfirmpricePage {
         origin:this.driverInfo.origin,
         note:this.note,
         price:this.precio,
-        currentHour:this.hourToSend,
-        startHour:this.hour,
+        startHour: this.startHour,
+
         // geofireKey: this.goefireKey,
         type: this.typeOfReserve
 
@@ -190,8 +190,8 @@ export class ConfirmpricePage {
         origin:this.driverInfo.origin,
         note:this.note,
         price:this.precio,
-        currentHour:this.hourToSend,
-        startHour:this.hour,
+        startHour: this.startHour,
+
         // geofireKey: this.goefireKey,
         type: this.typeOfReserve
 
@@ -228,7 +228,7 @@ export class ConfirmpricePage {
     
       } else {
         this.hourToSend = this.nowHour.getHours()+":"+this.nowHour.getMinutes();
-        this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.note,this.car, this.hour, this.hourToSend)
+        this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid,this.precio,this.note,this.car);
         this.accepted = true;
         this.dismiss();
         // this.goefireKey = Date.now();
@@ -246,8 +246,8 @@ export class ConfirmpricePage {
         origin:this.driverInfoNote.origin,
         note: this.note,
         price:this.precio,
-        currentHour:this.hourToSend,
-        startHour:this.hour,
+        startHour: this.startHour,
+
         // geofireKey: this.goefireKey,
         type: this.typeOfReserve
       }).then((snap)=>{
@@ -286,8 +286,8 @@ export class ConfirmpricePage {
         origin:this.driverInfoNote.origin,
         note: this.note,
         price:this.precio,
-        currentHour:this.hourToSend,
-        startHour:this.hour,
+        startHour: this.startHour,
+
         // geofireKey: this.goefireKey,
         type: this.typeOfReserve
       }).then((snap)=>{
@@ -321,7 +321,17 @@ export class ConfirmpricePage {
     }
           
 }
-      
+      }else{
+           	let alert = this.alertCtrl.create({
+            title: 'Información erronea',
+            subTitle: 'no se puede colocar una reserva para unas horas que ya pasaron',
+            buttons: ['OK']
+          });
+          alert.present();
+          console.log('es una fecha pasada');
+      }   
+
+      console.log(this.car);
 }; 
         
   dismiss() {

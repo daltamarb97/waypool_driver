@@ -30,18 +30,18 @@ export class MyApp {
     statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
      firebase.auth().onAuthStateChanged((user)=>{
       if(user){
-        //get Token of the device for push notification
-    this.fcm.getToken(user.uid)
+    //     //get Token of the device for push notification
+    // this.fcm.getToken(user.uid)
 
-    this.fcm.listenToNotifications().pipe(
-      tap(message => {
-        const toast = this.toastCtrl.create({
-          message: message.body,
-          duration: 3000
-        });
-        toast.present();
-      })
-    ).subscribe()
+    // this.fcm.listenToNotifications().pipe(
+    //   tap(message => {
+    //     const toast = this.toastCtrl.create({
+    //       message: message.body,
+    //       duration: 3000
+    //     });
+    //     toast.present();
+    //   })
+    // ).subscribe()
 
     
         if(user.emailVerified == false){

@@ -8,66 +8,105 @@
 
 <ion-content class="bg-light" class="hideLongText">
 
-    <ion-row class="center-align bg-white flow-ride">
-        <ion-col *ngFor = "let origin of locationOrigin"  class="hideLongText" col-5>
-            <h2>Mi Origen:</h2> {{origin}}
-
-        </ion-col>
-      
-        <ion-col *ngFor = "let destination of locationDestination" class="hideLongText" col-5>
-            <h2>Mi Destino:</h2> {{destination}}
-        </ion-col>
-
-    </ion-row>
+  
     <div class="iconHelp">
         <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>
     </div>
 
-    <ion-card *ngFor = "let trip of tripsReserves">
-        
-                <ion-item>
-                        <ion-avatar item-start>
-                            <img src="assets/imgs/userPicture.png">
-                        </ion-avatar>
-                        <div class="name">
-                            <h2>Inicio de viaje: {{trip.startHour |titlecase}} 
-            
-                            </h2>
-                        </div>
-                        <div class="more">
-                              
-                                        <h2 class="text text-theme">                        
-                                            $ {{trip.price}}                          
-                                        </h2>                        
+    <ion-card  *ngFor = "let trip of tripsReserves">
+        <ng-container *ngIf="trip.isLate; else noLateBlock">
+            <ion-item>
+                <ion-avatar item-start>
+                    <img class="animated infinite pulse" src="assets/imgs/stopwatch2.png">
+                </ion-avatar>
+               
+                <div class="name">
+                   
+                    <div class="name">
+                            <h2 class="text text-hot animated infinite pulse">                        
+                                    Inicio de viaje: {{trip.startHour}}     
+                           </h2>  
                                  
-                        </div>
-                    </ion-item>
-                    <ion-card-content>
-                        <div class="ride-detail">
-                            <p  >
-                                <span class="icon-location bg-theme"></span>{{trip.origin}}</p>
-                            <p > 
-                                <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>
-                        </div>
-                        <ion-row class="center-align">
-                            <!-- <ion-col col-3 class="detail-text text-theme">
-                                3 seats
-                            </ion-col> -->
-                            <ion-col col-2 class="detail-text text-theme">
+
+                    </div>
+                   
+                    <p>{{trip.car}}</p>
+                </div>
+                <div class="more">
+                    <h2 class="text text-hot">                        
+                     $ {{trip.price}}                          
+                    </h2>
+                   
+                </div>
+            </ion-item>
+            <ion-card-content >
+                <div  class="ride-detail">
+                    <p>
+                        <span class="icon-location bg-hot"></span>{{trip.origin}}</p>
+                    <p>
+                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>
+                </div>
+                <ion-row class="center-align">  
+                        <ion-col col-2 class="detail-text text-theme">
                             </ion-col>
                             <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                                <button class="btn bg-theme rounded full text-white" (click)="startTrip(trip.keyTrip,trip)">
-                                    <ion-icon class="icon" name="play"></ion-icon> Iniciar viaje
+                                    <button class="btn bg-hot rounded full text-white"  (click)="seePassengers(trip.keyTrip)">DETALLES</button>
+                                </ion-col>
+                              
+                            <ion-col center text-center col-4 text-right style="margin-left: auto;">
+                                <button  class="btn bg-hot rounded full text-white" (click)="startTrip(trip.keyTrip,trip)">
+                                     INICIAR VIAJE
                                 </button>
                              </ion-col>
+                            
                             <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                                <button class="btn bg-theme rounded full text-white" (click)="seePassengers(trip.keyTrip)">Ver pasajeros</button>
-                            </ion-col>
-                            <ion-col center text-center col-4 text-right style="margin-left: auto;">
-                                    <button class="btn bg-red rounded full text-white" (click)="cancelReserve(trip.type, trip.geofireKey, trip.keyTrip)">cancelar reserva</button>
                                 </ion-col>
-                        </ion-row>
-                    </ion-card-content>
+                            
+                </ion-row>
+            </ion-card-content>
+        </ng-container>
+        <ng-template #noLateBlock>
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="assets/imgs/userPicture.png">
+                </ion-avatar>
+                <div class="name">
+                    <h2>Inicio de viaje: {{trip.startHour}}            
+                    </h2>
+                </div>
+                <div class="more">                              
+                                <h2 class="text text-theme">                        
+                                    $ {{trip.price}}                          
+                                </h2>                       
+                         
+                </div>
+            </ion-item>
+            <ion-card-content>
+                <div class="ride-detail">
+                    <p  >
+                        <span class="icon-location bg-theme"></span>{{trip.origin}}</p>
+                    <p > 
+                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>
+                </div>
+                <ion-row class="center-align">
+                    <!-- <ion-col col-3 class="detail-text text-theme">
+                        3 seats
+                    </ion-col> -->
+                    <ion-col col-2 class="detail-text text-theme">
+                    </ion-col>
+                    
+                    <ion-col center text-center col-4 text-right style="margin-left: auto;">
+                        <button class="btn bg-theme rounded full text-white" (click)="seePassengers(trip.keyTrip)">DETALLES</button>
+                    </ion-col>
+                    <ion-col center text-center col-4 text-right style="margin-left: auto;">
+                        <button class="btn bg-theme rounded full text-white" (click)="startTrip(trip.keyTrip,trip)">INICIAR VIAJE</button>
+                     </ion-col>
+                    <ion-col center text-center col-4 text-right style="margin-left: auto;">
+                        </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ng-template>
+              
                
         
         

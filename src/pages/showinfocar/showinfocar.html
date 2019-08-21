@@ -2,12 +2,16 @@
     <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
     <ion-card>
         <h6 class="text-theme">Mis vehículos</h6>
-        <ion-item>
-            <div class="name" *ngFor="let car of carList">
-                <h2><ion-icon name="car" class="icon-location"></ion-icon>{{car.carModel}}</h2>
-                <p>{{car.plateNumber}} | {{car.color}}</p>
+        <ion-item *ngFor="let car of carList">
+            <div  style="display: flex">
+                    <div class="name"  style="margin-top:2px">
+                            <h2><ion-icon name="car" class="icon-location" style="margin-right: 15px;"></ion-icon>{{car.carModel}}</h2>
+                            <p>{{car.plateNumber}} | {{car.color}}</p>
+                        </div>
+                            <ion-icon name="close-circle"  (click)="deleteCar(car.keyCar)"></ion-icon>
+                         
             </div>
-       
+            
         </ion-item>
         
 
