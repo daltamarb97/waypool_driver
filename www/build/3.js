@@ -17357,6 +17357,10 @@ var ConfirmpricePage = /** @class */ (function () {
             _this.carModelList = car;
             console.log(_this.carModelList);
         });
+        this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userDriverUid)
+            .subscribe(function (reserves) {
+            _this.reservesAlreadyCreated = reserves;
+        });
         this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.userDriverUid).subscribe(function (driver) {
             _this.driver = driver;
             _this.driverInfo.origin = _this.driver.trips.origin;
@@ -17391,195 +17395,205 @@ var ConfirmpricePage = /** @class */ (function () {
     };
     ConfirmpricePage.prototype.setPriceDriver = function () {
         var _this = this;
-        var reserveDate = __WEBPACK_IMPORTED_MODULE_10_moment__(JSON.stringify(this.startHour), 'HH:mm');
-        console.log(reserveDate);
-        console.log(__WEBPACK_IMPORTED_MODULE_10_moment__().isBefore(reserveDate));
-        if (__WEBPACK_IMPORTED_MODULE_10_moment__().isBefore(reserveDate) === true) {
-            if (this.precio == null || this.precio == '' || this.car == null || this.car == '' || this.startHour == null || this.startHour == '') {
-                var alert = this.alertCtrl.create({
-                    title: 'Informacion Incompleta',
-                    subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu viaje, no haz especificado en que carro te moverás o no haz puesto la hora del inicio del viaje',
-                    buttons: ['OK']
-                });
-                alert.present();
-            }
-            else if (this.note == null || this.note == '') {
-                this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-                this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.car);
-                this.accepted = true;
-                this.dismiss();
-                // this.goefireKey = Date.now();
-                if (this.driver.geofireOrigin === true) {
-                    this.typeOfReserve = 'origin';
-                    this.note = 'No hay nota.';
-                    // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
-                    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
-                        driver: this.driverInfo,
-                        car: this.car,
-                        destination: this.driverInfo.destination,
-                        origin: this.driverInfo.origin,
-                        note: this.note,
-                        price: this.precio,
-                        startHour: this.startHour,
-                        type: this.typeOfReserve
-                    }).then(function (snap) {
-                        _this.destination = _this.driverInfo.destination[0][0];
-                        _this.origin = _this.driverInfo.origin[0][0];
-                        var key = snap.key;
-                        // geocoding of addresses that came from findRide
-                        _this.geocoder.geocode({ 'address': _this.origin }, function (results, status) {
-                            if (status === 'OK') {
-                                _this.geocoordinatesOr = {
-                                    lat: results[0].geometry.location.lat(),
-                                    lng: results[0].geometry.location.lng()
-                                };
-                            }
-                            // set geofirekey 
-                            // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
-                            _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
-                                driverId: _this.driverInfo.userId
-                            });
-                            console.log('executed geofire Or');
-                        });
-                        _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
-                            keyTrip: key
-                        });
-                    });
-                }
-                else {
-                    this.typeOfReserve = 'destination';
-                    this.note = 'No hay nota.';
-                    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
-                        driver: this.driverInfo,
-                        car: this.car,
-                        destination: this.driverInfo.destination,
-                        origin: this.driverInfo.origin,
-                        note: this.note,
-                        price: this.precio,
-                        startHour: this.startHour,
-                        // geofireKey: this.goefireKey,
-                        type: this.typeOfReserve
-                    }).then(function (snap) {
-                        _this.destination = _this.driverInfo.destination[0][0];
-                        _this.origin = _this.driverInfo.origin[0][0];
-                        var key = snap.key;
-                        // geocoding of addresses that came from findRide
-                        _this.geocoder.geocode({ 'address': _this.destination }, function (results, status) {
-                            if (status === 'OK') {
-                                _this.geocoordinatesDest = {
-                                    lat: results[0].geometry.location.lat(),
-                                    lng: results[0].geometry.location.lng()
-                                };
-                            }
-                            // set geofire key
-                            // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
-                            _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
-                                driverId: _this.driverInfo.userId
-                            });
-                            console.log('executed geofire Dest');
-                        });
-                        _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
-                            keyTrip: key
-                        });
-                    });
-                }
-            }
-            else {
-                this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-                this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.note, this.car);
-                this.accepted = true;
-                this.dismiss();
-                // this.goefireKey = Date.now();
-                // console.log(this.goefireKey);
-                // add reserve and command to dismiss modal
-                if (this.driver.geofireOrigin === true) {
-                    this.typeOfReserve = 'origin';
-                    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
-                        driver: this.driverInfoNote,
-                        car: this.car,
-                        destination: this.driverInfoNote.destination,
-                        origin: this.driverInfoNote.origin,
-                        note: this.note,
-                        price: this.precio,
-                        startHour: this.startHour,
-                        // geofireKey: this.goefireKey,
-                        type: this.typeOfReserve
-                    }).then(function (snap) {
-                        _this.destinationNote = _this.driverInfoNote.destination[0][0];
-                        _this.originNote = _this.driverInfoNote.origin[0][0];
-                        var key = snap.key;
-                        // geocoding of addresses that came from findRide
-                        _this.geocoder.geocode({ 'address': _this.originNote }, function (results, status) {
-                            if (status === 'OK') {
-                                _this.geocoordinatesOr = {
-                                    lat: results[0].geometry.location.lat(),
-                                    lng: results[0].geometry.location.lng()
-                                };
-                            }
-                            // set geofire key 
-                            // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
-                            _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
-                                driverId: _this.driverInfoNote.userId
-                            });
-                            console.log('executed geofire Or');
-                        });
-                        _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
-                            keyTrip: key
-                        });
-                    });
-                }
-                else {
-                    this.typeOfReserve = 'destination';
-                    this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
-                        driver: this.driverInfoNote,
-                        car: this.car,
-                        destination: this.driverInfoNote.destination,
-                        origin: this.driverInfoNote.origin,
-                        note: this.note,
-                        price: this.precio,
-                        startHour: this.startHour,
-                        // geofireKey: this.goefireKey,
-                        type: this.typeOfReserve
-                    }).then(function (snap) {
-                        _this.destinationNote = _this.driverInfoNote.destination[0][0];
-                        _this.originNote = _this.driverInfoNote.origin[0][0];
-                        var key = snap.key;
-                        // geocoding of addresses that came from findRide
-                        _this.geocoder.geocode({ 'address': _this.destinationNote }, function (results, status) {
-                            if (status === 'OK') {
-                                _this.geocoordinatesDest = {
-                                    lat: results[0].geometry.location.lat(),
-                                    lng: results[0].geometry.location.lng()
-                                };
-                            }
-                            // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
-                            // set geofire key 
-                            _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
-                                driverId: _this.driverInfoNote.userId
-                            });
-                            console.log('executed geofire Dest');
-                        });
-                        _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
-                            keyTrip: key
-                        });
-                    });
-                }
-            }
-        }
-        else {
+        if (this.reservesAlreadyCreated.length >= 5) {
             var alert = this.alertCtrl.create({
-                title: 'Información erronea',
-                subTitle: 'no se puede colocar una reserva para unas horas que ya pasaron',
+                title: 'Limite de reservas por un dia',
+                subTitle: 'Ya llegaste al limite de reservas que se pueden hacer en un dia, cancela reservas que no vayas a hacer o termina los viajes de las que ya tienes en curso por hoy',
                 buttons: ['OK']
             });
             alert.present();
-            console.log('es una fecha pasada');
         }
-        console.log(this.car);
+        else {
+            var reserveDate = __WEBPACK_IMPORTED_MODULE_10_moment__(JSON.stringify(this.startHour), 'HH:mm');
+            console.log(reserveDate);
+            console.log(__WEBPACK_IMPORTED_MODULE_10_moment__().isBefore(reserveDate));
+            if (__WEBPACK_IMPORTED_MODULE_10_moment__().isBefore(reserveDate) === true) {
+                if (this.precio == null || this.precio == '' || this.car == null || this.car == '' || this.startHour == null || this.startHour == '') {
+                    var alert = this.alertCtrl.create({
+                        title: 'Informacion Incompleta',
+                        subTitle: 'No haz colocado el precio por el que estas dispuesto a compatir tu viaje, no haz especificado en que carro te moverás o no haz puesto la hora del inicio del viaje',
+                        buttons: ['OK']
+                    });
+                    alert.present();
+                }
+                else if (this.note == null || this.note == '') {
+                    this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
+                    this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.car);
+                    this.accepted = true;
+                    this.dismiss();
+                    // this.goefireKey = Date.now();
+                    if (this.driver.geofireOrigin === true) {
+                        this.typeOfReserve = 'origin';
+                        this.note = 'No hay nota.';
+                        // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
+                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                            driver: this.driverInfo,
+                            car: this.car,
+                            destination: this.driverInfo.destination,
+                            origin: this.driverInfo.origin,
+                            note: this.note,
+                            price: this.precio,
+                            startHour: this.startHour,
+                            type: this.typeOfReserve
+                        }).then(function (snap) {
+                            _this.destination = _this.driverInfo.destination[0][0];
+                            _this.origin = _this.driverInfo.origin[0][0];
+                            var key = snap.key;
+                            // geocoding of addresses that came from findRide
+                            _this.geocoder.geocode({ 'address': _this.origin }, function (results, status) {
+                                if (status === 'OK') {
+                                    _this.geocoordinatesOr = {
+                                        lat: results[0].geometry.location.lat(),
+                                        lng: results[0].geometry.location.lng()
+                                    };
+                                }
+                                // set geofirekey 
+                                // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
+                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
+                                    driverId: _this.driverInfo.userId
+                                });
+                                console.log('executed geofire Or');
+                            });
+                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                                keyTrip: key
+                            });
+                        });
+                    }
+                    else {
+                        this.typeOfReserve = 'destination';
+                        this.note = 'No hay nota.';
+                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                            driver: this.driverInfo,
+                            car: this.car,
+                            destination: this.driverInfo.destination,
+                            origin: this.driverInfo.origin,
+                            note: this.note,
+                            price: this.precio,
+                            startHour: this.startHour,
+                            // geofireKey: this.goefireKey,
+                            type: this.typeOfReserve
+                        }).then(function (snap) {
+                            _this.destination = _this.driverInfo.destination[0][0];
+                            _this.origin = _this.driverInfo.origin[0][0];
+                            var key = snap.key;
+                            // geocoding of addresses that came from findRide
+                            _this.geocoder.geocode({ 'address': _this.destination }, function (results, status) {
+                                if (status === 'OK') {
+                                    _this.geocoordinatesDest = {
+                                        lat: results[0].geometry.location.lat(),
+                                        lng: results[0].geometry.location.lng()
+                                    };
+                                }
+                                // set geofire key
+                                // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
+                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
+                                    driverId: _this.driverInfo.userId
+                                });
+                                console.log('executed geofire Dest');
+                            });
+                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                                keyTrip: key
+                            });
+                        });
+                    }
+                }
+                else {
+                    this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
+                    this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.note, this.car);
+                    this.accepted = true;
+                    this.dismiss();
+                    // this.goefireKey = Date.now();
+                    // console.log(this.goefireKey);
+                    // add reserve and command to dismiss modal
+                    if (this.driver.geofireOrigin === true) {
+                        this.typeOfReserve = 'origin';
+                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                            driver: this.driverInfoNote,
+                            car: this.car,
+                            destination: this.driverInfoNote.destination,
+                            origin: this.driverInfoNote.origin,
+                            note: this.note,
+                            price: this.precio,
+                            startHour: this.startHour,
+                            // geofireKey: this.goefireKey,
+                            type: this.typeOfReserve
+                        }).then(function (snap) {
+                            _this.destinationNote = _this.driverInfoNote.destination[0][0];
+                            _this.originNote = _this.driverInfoNote.origin[0][0];
+                            var key = snap.key;
+                            // geocoding of addresses that came from findRide
+                            _this.geocoder.geocode({ 'address': _this.originNote }, function (results, status) {
+                                if (status === 'OK') {
+                                    _this.geocoordinatesOr = {
+                                        lat: results[0].geometry.location.lat(),
+                                        lng: results[0].geometry.location.lng()
+                                    };
+                                }
+                                // set geofire key 
+                                // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
+                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
+                                    driverId: _this.driverInfoNote.userId
+                                });
+                                console.log('executed geofire Or');
+                            });
+                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                                keyTrip: key
+                            });
+                        });
+                    }
+                    else {
+                        this.typeOfReserve = 'destination';
+                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                            driver: this.driverInfoNote,
+                            car: this.car,
+                            destination: this.driverInfoNote.destination,
+                            origin: this.driverInfoNote.origin,
+                            note: this.note,
+                            price: this.precio,
+                            startHour: this.startHour,
+                            // geofireKey: this.goefireKey,
+                            type: this.typeOfReserve
+                        }).then(function (snap) {
+                            _this.destinationNote = _this.driverInfoNote.destination[0][0];
+                            _this.originNote = _this.driverInfoNote.origin[0][0];
+                            var key = snap.key;
+                            // geocoding of addresses that came from findRide
+                            _this.geocoder.geocode({ 'address': _this.destinationNote }, function (results, status) {
+                                if (status === 'OK') {
+                                    _this.geocoordinatesDest = {
+                                        lat: results[0].geometry.location.lat(),
+                                        lng: results[0].geometry.location.lng()
+                                    };
+                                }
+                                // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
+                                // set geofire key 
+                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
+                                    driverId: _this.driverInfoNote.userId
+                                });
+                                console.log('executed geofire Dest');
+                            });
+                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                                keyTrip: key
+                            });
+                        });
+                    }
+                }
+            }
+            else {
+                var alert = this.alertCtrl.create({
+                    title: 'Información erronea',
+                    subTitle: 'no se puede colocar una reserva para unas horas que ya pasaron',
+                    buttons: ['OK']
+                });
+                alert.present();
+                console.log('es una fecha pasada');
+            }
+            console.log(this.car);
+        }
     };
     ;
     ConfirmpricePage.prototype.dismiss = function () {

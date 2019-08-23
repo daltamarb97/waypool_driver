@@ -63,6 +63,7 @@ export class ConfirmpricePage {
    typeOfReserve:any;
    reserve:any;
    startHour:any;
+   reservesAlreadyCreated:any;
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
@@ -72,6 +73,13 @@ export class ConfirmpricePage {
       this.carModelList = car;
       console.log(this.carModelList)
     });
+
+
+    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userDriverUid)
+    .subscribe(reserves => {
+      this.reservesAlreadyCreated = reserves;
+      
+    })
 
     this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).subscribe(driver=>{
       this.driver = driver;
@@ -117,7 +125,15 @@ export class ConfirmpricePage {
 
 
     setPriceDriver(){
-     let reserveDate = moment(JSON.stringify(this.startHour), 'HH:mm')
+    if(this.reservesAlreadyCreated.length >= 5){
+      const alert = this.alertCtrl.create({
+        title: 'Limite de reservas por un dia',
+        subTitle: 'Ya llegaste al limite de reservas que se pueden hacer en un dia, cancela reservas que no vayas a hacer o termina los viajes de las que ya tienes en curso por hoy',
+        buttons: ['OK']
+      });
+      alert.present();
+    }else{
+      let reserveDate = moment(JSON.stringify(this.startHour), 'HH:mm')
       console.log(reserveDate);      
       console.log(moment().isBefore(reserveDate));
       if(moment().isBefore(reserveDate) === true){
@@ -331,6 +347,8 @@ export class ConfirmpricePage {
       }   
 
       console.log(this.car);
+    }
+     
 }; 
         
   dismiss() {
