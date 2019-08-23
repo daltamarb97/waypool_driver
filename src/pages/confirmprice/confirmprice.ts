@@ -85,6 +85,7 @@ export class ConfirmpricePage {
       this.driverInfo.car = this.driver.trips.car
       this.driverInfo.price = this.driver.trips.price
       this.driverInfo.note = 'No hay nota.'
+      this.driverInfo.verifiedPerson = this.driver.verifiedPerson
       console.log('got info here');
  })
  
@@ -101,7 +102,7 @@ export class ConfirmpricePage {
      this.driverInfoNote.car = this.driver2.trips.car
      this.driverInfoNote.price = this.driver2.trips.price
      this.driverInfoNote.note = this.driver2.trips.note
-
+     this.driverInfoNote.verifiedPerson = this.driver2.verifiedPerson
   
 })
 
@@ -148,8 +149,6 @@ export class ConfirmpricePage {
         note:this.note,
         price:this.precio,
         startHour: this.startHour,
-
-        // geofireKey: this.goefireKey,
         type: this.typeOfReserve
 
     }).then((snap)=>{

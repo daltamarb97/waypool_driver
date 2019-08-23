@@ -19,7 +19,7 @@ import { authenticationService } from '../../services/driverauthentication.servi
 import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
-
+import { instancesService } from '../../services/instances.service';
 
 
  
@@ -86,7 +86,7 @@ export class FindridePage {
   doGeoquery:boolean;
   keyTrip:any;
   onTrip:any;
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService) {
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -105,8 +105,7 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
-    
-    
+  
    
  } // END OF CONSTRUCTOR
 
@@ -164,13 +163,12 @@ export class FindridePage {
       this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
         this.universityInfo = uni;
         if(this.universityInfo.email == undefined){
-  
           if(this.userInfo.documents){
-            if(this.userInfo.documents.carne == undefined || this.userInfo.documents.id == undefined){
+            if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
               let modal = this.modalCtrl.create('VerificationImagesPage');
               modal.present();
-            }else{
-  
+            }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
+              this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
             }
           }else if(!this.universityInfo.documents) {
             console.log('no hay docs')
@@ -178,7 +176,8 @@ export class FindridePage {
               modal.present();
           } 
         }else{
-  
+          this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+
         }
 
 
@@ -521,6 +520,7 @@ geocodeLatLng(latLng,inputName) {
                 this.directionsDisplay.setDirections({routes: []});
                 this.loadMap();
                } else {
+                 
                 this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
        
                 this.geoInfo1 = this.myLatLng;

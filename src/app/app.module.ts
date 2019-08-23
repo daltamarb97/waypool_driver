@@ -52,8 +52,7 @@ import { ChatsService } from '../services/chat.service';
 import { TripsService } from '../services/trips.service';
 import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
-import { FcmProvider } from '../providers/fcm/fcm';
-import { Firebase } from '@ionic-native/firebase/ngx'
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 
@@ -115,8 +114,7 @@ export const firebaseConfig = {
     ChatsService,
     TripsService,
     WindowService,
-    FcmProvider,
-    Firebase
+    FCM
 
   ]
 })

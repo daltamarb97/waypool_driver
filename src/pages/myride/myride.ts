@@ -160,6 +160,9 @@ tripState:any;
 			keyTrip: this.userDriver.keyTrip
 		});
 	}
+
+
+
 	endTrip() {
 		// se cambiara a finalizar viaje
 		if (this.pendingUsers.length == 0 && this.pickedUpUsers.length !== 0) {
@@ -190,6 +193,8 @@ tripState:any;
 							this.TripsService.timeFinishedTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid, today);
 							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
 							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
+							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
+							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 							this.pickedUpUsers.forEach(user => {
 								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
 							});

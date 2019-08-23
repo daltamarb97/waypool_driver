@@ -18,7 +18,7 @@
                     </ion-avatar>
                     <div class="name">
                         <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
-                          <ion-icon name="ios-checkmark-circle" class="text-darkblue"></ion-icon>
+                          <ion-icon *ngIf='user.verifiedPerson' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>
 
                         </h2>
                         <p>{{user.about}}</p>

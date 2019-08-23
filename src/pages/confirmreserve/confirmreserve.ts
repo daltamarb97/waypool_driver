@@ -66,6 +66,8 @@ console.log(this.reserveKey)
 			//   this.geofireService.cancelGeoqueryDest(geofireKey);
 			// }
 			this.TripsService.cancelReserve(this.SignUpService.userUniversity, this.userUid,this.reserveKey);
+			this.geoFireService.deleteUserGeofireDest(this.SignUpService.userUniversity, this.reserveKey);
+			this.geoFireService.deleteUserGeofireOr(this.SignUpService.userUniversity, this.reserveKey);
 			this.dismiss();
 		  
 		
