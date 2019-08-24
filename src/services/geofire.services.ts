@@ -222,9 +222,9 @@ public onTripUserListRide(driverId, userId){
   });
 }
 
-deleteUserGeofireDest(university, userId){
-  this.afDB.database.ref(university + '/geofireDest/' + userId).remove().then(()=>{
-      console.log("succesfully removed");
+deleteUserGeofireDest(university, keyTrip){
+  this.afDB.database.ref(university + '/geofireDest/' + keyTrip).remove().then(()=>{
+      console.log("GeofireDest succesfully removed");
   }).catch(error =>{
       console.log(error);
   })
@@ -232,14 +232,34 @@ deleteUserGeofireDest(university, userId){
   
 }
 
-deleteUserGeofireOr(university, userId){
-  this.afDB.database.ref(university + '/geofireOr/' + userId).remove().then(()=>{
-      console.log("succesfully removed");
+deleteUserGeofireOr(university, keyTrip){
+  this.afDB.database.ref(university + '/geofireOr/' + keyTrip).remove().then(()=>{
+      console.log("GeofireOr succesfully removed");
   }).catch(error =>{
       console.log(error);
   })
   
   
+}
+
+
+deleteUserGeofireOrTrip(university, keyTrip){
+  this.afDB.database.ref(university + '/geofireOrTrip/' +  keyTrip).remove().then(()=>{
+      console.log("geofireOrTrip succesfully removed");
+  }).catch(error =>{
+      console.log(error);
+  })
+}
+
+
+
+deleteUserGeofireDestTrip(university, keyTrip){
+  this.afDB.database.ref(university + '/geofireDestTrip/' + keyTrip).remove().then(()=>{
+      console.log("geofireDestTrip succesfully removed");
+  }).catch(error =>{
+      console.log(error);
+  })
+ 
 }
 
 public getInfoUser(userId){

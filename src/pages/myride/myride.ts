@@ -225,6 +225,8 @@ tripState:any;
 							setTimeout(() => {
 								this.unSubscribeServices();
 							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
+							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
+							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 							this.pickedUpUsers.forEach(user => {
 								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
 							});

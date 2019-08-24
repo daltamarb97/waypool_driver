@@ -80,5 +80,12 @@ public clickedDirectionMessageCancel(userId){
     })
 }
 
+
+public isVerifiedPerson (university, userId){
+    this.afDB.database.ref(university + '/drivers/' + userId).update({
+        verifiedPerson: true
+    })
+}
+
 }
 

@@ -22,11 +22,9 @@ apply plugin: 'com.android.application'
 buildscript {
     repositories {
         jcenter()
-        maven { url 'https://maven.fabric.io/public' } // Fabrics Maven repository from cordova-plugin-firebase
         maven {
             url "https://maven.google.com"
         }
-        google()
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -34,9 +32,7 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.google.gms:google-services:4.1.0' // google-services dependency from cordova-plugin-firebase
-        classpath 'io.fabric.tools:gradle:1.25.4' // fabric dependency from cordova-plugin-firebase
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
@@ -44,7 +40,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        google() // Google's Maven repository from cordova-plugin-firebase
         maven {
             url "https://maven.google.com"
         }
@@ -97,8 +92,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "cordova-plugin-badge/waypoolcars2-badge.gradle"
-apply from: "cordova-plugin-firebase/waypoolcars2-build.gradle"
+apply from: "cordova-plugin-fcm-with-dependecy-updated/waypoolcars2-FCMPlugin.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -181,7 +175,6 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
-        minSdkVersion = "16"
     }
 
     lintOptions {
@@ -254,25 +247,15 @@ android {
     if (cdvDebugSigningPropertiesFile) {
         addSigningProps(cdvDebugSigningPropertiesFile, signingConfigs.debug)
     }
-    buildToolsVersion '28.0.3'
-
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
-    //debugCompile(project(path: "CordovaLib", configuration: "debug"))
-    //releaseCompile(project(path: "CordovaLib", configuration: "release"))
-    compile project(':CordovaLib')
-
-    implementation  "com.android.support:support-v4:24.1.1+"
-    implementation "com.android.support:support-v4:27.+"
-    implementation "com.google.android.gms:play-services-tagmanager:17.0.0"
-    implementation "com.google.firebase:firebase-core:17.0.0"
-    implementation "com.google.firebase:firebase-messaging:+"
-    implementation "com.google.firebase:firebase-config:+"
-    implementation "com.google.firebase:firebase-perf:+"
+    debugCompile(project(path: "CordovaLib", configuration: "debug"))
+    releaseCompile(project(path: "CordovaLib", configuration: "release"))
+    compile "com.google.firebase:firebase-core:10.+"
+    compile "com.google.firebase:firebase-messaging:10.+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

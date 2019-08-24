@@ -4,13 +4,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase';
 import { SignUpService } from '../services/signup.service';
-import { FcmProvider } from '../providers/fcm/fcm';
-import { tap } from 'rxjs/operators';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 
 
 
+declare var require: any;
+declare var module: any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,31 +20,38 @@ export class MyApp {
   userUniversity:any;
   oneSignalAppId:string = '58b65ff2-abec-43de-8596-ec82288d0255';
   firebaseSenderId:string = '1009109452629';
+  
 
-
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, public fcm: FcmProvider, public toastCtrl: ToastController) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private fcm: FCM) {
   this.userUniversity = this.signUpService.userUniversity;
   console.log(this.userUniversity);
   
     
-   platform.ready().then(()=>{
+  //  platform.ready().then(()=>{
+  //   this.fcm.getToken().then(token => {
+  //     console.log(token);
+  //   });
+
+  //   this.fcm.onTokenRefresh().subscribe(token => {
+  //     console.log(token);
+  //   });
+
+  //   this.fcm.onNotification().subscribe(data => {
+  //     console.log(data);
+  //     if (data.wasTapped) {
+  //       console.log('Received in background');
+  //       this.rootPage = 'LoginPage';
+
+  //     } else {
+  //       console.log('Received in foreground');
+  //       this.rootPage = 'LoginPage';
+  //     }
+  //   });
+
     statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
      firebase.auth().onAuthStateChanged((user)=>{
       if(user){
-    //     //get Token of the device for push notification
-    // this.fcm.getToken(user.uid)
-
-    // this.fcm.listenToNotifications().pipe(
-    //   tap(message => {
-    //     const toast = this.toastCtrl.create({
-    //       message: message.body,
-    //       duration: 3000
-    //     });
-    //     toast.present();
-    //   })
-    // ).subscribe()
-
-    
+       
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
@@ -53,9 +61,5 @@ export class MyApp {
         this.rootPage = 'LoginPage';
       }
     })
-   })
-    
-
-
   }
 }

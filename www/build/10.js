@@ -1,14 +1,14 @@
 webpackJsonp([10],{
 
-/***/ 619:
+/***/ 618:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignupPageModule", function() { return SignupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(777);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(776);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,19 +41,19 @@ var SignupPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 777:
+/***/ 776:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_driverauthentication_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_driverauthentication_service__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_window_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_window_service__ = __webpack_require__(344);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -103,7 +103,8 @@ var SignupPage = /** @class */ (function () {
             carModel: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             plateNumber: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             color: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            university: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
+            university: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            isChecked: [true, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
         });
         this.SignUpService.getUniversities().subscribe(function (universities) {
             _this.universities = universities;
@@ -135,177 +136,187 @@ var SignupPage = /** @class */ (function () {
     };
     SignupPage.prototype.verification = function () {
         var _this = this;
-        if (this.showReadonly == true) {
-            var userName = this.signupGroup.controls['name'].value;
-            var userLastName = this.signupGroup.controls['lastname'].value;
-            var userPhone = this.signupGroup.controls['phone'].value;
-            var userEmail = this.signupGroup.controls['email'].value;
-            var userFixedemail = this.signupGroup.controls['fixedemail'].value;
-            var userEmailComplete = userEmail + userFixedemail;
-            var userPassword = this.signupGroup.controls['password'].value;
-            var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
-            //   let userPhone = this.signupGroup.controls['phone'].value;
-            var userCarModel = this.signupGroup.controls['carModel'].value;
-            var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
-            var usercarColor = this.signupGroup.controls['color'].value;
-            var userUniversity = this.signupGroup.controls['university'].value;
-            this.car = {
-                carModel: userCarModel,
-                plateNumber: userPlateNumber,
-                color: usercarColor
-            };
-            // saving data in variable
-            this.user = {
-                name: userName,
-                lastname: userLastName,
-                email: userEmailComplete,
-                phone: '+57' + userPhone,
-                university: userUniversity,
-                createdBy: 'driver'
-            };
-            this.SignUpService.userUniversity = userUniversity;
-            if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
-                this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(function () {
-                    if (!_this.user.userId) {
-                        _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                            if (user) {
-                                user.getIdToken().then(function (token) {
-                                    _this.user.tokenId = token;
-                                });
-                                if (!_this.user.userId) {
-                                    _this.user.userId = user.uid;
-                                }
-                                _this.SignUpService.saveUser(_this.SignUpService.userUniversity, _this.user);
-                                _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
-                                //send text message with code
-                                _this.sendVerificationCode(_this.user.userId);
-                            }
-                            else {
-                                console.log('there is no user');
-                            }
-                        });
-                    }
-                    ;
-                    //sending email verification and verifying weather email is verified or not
-                    _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                        if (user) {
-                            if (user.emailVerified == false) {
-                                user.sendEmailVerification();
-                                console.log("verification email has been sent");
-                            }
-                            else {
-                                console.log("verification email has not been sent or the email is already verifyied");
-                            }
-                        }
-                        else {
-                            console.log('there is no user');
-                        }
-                    });
-                }).catch(function (error) {
-                    if (error.code === "auth/email-already-in-use") {
-                        var alert_1 = _this.alertCtrl.create({
-                            title: 'ya existe una cuenta con este correo',
-                            subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
-                            buttons: ['OK']
-                        });
-                        alert_1.present();
-                    }
-                });
-                // this.navCtrl.push('LoginPage', this.user);
-            }
-            else {
-                var alert_2 = this.alertCtrl.create({
-                    title: 'Oops!',
-                    subTitle: 'las contraseñas no coinciden, intenta de nuevo',
-                    buttons: ['OK']
-                });
-                alert_2.present();
-            }
+        if (!this.signupGroup.controls['isChecked'].value === true) {
+            var alert_1 = this.alertCtrl.create({
+                title: 'No aceptaste nuestros términos y condiciones',
+                subTitle: 'Debes estar de acuerdo con nustros términos y condiciones para usar Waypool',
+                buttons: ['OK']
+            });
+            alert_1.present();
         }
-        else if (this.showReadonly === false) {
-            var userName = this.signupGroup.controls['name'].value;
-            var userLastName = this.signupGroup.controls['lastname'].value;
-            var userPhone = this.signupGroup.controls['phone'].value;
-            var userEmail = this.signupGroup.controls['email'].value;
-            var userFixedemail = this.signupGroup.controls['fixedemail'].value;
-            var userEmailComplete = userEmail + userFixedemail;
-            var userPassword = this.signupGroup.controls['password'].value;
-            var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
-            //   let userPhone = this.signupGroup.controls['phone'].value;
-            var userCarModel = this.signupGroup.controls['carModel'].value;
-            var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
-            var usercarColor = this.signupGroup.controls['color'].value;
-            var userUniversity = this.signupGroup.controls['university'].value;
-            this.car = {
-                carModel: userCarModel,
-                plateNumber: userPlateNumber,
-                color: usercarColor
-            };
-            // saving data in variable
-            this.user = {
-                name: userName,
-                lastname: userLastName,
-                email: userEmail,
-                phone: '+57' + userPhone,
-                university: userUniversity,
-                createdBy: 'driver'
-            };
-            this.SignUpService.userUniversity = userUniversity;
-            if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
-                this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(function () {
-                    if (!_this.user.userId) {
+        else {
+            if (this.showReadonly == true) {
+                var userName = this.signupGroup.controls['name'].value;
+                var userLastName = this.signupGroup.controls['lastname'].value;
+                var userPhone = this.signupGroup.controls['phone'].value;
+                var userEmail = this.signupGroup.controls['email'].value;
+                var userFixedemail = this.signupGroup.controls['fixedemail'].value;
+                var userEmailComplete = userEmail + userFixedemail;
+                var userPassword = this.signupGroup.controls['password'].value;
+                var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
+                //   let userPhone = this.signupGroup.controls['phone'].value;
+                var userCarModel = this.signupGroup.controls['carModel'].value;
+                var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+                var usercarColor = this.signupGroup.controls['color'].value;
+                var userUniversity = this.signupGroup.controls['university'].value;
+                this.car = {
+                    carModel: userCarModel,
+                    plateNumber: userPlateNumber,
+                    color: usercarColor
+                };
+                // saving data in variable
+                this.user = {
+                    name: userName,
+                    lastname: userLastName,
+                    email: userEmailComplete,
+                    phone: '+57' + userPhone,
+                    university: userUniversity,
+                    createdBy: 'driver'
+                };
+                this.SignUpService.userUniversity = userUniversity;
+                if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
+                    this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(function () {
+                        if (!_this.user.userId) {
+                            _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                                if (user) {
+                                    user.getIdToken().then(function (token) {
+                                        _this.user.tokenId = token;
+                                    });
+                                    if (!_this.user.userId) {
+                                        _this.user.userId = user.uid;
+                                    }
+                                    _this.SignUpService.saveUser(_this.SignUpService.userUniversity, _this.user);
+                                    _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
+                                    //send text message with code
+                                    _this.sendVerificationCode(_this.user.userId);
+                                }
+                                else {
+                                    console.log('there is no user');
+                                }
+                            });
+                        }
+                        ;
+                        //sending email verification and verifying weather email is verified or not
                         _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
                             if (user) {
-                                user.getIdToken().then(function (token) {
-                                    _this.user.tokenId = token;
-                                });
-                                if (!_this.user.userId) {
-                                    _this.user.userId = user.uid;
+                                if (user.emailVerified == false) {
+                                    user.sendEmailVerification();
+                                    console.log("verification email has been sent");
                                 }
-                                _this.SignUpService.saveUser(_this.SignUpService.userUniversity, _this.user);
-                                _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
-                                //send text message with code
-                                _this.sendVerificationCode(_this.user.userId);
+                                else {
+                                    console.log("verification email has not been sent or the email is already verifyied");
+                                }
                             }
                             else {
                                 console.log('there is no user');
                             }
                         });
-                    }
-                    ;
-                    // sending email verification and verifying weather email is verified or not
-                    _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                        if (user) {
-                            if (user.emailVerified == false) {
-                                user.sendEmailVerification();
-                                console.log("verification email has been sent");
-                            }
-                            else {
-                                console.log("verification email has not been sent or the email is already verifyied");
-                            }
-                        }
-                        else {
-                            console.log('there is no user');
+                    }).catch(function (error) {
+                        if (error.code === "auth/email-already-in-use") {
+                            var alert_2 = _this.alertCtrl.create({
+                                title: 'ya existe una cuenta con este correo',
+                                subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                                buttons: ['OK']
+                            });
+                            alert_2.present();
                         }
                     });
-                }).catch(function (error) {
-                    if (error.code === "auth/email-already-in-use") {
-                        var alert_3 = _this.alertCtrl.create({
-                            title: 'ya existe una cuenta con este correo',
-                            subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
-                            buttons: ['OK']
-                        });
-                        alert_3.present();
-                    }
-                });
+                    // this.navCtrl.push('LoginPage', this.user);
+                }
+                else {
+                    var alert_3 = this.alertCtrl.create({
+                        title: 'Oops!',
+                        subTitle: 'las contraseñas no coinciden, intenta de nuevo',
+                        buttons: ['OK']
+                    });
+                    alert_3.present();
+                }
             }
-            else {
-                var alert_4 = this.alertCtrl.create({
-                    title: 'Oops!',
-                    subTitle: 'las contraseñas no coinciden, intenta de nuevo',
-                    buttons: ['OK']
-                });
-                alert_4.present();
+            else if (this.showReadonly === false) {
+                var userName = this.signupGroup.controls['name'].value;
+                var userLastName = this.signupGroup.controls['lastname'].value;
+                var userPhone = this.signupGroup.controls['phone'].value;
+                var userEmail = this.signupGroup.controls['email'].value;
+                var userFixedemail = this.signupGroup.controls['fixedemail'].value;
+                var userEmailComplete = userEmail + userFixedemail;
+                var userPassword = this.signupGroup.controls['password'].value;
+                var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
+                //   let userPhone = this.signupGroup.controls['phone'].value;
+                var userCarModel = this.signupGroup.controls['carModel'].value;
+                var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
+                var usercarColor = this.signupGroup.controls['color'].value;
+                var userUniversity = this.signupGroup.controls['university'].value;
+                this.car = {
+                    carModel: userCarModel,
+                    plateNumber: userPlateNumber,
+                    color: usercarColor
+                };
+                // saving data in variable
+                this.user = {
+                    name: userName,
+                    lastname: userLastName,
+                    email: userEmail,
+                    phone: '+57' + userPhone,
+                    university: userUniversity,
+                    createdBy: 'driver'
+                };
+                this.SignUpService.userUniversity = userUniversity;
+                if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
+                    this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(function () {
+                        if (!_this.user.userId) {
+                            _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                                if (user) {
+                                    user.getIdToken().then(function (token) {
+                                        _this.user.tokenId = token;
+                                    });
+                                    if (!_this.user.userId) {
+                                        _this.user.userId = user.uid;
+                                    }
+                                    _this.SignUpService.saveUser(_this.SignUpService.userUniversity, _this.user);
+                                    _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
+                                    //send text message with code
+                                    _this.sendVerificationCode(_this.user.userId);
+                                }
+                                else {
+                                    console.log('there is no user');
+                                }
+                            });
+                        }
+                        ;
+                        // sending email verification and verifying weather email is verified or not
+                        _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                            if (user) {
+                                if (user.emailVerified == false) {
+                                    user.sendEmailVerification();
+                                    console.log("verification email has been sent");
+                                }
+                                else {
+                                    console.log("verification email has not been sent or the email is already verifyied");
+                                }
+                            }
+                            else {
+                                console.log('there is no user');
+                            }
+                        });
+                    }).catch(function (error) {
+                        if (error.code === "auth/email-already-in-use") {
+                            var alert_4 = _this.alertCtrl.create({
+                                title: 'ya existe una cuenta con este correo',
+                                subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                                buttons: ['OK']
+                            });
+                            alert_4.present();
+                        }
+                    });
+                }
+                else {
+                    var alert_5 = this.alertCtrl.create({
+                        title: 'Oops!',
+                        subTitle: 'las contraseñas no coinciden, intenta de nuevo',
+                        buttons: ['OK']
+                    });
+                    alert_5.present();
+                }
             }
         }
     };
@@ -318,7 +329,7 @@ var SignupPage = /** @class */ (function () {
     ], SignupPage.prototype, "content", void 0);
     SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-signup',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\signup\signup.html"*/'<ion-header class="transparent">\n\n    <ion-navbar>\n\n        <ion-title><span class="text-theme"></span></ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n\n\n\n\n    <ion-content>\n\n\n\n        <form [formGroup]="signupGroup" (ngSubmit)="verification()">\n\n        <div>\n\n            <div class="">\n\n                <ion-row>\n\n                    <ion-col class="name-fild">\n\n                        <ion-list class="form" style="margin-bottom: 0">\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input  type="text"  text-right formControlName="name" placeholder= "Tú nombre"></ion-input>\n\n                            </ion-item>\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>\n\n                            </ion-item>\n\n                            <ion-item>\n\n                                <ion-label  text-right >selecciona tu universidad</ion-label>\n\n                                    <ion-select (ionChange)="onChange()" [(ngModel)]="universityVar" formControlName="university">\n\n                                        <ion-option *ngFor="let uni of universities">{{uni.name}}</ion-option>\n\n                                    </ion-select>\n\n                            </ion-item>\n\n                        </ion-list>\n\n                    </ion-col>\n\n                </ion-row>\n\n                <div [ngSwitch]="showReadonly">\n\n                    <ion-row *ngSwitchCase=true>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="editable-email">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right formControlName="email" placeholder= "email"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item  class="nonEditable-email">                                        \n\n                                    <ion-input readonly [(ngModel)]=\'emailVar\' formControlName="fixedemail"></ion-input>\n\n                                </ion-item>\n\n                            </ion-list>\n\n                        </ion-col>\n\n                    </ion-row>\n\n\n\n\n\n\n\n                    <ion-row *ngSwitchCase=false >\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="editable-email">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right [(ngModel)]=\'onlyEmail\' formControlName="email" placeholder= "email"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </div>\n\n\n\n                <ion-list class="form" style="margin-bottom: 0">\n\n                    <ion-item>\n\n                            <ion-label  fixed><span style="font-weight: bold; color: red;">(mínimo 6 caracteres)</span></ion-label>\n\n                            <ion-input type="password"  text-right formControlName="password" placeholder= "Escribe tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="password"  text-right formControlName="passwordconf" placeholder= "confirma tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="text" text-right formControlName="phone" placeholder= "Tú número de celular"></ion-input>\n\n                    </ion-item>\n\n                </ion-list>\n\n                <ion-list>\n\n\n\n                    <ion-row class="col-car">\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="carModel">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right formControlName="carModel" placeholder= "marca de carro"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="plateNumber">\n\n                                        <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>\n\n                                </ion-item>\n\n                            </ion-list>\n\n                        </ion-col>               \n\n                    </ion-row>     \n\n                            <ion-list class="form">\n\n                                    <ion-item class="form" class="plateNumber" >\n\n                                            <ion-input type="text"  text-right formControlName="color" placeholder= "Color de carro" class="name-fild-2"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                   \n\n                </ion-list>\n\n                <div id="recaptcha-container"></div>\n\n                        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>\n\n                        <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Inicia Sesión</strong></p>\n\n            </div>\n\n        </div>\n\n    </form>\n\n    </ion-content>\n\n    \n\n\n\n\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\signup\signup.html"*/
+            selector: 'page-signup',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\signup\signup.html"*/'<ion-header class="transparent">\n\n    <ion-navbar>\n\n        <ion-title><span class="text-theme"></span></ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n\n\n\n\n    <ion-content>\n\n\n\n        <form [formGroup]="signupGroup" (ngSubmit)="verification()">\n\n        <div>\n\n            <div class="">\n\n                <ion-row>\n\n                    <ion-col class="name-fild">\n\n                        <ion-list class="form" style="margin-bottom: 0">\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input  type="text"  text-right formControlName="name" placeholder= "Tú nombre"></ion-input>\n\n                            </ion-item>\n\n                            <ion-item>\n\n                                <ion-label></ion-label>\n\n                                <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>\n\n                            </ion-item>\n\n                            <ion-item>\n\n                                <ion-label  text-right >selecciona tu universidad</ion-label>\n\n                                    <ion-select (ionChange)="onChange()" [(ngModel)]="universityVar" formControlName="university">\n\n                                        <ion-option *ngFor="let uni of universities">{{uni.name}}</ion-option>\n\n                                    </ion-select>\n\n                            </ion-item>\n\n                        </ion-list>\n\n                    </ion-col>\n\n                </ion-row>\n\n                <div [ngSwitch]="showReadonly">\n\n                    <ion-row *ngSwitchCase=true>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="editable-email">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right formControlName="email" placeholder= "email"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item  class="nonEditable-email">                                        \n\n                                    <ion-input readonly [(ngModel)]=\'emailVar\' formControlName="fixedemail"></ion-input>\n\n                                </ion-item>\n\n                            </ion-list>\n\n                        </ion-col>\n\n                    </ion-row>\n\n\n\n\n\n\n\n                    <ion-row *ngSwitchCase=false >\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="editable-email">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right [(ngModel)]=\'onlyEmail\' formControlName="email" placeholder= "email"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </div>\n\n\n\n                <ion-list class="form" style="margin-bottom: 0">\n\n                    <ion-item>\n\n                            <ion-label  fixed><span style="font-weight: bold; color: red;">(mínimo 6 caracteres)</span></ion-label>\n\n                            <ion-input type="password"  text-right formControlName="password" placeholder= "Escribe tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="password"  text-right formControlName="passwordconf" placeholder= "confirma tu contraseña" minlength="6"></ion-input>\n\n                    </ion-item>\n\n                    <ion-item>\n\n                        <ion-label></ion-label>\n\n                        <ion-input type="text" text-right formControlName="phone" placeholder= "Tú número de celular"></ion-input>\n\n                    </ion-item>\n\n                </ion-list>\n\n                <ion-list>\n\n\n\n                    <ion-row class="col-car">\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="carModel">\n\n                                        <ion-label></ion-label>\n\n                                            <ion-input type="text" text-right formControlName="carModel" placeholder= "marca de carro"></ion-input>\n\n                                        </ion-item>\n\n                                </ion-list>\n\n                        </ion-col>\n\n                        <ion-col class="name-fild-2">\n\n                            <ion-list class="form">\n\n                                <ion-item class="plateNumber">\n\n                                        <ion-input type="text"  text-right formControlName="plateNumber" placeholder= "placa de carro" ></ion-input>\n\n                                </ion-item>\n\n                            </ion-list>\n\n                        </ion-col>               \n\n                    </ion-row>     \n\n                            <ion-list class="form">\n\n                                    <ion-item class="form" class="plateNumber" >\n\n                                            <ion-input type="text"  text-right formControlName="color" placeholder= "Color de carro" class="name-fild-2"></ion-input>\n\n                                        </ion-item>\n\n\n\n                                        <ion-item>\n\n                                            <ion-label>Por favor lee y acepta nuestro términos y condiciones</ion-label>\n\n                                            <ion-checkbox formControlName="isChecked" ></ion-checkbox>\n\n                                        </ion-item>\n\n                                        <ion-item>\n\n                                            <p>Ver <a href="https://waypooltech.wordpress.com/">términos y condiciones</a></p>                                        </ion-item>\n\n                                </ion-list>\n\n                   \n\n                </ion-list>\n\n                        <button ion-button full class="bg-theme text-white btn rounded" type="submit" [disabled]="!signupGroup.valid">¡Únete ya!</button>\n\n                        <p text-center>¿ya estas registrado? <strong class="text-theme" (click)="login()">Inicia Sesión</strong></p>\n\n            </div>\n\n        </div>\n\n    </form>\n\n    </ion-content>\n\n    \n\n\n\n\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\signup\signup.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__services_window_service__["a" /* WindowService */]])
     ], SignupPage);
