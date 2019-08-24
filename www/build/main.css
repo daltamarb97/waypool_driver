@@ -26473,7 +26473,7 @@ page-confirm-university .content {
 page-confirm-university .card {
   width: 80%;
   margin: auto;
-  height: 420px;
+  height: 170px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27860,15 +27860,13 @@ page-myride .deleteIcon {
   font-weight: 900;
 }
 
-page-myride .love {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+page-myride .important {
+  margin: 14px;
+  text-align: left;
+  color: #4d5853;
+}
+
+page-myride .message {
   color: #4d5853;
 }
 
@@ -28861,8 +28859,8 @@ page-ratetrip .card.rate .driver p.icons ion-icon {
 
 page-ratetrip .card.rate .driver ion-textarea {
   height: 10rem;
-  color: #bfbfbf;
-  font-size: 1.3rem;
+  color: #001127;
+  font-size: 1.5rem;
 }
 
 page-reservetrip .card {

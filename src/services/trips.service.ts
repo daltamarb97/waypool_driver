@@ -66,7 +66,12 @@ export class TripsService {
         this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+ user.userId).update(user);
 
        }        
-      
+       public noRepeatLMU(university, driverUid,keyTrip,userId){
+        this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip+'/lastMinuteUsers/'+ userId).update({
+          noRepeat:true
+        });
+
+       } 
       public eliminateLastMinuteUser(university, driverUid,keyTrip,userId){  
 
           //eliminate the user from pendingUsers

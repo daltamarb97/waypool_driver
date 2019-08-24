@@ -272,8 +272,8 @@ export class PickupPage {
       // this.sendCoordsService.pickUpInstance(this.user.userId);
       moment.locale('es');   
       let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-      this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
-      this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
+      // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
+      // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
     }
     

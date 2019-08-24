@@ -19,9 +19,11 @@ userDriverUid = this.AngularFireAuth.auth.currentUser.uid
 userDriver:any={};
 experience:string;
 title = 'calificacion de viaje';
+trip:any;
   constructor(public navCtrl: NavController,public navParams: NavParams,private emailComposer: EmailComposer,public SignUpServices:SignUpService,private afDB: AngularFireDatabase, public SignUpService: SignUpService, private AngularFireAuth: AngularFireAuth, public sendfeedback:sendFeedbackService, private geofireService: geofireService) {
     this.today = Date.now();
-    this.userDriver= this.navParams.get('user')   
+    this.userDriver= this.navParams.get('user');
+    this.trip= this.navParams.get('trip');      
   }
   
   sendEmail() {

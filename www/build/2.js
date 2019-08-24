@@ -17299,6 +17299,7 @@ webpackContext.id = 750;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(621);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17308,6 +17309,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -17338,6 +17340,7 @@ var MyridePage = /** @class */ (function () {
         this.pickedUpUsers = [];
         this.ride = "today";
         this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_10_rxjs__["Subject"];
         this.lastMinuteUsers = [];
         //get driver information to get the keyTrip
         this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid)
@@ -17359,7 +17362,7 @@ var MyridePage = /** @class */ (function () {
         // this.lastMinuteUsers = [];
         console.log(this.lastMinuteUsers);
         console.log("1");
-        this.TripsService.getLastMinuteUsers(this.SignUpService.userUniversity, keyTrip, driverUid)
+        this.TripsService.getLastMinuteUsers(this.SignUpService.userUniversity, keyTrip, driverUid).takeUntil(this.unsubscribe)
             .subscribe(function (users) {
             _this.lastMinuteUsers = users;
             //verify if user info exist 
@@ -17370,13 +17373,19 @@ var MyridePage = /** @class */ (function () {
             }
             else {
                 _this.lastMinuteUsers.forEach(function (userLastMinute) {
-                    console.log(userLastMinute);
-                    console.log(_this.lastMinuteUsers);
-                    console.log("3");
-                    var modal = _this.modalCtrl.create('ConfirmtripPage', {
-                        user: userLastMinute
-                    });
-                    modal.present();
+                    if (userLastMinute.noRepeat === true) {
+                        console.log("TE QUERIAS REPETIR PERO NOOOOO");
+                    }
+                    else {
+                        _this.TripsService.noRepeatLMU(_this.SignUpService.userUniversity, _this.driverUid, keyTrip, userLastMinute.userId);
+                        console.log(userLastMinute);
+                        console.log(_this.lastMinuteUsers);
+                        console.log("3");
+                        var modal = _this.modalCtrl.create('ConfirmtripPage', {
+                            user: userLastMinute,
+                        });
+                        modal.present();
+                    }
                 });
             }
         });
@@ -17385,11 +17394,14 @@ var MyridePage = /** @class */ (function () {
         var _this = this;
         // this.getLastMinuteUsers(this.userDriver.keyTrip, this.userDriver.userId);
         this.getLastMinuteUsers(keyTrip, driverUid);
-        this.TripsService.getTrip(this.SignUpService.userUniversity, keyTrip, driverUid)
+        this.TripsService.getTrip(this.SignUpService.userUniversity, keyTrip, driverUid).takeUntil(this.unsubscribe)
             .subscribe(function (trip) {
             console.log('se repitio?');
             _this.trip = trip;
             if (_this.trip === undefined || _this.trip === null) {
+                console.log(_this.trip);
+                console.log("ARMAGEDON");
+                _this.conditionalsOnTrip();
             }
             else {
                 // after getting trip from node, get pending and pickedUp arrays
@@ -17399,18 +17411,24 @@ var MyridePage = /** @class */ (function () {
     };
     MyridePage.prototype.getPendingAndPickedUpUsers = function (keyTrip, driverUid) {
         var _this = this;
-        this.TripsService.getPendingUsers(this.SignUpService.userUniversity, keyTrip, driverUid)
+        this.TripsService.getPendingUsers(this.SignUpService.userUniversity, keyTrip, driverUid).takeUntil(this.unsubscribe)
             .subscribe(function (user) {
             _this.pendingUsers = user;
             console.log(_this.pendingUsers);
+            _this.conditionalsOnTrip();
         });
-        this.TripsService.getPickedUpUsers(this.SignUpService.userUniversity, keyTrip, driverUid)
+        this.TripsService.getPickedUpUsers(this.SignUpService.userUniversity, keyTrip, driverUid).takeUntil(this.unsubscribe)
             .subscribe(function (user) {
             _this.pickedUpUsers = user;
             console.log(_this.pickedUpUsers);
+            _this.conditionalsOnTrip();
         });
+    };
+    MyridePage.prototype.conditionalsOnTrip = function () {
+        console.log("sirvio");
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
             // erase trip because driver decide to cancel
+            this.unSubscribeServices();
             this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
             this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
             this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
@@ -17422,6 +17440,7 @@ var MyridePage = /** @class */ (function () {
         }
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
             // erase trip because there is no one to picked Up
+            this.unSubscribeServices();
             this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
             this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
             this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
@@ -17444,6 +17463,10 @@ var MyridePage = /** @class */ (function () {
             alert.present();
             console.log('Error launching dialer', err);
         });
+    };
+    MyridePage.prototype.unSubscribeServices = function () {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     };
     MyridePage.prototype.goToRide = function (user) {
         this.navCtrl.push('PickupPage', {
@@ -17472,12 +17495,18 @@ var MyridePage = /** @class */ (function () {
                             // this.geofireServices.cancelGeoqueryDest()
                             var today = __WEBPACK_IMPORTED_MODULE_8_moment__().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
                             _this.TripsService.timeFinishedTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip, _this.driverUid, today);
-                            _this.TripsService.saveTripUser(_this.SignUpService.userUniversity, _this.driverUid, _this.userDriver.keyTrip);
-                            _this.TripsService.saveTripOnRecords(_this.SignUpService.userUniversity, _this.driverUid, _this.trip);
-                            _this.pickedUpUsers.forEach(function (user) {
-                                _this.TripsService.endTripForUsers(_this.SignUpService.userUniversity, user.userId);
-                            });
+                            console.log(_this.trip);
+                            // this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
+                            console.log("praise the sun");
+                            console.log(_this.trip);
+                            console.log(_this.trip);
                             setTimeout(function () {
+                                _this.unSubscribeServices();
+                                _this.TripsService.saveTripUser(_this.SignUpService.userUniversity, _this.driverUid, _this.userDriver.keyTrip);
+                                _this.pickedUpUsers.forEach(function (user) {
+                                    _this.TripsService.endTripForUsers(_this.SignUpService.userUniversity, user.userId);
+                                });
+                                _this.TripsService.saveTripOnRecords(_this.SignUpService.userUniversity, _this.driverUid, _this.trip);
                                 _this.TripsService.endTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip, _this.driverUid);
                                 _this.TripsService.eraseKeyTrip(_this.SignUpService.userUniversity, _this.driverUid);
                                 _this.TripsService.setOnTripFalse(_this.SignUpService.userUniversity, _this.driverUid);
@@ -17486,6 +17515,7 @@ var MyridePage = /** @class */ (function () {
                             _this.presentToast('Haz finalizado el viaje, ¡esperamos verte pronto!', 5000, 'middle');
                             //TO-DO: AQUI FALTA RATETRIPPAGE
                             _this.navCtrl.pop();
+                            _this.navCtrl.push('RatetripPage', { user: _this.userDriver, trip: _this.trip });
                         }
                     }
                 ]
@@ -17545,7 +17575,7 @@ var MyridePage = /** @class */ (function () {
     };
     MyridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-myride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/myride/myride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">VIAJE EN CURSO\n           \n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n        </ion-title>\n\n    </ion-navbar>\n    \n</ion-header>\n\n<ion-content class="bg-light"> \n        <ion-list >\n            <ion-card *ngFor = "let user of pendingUsers">\n                <ion-item>\n                    <ion-avatar item-start>\n                        <img src="assets/imgs/userPicture.png">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                          <ion-icon name="ios-checkmark-circle" class="text-darkblue"></ion-icon>\n\n                        </h2>\n                        <p>{{user.about}}</p>\n                    </div>\n                    <div class="more">\n                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>\n                    </div>\n                </ion-item>\n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p><small></small>\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                        <p><small></small>\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                    </div>\n                    <ion-row>\n                          \n                                <ion-col class="detail-text">\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n            \n                                    </ion-col>\n                        <ion-col col-5>\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>         \n\n                \n            </ion-card>\n            \n            \n            \n            <ion-card *ngFor = "let user of pickedUpUsers">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                            </h2>\n                      \n                        </div>\n                        <div class="more">                       \n                                <ion-badge color="secondary" class="badge">RECOGIDO</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>\n                   \n        \n                    \n                </ion-card> \n\n\n                <ion-row>\n                \n                   \n                    <ion-col class="detail-text">\n                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>\n                    </ion-col>\n               \n                </ion-row>\n        </ion-list>\n        \n\n\n\n            \n            \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/myride/myride.html"*/
+            selector: 'page-myride',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\myride\myride.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">VIAJE EN CURSO\n\n           \n\n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n\n\n\n    </ion-navbar>\n\n    \n\n</ion-header>\n\n\n\n<ion-content class="bg-light"> \n\n        <p class="important">¡IMPORTANTE!: No cierres la app mientras estas haciendo un viaje. </p> \n\n\n\n        <ion-list >\n\n            <ion-card *ngFor = "let user of pendingUsers">\n\n                <ion-item>\n\n                    <ion-avatar item-start>\n\n                        <img src="assets/imgs/userPicture.png">\n\n                    </ion-avatar>\n\n                    <div class="name">\n\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                          <ion-icon name="ios-checkmark-circle" class="text-darkblue"></ion-icon>\n\n\n\n                        </h2>\n\n                        <p>{{user.about}}</p>\n\n                    </div>\n\n                    <div class="more">\n\n                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>\n\n                    </div>\n\n                </ion-item>\n\n                <ion-card-content>\n\n                    <div class="ride-detail">\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                    </div>\n\n                    <ion-row>\n\n                          \n\n                                <ion-col class="detail-text">\n\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n\n            \n\n                                    </ion-col>\n\n                        <ion-col col-5>\n\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-card-content>         \n\n\n\n                \n\n            </ion-card>\n\n            \n\n            \n\n            \n\n            <ion-card *ngFor = "let user of pickedUpUsers">\n\n                    <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                            </h2>\n\n                      \n\n                        </div>\n\n                        <div class="more">                       \n\n                                <ion-badge  class="badge bg-darkblue">RECOGIDO</ion-badge>                                  \n\n                                    \n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p>\n\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                            <p>\n\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                        </div>\n\n                       \n\n                    </ion-card-content>\n\n                   \n\n        \n\n                    \n\n                </ion-card> \n\n\n\n\n\n                <ion-row>\n\n                \n\n                   \n\n                    <ion-col class="detail-text">\n\n                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>\n\n                    </ion-col>\n\n               \n\n                </ion-row>\n\n        </ion-list>\n\n        \n\n\n\n\n\n\n\n            \n\n            \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\myride\myride.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */]])
     ], MyridePage);

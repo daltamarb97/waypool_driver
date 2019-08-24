@@ -146,9 +146,16 @@ page-myride {
     .deleteIcon{
         font-weight: 900
     }
-    .love{
-        display: flex;
-        justify-content: center;
+    .important{
+        margin: 14px;
+        
+        text-align: left;
+        color: #4d5853
+    }
+    .message{
+        // margin: 14px;
+        
+        // text-align: center;
         color: #4d5853
     }
     .imagenViajes{

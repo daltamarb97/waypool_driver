@@ -32,8 +32,10 @@ export class ConfirmtripPage {
   driver:any;
   constructor(public navCtrl: NavController,public SignUpServices:SignUpService ,public sendUsersService:sendUsersService,public TripsService:TripsService,public toastCtrl: ToastController,public viewCtrl: ViewController,private afDB: AngularFireDatabase, public sendCoordsService: sendCoordsService,public navParams: NavParams,public AngularFireAuth: AngularFireAuth, public instances: instancesService) {
     
-    this.user= this.navParams.get('user') 
+    this.user= this.navParams.get('user');
     console.log(this.user)
+
+
 
     this.SignUpServices.getMyInfo(this.SignUpServices.userUniversity, this.userUid)    
 		.subscribe(driverInfo => {
@@ -41,11 +43,12 @@ export class ConfirmtripPage {
       console.log(this.driver)
 
 		});
-        
+    
        
     
 
   }
+ 
   rejectUser(){
     this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid,this.driver.keyTrip,this.user.userId);
     console.log("nanai kukas")

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, AlertController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, ModalController, AlertController, ToastController, IonicPage, App } from 'ionic-angular';
 
 // import { RiderprofilePage } from '../riderprofile/riderprofile';
 // import { Observable } from 'rxjs';
@@ -44,7 +44,7 @@ export class ReservetripPage{
 
 
   reserveTime:any;
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService ,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     this.geocoder = new google.maps.Geocoder;
     this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid)
 		.subscribe(userDriver => {
@@ -198,8 +198,8 @@ export class ReservetripPage{
                }
 
                ////
-               this.navCtrl.push('MyridePage');
-            }
+               this.app.getRootNav().push('MyridePage');
+              }
             }           
 
           }
