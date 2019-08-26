@@ -60,7 +60,7 @@ export class PickupPage {
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
 
-    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
@@ -276,7 +276,10 @@ export class PickupPage {
       // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
     }
-    
+    ionViewDidLeave(){
+      this.unsubscribe.next();
+      this.unsubscribe.complete();
+    }
     callUser(){
     
       this.callNumber.isCallSupported()

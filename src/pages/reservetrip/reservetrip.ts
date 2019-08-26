@@ -12,7 +12,7 @@ import { geofireService } from '../../services/geofire.services';
 // import { sendUsersService } from '../../services/sendUsers.service';
 // import { Geofence } from '@ionic-native/geofence';
 
-import {  Subscription } from 'rxjs';
+import {  Subscription, Subject } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { instancesService } from '../../services/instances.service';
 import { sendUsersService } from '../../services/sendUsers.service';
@@ -41,19 +41,20 @@ export class ReservetripPage{
   geocoder: any
   geocoordinatesOr:any;
   geocoordinatesDest:any;
+  unsubscribe = new Subject;
 
 
   reserveTime:any;
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     this.geocoder = new google.maps.Geocoder;
-    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
         //get personal info of the driver
       
-    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity,this.userUid)
+    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity,this.userUid).takeUntil(this.unsubscribe)
     .subscribe( tripsReserves => {
       console.log(this.SignUpService.userUniversity)
       this.tripsReserves = tripsReserves;
@@ -97,8 +98,10 @@ export class ReservetripPage{
     }) 
   }
 
-  ionViewDidLoad(){
-  }  
+ ionViewDidLeave(){
+    this.unsubscribe.next();
+     this.unsubscribe.complete();
+  }
  startTrip(tripKeyTrip,trip){
   let alert = this.alertCtrl.create({
     title: 'Iniciar Viaje',
@@ -137,7 +140,9 @@ export class ReservetripPage{
                  });
             toast.present();
             }else{
-              this.TripsService.getReserveUsers(this.SignUpService.userUniversity,tripKeyTrip,this.userUid)
+              this.TripsService.setOnTrip(this.SignUpService.userUniversity,this.userUid);   
+
+              this.TripsService.getReserveUsers(this.SignUpService.userUniversity,tripKeyTrip,this.userUid).takeUntil(this.unsubscribe)
               .subscribe( reservesUser => {
                 this.reserveUser = reservesUser;
                 console.log(this.reserveUser);
@@ -148,6 +153,7 @@ export class ReservetripPage{
                 //debería ser en vez de navPop, una funcion que te lleve a myRide y te muestre el viaje
               })
               this.TripsService.pushKeyInDriver(this.SignUpService.userUniversity,tripKeyTrip,this.userUid);
+
               this.TripsService.startTrip(this.SignUpService.userUniversity,tripKeyTrip,this.userUid,trip);   
               this.TripsService.createTripState(this.SignUpService.userUniversity,tripKeyTrip,this.userUid);
               this.TripsService.deleteReserve(this.SignUpService.userUniversity,tripKeyTrip,this.userUid); 

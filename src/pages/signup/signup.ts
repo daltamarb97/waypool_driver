@@ -16,6 +16,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { WindowService } from '../../services/window.service';
 // import * as firebase from 'firebase';
 import * as firebase from 'firebase';
+import { Subject } from 'rxjs';
 
 
 @IonicPage()
@@ -44,7 +45,8 @@ export class SignupPage {
 
     windowRef:any;
     verificationCode:string;
-    
+    unsubscribe = new Subject;
+
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
@@ -62,7 +64,8 @@ export class SignupPage {
     })
 
 
-    this.SignUpService.getUniversities().subscribe(universities => {
+    this.SignUpService.getUniversities().takeUntil(this.unsubscribe)
+    .subscribe(universities => {
         this.universities = universities;
         console.log(this.universities);
     })

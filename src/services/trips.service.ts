@@ -54,14 +54,12 @@ export class TripsService {
     }
        public startTrip(university, keyTrip,driverUid,trip){
                 //create a trip in Trip's node in database
+               
               this.afDB.database.ref(university+ '/trips/'+driverUid+'/'+ keyTrip).update(trip);
-              this.afDB.database.ref(university+ '/trips/'+driverUid+'/'+ keyTrip).update({
-                onTrip:true
-              });
-              this.afDB.database.ref(university + '/drivers/'+driverUid+'/').update({
-                onTrip:true
-              });
-          }   
+             
+             
+          }  
+
        public acceptLastMinute(university, driverUid,keyTrip,user){
         this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip+'/pendingUsers/'+ user.userId).update(user);
 
@@ -137,11 +135,19 @@ export class TripsService {
             onTrip:false
           });  
         }
+        public setOnTrip(university, driverUid){           
+          // set false to onTrip instance in driver's node
+          this.afDB.database.ref(university + '/drivers/'+driverUid).update({
+            onTrip:true
+          });  
+        }
         
         public endTripForUsers(university,userId){          
           //erase trip in users's node
           
          this.afDB.database.ref(university + '/users/'+userId+'/keyTrip').remove();
+         this.afDB.database.ref(university + '/users/'+userId+'/onTrip').remove();
+
      }
        public saveTripUser(university, driverUid,keyTrip){           
           // this instance allows the user to save the trip in his records
@@ -159,6 +165,10 @@ export class TripsService {
           this.afDB.database.ref(university + '/drivers/' + driverUid +'/keyTrip').remove();
         }
        public cancelUserFromTrip(university, driverUid,keyTrip,userId){ 
+          //eliminate credentials from database
+            // this.afDB.database.ref(university + '/users/' + userId +'/keyTrip').remove();
+            // this.afDB.database.ref(university + '/users/' + userId +'/onTrip').remove();
+
           // save user in cancelUsers array
             this.afDB.database.ref(university +'/tripsState/'+driverUid+'/'+ keyTrip +'/cancelUsers/'+userId).update({
               userId:userId

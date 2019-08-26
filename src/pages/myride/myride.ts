@@ -37,9 +37,10 @@ userDriver:any;
 unsubscribe = new Subject;
 lastMinuteUsers:any =[];
 tripState:any;
+
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
 		//get driver information to get the keyTrip
-		this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid)
+		this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid).takeUntil(this.unsubscribe)
 			.subscribe(userDriver => {
 				this.userDriver = userDriver;
 				if (this.userDriver.keyTrip === null || this.userDriver.onTrip === false) {
@@ -55,6 +56,7 @@ tripState:any;
 
 
 	}
+
 	getLastMinuteUsers(keyTrip, driverUid) {
 		// this.lastMinuteUsers = [];
 		console.log(this.lastMinuteUsers)
@@ -137,10 +139,11 @@ tripState:any;
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
 			// erase trip because driver decide to cancel
 			this.unSubscribeServices();
-			this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
 			this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 			this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
 			this.navCtrl.pop();
+			this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
+		
 			// this.navCtrl.setRoot(this.navCtrl.getActive().component);
 			let modal = this.modalCtrl.create('CanceltripPage');
 			modal.present();
@@ -152,9 +155,10 @@ tripState:any;
 		// erase trip because there is no one to picked Up
 		this.unSubscribeServices();
 
-		this.TripsService.endTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid);
 		this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 		this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
+		this.TripsService.endTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid);
+
 		this.navCtrl.pop();
 		console.log("me reproduci 2")
 
@@ -221,10 +225,10 @@ tripState:any;
 							
 
 							console.log(this.trip)
-							
+							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
+
 							setTimeout(() => {
 								this.unSubscribeServices();
-							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
 							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 							this.pickedUpUsers.forEach(user => {
@@ -236,7 +240,6 @@ tripState:any;
 							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 							
 							this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
-							this.TripsService.eliminateTripState(this.SignUpService.userUniversity, this.userDriver.keyTrip,this.driverUid);				
 							}, 1000);
 
 							//TO-DO: AQUI FALTA RATETRIPPAGE

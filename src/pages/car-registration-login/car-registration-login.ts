@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
+import { Subject } from 'rxjs';
 
 
 
@@ -41,6 +42,7 @@ export class CarRegistrationLoginPage {
   showId:boolean = false;
   cameraPicLicense:boolean = false;
   cameraPicId:boolean = false;
+  unsubscribe = new Subject;
 
 
   options:CameraOptions = {
@@ -52,7 +54,7 @@ export class CarRegistrationLoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
-    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
       this.driverInfo = user
     })
 
@@ -61,7 +63,10 @@ export class CarRegistrationLoginPage {
     
   }
 
-
+  ionViewDidLeave(){
+		this.unsubscribe.next();
+		this.unsubscribe.complete();
+	}
   usageCameraLicense(){
     const alert = this.alertCtrl.create({
       title: 'Permiso de uso de tu cámara',

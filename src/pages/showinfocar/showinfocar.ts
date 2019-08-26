@@ -3,6 +3,7 @@ import { NavController, ViewController, ModalController, ToastController, NavPar
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
+import { Subject } from 'rxjs';
 
 @IonicPage()
 
@@ -17,15 +18,20 @@ carList:any=[];
 carModel:string;
 plateNumber:string;
 color:string;
+unsubscribe = new Subject;
 
   constructor( public modalCtrl: ModalController,public alertCtrl:AlertController,public SignupService:SignUpService,public navParams: NavParams,public viewCtrl: ViewController,public navCtrl: NavController,public toastCtrl: ToastController,  private AngularFireAuth: AngularFireAuth,private afDB: AngularFireDatabase, public SignUpService: SignUpService) {
     this.user = this.navParams.get('user')
-    this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid)
+    this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
     .subscribe( car => {
       this.carList = car;
       console.log(this.carList)
     });
   }
+  ionViewDidLeave(){
+		this.unsubscribe.next();
+		this.unsubscribe.complete();
+	}
   addCar(){
     if(this.carList.length >= 3){
       const alert = this.alertCtrl.create({

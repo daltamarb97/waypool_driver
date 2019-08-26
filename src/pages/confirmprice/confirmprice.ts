@@ -8,7 +8,7 @@ import { sendCoordsService } from '../../services/sendCoords.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { priceService } from '../../services/price.service';
 import { geofireService } from '../../services/geofire.services';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, Subscriber } from 'rxjs';
 import * as moment from 'moment';
 
 
@@ -67,7 +67,7 @@ export class ConfirmpricePage {
 
   constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
-    this.SignUpService.getCar( this.SignUpService.userUniversity , this.userDriverUid)
+    this.SignUpService.getCar( this.SignUpService.userUniversity , this.userDriverUid).takeUntil(this.unsubscribe)
     .subscribe( car => {
       //get cars registered
       this.carModelList = car;
@@ -75,13 +75,13 @@ export class ConfirmpricePage {
     });
 
 
-    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userDriverUid)
+    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
     .subscribe(reserves => {
       this.reservesAlreadyCreated = reserves;
       
     })
 
-    this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).subscribe(driver=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
       this.driver = driver;
       
       this.driverInfo.origin = this.driver.trips.origin
@@ -98,7 +98,7 @@ export class ConfirmpricePage {
  })
  
 
- this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).subscribe(driver=>{
+ this.SignUpService.getMyInfo(this.SignUpService.userUniversity , this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
   this.driver2 = driver;
   
      this.driverInfoNote.origin = this.driver2.trips.origin
@@ -122,7 +122,7 @@ export class ConfirmpricePage {
      this.geofireService.cancelGeoqueryUniversity();
     }
   
-
+   
 
     setPriceDriver(){
     if(this.reservesAlreadyCreated.length >= 5){
@@ -359,6 +359,8 @@ export class ConfirmpricePage {
 
   ionViewDidLeave(){
     this.geofireService.cancelGeofireOrigin(this.SignUpService.userUniversity, this.userDriverUid);
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
-
+ 
 }

@@ -10,7 +10,6 @@ import { WalletPage } from '../pages/wallet/wallet';
 import { MorePage } from '../pages/more/more';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { ConfirmpopupPage } from '../pages/confirmpopup/confirmpopup';
 import { ProfilePage } from '../pages/profile/profile';
 import { TermsPage } from '../pages/terms/terms';
 import { HelpPage } from '../pages/help/help';
@@ -57,12 +56,20 @@ import { FCM } from '@ionic-native/fcm/ngx';
 
 
 export const firebaseConfig = {
+  // apiKey: "AIzaSyDrNPJBT1eVEFvZDfIfwnuD3ivJo7hVw2M",
+  // authDomain: "securityrules-93b35.firebaseapp.com",
+  // databaseURL: "https://securityrules-93b35.firebaseio.com",
+  // projectId: "securityrules-93b35",
+  // storageBucket: "",
+  // messagingSenderId: "181111098326",
+  // appId: "1:181111098326:web:32275360c003125c"
   apiKey: "AIzaSyAPagXvglCXnK3neJwU50EiZnJPmdd__PM",
   authDomain: "waypoooldemo.firebaseapp.com",
   databaseURL: "https://waypoooldemo.firebaseio.com",
   projectId: "waypoooldemo",
   storageBucket: "waypoooldemo.appspot.com",
-  messagingSenderId: "1009109452629"
+  messagingSenderId: "1009109452629",
+  appId: "1:1009109452629:web:d9385099e749eefc"
 };
 
 

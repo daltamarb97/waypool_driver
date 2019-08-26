@@ -46,7 +46,10 @@ console.log(this.reserveKey)
 		})	
    
 }
-
+ionViewDidLeave(){
+    this.unsubscribe.next();
+     this.unsubscribe.complete();
+  }
 		deleteUser(userId) {
 		this.sendCoordsService.eraseUser(this.SignUpService.userUniversity, userId,this.userUid,this.reserveKey );
  		}

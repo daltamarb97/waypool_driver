@@ -1,14 +1,14 @@
 webpackJsonp([23],{
 
-/***/ 596:
+/***/ 595:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChattingPageModule", function() { return ChattingPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatsPageModule", function() { return ChatsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chatting__ = __webpack_require__(754);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chats__ = __webpack_require__(752);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ChattingPageModule = /** @class */ (function () {
-    function ChattingPageModule() {
+var ChatsPageModule = /** @class */ (function () {
+    function ChatsPageModule() {
     }
-    ChattingPageModule = __decorate([
+    ChatsPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */],
+                __WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]
+                __WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */]
             ]
         })
-    ], ChattingPageModule);
-    return ChattingPageModule;
+    ], ChatsPageModule);
+    return ChatsPageModule;
 }());
 
-//# sourceMappingURL=chatting.module.js.map
+//# sourceMappingURL=chats.module.js.map
 
 /***/ }),
 
-/***/ 754:
+/***/ 752:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChattingPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_chat_service__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendUsers_service__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(190);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -66,37 +67,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var ChattingPage = /** @class */ (function () {
-    function ChattingPage(navCtrl, ChatsService, navParams, AngularFireAuth, signUpService) {
+var ChatsPage = /** @class */ (function () {
+    function ChatsPage(navCtrl, sendUsersService, AngularFireAuth, signUpService) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.ChatsService = ChatsService;
-        this.navParams = navParams;
+        this.sendUsersService = sendUsersService;
         this.AngularFireAuth = AngularFireAuth;
         this.signUpService = signUpService;
         this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.chats = [];
-        this.user = this.navParams.get('user');
-        console.log(this.user.userId);
-        this.ChatsService.getChats(this.signUpService.userUniversity, this.driverUid, this.user.userId)
-            .subscribe(function (chat) {
-            _this.chats = chat;
-            console.log(_this.chats);
+        this.pickingUsers = [];
+        this.sendUsersService.getUsersOnTrip(this.signUpService.userUniversity, this.driverUid)
+            .subscribe(function (user) {
+            _this.pickingUsers = user;
+            console.log(_this.pickingUsers);
         });
     }
-    ChattingPage.prototype.sendMessage = function () {
-        this.ChatsService.pushMessage(this.signUpService.userUniversity, this.driverUid, this.user.userId, this.message);
+    ChatsPage.prototype.chatting = function (user) {
+        this.navCtrl.push('ChattingPage', { user: user });
     };
-    ChattingPage = __decorate([
+    ChatsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chatting',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\chatting\chatting.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-item>\n\n            <ion-avatar item-start>\n\n                <img src="assets/imgs/face-1.jpg">\n\n            </ion-avatar>\n\n            <h2><span class="text-white">{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}</span>\n\n                <ion-icon name="md-more" end-item item-end class="text-white"></ion-icon>\n\n            </h2>\n\n        </ion-item>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="chat-bg">\n\n    <div *ngFor="let chat of chats">\n\n            <div  class="cb" >        \n\n                    <div>                        \n\n                         <div *ngIf="driverUid === chat.uid" class="chat chat-left bg-theme text-white" text-left padding float-right>\n\n                         <!-- its driver message -->\n\n                             <p>{{chat.message}}</p>   \n\n                       </div>                       \n\n                   </div>                    \n\n                </div>\n\n                <div class="cb">            \n\n                    <div>   \n\n                        <div *ngIf="chat.uid === user.userId" class="chat chat-right bg-white text-dark" text-right padding float-left>  \n\n                            <!-- its user message -->\n\n                             <p>{{chat.message}}</p>  \n\n                           \n\n                         </div>\n\n                    </div>                  \n\n                </div>\n\n    </div>\n\n    \n\n    <div class="fixed-bottom">\n\n        <ion-list inset>\n\n            <ion-item>\n\n                <ion-icon name="md-add" class="circle-icon" item-start></ion-icon>\n\n                <ion-input type="text" placeholder="Escribe tu mensaje" [(ngModel)]="message"></ion-input>\n\n                <ion-icon name="md-send" class="text-theme" item-end (click)="sendMessage()"></ion-icon>\n\n            </ion-item>\n\n        </ion-list>\n\n    </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\chatting\chatting.html"*/
+            selector: 'page-chats',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\chats\chats.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">CHATS\n\n        </ion-title>\n\n\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="bg-light">\n\n    <ion-item (click)="chatting(user)" *ngFor="let user of pickingUsers">\n\n        <ion-avatar item-start>\n\n            <img src="assets/imgs/userPicture.png">\n\n            <ion-badge color="danger">9+</ion-badge>\n\n        </ion-avatar>\n\n        <h2 class="text-theme">{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n        </h2>\n\n        <p>Washington sq Park?</p>\n\n        <ion-note item-end>Ride on<span class="time">1:12 pm</span></ion-note>\n\n    </ion-item>\n\n   \n\n    <p text-center class="text-light"><small>Este chat se borrará automáticamente cuando  <br>terminado el viaje.</small></p>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\chats\chats.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__services_chat_service__["a" /* ChatsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]])
-    ], ChattingPage);
-    return ChattingPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]])
+    ], ChatsPage);
+    return ChatsPage;
 }());
 
-//# sourceMappingURL=chatting.js.map
+//# sourceMappingURL=chats.js.map
 
 /***/ })
 

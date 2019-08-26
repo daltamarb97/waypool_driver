@@ -5,6 +5,7 @@ import { sendCoordsService } from '../../services/sendCoords.service';
 import { SignUpService } from '../../services/signup.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Subject } from 'rxjs';
 @IonicPage()
 @Component({
   selector: 'page-wallet',
@@ -20,7 +21,7 @@ export class WalletPage {
   totalTrip:any;
   pickedUpUsers = [];
   newNumber:any = 0;
-  
+  unsubscribe = new Subject;
 
   constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public signupService: SignUpService) {
     

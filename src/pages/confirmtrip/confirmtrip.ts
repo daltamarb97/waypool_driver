@@ -37,7 +37,7 @@ export class ConfirmtripPage {
 
 
 
-    this.SignUpServices.getMyInfo(this.SignUpServices.userUniversity, this.userUid)    
+    this.SignUpServices.getMyInfo(this.SignUpServices.userUniversity, this.userUid).takeUntil(this.unsubscribe)    
 		.subscribe(driverInfo => {
       this.driver = driverInfo;
       console.log(this.driver)
@@ -48,7 +48,10 @@ export class ConfirmtripPage {
     
 
   }
- 
+  ionViewDidLeave(){
+    this.unsubscribe.next();
+     this.unsubscribe.complete();
+  }
   rejectUser(){
     this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid,this.driver.keyTrip,this.user.userId);
     console.log("nanai kukas")
