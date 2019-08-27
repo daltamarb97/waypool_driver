@@ -156,52 +156,55 @@ export class ReservetripPage{
 
               this.TripsService.startTrip(this.SignUpService.userUniversity,tripKeyTrip,this.userUid,trip);   
               this.TripsService.createTripState(this.SignUpService.userUniversity,tripKeyTrip,this.userUid);
-              this.TripsService.deleteReserve(this.SignUpService.userUniversity,tripKeyTrip,this.userUid); 
               // this.navCtrl.pop();
 
               // steps needed to get LMU right
                this.geofireService.deleteUserGeofireDest(this.SignUpService.userUniversity, tripKeyTrip);
                this.geofireService.deleteUserGeofireOr(this.SignUpService.userUniversity, tripKeyTrip);
+              setTimeout(() => {
+                this.TripsService.deleteReserve(this.SignUpService.userUniversity,tripKeyTrip,this.userUid); 
 
-               if(trip.type == 'origin'){
+                if(trip.type == 'origin'){
 
+                  // geocoding of addresses 
+                  this.geocoder.geocode({'address': trip.origin[0][0]}, (results, status)=>{
+                    if(status==='OK'){
+                      this.geocoordinatesOr={
+                      lat:results[0].geometry.location.lat(),
+                      lng: results[0].geometry.location.lng()
+                       }
+                     }
+                     // set geofirekey for LMU
+                       this.geofireService.setGeofireOrOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
+                       this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireOrTrip/' + tripKeyTrip).update({
+                       driverId: this.userUid
+                     })
+                     console.log('executed geofire Or on Trip')
+                   })
+ 
+ 
+                }else if(trip.type == 'destination'){
+ 
                  // geocoding of addresses 
-                 this.geocoder.geocode({'address': trip.origin[0][0]}, (results, status)=>{
+                 this.geocoder.geocode({'address': trip.destination[0][0]}, (results, status)=>{
                    if(status==='OK'){
-                     this.geocoordinatesOr={
+                     this.geocoordinatesDest={
                      lat:results[0].geometry.location.lat(),
                      lng: results[0].geometry.location.lng()
                       }
                     }
                     // set geofirekey for LMU
-                      this.geofireService.setGeofireOrOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
-                      this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireOrTrip/' + tripKeyTrip).update({
+                    this.geofireService.setGeofireDestOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+                    this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDestTrip/' + tripKeyTrip).update({
                       driverId: this.userUid
                     })
-                    console.log('executed geofire Or on Trip')
+                    console.log('executed geofire Dest on Trip')
                   })
-
-
-               }else if(trip.type == 'destination'){
-
-                // geocoding of addresses 
-                this.geocoder.geocode({'address': trip.destination[0][0]}, (results, status)=>{
-                  if(status==='OK'){
-                    this.geocoordinatesDest={
-                    lat:results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
-                     }
-                   }
-                   // set geofirekey for LMU
-                   this.geofireService.setGeofireDestOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-                   this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDestTrip/' + tripKeyTrip).update({
-                     driverId: this.userUid
-                   })
-                   console.log('executed geofire Dest on Trip')
-                 })
-
-
-               }
+ 
+ 
+                }
+              }, 1500);
+             
 
                ////
                this.app.getRootNav().push('MyridePage');

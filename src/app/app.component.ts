@@ -7,7 +7,7 @@ import { SignUpService } from '../services/signup.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 
 
-
+ESTEEEEEEEEEEEEEE ES NO TE CONFUNDAS
 
 
 declare var require: any;
