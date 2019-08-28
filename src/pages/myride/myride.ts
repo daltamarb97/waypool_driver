@@ -142,6 +142,8 @@ tripState:any;
 			this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
 			this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 			this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
+			this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
+			this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 			this.navCtrl.pop();
 			this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
 		
@@ -156,11 +158,12 @@ tripState:any;
 		// erase trip because there is no one to picked Up
 		this.unSubscribeServices();
 		this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
-
+		this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
+		this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 		this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 		this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
 		this.TripsService.endTrip(this.SignUpService.userUniversity,this.userDriver.keyTrip, this.driverUid);
-
+		
 		this.navCtrl.pop();
 		console.log("me reproduci 2")
 
@@ -238,17 +241,19 @@ tripState:any;
 								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
 							});
 							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
-							this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
+							this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid);
+							this.TripsService.allTrips(this.SignUpService.userUniversity,this.driverUid,this.userDriver.keyTrip,this.trip);
 
 							this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
 							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 							
 							this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
 							}, 1000);
-
+							
 							//TO-DO: AQUI FALTA RATETRIPPAGE
-							this.navCtrl.pop();
+							this.navCtrl.setRoot('TabsPage');
 							this.navCtrl.push('RatetripPage',{user:this.userDriver, trip:this.trip});
+
 						}
 					}
 				]

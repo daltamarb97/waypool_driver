@@ -9,13 +9,13 @@ constructor(public afDB: AngularFireDatabase){
               
     }
     
-   public sendFeedback(university, title, info, name, lastname, number, userId){
-       this.afDB.database.ref(university + '/feedback/' + title +'/drivers/'+ userId).set({
-           info: info,
-           name: name,
-           lastname: lastname,
-           number: number
-       })
-   }
+    public sendFeedback(university, title, info, name, lastname, number, userId){
+        this.afDB.database.ref(university + '/feedback/' + title +'/drivers/'+ userId).set({
+            info: info,
+            name: name,
+            lastname: lastname,
+            number: number
+        })
+    }
  
 }

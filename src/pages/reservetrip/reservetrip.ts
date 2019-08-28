@@ -203,11 +203,12 @@ export class ReservetripPage{
  
  
                 }
+                this.app.getRootNav().push('MyridePage');
+
               }, 1500);
              
 
                ////
-               this.app.getRootNav().push('MyridePage');
               }
             }           
 

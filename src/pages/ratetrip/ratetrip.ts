@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, ModalController, NavParams, IonicPage, AlertController } from 'ionic-angular';
 import { SignUpService } from '../../services/signup.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -20,21 +20,14 @@ userDriver:any={};
 experience:string;
 title = 'calificacion de viaje';
 trip:any;
-  constructor(public navCtrl: NavController,public navParams: NavParams,private emailComposer: EmailComposer,public SignUpServices:SignUpService,private afDB: AngularFireDatabase, public SignUpService: SignUpService, private AngularFireAuth: AngularFireAuth, public sendfeedback:sendFeedbackService, private geofireService: geofireService) {
+  constructor(public navCtrl: NavController,public navParams: NavParams,public SignUpServices:SignUpService,private afDB: AngularFireDatabase, public SignUpService: SignUpService, private AngularFireAuth: AngularFireAuth, public sendfeedback:sendFeedbackService, private alertCtrl: AlertController) {
     this.today = Date.now();
     this.userDriver= this.navParams.get('user');
     this.trip= this.navParams.get('trip');      
   }
   
   sendEmail() {
-    this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-    // this.geofireService.cancelGeoqueryDest();
-    // this.geofireService.cancelGeoqueryOr();
-
-  }
-
-  ionViewWillLeave(){
-    // this.geofireService.cancelGeoqueryDest();
-    // this.geofireService.cancelGeoqueryOr();
-  }
+        this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
+        this.navCtrl.setRoot('TabsPage');
+    }
 }

@@ -143,17 +143,21 @@ export class TripsService {
         }
         
         public endTripForUsers(university,userId){          
-          //erase trip in users's node
-          
-         this.afDB.database.ref(university + '/users/'+userId+'/keyTrip').remove();
-         this.afDB.database.ref(university + '/users/'+userId+'/onTrip').remove();
-
+          this.afDB.database.ref(university + '/users/'+userId+'/saveTrip').update({
+            saveTrip:true
+          });  
+        
+        
      }
        public saveTripUser(university, driverUid,keyTrip){           
           // this instance allows the user to save the trip in his records
           this.afDB.database.ref(university+ '/tripsState/'+driverUid+'/'+ keyTrip).update({
             saveTrip:true
           });  
+        }
+        public allTrips(university, driverUid,keyTrip,trip){           
+          // this instance allows the user to save the trip in his records
+          this.afDB.database.ref('allTrips/'+university+'/'+driverUid+'/'+ keyTrip).update(trip);  
         }
        public getTripState(university, reserveId,driverId){
           return  this.afDB.object(university + '/tripsState/'+driverId+'/'+reserveId+'/').valueChanges();
@@ -165,14 +169,11 @@ export class TripsService {
           this.afDB.database.ref(university + '/drivers/' + driverUid +'/keyTrip').remove();
         }
        public cancelUserFromTrip(university, driverUid,keyTrip,userId){ 
-          //eliminate credentials from database
-            // this.afDB.database.ref(university + '/users/' + userId +'/keyTrip').remove();
-            // this.afDB.database.ref(university + '/users/' + userId +'/onTrip').remove();
-
-          // save user in cancelUsers array
-            this.afDB.database.ref(university +'/tripsState/'+driverUid+'/'+ keyTrip +'/cancelUsers/'+userId).update({
-              userId:userId
-            });            
+    
+            this.afDB.database.ref(university +'/users/'+userId+'/' +'/cancelTrip/').update({
+              cancelTrip:true
+            });       
+         
           //eliminate the user from pendingUsers
           this.afDB.database.ref(university + '/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+userId).remove();  
           

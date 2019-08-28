@@ -128,6 +128,8 @@ export class FindridePage {
     modal.onDidDismiss(readyToStart =>{
       if(readyToStart){
         //search keyTrip
+
+
         this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
         .subscribe(keyTrip=>{
           this.keyTrip =keyTrip;
@@ -185,6 +187,61 @@ export class FindridePage {
     })
     modal.present();
 
+  }else{
+     //search keyTrip
+     this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
+     .subscribe(keyTrip=>{
+       this.keyTrip =keyTrip;
+       console.log(this.user)
+       console.log(this.keyTrip)
+       //if key its deleted don't show VIAJE EN CURSO  
+       if(this.keyTrip === undefined || this.keyTrip === null){
+       this.onTrip=false;
+       //  this.TripsService.eraseKeyTrip(this.user);
+       //  this.TripsService.setOnTripFalse(this.user);
+         console.log("llegue adonde era")
+       }else{
+         //confirm that trip exist and get it
+         this.getTrip();
+         
+       }
+
+})
+       // set geofire key of university to avoid asking users to put where they are going
+       this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
+         this.university = university
+         this.locationUniversity = this.university.location;
+         this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+       })
+
+
+       this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
+         this.userInfo = user;
+       })  
+
+
+       this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+        this.universityInfo = uni;
+        if(this.universityInfo.email == undefined){
+          if(this.userInfo.documents){
+            if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
+              let modal = this.modalCtrl.create('VerificationImagesPage');
+              modal.present();
+            }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
+              this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+            }
+          }else if(!this.universityInfo.documents) {
+            console.log('no hay docs')
+            let modal = this.modalCtrl.create('VerificationImagesPage');
+              modal.present();
+          } 
+        }else{
+          this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+
+        }
+
+
+      })
   }
 
   this.loadMap();
@@ -192,21 +249,20 @@ export class FindridePage {
 
 
  getTrip(){
-   this.TripsService.getTrip(this.SignUpService.userUniversity, this.keyTrip,this.user)
-     .subscribe(trip=>{
-       this.trip = trip
-       console.log(this.trip)
-       //if there is no trip, eliminate key
-       if(this.trip === null || this.trip === undefined){
-       console.log("borre")
-         
-      //  this.TripsService.eraseKeyTrip(this.user);
-      //  this.TripsService.setOnTripFalse(this.user);
 
-       }else{
-         this.getOnTrip();
-       }
-     })
+    this.afDB.database.ref(this.SignUpService.userUniversity + '/trips/'+ this.user +'/'+ this.keyTrip)
+    .once('value').then((snapshot) => {
+      let trip = snapshot.val();
+      console.log(trip);
+
+      if(trip === null || trip === undefined){
+        console.log("borre");
+        //  this.TripsService.eraseKeyTrip(this.user);
+      //  this.TripsService.setOnTripFalse(this.user);
+      }else{
+        this.getOnTrip();
+      }
+    })
     
  } 
 
