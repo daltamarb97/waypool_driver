@@ -253,7 +253,7 @@ export class ReservetripPage{
   
   help(){
     const toast = this.toastCtrl.create({
-      message: 'Aquí te mostraremos tus reservas, presiona detalles para ver tus compañeros que se unan en tu viaje, después de 5 minutos de pasado el tiempo de la reserva, se cancelará automaticamente, la app te recordará con una notificación',
+      message: 'Todas reservas serán eliminadas al finalizar el día a las 11:59pm ',
       showCloseButton:true,
       closeButtonText: 'OK',
       position:'top'

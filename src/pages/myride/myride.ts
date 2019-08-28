@@ -139,6 +139,7 @@ tripState:any;
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
 			// erase trip because driver decide to cancel
 			this.unSubscribeServices();
+			this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
 			this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 			this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
 			this.navCtrl.pop();
@@ -154,6 +155,7 @@ tripState:any;
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
 		// erase trip because there is no one to picked Up
 		this.unSubscribeServices();
+		this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
 
 		this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 		this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
@@ -228,6 +230,7 @@ tripState:any;
 							this.TripsService.saveTripUser(this.SignUpService.userUniversity,this.driverUid, this.userDriver.keyTrip);
 
 							setTimeout(() => {
+								console.log("MIRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 								this.unSubscribeServices();
 							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
 							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip);
@@ -235,6 +238,7 @@ tripState:any;
 								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
 							});
 							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
+							this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid)
 
 							this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
 							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);

@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 614:
+/***/ 616:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservetripPageModule", function() { return ReservetripPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(771);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(773);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 748;
 
 /***/ }),
 
-/***/ 771:
+/***/ 773:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17293,12 +17293,12 @@ webpackContext.id = 748;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_instances_service__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_instances_service__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(335);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(619);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17529,7 +17529,7 @@ var ReservetripPage = /** @class */ (function () {
     };
     ReservetripPage.prototype.help = function () {
         var toast = this.toastCtrl.create({
-            message: 'Aquí te mostraremos tus reservas, presiona detalles para ver tus compañeros que se unan en tu viaje, después de 5 minutos de pasado el tiempo de la reserva, se cancelará automaticamente, la app te recordará con una notificación',
+            message: 'Todas reservas serán eliminadas al finalizar el día a las 11:59pm ',
             showCloseButton: true,
             closeButtonText: 'OK',
             position: 'top'

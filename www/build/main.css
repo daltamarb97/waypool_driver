@@ -28878,6 +28878,12 @@ page-reservetrip .iconHelp {
   justify-content: center;
 }
 
+page-reservetrip .important {
+  margin: 14px;
+  text-align: left;
+  color: #4d5853;
+}
+
 page-showinfocar .close-icon {
   font-size: 3rem;
   right: 10px;

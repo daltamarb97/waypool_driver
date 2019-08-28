@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 616:
+/***/ 614:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyridePageModule", function() { return MyridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(773);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(771);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 748;
 
 /***/ }),
 
-/***/ 773:
+/***/ 771:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17293,12 +17293,12 @@ webpackContext.id = 748;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__ = __webpack_require__(340);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_signup_service__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(619);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(335);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -17429,6 +17429,7 @@ var MyridePage = /** @class */ (function () {
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
             // erase trip because driver decide to cancel
             this.unSubscribeServices();
+            this.TripsService.eliminateTripState(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
             this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
             this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
             this.navCtrl.pop();
@@ -17441,6 +17442,7 @@ var MyridePage = /** @class */ (function () {
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
             // erase trip because there is no one to picked Up
             this.unSubscribeServices();
+            this.TripsService.eliminateTripState(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
             this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity, this.driverUid);
             this.TripsService.setOnTripFalse(this.SignUpService.userUniversity, this.driverUid);
             this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
@@ -17478,7 +17480,7 @@ var MyridePage = /** @class */ (function () {
         var _this = this;
         // se cambiara a finalizar viaje
         if (this.pendingUsers.length == 0 && this.pickedUpUsers.length !== 0) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Finalizar Viaje',
                 message: "\u00BFEstas seguro que deseas finalizar tu viaje?",
                 buttons: [{
@@ -17502,6 +17504,7 @@ var MyridePage = /** @class */ (function () {
                             console.log(_this.trip);
                             _this.TripsService.saveTripUser(_this.SignUpService.userUniversity, _this.driverUid, _this.userDriver.keyTrip);
                             setTimeout(function () {
+                                console.log("MIRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                                 _this.unSubscribeServices();
                                 _this.geofireServices.deleteUserGeofireOrTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip);
                                 _this.geofireServices.deleteUserGeofireDestTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip);
@@ -17509,6 +17512,7 @@ var MyridePage = /** @class */ (function () {
                                     _this.TripsService.endTripForUsers(_this.SignUpService.userUniversity, user.userId);
                                 });
                                 _this.TripsService.saveTripOnRecords(_this.SignUpService.userUniversity, _this.driverUid, _this.trip);
+                                _this.TripsService.eliminateTripState(_this.SignUpService.userUniversity, _this.userDriver.keyTrip, _this.driverUid);
                                 _this.TripsService.endTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip, _this.driverUid);
                                 _this.TripsService.eraseKeyTrip(_this.SignUpService.userUniversity, _this.driverUid);
                                 _this.TripsService.setOnTripFalse(_this.SignUpService.userUniversity, _this.driverUid);
@@ -17520,7 +17524,7 @@ var MyridePage = /** @class */ (function () {
                     }
                 ]
             });
-            alert_1.present();
+            alert.present();
         }
         else {
             this.presentAlert('Viaje Incompleto', 'Por favor termina de recoger a todos los usuarios o cancélalos', 'Ok');
@@ -17577,9 +17581,10 @@ var MyridePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-myride',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\myride\myride.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">VIAJE EN CURSO\n\n           \n\n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n\n\n\n    </ion-navbar>\n\n    \n\n</ion-header>\n\n\n\n<ion-content class="bg-light"> \n\n        <p class="important">¡IMPORTANTE!: No cierres la app mientras estas haciendo un viaje. </p> \n\n\n\n        <ion-list >\n\n            <ion-card *ngFor = "let user of pendingUsers">\n\n                <ion-item>\n\n                    <ion-avatar item-start>\n\n                        <img src="assets/imgs/userPicture.png">\n\n                    </ion-avatar>\n\n                    <div class="name">\n\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                          <ion-icon *ngIf=\'user.verifiedPerson\' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>\n\n\n\n                        </h2>\n\n                        <p>{{user.about}}</p>\n\n                    </div>\n\n                    <div class="more">\n\n                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>\n\n                    </div>\n\n                </ion-item>\n\n                <ion-card-content>\n\n                    <div class="ride-detail">\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                        <p><small></small>\n\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                    </div>\n\n                    <ion-row>\n\n                          \n\n                                <ion-col class="detail-text">\n\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n\n            \n\n                                    </ion-col>\n\n                        <ion-col col-5>\n\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-card-content>         \n\n\n\n                \n\n            </ion-card>\n\n            \n\n            \n\n            \n\n            <ion-card *ngFor = "let user of pickedUpUsers">\n\n                    <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n\n                            </h2>\n\n                      \n\n                        </div>\n\n                        <div class="more">                       \n\n                                <ion-badge  class="badge bg-darkblue">RECOGIDO</ion-badge>                                  \n\n                                    \n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p>\n\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                            <p>\n\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                        </div>\n\n                       \n\n                    </ion-card-content>\n\n                   \n\n        \n\n                    \n\n                </ion-card> \n\n\n\n\n\n                <ion-row>\n\n                \n\n                   \n\n                    <ion-col class="detail-text">\n\n                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>\n\n                    </ion-col>\n\n               \n\n                </ion-row>\n\n        </ion-list>\n\n        \n\n\n\n\n\n\n\n            \n\n            \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\merge\driver\waypool_driver\src\pages\myride\myride.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */]) === "function" && _m || Object])
     ], MyridePage);
     return MyridePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 }());
 
 //# sourceMappingURL=myride.js.map
