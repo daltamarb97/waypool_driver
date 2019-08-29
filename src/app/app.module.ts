@@ -56,21 +56,14 @@ import { FCM } from '@ionic-native/fcm/ngx';
 
 
 export const firebaseConfig = {
-  // apiKey: "AIzaSyDrNPJBT1eVEFvZDfIfwnuD3ivJo7hVw2M",
-  // authDomain: "securityrules-93b35.firebaseapp.com",
-  // databaseURL: "https://securityrules-93b35.firebaseio.com",
-  // projectId: "securityrules-93b35",
-  // storageBucket: "",
-  // messagingSenderId: "181111098326",
-  // appId: "1:181111098326:web:32275360c003125c"
-  apiKey: "AIzaSyAPagXvglCXnK3neJwU50EiZnJPmdd__PM",
-  authDomain: "waypoooldemo.firebaseapp.com",
-  databaseURL: "https://waypoooldemo.firebaseio.com",
-  projectId: "waypoooldemo",
-  storageBucket: "waypoooldemo.appspot.com",
-  messagingSenderId: "1009109452629",
-  appId: "1:1009109452629:web:d9385099e749eefc"
-};
+  apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
+    authDomain: "waypool-511be.firebaseapp.com",
+    databaseURL: "https://waypool-511be.firebaseio.com",
+    projectId: "waypool-511be",
+    storageBucket: "",
+    messagingSenderId: "904521954579",
+    appId: "1:904521954579:web:ec5463ca11c208b4"
+  };
 
 
 

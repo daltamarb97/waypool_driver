@@ -207,15 +207,15 @@ var map = {
 		23
 	],
 	"../pages/chatting/chatting.module": [
-		596,
+		597,
 		22
 	],
 	"../pages/confirm-university/confirm-university.module": [
-		597,
+		596,
 		21
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		613,
+		615,
 		3
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
@@ -243,11 +243,11 @@ var map = {
 		15
 	],
 	"../pages/myride/myride.module": [
-		614,
+		613,
 		2
 	],
 	"../pages/pickup/pickup.module": [
-		615,
+		614,
 		1
 	],
 	"../pages/profile/profile.module": [
@@ -279,19 +279,19 @@ var map = {
 		9
 	],
 	"../pages/tabs/tabs.module": [
-		608,
+		609,
 		8
 	],
 	"../pages/terms/terms.module": [
-		609,
+		608,
 		7
 	],
 	"../pages/verification-images/verification-images.module": [
-		610,
+		611,
 		6
 	],
 	"../pages/verification-number/verification-number.module": [
-		611,
+		610,
 		5
 	],
 	"../pages/wallet/wallet.module": [
@@ -702,10 +702,195 @@ var sendUsersService = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var TripsService = /** @class */ (function () {
+    function TripsService(afDB, AngularFireAuth) {
+        this.afDB = afDB;
+        this.AngularFireAuth = AngularFireAuth;
+    }
+    TripsService.prototype.getTrip = function (university, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.object(university + '/trips/' + driverUid + '/' + keyTrip).valueChanges();
+    };
+    TripsService.prototype.getPendingUsers = function (university, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
+    };
+    TripsService.prototype.getKeyTrip = function (university, driverUid) {
+        //get key of driver's trip
+        return this.afDB.object(university + '/drivers/' + driverUid + '/keyTrip').valueChanges();
+    };
+    TripsService.prototype.getOnTrip = function (university, userUid) {
+        return this.afDB.object(university + '/drivers/' + userUid + '/onTrip').valueChanges();
+    };
+    TripsService.prototype.getSpecificUser = function (university, keyTrip, driverUid, userId) {
+        //get trip in Trip's node
+        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).valueChanges();
+    };
+    TripsService.prototype.getReserveUsers = function (university, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(university + '/reserves/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
+    };
+    TripsService.prototype.getLastMinuteUsers = function (university, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers').valueChanges();
+    };
+    TripsService.prototype.getPickedUpUsers = function (university, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
+    };
+    TripsService.prototype.startTripForUsers = function (university, keyTrip, userId, driverId) {
+        //create a trip in Trip's node in database     
+        this.afDB.database.ref(university + '/users/' + userId).update({
+            onTrip: true
+        });
+        this.afDB.database.ref(university + '/users/' + userId + '/keyTrip').update({
+            keyTrip: keyTrip,
+            driverId: driverId
+        });
+    };
+    TripsService.prototype.startTrip = function (university, keyTrip, driverUid, trip) {
+        //create a trip in Trip's node in database
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.acceptLastMinute = function (university, driverUid, keyTrip, user) {
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + user.userId).update(user);
+    };
+    TripsService.prototype.noRepeatLMU = function (university, driverUid, keyTrip, userId) {
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).update({
+            noRepeat: true
+        });
+    };
+    TripsService.prototype.eliminateLastMinuteUser = function (university, driverUid, keyTrip, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).remove();
+    };
+    TripsService.prototype.deleteReserve = function (university, keyTrip, driverUid) {
+        this.afDB.database.ref(university + '/reserves/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.pushKeyInDriver = function (university, keyTrip, DriverUid) {
+        //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
+        this.afDB.database.ref(university + '/drivers/' + DriverUid).update({
+            keyTrip: keyTrip
+        });
+    };
+    TripsService.prototype.pushOnTripInDriver = function (university, DriverUid) {
+        //push a onTrip in Driver's node
+        this.afDB.database.ref(university + '/drivers/' + DriverUid).update({
+            onTrip: true
+        });
+    };
+    TripsService.prototype.eliminatePendingUsers = function (university, keyTrip, driverUid, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.pickUp = function (university, keyTrip, driverUid, userId, user) {
+        // add the driver to pickedUpUsers 
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
+    };
+    TripsService.prototype.createTripState = function (university, keyTrip, driverUid) {
+        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).update({
+            saveTrip: false,
+            canceledTrip: false
+        });
+    };
+    TripsService.prototype.eliminateTripState = function (university, keyTrip, driverUid) {
+        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.timeFinishedTrip = function (university, keyTrip, driverUid, date) {
+        //set time when driver go to destination 
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).update({
+            DestinationTime: date
+        });
+    };
+    TripsService.prototype.endTrip = function (university, keyTrip, driverUid) {
+        //erase trip in trip's node
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.setOnTripFalse = function (university, driverUid) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(university + '/drivers/' + driverUid).update({
+            onTrip: false
+        });
+    };
+    TripsService.prototype.setOnTrip = function (university, driverUid) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(university + '/drivers/' + driverUid).update({
+            onTrip: true
+        });
+    };
+    TripsService.prototype.endTripForUsers = function (university, userId) {
+        this.afDB.database.ref(university + '/users/' + userId + '/saveTrip').update({
+            saveTrip: true
+        });
+    };
+    TripsService.prototype.saveTripUser = function (university, driverUid, keyTrip) {
+        // this instance allows the user to save the trip in his records
+        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).update({
+            saveTrip: true
+        });
+    };
+    TripsService.prototype.allTrips = function (university, driverUid, keyTrip, trip) {
+        // this instance allows the user to save the trip in his records
+        this.afDB.database.ref('allTrips/' + university + '/' + driverUid + '/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.getTripState = function (university, reserveId, driverId) {
+        return this.afDB.object(university + '/tripsState/' + driverId + '/' + reserveId + '/').valueChanges();
+    };
+    TripsService.prototype.eraseKeyTrip = function (university, driverUid) {
+        // erase keyTrip in driver's node
+        this.afDB.database.ref(university + '/drivers/' + driverUid + '/keyTrip').remove();
+    };
+    TripsService.prototype.cancelUserFromTrip = function (university, driverUid, keyTrip, userId) {
+        this.afDB.database.ref(university + '/users/' + userId + '/' + '/cancelTrip/').update({
+            cancelTrip: true
+        });
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.saveTripOnRecords = function (university, driverUid, trip) {
+        //save trip in recordTrips
+        this.afDB.database.ref(university + '/drivers/' + driverUid + '/recordTrips/').push(trip);
+    };
+    TripsService.prototype.cancelReserve = function (university, driverUid, keyTrip) {
+        this.afDB.database.ref(university + '/reserves/' + driverUid + '/' + keyTrip).remove();
+        console.log("hola");
+    };
+    TripsService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], TripsService);
+    return TripsService;
+}());
+
+//# sourceMappingURL=trips.service.js.map
+
+/***/ }),
+
+/***/ 335:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return geofireService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire__ = __webpack_require__(563);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire__ = __webpack_require__(562);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_geofire___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_geofire__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
@@ -968,188 +1153,6 @@ var geofireService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 335:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var TripsService = /** @class */ (function () {
-    function TripsService(afDB, AngularFireAuth) {
-        this.afDB = afDB;
-        this.AngularFireAuth = AngularFireAuth;
-    }
-    TripsService.prototype.getTrip = function (university, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.object(university + '/trips/' + driverUid + '/' + keyTrip).valueChanges();
-    };
-    TripsService.prototype.getPendingUsers = function (university, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
-    };
-    TripsService.prototype.getKeyTrip = function (university, driverUid) {
-        //get key of driver's trip
-        return this.afDB.object(university + '/drivers/' + driverUid + '/keyTrip').valueChanges();
-    };
-    TripsService.prototype.getOnTrip = function (university, userUid) {
-        return this.afDB.object(university + '/drivers/' + userUid + '/onTrip').valueChanges();
-    };
-    TripsService.prototype.getSpecificUser = function (university, keyTrip, driverUid, userId) {
-        //get trip in Trip's node
-        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).valueChanges();
-    };
-    TripsService.prototype.getReserveUsers = function (university, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(university + '/reserves/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
-    };
-    TripsService.prototype.getLastMinuteUsers = function (university, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers').valueChanges();
-    };
-    TripsService.prototype.getPickedUpUsers = function (university, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(university + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
-    };
-    TripsService.prototype.startTripForUsers = function (university, keyTrip, userId, driverId) {
-        //create a trip in Trip's node in database     
-        this.afDB.database.ref(university + '/users/' + userId).update({
-            onTrip: true
-        });
-        this.afDB.database.ref(university + '/users/' + userId + '/keyTrip').update({
-            keyTrip: keyTrip,
-            driverId: driverId
-        });
-    };
-    TripsService.prototype.startTrip = function (university, keyTrip, driverUid, trip) {
-        //create a trip in Trip's node in database
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).update(trip);
-    };
-    TripsService.prototype.acceptLastMinute = function (university, driverUid, keyTrip, user) {
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + user.userId).update(user);
-    };
-    TripsService.prototype.noRepeatLMU = function (university, driverUid, keyTrip, userId) {
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).update({
-            noRepeat: true
-        });
-    };
-    TripsService.prototype.eliminateLastMinuteUser = function (university, driverUid, keyTrip, userId) {
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).remove();
-    };
-    TripsService.prototype.deleteReserve = function (university, keyTrip, driverUid) {
-        this.afDB.database.ref(university + '/reserves/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.pushKeyInDriver = function (university, keyTrip, DriverUid) {
-        //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
-        this.afDB.database.ref(university + '/drivers/' + DriverUid).update({
-            keyTrip: keyTrip
-        });
-    };
-    TripsService.prototype.pushOnTripInDriver = function (university, DriverUid) {
-        //push a onTrip in Driver's node
-        this.afDB.database.ref(university + '/drivers/' + DriverUid).update({
-            onTrip: true
-        });
-    };
-    TripsService.prototype.eliminatePendingUsers = function (university, keyTrip, driverUid, userId) {
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
-    };
-    TripsService.prototype.pickUp = function (university, keyTrip, driverUid, userId, user) {
-        // add the driver to pickedUpUsers 
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
-    };
-    TripsService.prototype.createTripState = function (university, keyTrip, driverUid) {
-        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).update({
-            saveTrip: false,
-            canceledTrip: false
-        });
-    };
-    TripsService.prototype.eliminateTripState = function (university, keyTrip, driverUid) {
-        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.timeFinishedTrip = function (university, keyTrip, driverUid, date) {
-        //set time when driver go to destination 
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).update({
-            DestinationTime: date
-        });
-    };
-    TripsService.prototype.endTrip = function (university, keyTrip, driverUid) {
-        //erase trip in trip's node
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.setOnTripFalse = function (university, driverUid) {
-        // set false to onTrip instance in driver's node
-        this.afDB.database.ref(university + '/drivers/' + driverUid).update({
-            onTrip: false
-        });
-    };
-    TripsService.prototype.setOnTrip = function (university, driverUid) {
-        // set false to onTrip instance in driver's node
-        this.afDB.database.ref(university + '/drivers/' + driverUid).update({
-            onTrip: true
-        });
-    };
-    TripsService.prototype.endTripForUsers = function (university, userId) {
-        this.afDB.database.ref(university + '/users/' + userId + '/saveTrip').update({
-            saveTrip: true
-        });
-    };
-    TripsService.prototype.saveTripUser = function (university, driverUid, keyTrip) {
-        // this instance allows the user to save the trip in his records
-        this.afDB.database.ref(university + '/tripsState/' + driverUid + '/' + keyTrip).update({
-            saveTrip: true
-        });
-    };
-    TripsService.prototype.getTripState = function (university, reserveId, driverId) {
-        return this.afDB.object(university + '/tripsState/' + driverId + '/' + reserveId + '/').valueChanges();
-    };
-    TripsService.prototype.eraseKeyTrip = function (university, driverUid) {
-        // erase keyTrip in driver's node
-        this.afDB.database.ref(university + '/drivers/' + driverUid + '/keyTrip').remove();
-    };
-    TripsService.prototype.cancelUserFromTrip = function (university, driverUid, keyTrip, userId) {
-        this.afDB.database.ref(university + '/users/' + userId + '/' + '/cancelTrip/').update({
-            cancelTrip: true
-        });
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(university + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
-    };
-    TripsService.prototype.saveTripOnRecords = function (university, driverUid, trip) {
-        //save trip in recordTrips
-        this.afDB.database.ref(university + '/drivers/' + driverUid + '/recordTrips/').push(trip);
-    };
-    TripsService.prototype.cancelReserve = function (university, driverUid, keyTrip) {
-        this.afDB.database.ref(university + '/reserves/' + driverUid + '/' + keyTrip).remove();
-        console.log("hola");
-    };
-    TripsService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]) === "function" && _b || Object])
-    ], TripsService);
-    return TripsService;
-    var _a, _b;
-}());
-
-//# sourceMappingURL=trips.service.js.map
-
-/***/ }),
-
 /***/ 336:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1288,10 +1291,9 @@ var sendFeedbackService = /** @class */ (function () {
     };
     sendFeedbackService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
     ], sendFeedbackService);
     return sendFeedbackService;
-    var _a;
 }());
 
 //# sourceMappingURL=sendFeedback.service.js.map
@@ -1346,7 +1348,7 @@ var ChatsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 344:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1422,7 +1424,7 @@ var priceService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 345:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1455,13 +1457,13 @@ var WindowService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 346:
+/***/ 345:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(467);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(466);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1469,7 +1471,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 467:
+/***/ 466:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1478,7 +1480,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(581);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(580);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(328);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire__ = __webpack_require__(166);
@@ -1490,19 +1492,19 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendCoords_service__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_sendUsers_service__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(338);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(582);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_geofence__ = __webpack_require__(581);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_geofire_services__ = __webpack_require__(335);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_instances_service__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_call_number__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(583);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(590);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_price_service__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_common_http__ = __webpack_require__(582);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__(589);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_email_composer_ngx__ = __webpack_require__(590);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_sendFeedback_service__ = __webpack_require__(339);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(342);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_trips_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_trips_service__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__mobiscroll_angular_lite__ = __webpack_require__(591);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_window_service__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_window_service__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_fcm_ngx__ = __webpack_require__(330);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1541,20 +1543,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var firebaseConfig = {
-    // apiKey: "AIzaSyDrNPJBT1eVEFvZDfIfwnuD3ivJo7hVw2M",
-    // authDomain: "securityrules-93b35.firebaseapp.com",
-    // databaseURL: "https://securityrules-93b35.firebaseio.com",
-    // projectId: "securityrules-93b35",
-    // storageBucket: "",
-    // messagingSenderId: "181111098326",
-    // appId: "1:181111098326:web:32275360c003125c"
-    apiKey: "AIzaSyAPagXvglCXnK3neJwU50EiZnJPmdd__PM",
-    authDomain: "waypoooldemo.firebaseapp.com",
-    databaseURL: "https://waypoooldemo.firebaseio.com",
-    projectId: "waypoooldemo",
-    storageBucket: "waypoooldemo.appspot.com",
-    messagingSenderId: "1009109452629",
-    appId: "1:1009109452629:web:d9385099e749eefc"
+    apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
+    authDomain: "waypool-511be.firebaseapp.com",
+    databaseURL: "https://waypool-511be.firebaseio.com",
+    projectId: "waypool-511be",
+    storageBucket: "",
+    messagingSenderId: "904521954579",
+    appId: "1:904521954579:web:ec5463ca11c208b4"
 };
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -1573,8 +1568,8 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirm-university/confirm-university.module#ConfirmUniversityPageModule', name: 'ConfirmUniversityPage', segment: 'confirm-university', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
@@ -1585,14 +1580,14 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
@@ -1643,7 +1638,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 581:
+/***/ 580:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1682,23 +1677,6 @@ var MyApp = /** @class */ (function () {
         this.firebaseSenderId = '1009109452629';
         this.userUniversity = this.signUpService.userUniversity;
         console.log(this.userUniversity);
-        //  platform.ready().then(()=>{
-        //   this.fcm.getToken().then(token => {
-        //     console.log(token);
-        //   });
-        //   this.fcm.onTokenRefresh().subscribe(token => {
-        //     console.log(token);
-        //   });
-        //   this.fcm.onNotification().subscribe(data => {
-        //     console.log(data);
-        //     if (data.wasTapped) {
-        //       console.log('Received in background');
-        //       this.rootPage = 'LoginPage';
-        //     } else {
-        //       console.log('Received in foreground');
-        //       this.rootPage = 'LoginPage';
-        //     }
-        //   });
         statusBar.backgroundColorByHexString('#ffffff');
         splashScreen.hide();
         __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().onAuthStateChanged(function (user) {
@@ -1727,5 +1705,5 @@ var MyApp = /** @class */ (function () {
 
 /***/ })
 
-},[346]);
+},[345]);
 //# sourceMappingURL=main.js.map

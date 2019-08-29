@@ -6,16 +6,6 @@
   "config_munge": {
     "files": {}
   },
-  "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars2"
-    },
-    "call-number": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars2"
-    },
-    "cordova-plugin-fcm-with-dependecy-updated": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars2"
-    }
-  },
+  "installed_plugins": {},
   "dependent_plugins": {}
 }

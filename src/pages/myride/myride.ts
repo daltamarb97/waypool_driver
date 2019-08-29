@@ -240,9 +240,9 @@ tripState:any;
 							this.pickedUpUsers.forEach(user => {
 								this.TripsService.endTripForUsers(this.SignUpService.userUniversity,user.userId);
 							});
+							this.TripsService.allTrips(this.SignUpService.userUniversity,this.driverUid,this.userDriver.keyTrip,this.trip);
 							this.TripsService.saveTripOnRecords(this.SignUpService.userUniversity,this.driverUid, this.trip);
 							this.TripsService.eliminateTripState(this.SignUpService.userUniversity,this.userDriver.keyTrip,this.driverUid);
-							this.TripsService.allTrips(this.SignUpService.userUniversity,this.driverUid,this.userDriver.keyTrip,this.trip);
 
 							this.TripsService.endTrip(this.SignUpService.userUniversity, this.userDriver.keyTrip, this.driverUid);
 							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);

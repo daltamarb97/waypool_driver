@@ -187,7 +187,7 @@ export class CarRegistrationLoginPage {
   };
 
   findRide(){
-    this.navCtrl.pop();
+    this.navCtrl.setRoot('TabsPage');
   }
 
 

@@ -228,7 +228,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
     };
     ;
     CarRegistrationLoginPage.prototype.findRide = function () {
-        this.navCtrl.pop();
+        this.navCtrl.setRoot('TabsPage');
     };
     CarRegistrationLoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({

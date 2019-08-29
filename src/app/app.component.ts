@@ -26,27 +26,7 @@ export class MyApp {
   this.userUniversity = this.signUpService.userUniversity;
   console.log(this.userUniversity);
   
-    
-  //  platform.ready().then(()=>{
-  //   this.fcm.getToken().then(token => {
-  //     console.log(token);
-  //   });
 
-  //   this.fcm.onTokenRefresh().subscribe(token => {
-  //     console.log(token);
-  //   });
-
-  //   this.fcm.onNotification().subscribe(data => {
-  //     console.log(data);
-  //     if (data.wasTapped) {
-  //       console.log('Received in background');
-  //       this.rootPage = 'LoginPage';
-
-  //     } else {
-  //       console.log('Received in foreground');
-  //       this.rootPage = 'LoginPage';
-  //     }
-  //   });
 
     statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
      firebase.auth().onAuthStateChanged((user)=>{

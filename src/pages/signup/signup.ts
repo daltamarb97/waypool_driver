@@ -2,7 +2,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, App } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 // import { VerificationPage } from '../verification/verification';
 
@@ -47,7 +47,7 @@ export class SignupPage {
     verificationCode:string;
     unsubscribe = new Subject;
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService) {
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -160,7 +160,8 @@ export class SignupPage {
                             this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
                             this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
                             //send text message with code
-                            this.sendVerificationCode(this.user.userId);
+                            // this.sendVerificationCode(this.user.userId);
+                            this.app.getRootNav().push('LoginPage');
                         }else{
                             console.log('there is no user');
                         }
@@ -250,7 +251,9 @@ export class SignupPage {
                         this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
                         this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
                         //send text message with code
-                         this.sendVerificationCode(this.user.userId);
+                        //  this.sendVerificationCode(this.user.userId);
+                        this.app.getRootNav().push('LoginPage');
+
                     }else{
                         console.log('there is no user');
                     }
