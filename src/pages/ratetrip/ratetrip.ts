@@ -27,7 +27,13 @@ trip:any;
   }
   
   sendEmail() {
+      if(this.experience === null || this.experience === undefined){
+        this.experience = 'no hay feedback'
         this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
         this.navCtrl.setRoot('TabsPage');
+      }else{
+        this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
+        this.navCtrl.setRoot('TabsPage');
+      }
     }
 }

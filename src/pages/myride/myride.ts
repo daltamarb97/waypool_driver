@@ -248,7 +248,7 @@ tripState:any;
 							this.TripsService.eraseKeyTrip(this.SignUpService.userUniversity,this.driverUid);
 							
 							this.TripsService.setOnTripFalse(this.SignUpService.userUniversity,this.driverUid);
-							}, 1000);
+							}, 3000);
 							
 							//TO-DO: AQUI FALTA RATETRIPPAGE
 							this.navCtrl.setRoot('TabsPage');

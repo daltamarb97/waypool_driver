@@ -205,7 +205,7 @@ export class ReservetripPage{
                 }
                 this.app.getRootNav().push('MyridePage');
 
-              }, 1500);
+              }, 2500);
              
 
                ////

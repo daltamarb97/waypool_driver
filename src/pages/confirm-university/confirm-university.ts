@@ -17,7 +17,7 @@ export class ConfirmUniversityPage {
   userId:any;
   user:any;
   showButton:boolean = false;
-  constructor(private signUpService: SignUpService, public viewCtrl: ViewController, private angularFireAuth: AngularFireAuth, public alertCtrl: AlertController) {
+  constructor(private signUpService: SignUpService, public viewCtrl: ViewController, private angularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private afDB: AngularFireDatabase) {
     this.signUpService.getUniversities().subscribe(universities => {
       this.universities = universities;
       console.log(this.universities);
@@ -30,18 +30,19 @@ export class ConfirmUniversityPage {
   onChange(){
     this.showButton = false;
     this.signUpService.userUniversity = this.universityChosen;
-    
-      this.signUpService.getMyInfo(this.signUpService.userUniversity, this.userId).subscribe(user =>{
-        this.user = user;
-      })
-   
-      setTimeout(()=>{
-        if(this.user == null){
+
+    setTimeout(() => {
+      this.afDB.database.ref(this.signUpService.userUniversity + '/drivers/'+ this.userId)
+      .once('value')
+      .then((snap)=> {
+        let user = snap.val();
+        if(user === null){
           this.alertUni()
         }else{
           this.showButton = true;
         } 
-      }, 500)
+      })
+    }, 500); 
   }
 
   alertUni(){

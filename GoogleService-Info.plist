@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>904521954579-2toe8ml2vapv01huuvl0k478uu54r3he.apps.googleusercontent.com</string>
+	<string>904521954579-hs58u2hk7btnsu3o7468a0g5mb11lv7b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.904521954579-2toe8ml2vapv01huuvl0k478uu54r3he</string>
+	<string>com.googleusercontent.apps.904521954579-hs58u2hk7btnsu3o7468a0g5mb11lv7b</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDYNJmss3_FGHgMCPviAc9nZYNu-L8LeYY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.waypoolsas.waypoolcars</string>
+	<string>com.waypoolsas.waypoolcars2</string>
 	<key>PROJECT_ID</key>
 	<string>waypool-511be</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:904521954579:ios:558e9df4e7c52835</string>
+	<string>1:904521954579:ios:ee0634e12a417bdf</string>
 	<key>DATABASE_URL</key>
 	<string>https://waypool-511be.firebaseio.com</string>
 </dict>

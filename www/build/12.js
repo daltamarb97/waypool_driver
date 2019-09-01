@@ -87,8 +87,15 @@ var RatetripPage = /** @class */ (function () {
         this.trip = this.navParams.get('trip');
     }
     RatetripPage.prototype.sendEmail = function () {
-        this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-        this.navCtrl.setRoot('TabsPage');
+        if (this.experience === null || this.experience === undefined) {
+            this.experience = 'no hay feedback';
+            this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
+            this.navCtrl.setRoot('TabsPage');
+        }
+        else {
+            this.sendfeedback.sendFeedback(this.SignUpService.userUniversity, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
+            this.navCtrl.setRoot('TabsPage');
+        }
     };
     RatetripPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({

@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 613:
+/***/ 614:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyridePageModule", function() { return MyridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(770);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__myride__ = __webpack_require__(771);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 748;
 
 /***/ }),
 
-/***/ 770:
+/***/ 771:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17521,7 +17521,7 @@ var MyridePage = /** @class */ (function () {
                                 _this.TripsService.endTrip(_this.SignUpService.userUniversity, _this.userDriver.keyTrip, _this.driverUid);
                                 _this.TripsService.eraseKeyTrip(_this.SignUpService.userUniversity, _this.driverUid);
                                 _this.TripsService.setOnTripFalse(_this.SignUpService.userUniversity, _this.driverUid);
-                            }, 1000);
+                            }, 3000);
                             //TO-DO: AQUI FALTA RATETRIPPAGE
                             _this.navCtrl.setRoot('TabsPage');
                             _this.navCtrl.push('RatetripPage', { user: _this.userDriver, trip: _this.trip });
