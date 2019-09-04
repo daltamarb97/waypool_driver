@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, IonicPage, App, ModalController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage, App, ModalController, ActionSheetController } from 'ionic-angular';
 
 
 import { TabsPage } from '../tabs/tabs';
@@ -38,7 +38,7 @@ unsubscribe = new Subject;
 lastMinuteUsers:any =[];
 tripState:any;
 
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid).takeUntil(this.unsubscribe)
 			.subscribe(userDriver => {
@@ -307,6 +307,28 @@ tripState:any;
 		});
 		alert.present();
 	}
+	presentActionSheet(userId,nameUser) {
+		const actionSheet = this.actionSheetCtrl.create({
+		  title: 'Opciones',
+		  buttons: [
+			{
+			  text: 'Cancelar Usuario',
+			  role: 'destructive',
+			  handler: () => {
+				  this.deleteUser(userId,nameUser)
+				  }
+			},
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  handler: () => {
+				console.log('Cancel clicked');
+			  }
+			}
+		  ]
+		});
+		actionSheet.present();
+	  }
 	help() {
 		const toast = this.toastCtrl.create({
 			message: 'En esta página podrás recoger, llamar, chatear (próximamente), a los compañeros que hayas escogido',

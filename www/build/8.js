@@ -27,7 +27,7 @@ var TabsPageModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]),
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]
@@ -71,7 +71,7 @@ var TabsPage = /** @class */ (function () {
         this.tab3Root = 'MorePage';
     }
     TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/tabs/tabs.html"*/'<ion-tabs #myTabs tabsHideOnSubPages="false" [selectedIndex]="1">\n   <ion-tab [root]="tab1Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>\n\n    <ion-tab [root]="tab2Root" tabTitle="Unirme" tabIcon="md-car"></ion-tab>\n    \n\n    <ion-tab [root]="tab3Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/tabs/tabs.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\driver\waypool_Driver\src\pages\tabs\tabs.html"*/'<ion-tabs #myTabs tabsHideOnSubPages="false" [selectedIndex]="1">\n\n   <ion-tab [root]="tab1Root" tabTitle="Ganancias" tabIcon="md-card" ></ion-tab>\n\n\n\n    <ion-tab [root]="tab2Root" tabTitle="Unirme" tabIcon="md-car"></ion-tab>\n\n    \n\n\n\n    <ion-tab [root]="tab3Root" tabTitle="Perfil" tabIcon="md-person" ></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\driver\waypool_Driver\src\pages\tabs\tabs.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]])
     ], TabsPage);

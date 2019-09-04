@@ -8,10 +8,11 @@
 
 <ion-content class="bg-light" class="hideLongText">
 
-  
+
     <div class="iconHelp">
         <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>
     </div>
+    <img *ngIf="noReserve" src="assets/imgs/noreserve.png">
 
     <ion-card  *ngFor = "let trip of tripsReserves">
         <ng-container *ngIf="trip.isLate; else noLateBlock">
