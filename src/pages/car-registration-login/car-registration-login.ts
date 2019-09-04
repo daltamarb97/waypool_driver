@@ -66,13 +66,16 @@ export class CarRegistrationLoginPage {
   ionViewDidLeave(){
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
-	}
+  }
+  
+
+  
   usageCameraLicense(){
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref('documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url');
 
       const alert = this.alertCtrl.create({
@@ -103,7 +106,7 @@ export class CarRegistrationLoginPage {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref('documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url');
 
       const alert = this.alertCtrl.create({

@@ -1,6 +1,6 @@
 webpackJsonp([24],{
 
-/***/ 595:
+/***/ 597:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CarRegistrationPageModule", function() { return CarRegistrationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__car_registration__ = __webpack_require__(752);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__car_registration__ = __webpack_require__(754);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var CarRegistrationPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 752:
+/***/ 754:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -141,17 +141,11 @@ var CarRegistrationPage = /** @class */ (function () {
     };
     CarRegistrationPage.prototype.usageCameraLicense = function () {
         var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Permiso de uso de tu cámara',
-            subTitle: 'Queremos acceder a tú camara para que puedas tomarle foto a tus documentos',
-            buttons: ['OK']
-        });
-        alert.present();
         this.camera.getPicture(this.options).then(function (imageData) {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url');
             var alert = _this.alertCtrl.create({
                 title: '¡HECHO!',
@@ -178,7 +172,7 @@ var CarRegistrationPage = /** @class */ (function () {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url');
             var alert = _this.alertCtrl.create({
                 title: '¡HECHO!',

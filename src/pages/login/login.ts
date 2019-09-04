@@ -38,17 +38,6 @@ export class LoginPage {
             this.driverInfo = driver;
         })
     }
-    
-    if(this.driverInfo){
-        if(this.auth.currentUser.emailVerified === false){
-            const alert = this.alertCtrl.create({
-                title: 'VERIFICA TU EMAIL',
-                subTitle: 'te hemos enviado un email de verificación a tu correo ',
-                buttons: ['OK']
-              });
-              alert.present();
-        }
-    }
       
 }
 
@@ -96,14 +85,30 @@ export class LoginPage {
                       alert.present();  
                 }else{
                     let metadata = this.auth.currentUser.metadata;
-                    if(metadata.creationTime == metadata.lastSignInTime){
+                    if(metadata.creationTime === metadata.lastSignInTime){
                         console.log(metadata.creationTime);
                         console.log(metadata.lastSignInTime);
     
                         this.navCtrl.push('CarRegistrationLoginPage');
+
+                        setTimeout(()=>{
+                            if(this.navCtrl.getActive().id === 'LoginPage'){
+
+                                this.navCtrl.push('CarRegistrationLoginPage');
+                            }else{
+                                console.log('actuo el abservable')
+                            }
+                        }, 500)
     
                     }else{
-                        this.navCtrl.push('TabsPage');
+                        setTimeout(()=>{
+                            if(this.navCtrl.getActive().id === 'LoginPage'){
+                                this.navCtrl.setRoot('TabsPage');
+
+                            }else{
+                                console.log('actuo el abservable')
+                            }
+                        }, 500) 
                     }
                     this.authenticationService.getStatus;  
                 };

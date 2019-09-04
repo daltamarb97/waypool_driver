@@ -53,7 +53,7 @@ var SignupPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_window_service__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_window_service__ = __webpack_require__(343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -194,7 +194,7 @@ var SignupPage = /** @class */ (function () {
                                     _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
                                     //send text message with code
                                     // this.sendVerificationCode(this.user.userId);
-                                    _this.app.getRootNav().push('LoginPage');
+                                    // this.app.getRootNav().push('LoginPage');
                                 }
                                 else {
                                     console.log('there is no user');
@@ -207,6 +207,19 @@ var SignupPage = /** @class */ (function () {
                             if (user) {
                                 if (user.emailVerified == false) {
                                     user.sendEmailVerification();
+                                    var alert_2 = _this.alertCtrl.create({
+                                        title: 'Verificación de email',
+                                        subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
+                                        buttons: [
+                                            {
+                                                text: 'OK',
+                                                handler: function () {
+                                                    _this.app.getRootNav().push('LoginPage');
+                                                }
+                                            }
+                                        ]
+                                    });
+                                    alert_2.present();
                                     console.log("verification email has been sent");
                                 }
                                 else {
@@ -219,23 +232,23 @@ var SignupPage = /** @class */ (function () {
                         });
                     }).catch(function (error) {
                         if (error.code === "auth/email-already-in-use") {
-                            var alert_2 = _this.alertCtrl.create({
+                            var alert_3 = _this.alertCtrl.create({
                                 title: 'ya existe una cuenta con este correo',
                                 subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
                                 buttons: ['OK']
                             });
-                            alert_2.present();
+                            alert_3.present();
                         }
                     });
                     // this.navCtrl.push('LoginPage', this.user);
                 }
                 else {
-                    var alert_3 = this.alertCtrl.create({
+                    var alert_4 = this.alertCtrl.create({
                         title: 'Oops!',
                         subTitle: 'las contraseñas no coinciden, intenta de nuevo',
                         buttons: ['OK']
                     });
-                    alert_3.present();
+                    alert_4.present();
                 }
             }
             else if (this.showReadonly === false) {
@@ -282,7 +295,7 @@ var SignupPage = /** @class */ (function () {
                                     _this.SignUpService.addCarProfile(_this.SignUpService.userUniversity, _this.user.userId, _this.car);
                                     //send text message with code
                                     //  this.sendVerificationCode(this.user.userId);
-                                    _this.app.getRootNav().push('LoginPage');
+                                    // this.app.getRootNav().push('LoginPage');
                                 }
                                 else {
                                     console.log('there is no user');
@@ -295,6 +308,19 @@ var SignupPage = /** @class */ (function () {
                             if (user) {
                                 if (user.emailVerified == false) {
                                     user.sendEmailVerification();
+                                    var alert_5 = _this.alertCtrl.create({
+                                        title: 'Verificación de email',
+                                        subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
+                                        buttons: [
+                                            {
+                                                text: 'OK',
+                                                handler: function () {
+                                                    _this.app.getRootNav().push('LoginPage');
+                                                }
+                                            }
+                                        ]
+                                    });
+                                    alert_5.present();
                                     console.log("verification email has been sent");
                                 }
                                 else {
@@ -307,22 +333,22 @@ var SignupPage = /** @class */ (function () {
                         });
                     }).catch(function (error) {
                         if (error.code === "auth/email-already-in-use") {
-                            var alert_4 = _this.alertCtrl.create({
+                            var alert_6 = _this.alertCtrl.create({
                                 title: 'ya existe una cuenta con este correo',
                                 subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
                                 buttons: ['OK']
                             });
-                            alert_4.present();
+                            alert_6.present();
                         }
                     });
                 }
                 else {
-                    var alert_5 = this.alertCtrl.create({
+                    var alert_7 = this.alertCtrl.create({
                         title: 'Oops!',
                         subTitle: 'las contraseñas no coinciden, intenta de nuevo',
                         buttons: ['OK']
                     });
-                    alert_5.present();
+                    alert_7.present();
                 }
             }
         }

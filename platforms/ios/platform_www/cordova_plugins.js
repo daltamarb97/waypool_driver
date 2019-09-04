@@ -25,38 +25,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-geolocation.Coordinates",
-    "file": "plugins/cordova-plugin-geolocation/www/Coordinates.js",
-    "pluginId": "cordova-plugin-geolocation",
-    "clobbers": [
-      "Coordinates"
-    ]
-  },
-  {
-    "id": "cordova-plugin-geolocation.PositionError",
-    "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-    "pluginId": "cordova-plugin-geolocation",
-    "clobbers": [
-      "PositionError"
-    ]
-  },
-  {
-    "id": "cordova-plugin-geolocation.Position",
-    "file": "plugins/cordova-plugin-geolocation/www/Position.js",
-    "pluginId": "cordova-plugin-geolocation",
-    "clobbers": [
-      "Position"
-    ]
-  },
-  {
-    "id": "cordova-plugin-geolocation.geolocation",
-    "file": "plugins/cordova-plugin-geolocation/www/geolocation.js",
-    "pluginId": "cordova-plugin-geolocation",
-    "clobbers": [
-      "navigator.geolocation"
-    ]
-  },
-  {
     "id": "cordova-plugin-camera.Camera",
     "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
     "pluginId": "cordova-plugin-camera",
@@ -119,21 +87,53 @@ module.exports = [
     "clobbers": [
       "SQLitePlugin"
     ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.Coordinates",
+    "file": "plugins/cordova-plugin-geolocation/www/Coordinates.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "Coordinates"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.PositionError",
+    "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "PositionError"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.Position",
+    "file": "plugins/cordova-plugin-geolocation/www/Position.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "Position"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.geolocation",
+    "file": "plugins/cordova-plugin-geolocation/www/geolocation.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "navigator.geolocation"
+    ]
   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-  "cordova-plugin-whitelist": "1.3.4",
   "cordova-plugin-device": "2.0.3",
   "cordova-plugin-splashscreen": "5.0.3",
   "cordova-plugin-ionic-keyboard": "2.1.3",
-  "cordova-plugin-geolocation": "4.0.2",
   "cordova-plugin-camera": "4.1.0",
   "cordova-plugin-statusbar": "2.4.3",
   "mx.ferreyra.callnumber": "0.0.2",
   "cordova-plugin-badge": "0.8.8",
-  "cordova-sqlite-storage": "3.2.0"
+  "cordova-sqlite-storage": "3.2.0",
+  "cordova-plugin-whitelist": "1.3.4",
+  "cordova-plugin-geolocation": "4.0.2"
 };
 // BOTTOM OF METADATA
 });

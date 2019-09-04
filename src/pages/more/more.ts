@@ -51,7 +51,8 @@ export class MorePage {
          logout(){
           this.authenticationService.logOut();
           console.log(firebase.auth().currentUser);
-          this.app.getRootNav().push('LoginPage');
+          this.SignupService.userUniversity = undefined;
+          this.navCtrl.setRoot('LoginPage');
     }
          docs(){
     this.app.getRootNav().push('CarRegistrationPage');

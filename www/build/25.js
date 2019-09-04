@@ -117,17 +117,11 @@ var CarRegistrationLoginPage = /** @class */ (function () {
     };
     CarRegistrationLoginPage.prototype.usageCameraLicense = function () {
         var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Permiso de uso de tu cámara',
-            subTitle: 'Queremos acceder a tú camara para que puedas tomarle foto a tus documentos',
-            buttons: ['OK']
-        });
-        alert.present();
         this.camera.getPicture(this.options).then(function (imageData) {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url');
             var alert = _this.alertCtrl.create({
                 title: '¡HECHO!',
@@ -154,7 +148,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref('documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url');
             var alert = _this.alertCtrl.create({
                 title: '¡HECHO!',

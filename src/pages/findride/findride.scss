@@ -8,7 +8,14 @@ page-findride {
             // display: flex;
            
             align-items: center;
-            padding: 5px 15px;
+            .ios{
+              padding: 5px 15px;
+            }
+            .md{
+              padding: 0px 15px;
+
+            }
+           
             .searchbar-search-icon {
                 display: none;
             }
@@ -23,6 +30,39 @@ page-findride {
                 background: transparent !important;
                 border: none !important;
             }
+            .ios .dot {
+              min-width: 10px;
+                  min-height: 10px;
+                  display: flex;
+                  border-radius: 50%;
+                  width: 10px;
+                  margin-bottom: -17px !important;
+                  bottom: -10px;
+                  position: relative;
+                  left: -2px;
+                  z-index: 1;
+                  &.icons {
+                      border-radius: 0;
+                  }
+            }
+               .md .dot {
+              min-width: 10px;
+                  min-height: 10px;
+                  display: flex;
+                  border-radius: 50%;
+                  width: 10px;
+                  margin-bottom: -17px !important;
+                  bottom: -20px;
+                  position: relative;
+                  left: -2px;
+                  z-index: 1;
+                  &.icons {
+                      border-radius: 0;
+                  }
+            }
+          }
+
+          /*
             .dot {
                 min-width: 10px;
                 min-height: 10px;
@@ -30,14 +70,16 @@ page-findride {
                 border-radius: 50%;
                 width: 10px;
                 margin-bottom: -17px !important;
-                bottom: -10px;
+                bottom: -20px;
                 position: relative;
                 left: -2px;
                 z-index: 1;
                 &.icons {
                     border-radius: 0;
                 }
-            }}
+            }
+
+            */
             .ion-list {
                 margin: 0 ;
                 font-size: 130rem

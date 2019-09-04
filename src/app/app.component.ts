@@ -1,34 +1,53 @@
 import { Component } from '@angular/core';
-import { Platform, IonicPage, ToastController } from 'ionic-angular';
+import { Platform, IonicPage, ToastController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase';
 import { SignUpService } from '../services/signup.service';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
-// ESTEEEEEEEEEEEEEE ES NO TE CONFUNDAS
-
-
-declare var require: any;
-declare var module: any;
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any  = 'LoginPage';
-  userUniversity:any;
-  oneSignalAppId:string = '58b65ff2-abec-43de-8596-ec82288d0255';
-  firebaseSenderId:string = '1009109452629';
+  alertInternet:any;
+
   
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private fcm: FCM) {
-  this.userUniversity = this.signUpService.userUniversity;
-  console.log(this.userUniversity);
-  
+  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation) {
 
 
-    statusBar.backgroundColorByHexString('#ffffff');     splashScreen.hide();
+    statusBar.backgroundColorByHexString('#ffffff');     
+    splashScreen.hide();
+    this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then(()=>{
+      console.log('location catched');
+    }).catch((error)=>{
+      console.log(error);
+    })
+
+
+    setTimeout(() => {
+      firebase.database().ref('.info/connected').on('value', (snap)=>{
+        if(snap.val() === false){
+          this.alertInternet = this.alertCtrl.create({
+            title: '¡Oops!',
+            subTitle: 'Ocurrió un error conectándote a Waypool. Por favor verifica tu conexión a internet',
+          });
+          this.alertInternet.present();
+        }else if(snap.val() === true){
+          if(this.alertInternet){
+            this.alertInternet.dismiss();
+          }else{
+
+          }
+        }
+      })
+    }, 2500);
+
+
      firebase.auth().onAuthStateChanged((user)=>{
       if(user){
        

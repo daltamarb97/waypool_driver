@@ -47,7 +47,7 @@ var FindridePageModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
@@ -134,16 +134,6 @@ var FindridePage = /** @class */ (function () {
     } // END OF CONSTRUCTOR
     FindridePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-            if (user.emailVerified == false) {
-                var alert_1 = _this.alertCtrl.create({
-                    title: 'Por favor verifica tu email',
-                    subTitle: 'Estas casi listo para empezar a disfrutar de Waypool',
-                    buttons: ['OK']
-                });
-                alert_1.present();
-            }
-        });
         if (this.SignUpService.userUniversity == undefined) {
             var modal = this.modalCtrl.create('ConfirmUniversityPage');
             modal.onDidDismiss(function (readyToStart) {
@@ -514,12 +504,12 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.listride = function () {
         var _this = this;
         if (this.currentUser.emailVerified == false) {
-            var alert_2 = this.alertCtrl.create({
+            var alert_1 = this.alertCtrl.create({
                 title: 'Oops!',
                 subTitle: 'por favor verifica tu email',
                 buttons: ['OK']
             });
-            alert_2.present();
+            alert_1.present();
         }
         else {
             if (this.userInfo.documents) {
@@ -563,7 +553,7 @@ var FindridePage = /** @class */ (function () {
                     console.log(this.orFirebase);
                 }
                 else {
-                    var alert_3 = this.alertCtrl.create({
+                    var alert_2 = this.alertCtrl.create({
                         title: '¡oh-uh!',
                         subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                         buttons: [
@@ -582,11 +572,11 @@ var FindridePage = /** @class */ (function () {
                         ],
                         cssClass: 'alertDanger'
                     });
-                    alert_3.present();
+                    alert_2.present();
                 }
             }
             else {
-                var alert_4 = this.alertCtrl.create({
+                var alert_3 = this.alertCtrl.create({
                     title: '¡oh-oh!',
                     subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                     buttons: [
@@ -605,7 +595,7 @@ var FindridePage = /** @class */ (function () {
                     ],
                     cssClass: 'alertDanger'
                 });
-                alert_4.present();
+                alert_3.present();
             }
         }
     };

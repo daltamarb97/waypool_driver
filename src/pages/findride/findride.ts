@@ -112,16 +112,6 @@ export class FindridePage {
 
  ionViewDidLoad(){
 
-  this.AngularFireAuth.auth.onAuthStateChanged(user=>{
-    if(user.emailVerified == false){
-      const alert = this.alertCtrl.create({
-        title: 'Por favor verifica tu email',
-        subTitle: 'Estas casi listo para empezar a disfrutar de Waypool',
-        buttons: ['OK']
-      });
-      alert.present(); 
-    }
-  })
   if(this.SignUpService.userUniversity == undefined){
 
     let modal = this.modalCtrl.create('ConfirmUniversityPage');

@@ -60,9 +60,8 @@ export const firebaseConfig = {
     authDomain: "waypool-511be.firebaseapp.com",
     databaseURL: "https://waypool-511be.firebaseio.com",
     projectId: "waypool-511be",
-    storageBucket: "",
-    messagingSenderId: "904521954579",
-    appId: "1:904521954579:web:ec5463ca11c208b4"
+    storageBucket: "waypool-511be.appspot.com",
+    messagingSenderId: "904521954579"
   };
 
 

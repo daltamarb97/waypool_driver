@@ -1,6 +1,6 @@
 webpackJsonp([16],{
 
-/***/ 602:
+/***/ 601:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(758);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var LoginPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 759:
+/***/ 758:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93,16 +93,6 @@ var LoginPage = /** @class */ (function () {
                 _this.driverInfo = driver;
             });
         }
-        if (this.driverInfo) {
-            if (this.auth.currentUser.emailVerified === false) {
-                var alert_1 = this.alertCtrl.create({
-                    title: 'VERIFICA TU EMAIL',
-                    subTitle: 'te hemos enviado un email de verificación a tu correo ',
-                    buttons: ['OK']
-                });
-                alert_1.present();
-            }
-        }
     }
     LoginPage.prototype.signup = function () {
         this.navCtrl.push('SignupPage');
@@ -110,22 +100,22 @@ var LoginPage = /** @class */ (function () {
     ;
     LoginPage.prototype.resetPassword = function (email) {
         if (this.loginGroup.controls['email'].value == '') {
-            var alert_2 = this.alertCtrl.create({
+            var alert_1 = this.alertCtrl.create({
                 title: 'no hay ningun email',
                 subTitle: 'ingresa un email para resetear tu contraseña',
                 buttons: ['OK']
             });
-            alert_2.present();
+            alert_1.present();
             console.log("reset password email hasn't been sent");
         }
         else {
             this.auth.sendPasswordResetEmail(this.loginGroup.controls['email'].value);
-            var alert_3 = this.alertCtrl.create({
+            var alert_2 = this.alertCtrl.create({
                 title: 'revisa tu email',
                 subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
                 buttons: ['OK']
             });
-            alert_3.present();
+            alert_2.present();
             console.log("reset password email has been sent");
         }
         ;
@@ -139,22 +129,37 @@ var LoginPage = /** @class */ (function () {
         this.authenticationService.loginWithEmail(email, password).then(function (data) {
             console.log(data);
             if (data.user.emailVerified == false) {
-                var alert_4 = _this.alertCtrl.create({
+                var alert_3 = _this.alertCtrl.create({
                     title: 'Oops!',
                     subTitle: 'por favor verifica tu email',
                     buttons: ['OK']
                 });
-                alert_4.present();
+                alert_3.present();
             }
             else {
                 var metadata = _this.auth.currentUser.metadata;
-                if (metadata.creationTime == metadata.lastSignInTime) {
+                if (metadata.creationTime === metadata.lastSignInTime) {
                     console.log(metadata.creationTime);
                     console.log(metadata.lastSignInTime);
                     _this.navCtrl.push('CarRegistrationLoginPage');
+                    setTimeout(function () {
+                        if (_this.navCtrl.getActive().id === 'LoginPage') {
+                            _this.navCtrl.push('CarRegistrationLoginPage');
+                        }
+                        else {
+                            console.log('actuo el abservable');
+                        }
+                    }, 500);
                 }
                 else {
-                    _this.navCtrl.push('TabsPage');
+                    setTimeout(function () {
+                        if (_this.navCtrl.getActive().id === 'LoginPage') {
+                            _this.navCtrl.setRoot('TabsPage');
+                        }
+                        else {
+                            console.log('actuo el abservable');
+                        }
+                    }, 500);
                 }
                 _this.authenticationService.getStatus;
             }

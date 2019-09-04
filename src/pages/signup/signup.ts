@@ -161,7 +161,7 @@ export class SignupPage {
                             this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
                             //send text message with code
                             // this.sendVerificationCode(this.user.userId);
-                            this.app.getRootNav().push('LoginPage');
+                            // this.app.getRootNav().push('LoginPage');
                         }else{
                             console.log('there is no user');
                         }
@@ -173,6 +173,19 @@ export class SignupPage {
                     if(user){
                         if(user.emailVerified == false){
                             user.sendEmailVerification();
+                            const alert = this.alertCtrl.create({
+                                title: 'Verificación de email',
+                                subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
+                                buttons: [
+                                    {
+                                        text: 'OK',
+                                        handler: () => {
+                                            this.app.getRootNav().push('LoginPage');
+                                        }
+                                      }
+                                ]
+                            });
+                            alert.present();
                         console.log("verification email has been sent");
                         }else{
                             console.log("verification email has not been sent or the email is already verifyied");
@@ -252,7 +265,7 @@ export class SignupPage {
                         this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
                         //send text message with code
                         //  this.sendVerificationCode(this.user.userId);
-                        this.app.getRootNav().push('LoginPage');
+                        // this.app.getRootNav().push('LoginPage');
 
                     }else{
                         console.log('there is no user');
@@ -265,6 +278,19 @@ export class SignupPage {
                 if(user){
                     if(user.emailVerified == false){
                         user.sendEmailVerification();
+                        const alert = this.alertCtrl.create({
+                            title: 'Verificación de email',
+                            subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
+                            buttons: [
+                                {
+                                    text: 'OK',
+                                    handler: () => {
+                                        this.app.getRootNav().push('LoginPage');
+                                    }
+                                  }
+                            ]
+                        });
+                        alert.present();
                     console.log("verification email has been sent");
                     }else{
                         console.log("verification email has not been sent or the email is already verifyied");

@@ -71,22 +71,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/android.arch.core/runtime/1.1.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/android.arch.lifecycle/livedata-core/1.1.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/android.arch.lifecycle/runtime/1.1.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/android.arch.lifecycle/viewmodel/1.1.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-compat/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-ui/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-utils/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-fragment/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-media-compat/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/27.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.leolin/ShortcutBadger/1.1.22/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
@@ -102,22 +90,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/platforms/android/libs/sqlite-connector.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-v4-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:common:1.1.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-fragment-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-annotations:27.1.1@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.core:runtime-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-compat-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:viewmodel-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:livedata-core-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/platforms/android/libs/sqlite-native-driver.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-media-compat-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-ui-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.core:common:1.1.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-utils-27.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: me.leolin:ShortcutBadger-1.1.22" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:runtime-1.1.0" level="project" />
     <orderEntry type="module" module-name="CordovaLib" exported="" />
   </component>
 </module>

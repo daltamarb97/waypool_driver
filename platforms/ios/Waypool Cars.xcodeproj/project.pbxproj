@@ -20,7 +20,6 @@
 		1AF1F90E25794D04A2B8B371 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE978D1A444A8BB44B1A12 /* CDVSplashScreen.m */; };
 		2FEAB7F74F9841C8BA625F90 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D85802F8E4A19928380BE /* CDVViewController+SplashScreen.m */; };
 		4C268FAFD374473588B758D3 /* CDVIonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C19DA4FB3D4D496381A516BE /* CDVIonicKeyboard.m */; };
-		53C67A85675E46FBA02D3932 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A0E9D979942508CB727BA /* CDVLocation.m */; };
 		EFC63AB989D349CF97692BD5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B8F82BD4A040A29BC1F45B /* CoreLocation.framework */; };
 		B9EB6C224C78400C96EEABFE /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27DD15A15842B9B411591B /* UIImage+CropScaleOrientation.m */; };
 		058E8DA4641741E198557506 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0C3706E82A405ABC5F0281 /* CDVCamera.m */; };
@@ -33,6 +32,7 @@
 		A96B4CF7B61D45DEAE383460 /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104ED1066C64A09A9D3F082 /* SQLitePlugin.m */; };
 		B33B9E7A85BF409FAC1B9D04 /* PSPDFThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4635C462B64A9DB948B608 /* PSPDFThreadSafeMutableDictionary.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		FA725AA57B824FAFB3FCFDB4 /* sqlite3.c in Resources */ = {isa = PBXBuildFile; fileRef = 7E4AA2B27AEC450EB88ECAFF /* sqlite3.c */; settings = {COMPILER_FLAGS = "-w -DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_SYNCHRONOUS=3 -DSQLITE_DEFAULT_MEMSTATUS=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -DSQLITE_OMIT_PROGRESS_CALLBACK -DSQLITE_OMIT_SHARED_CACHE -DSQLITE_TEMP_STORE=2 -DSQLITE_OMIT_LOAD_EXTENSION -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -DSQLITE_DEFAULT_PAGE_SIZE=1024"; }; };
+		5447895F77074A568F481295 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BE002D6F341DF83BFBD8B /* CDVLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +81,6 @@
 		4121AAF261F145D6BF82FD6C /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		C19DA4FB3D4D496381A516BE /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.m"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		900ED44394BE4541A0E6DDAE /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.h"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		243A0E9D979942508CB727BA /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		449A7BC65FF748D19CDE08D4 /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		17B8F82BD4A040A29BC1F45B /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		6C27DD15A15842B9B411591B /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; name = "UIImage+CropScaleOrientation.m"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		1F0C3706E82A405ABC5F0281 /* CDVCamera.m */ = {isa = PBXFileReference; name = "CDVCamera.m"; path = "cordova-plugin-camera/CDVCamera.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
@@ -105,6 +103,8 @@
 		A90B461121584C26A2774E32 /* SQLitePlugin.h */ = {isa = PBXFileReference; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		872BC7F9B7AF4C2EA2E3271B /* PSPDFThreadSafeMutableDictionary.h */ = {isa = PBXFileReference; name = "PSPDFThreadSafeMutableDictionary.h"; path = "cordova-sqlite-storage/PSPDFThreadSafeMutableDictionary.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		6EFD3D8380624D56821595FD /* sqlite3.h */ = {isa = PBXFileReference; name = "sqlite3.h"; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		0B4BE002D6F341DF83BFBD8B /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		05F2C92988774E59AB68C708 /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,8 +222,6 @@
 				4121AAF261F145D6BF82FD6C /* CDVViewController+SplashScreen.h */,
 				C19DA4FB3D4D496381A516BE /* CDVIonicKeyboard.m */,
 				900ED44394BE4541A0E6DDAE /* CDVIonicKeyboard.h */,
-				243A0E9D979942508CB727BA /* CDVLocation.m */,
-				449A7BC65FF748D19CDE08D4 /* CDVLocation.h */,
 				6C27DD15A15842B9B411591B /* UIImage+CropScaleOrientation.m */,
 				1F0C3706E82A405ABC5F0281 /* CDVCamera.m */,
 				C23EA5B07EED482DA3250A4B /* CDVJpegHeaderWriter.m */,
@@ -243,6 +241,8 @@
 				A90B461121584C26A2774E32 /* SQLitePlugin.h */,
 				872BC7F9B7AF4C2EA2E3271B /* PSPDFThreadSafeMutableDictionary.h */,
 				6EFD3D8380624D56821595FD /* sqlite3.h */,
+				0B4BE002D6F341DF83BFBD8B /* CDVLocation.m */,
+				05F2C92988774E59AB68C708 /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = "Waypool Cars/Plugins";
@@ -359,7 +359,6 @@
 				1AF1F90E25794D04A2B8B371 /* CDVSplashScreen.m in Sources */,
 				2FEAB7F74F9841C8BA625F90 /* CDVViewController+SplashScreen.m in Sources */,
 				4C268FAFD374473588B758D3 /* CDVIonicKeyboard.m in Sources */,
-				53C67A85675E46FBA02D3932 /* CDVLocation.m in Sources */,
 				B9EB6C224C78400C96EEABFE /* UIImage+CropScaleOrientation.m in Sources */,
 				058E8DA4641741E198557506 /* CDVCamera.m in Sources */,
 				E2707A73B6104BF2BD542FD2 /* CDVJpegHeaderWriter.m in Sources */,
@@ -369,6 +368,7 @@
 				A96B4CF7B61D45DEAE383460 /* SQLitePlugin.m in Sources */,
 				B33B9E7A85BF409FAC1B9D04 /* PSPDFThreadSafeMutableDictionary.m in Sources */,
 				FA725AA57B824FAFB3FCFDB4 /* sqlite3.c in Resources */,
+				5447895F77074A568F481295 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

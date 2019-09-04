@@ -86,17 +86,11 @@ export class CarRegistrationPage {
 		this.unsubscribe.complete();
 	}
   usageCameraLicense(){
-    const alert = this.alertCtrl.create({
-      title: 'Permiso de uso de tu cámara',
-      subTitle: 'Queremos acceder a tú camara para que puedas tomarle foto a tus documentos',
-      buttons: ['OK']
-    });
-    alert.present();
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref('documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url');
 
       const alert = this.alertCtrl.create({
@@ -127,7 +121,7 @@ export class CarRegistrationPage {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref('documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url');
 
       const alert = this.alertCtrl.create({

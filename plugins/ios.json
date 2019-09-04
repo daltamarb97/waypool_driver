@@ -16,9 +16,6 @@
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
@@ -32,6 +29,12 @@
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
     "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     }
   },
