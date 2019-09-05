@@ -10,6 +10,7 @@ import { priceService } from '../../services/price.service';
 import { geofireService } from '../../services/geofire.services';
 import { Subscription, Subject, Subscriber } from 'rxjs';
 import * as moment from 'moment';
+import { MetricsService } from '../../services/metrics.service';
 
 
 declare var google;
@@ -65,7 +66,7 @@ export class ConfirmpricePage {
    startHour:any;
    reservesAlreadyCreated:any;
 
-  constructor(public navCtrl: NavController, public appCtrl: App,  public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
+  constructor(public navCtrl: NavController, public appCtrl: App,public MetricsService:MetricsService , public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
     this.SignUpService.getCar( this.SignUpService.userUniversity , this.userDriverUid).takeUntil(this.unsubscribe)
     .subscribe( car => {
@@ -171,7 +172,8 @@ export class ConfirmpricePage {
       this.destination = this.driverInfo.destination[0][0];
       this.origin = this.driverInfo.origin[0][0];
       const key = snap.key;
-       
+      this.MetricsService.createdReserves(this.SignUpService.userUniversity,this.userDriverUid,key,this.driverInfo,this.car,this.driverInfo.destination,this.driverInfo.origin,this.note,this.precio, this.startHour,this.typeOfReserve);
+
       // geocoding of addresses that came from findRide
         this.geocoder.geocode({'address': this.origin}, (results, status)=>{
           if(status==='OK'){
@@ -214,7 +216,7 @@ export class ConfirmpricePage {
       this.destination = this.driverInfo.destination[0][0];
       this.origin = this.driverInfo.origin[0][0];
       const key = snap.key;
-    
+      this.MetricsService.createdReserves(this.SignUpService.userUniversity,this.userDriverUid,key,this.driverInfo,this.car,this.driverInfo.destination,this.driverInfo.origin,this.note,this.precio, this.startHour,this.typeOfReserve);
       // geocoding of addresses that came from findRide
       this.geocoder.geocode({'address': this.destination}, (results, status)=>{
         if(status==='OK'){
@@ -269,6 +271,7 @@ export class ConfirmpricePage {
         this.destinationNote = this.driverInfoNote.destination[0][0];
         this.originNote = this.driverInfoNote.origin[0][0];
         const key = snap.key;
+        this.MetricsService.createdReserves(this.SignUpService.userUniversity,this.userDriverUid,key,this.driverInfoNote,this.car,this.driverInfoNote.destination,this.driverInfoNote.origin,this.note,this.precio, this.startHour,this.typeOfReserve);
 
         // geocoding of addresses that came from findRide
         this.geocoder.geocode({'address': this.originNote}, (results, status)=>{
@@ -309,8 +312,7 @@ export class ConfirmpricePage {
         this.destinationNote = this.driverInfoNote.destination[0][0];
         this.originNote = this.driverInfoNote.origin[0][0];
         const key = snap.key;
-
-        // geocoding of addresses that came from findRide
+        this.MetricsService.createdReserves(this.SignUpService.userUniversity,this.userDriverUid,key,this.driverInfoNote,this.car,this.driverInfoNote.destination,this.driverInfoNote.origin,this.note,this.precio, this.startHour,this.typeOfReserve);        // geocoding of addresses that came from findRide
         this.geocoder.geocode({'address': this.destinationNote}, (results, status)=>{
           if(status==='OK'){
             this.geocoordinatesDest={
