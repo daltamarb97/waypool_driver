@@ -135,6 +135,12 @@ export class TripsService {
             onTrip:false
           });  
         }
+        public setOnTripFalseUser(university, userId){           
+          // set false to onTrip instance in driver's node
+          this.afDB.database.ref(university + '/users/'+userId).update({
+            onTrip:false
+          });  
+        }
         public setOnTrip(university, driverUid){           
           // set false to onTrip instance in driver's node
           this.afDB.database.ref(university + '/drivers/'+driverUid).update({
@@ -146,9 +152,14 @@ export class TripsService {
           this.afDB.database.ref(university + '/users/'+userId+'/saveTrip').update({
             saveTrip:true
           });  
-        
+          
         
      }
+     public sentTripUser(university,userId,trip){          
+      this.afDB.database.ref(university + '/users/'+userId+'/trip').update(trip);  
+      
+    
+ }
        public saveTripUser(university, driverUid,keyTrip){           
           // this instance allows the user to save the trip in his records
           this.afDB.database.ref(university+ '/tripsState/'+driverUid+'/'+ keyTrip).update({

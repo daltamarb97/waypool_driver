@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, AlertController, ToastController, IonicPage, App } from 'ionic-angular';
+import { NavController, ModalController, AlertController, ToastController, IonicPage, App, LoadingController } from 'ionic-angular';
 
 // import { RiderprofilePage } from '../riderprofile/riderprofile';
 // import { Observable } from 'rxjs';
@@ -42,10 +42,11 @@ export class ReservetripPage{
   geocoordinatesOr:any;
   geocoordinatesDest:any;
   unsubscribe = new Subject;
+  noReserve:boolean;
 
 
   reserveTime:any;
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public loadingCtrl: LoadingController,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
     this.geocoder = new google.maps.Geocoder;
     this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
@@ -59,7 +60,14 @@ export class ReservetripPage{
       console.log(this.SignUpService.userUniversity)
       this.tripsReserves = tripsReserves;
       console.log(tripsReserves);
-
+      if(this.tripsReserves.length === 0){
+        //there are no reserves to show
+        this.presentLoadingCustom();   
+      }else{
+        //there are reserves
+          this.noReserve = false;
+  
+      }
       console.log(this.tripsReserves);
       //check if reserve  
       moment.locale('es');   
@@ -260,6 +268,23 @@ export class ReservetripPage{
       position:'top'
          });
     toast.present();
+  }
+  presentLoadingCustom() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: `
+        <div class="custom-spinner-container">
+          <div class="custom-spinner-box"></div>
+        </div>`,
+      duration: 250
+    });
+  
+    loading.onDidDismiss(() => {
+      this.noReserve = true;
+  
+    });
+  
+    loading.present();
   }
 }
 

@@ -27,7 +27,7 @@ var TabsPageModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]),
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__tabs__["a" /* TabsPage */]

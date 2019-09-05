@@ -26,7 +26,8 @@
                         <p>{{user.about}}</p>
                     </div>
                     <div class="more">
-                            <ion-icon name="close-circle-outline"class="deleteIcon"(click)="deleteUser(user.userId,user.name)"></ion-icon>
+                            <ion-icon name="md-more" (click)="presentActionSheet(user.userId,user.name)"></ion-icon>
+
                     </div>
                 </ion-item>
                 <ion-card-content>

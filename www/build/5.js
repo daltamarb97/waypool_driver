@@ -27,7 +27,7 @@ var VerificationNumberPageModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]),
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]
@@ -107,7 +107,7 @@ var VerificationNumberPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-verification-number',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/'<ion-header class="transparent">\n  <ion-navbar>\n      <ion-title><span class="text-white">verification</span></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n  <div class="logo">\n      <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n  </div>\n  <div class="bg-white login">\n      <div class="">\n          <p padding text-center>Ingresa el código de confirmación<br>enviado a tu SMS!</p>\n          <br>\n          <ion-list class="form" text-center>\n              <ion-item>\n                  <ion-input type="text" [(ngModel)]=\'confText\' text-right></ion-input>\n              </ion-item>\n          </ion-list>\n          <button ion-button full class="bg-theme text-white btn rounded" (click)="code()">Next</button>\n          <br>\n          <p padding text-center class="resendingButton" (click)= "resendCode()">Reenviar código de verificación</p>      \n        </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
     ], VerificationNumberPage);
     return VerificationNumberPage;
 }());
