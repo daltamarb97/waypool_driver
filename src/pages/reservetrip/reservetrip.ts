@@ -19,6 +19,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 import * as moment from 'moment';
 import { stringify } from '@angular/core/src/render3/util';
+import { MetricsService } from '../../services/metrics.service';
 
 declare var google;
 @IonicPage()
