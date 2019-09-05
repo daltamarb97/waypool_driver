@@ -168,7 +168,7 @@ export class TripsService {
         }
         public allTrips(university, driverUid,keyTrip,trip){           
           // this instance allows the user to save the trip in his records
-          this.afDB.database.ref('allTrips/'+university+'/'+driverUid+'/'+ keyTrip).update(trip);  
+          this.afDB.database.ref('data/allTrips/'+university+'/'+driverUid+'/'+ keyTrip).update(trip);  
         }
        public getTripState(university, reserveId,driverId){
           return  this.afDB.object(university + '/tripsState/'+driverId+'/'+reserveId+'/').valueChanges();
