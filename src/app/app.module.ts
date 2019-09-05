@@ -51,6 +51,7 @@ import { ChatsService } from '../services/chat.service';
 import { TripsService } from '../services/trips.service';
 import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
+import { MetricsService } from '../services/metrics.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 
 
