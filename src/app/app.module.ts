@@ -113,6 +113,7 @@ export const firebaseConfig = {
     ChatsService,
     TripsService,
     WindowService,
+    MetricsService,
     FCM
 
   ]
