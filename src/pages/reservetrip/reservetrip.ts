@@ -212,6 +212,7 @@ export class ReservetripPage{
  
                 }
                 this.app.getRootNav().push('MyridePage');
+                this.MetricsService.tripsInitiated(this.SignUpService.userUniversity,this.userUid,tripKeyTrip,trip)
 
               }, 2500);
              
