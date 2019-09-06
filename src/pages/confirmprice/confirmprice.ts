@@ -66,7 +66,7 @@ export class ConfirmpricePage {
    startHour:any;
    reservesAlreadyCreated:any;
 
-  constructor(public navCtrl: NavController, public appCtrl: App,public MetricsService:MetricsService , public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
+  constructor(public navCtrl: NavController, public appCtrl: App, private MetricsService:MetricsService , public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
     this.SignUpService.getCar( this.SignUpService.userUniversity , this.userDriverUid).takeUntil(this.unsubscribe)
     .subscribe( car => {

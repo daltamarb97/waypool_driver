@@ -47,7 +47,7 @@ export class ReservetripPage{
 
 
   reserveTime:any;
-  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public loadingCtrl: LoadingController,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService) {
+  constructor(public navCtrl: NavController, public SignUpService: SignUpService,public loadingCtrl: LoadingController,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService, private MetricsService: MetricsService) {
     this.geocoder = new google.maps.Geocoder;
     this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {

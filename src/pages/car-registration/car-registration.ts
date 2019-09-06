@@ -39,7 +39,7 @@ export class CarRegistrationPage {
   accepted1:boolean;
   accepted2:boolean;
   showLicense:boolean = true;
-  showId:boolean = false;
+  showId:boolean = false ;
   cameraPicLicense:boolean = false;
   cameraPicId:boolean = false;
   unsubscribe = new Subject;
@@ -60,18 +60,23 @@ export class CarRegistrationPage {
         if(this.driverInfo.documents.license == true ){
           this.picToViewLicense = "assets/imgs/v2.3.png";
           this.picToView =  "assets/imgs/v2.3.png";
+          this.showLicense = false;
         }else if(this.driverInfo.documents.id == true ){
           this.picToViewId = "assets/imgs/_v4.3.png";
+          this.showId = false;
         }else if(this.driverInfo.documents.license == false){
           this.picToViewLicense = "assets/imgs/v2.2.png";
           this.picToView =  "assets/imgs/v2.2.png";
+          this.showLicense = false;
         }else if(this.driverInfo.documents.id == false ){
           this.picToViewId = "assets/imgs/v4.2.png";
+          this.showId = false;
         }else if(this.driverInfo.documents.license == undefined ){
           this.picToViewLicense = "assets/imgs/v2.png";
           this.picToView =  "assets/imgs/v2.png";
         }else if(this.driverInfo.documents.id == undefined ){
           this.picToViewId = "assets/imgs/v4.png";
+          
         }
       }
     })
@@ -150,25 +155,34 @@ export class CarRegistrationPage {
   changeNamePicture1(){
 
   if(this.driverInfo.documents){
-    if(this.driverInfo.documents.license == undefined){
+    if(this.driverInfo.documents.license == undefined ){
       this.picToViewLicense = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+      this.showLicense = true;
+
+    
     }else if (this.driverInfo.documents.license == false){
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
+      this.showLicense = false;
+
     }else if(this.driverInfo.documents.license == true){
       this.picToViewLicense = "assets/imgs/v2.3.png";
       this.picToView = "assets/imgs/v2.3.png";
+      this.showLicense = false;
+
     }else{
       this.picToViewLicense = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+      this.showLicense = true;
+
     }
   }
   
     this.namePicture = this.img1;
     this.description = this.des1;
     this.data = "licencia";
-    this.showLicense = true;
+    // this.showLicense = true;
     this.showId = false;
   };
 
@@ -177,15 +191,23 @@ export class CarRegistrationPage {
     if(this.driverInfo.documents.id == undefined){
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+      this.showId = true;
+
     }else if(this.driverInfo.documents.id == false){
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
+      this.showId = false;
+
     }else if(this.driverInfo.documents.id == true){
       this.picToViewId = "assets/imgs/_v4.3.png";
       this.picToView = "assets/imgs/_v4.3.png";
+      this.showId = false;
+
     }else{
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+      this.showId = true;
+
     }
 
   }
@@ -193,7 +215,7 @@ export class CarRegistrationPage {
     this.namePicture = this.img2;
     this.description = this.des1;
     this.data = "cedula";
-    this.showId = true;
+    // this.showId = true;
     this.showLicense = false;
  
   };

@@ -46,17 +46,21 @@ export class VerificationImagesPage {
     this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(user=>{
       this.driverInfo = user
       if(this.driverInfo.documents){
-        if(this.driverInfo.documents.license == true ){
+        if(this.driverInfo.documents.carne == true ){
           this.picToViewCarne = "assets/imgs/v2.3.png";
           this.picToView =  "assets/imgs/v2.3.png";
+          this.showCarne = false;
         }else if(this.driverInfo.documents.id == true ){
           this.picToViewId = "assets/imgs/_v4.3.png";
-        }else if(this.driverInfo.documents.license == false){
+          this.showId = false;
+        }else if(this.driverInfo.documents.carne == false){
           this.picToViewCarne = "assets/imgs/v2.2.png";
           this.picToView =  "assets/imgs/v2.2.png";
+          this.showCarne = false;
         }else if(this.driverInfo.documents.id == false ){
           this.picToViewId = "assets/imgs/v4.2.png";
-        }else if(this.driverInfo.documents.license == undefined ){
+          this.showId = false;
+        }else if(this.driverInfo.documents.carne == undefined ){
           this.picToViewCarne = "assets/imgs/v2.png";
           this.picToView =  "assets/imgs/v2.png";
         }else if(this.driverInfo.documents.id == undefined ){
@@ -153,22 +157,26 @@ export class VerificationImagesPage {
     if(this.driverInfo.documents.carne == undefined){
       this.picToViewCarne = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+      this.showCarne = true;
     }else if (this.driverInfo.documents.carne == false){
       this.picToViewCarne = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
+      this.showCarne = false;
     }else if(this.driverInfo.documents.carne == true){
       this.picToViewCarne = "assets/imgs/v2.3.png";
       this.picToView = "assets/imgs/v2.3.png";
+      this.showCarne = false;
     }else{
       this.picToViewCarne = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+      this.showCarne = true;
     }
   }
   
     this.namePicture = this.img1;
     this.description = this.des1;
     this.data = "carné";
-    this.showCarne = true;
+    // this.showCarne = true;
     this.showId = false;
   };
 
@@ -177,15 +185,19 @@ export class VerificationImagesPage {
     if(this.driverInfo.documents.id == undefined){
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+      this.showId = true;
     }else if(this.driverInfo.documents.id == false){
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
+      this.showId = false;
     }else if(this.driverInfo.documents.id == true){
       this.picToViewId = "assets/imgs/_v4.3.png";
       this.picToView = "assets/imgs/_v4.3.png";
+      this.showId = false;
     }else{
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+      this.showId = true;
     }
 
   }
@@ -193,7 +205,7 @@ export class VerificationImagesPage {
     this.namePicture = this.img2;
     this.description = this.des1;
     this.data = "cédula";
-    this.showId = true;
+    // this.showId = true;
     this.showCarne = false;
  
   };

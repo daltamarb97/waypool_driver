@@ -117,6 +117,10 @@ export class FindridePage {
     let modal = this.modalCtrl.create('ConfirmUniversityPage');
     modal.onDidDismiss(readyToStart =>{
       if(readyToStart){
+
+        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
+          this.userInfo = user;
+        })
         //search keyTrip
 
 
@@ -146,34 +150,34 @@ export class FindridePage {
           })
 
 
-          this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-            this.userInfo = user;
-          })        
+         
 
       }
-
-      this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-        this.universityInfo = uni;
-        if(this.universityInfo.email == undefined){
-          if(this.userInfo.documents){
-            if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
+      setTimeout(() => {
+        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+          this.universityInfo = uni;
+          if(this.universityInfo.email == undefined){
+            if(this.userInfo.documents){
+              if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
+                let modal = this.modalCtrl.create('VerificationImagesPage');
+                modal.present();
+              }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
+                this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+              }
+            }else if(!this.userInfo.documents) {
+              console.log('no hay docs')
               let modal = this.modalCtrl.create('VerificationImagesPage');
-              modal.present();
-            }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-              this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
-            }
-          }else if(!this.universityInfo.documents) {
-            console.log('no hay docs')
-            let modal = this.modalCtrl.create('VerificationImagesPage');
-              modal.present();
-          } 
-        }else{
-          this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
-
-        }
-
-
-      }) 
+                modal.present();
+            } 
+          }else{
+            this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+  
+          }
+  
+  
+        })
+      }, 1000);
+       
     })
     modal.present();
 
@@ -220,7 +224,7 @@ export class FindridePage {
             }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
               this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
             }
-          }else if(!this.universityInfo.documents) {
+          }else if(!this.userInfo.documents) {
             console.log('no hay docs')
             let modal = this.modalCtrl.create('VerificationImagesPage');
               modal.present();
