@@ -5,7 +5,7 @@ import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 import { authenticationService } from '../../services/driverauthentication.service';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation/';
 import * as firebase from 'Firebase';
 import { CallNumber } from '@ionic-native/call-number';
 import * as moment from 'moment';

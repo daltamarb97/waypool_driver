@@ -24,7 +24,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation/';
 import { sendCoordsService } from '../services/sendCoords.service';
 import { sendUsersService } from '../services/sendUsers.service';
 import { Camera } from '@ionic-native/camera';

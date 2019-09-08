@@ -13,7 +13,7 @@
     <key>CFBundleIcons~ipad</key>
     <dict/>
     <key>CFBundleIdentifier</key>
-    <string>com.waypoolsas.waypoolcars</string>
+    <string>com.waypoolsas.waypooldriver2</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
@@ -21,11 +21,11 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.2.0</string>
+    <string>1.3.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>1.2.0</string>
+    <string>1.3.0</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSMainNibFile</key>
@@ -53,8 +53,12 @@
       <true/>
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Usado para conectarte con otros usuarios de Waypool</string>
+    <string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>
     <key>NSCameraUsageDescription</key>
     <string>Necesitamos acceso a tu camara para que nos puedas enviar tus fotos de documentos</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Accedemos a tus imagenes para que sea más fácil para ti mandarnos tu documentos</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>
   </dict>
 </plist>

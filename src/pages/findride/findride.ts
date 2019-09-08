@@ -3,7 +3,7 @@ import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
 
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation/';
 import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage, App } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';

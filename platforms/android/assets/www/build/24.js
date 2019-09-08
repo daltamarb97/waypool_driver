@@ -51,10 +51,10 @@ var CarRegistrationPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(338);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -113,16 +113,20 @@ var CarRegistrationPage = /** @class */ (function () {
                 if (_this.driverInfo.documents.license == true) {
                     _this.picToViewLicense = "assets/imgs/v2.3.png";
                     _this.picToView = "assets/imgs/v2.3.png";
+                    _this.showLicense = false;
                 }
                 else if (_this.driverInfo.documents.id == true) {
                     _this.picToViewId = "assets/imgs/_v4.3.png";
+                    _this.showId = false;
                 }
                 else if (_this.driverInfo.documents.license == false) {
                     _this.picToViewLicense = "assets/imgs/v2.2.png";
                     _this.picToView = "assets/imgs/v2.2.png";
+                    _this.showLicense = false;
                 }
                 else if (_this.driverInfo.documents.id == false) {
                     _this.picToViewId = "assets/imgs/v4.2.png";
+                    _this.showId = false;
                 }
                 else if (_this.driverInfo.documents.license == undefined) {
                     _this.picToViewLicense = "assets/imgs/v2.png";
@@ -198,24 +202,28 @@ var CarRegistrationPage = /** @class */ (function () {
             if (this.driverInfo.documents.license == undefined) {
                 this.picToViewLicense = "assets/imgs/v2.png";
                 this.picToView = "assets/imgs/v2.png";
+                this.showLicense = true;
             }
             else if (this.driverInfo.documents.license == false) {
                 this.picToViewLicense = "assets/imgs/v2.2.png";
                 this.picToView = "assets/imgs/v2.2.png";
+                this.showLicense = false;
             }
             else if (this.driverInfo.documents.license == true) {
                 this.picToViewLicense = "assets/imgs/v2.3.png";
                 this.picToView = "assets/imgs/v2.3.png";
+                this.showLicense = false;
             }
             else {
                 this.picToViewLicense = "assets/imgs/v2.png";
                 this.picToView = "assets/imgs/v2.png";
+                this.showLicense = true;
             }
         }
         this.namePicture = this.img1;
         this.description = this.des1;
         this.data = "licencia";
-        this.showLicense = true;
+        // this.showLicense = true;
         this.showId = false;
     };
     ;
@@ -224,30 +232,34 @@ var CarRegistrationPage = /** @class */ (function () {
             if (this.driverInfo.documents.id == undefined) {
                 this.picToViewId = "assets/imgs/v4.png";
                 this.picToView = "assets/imgs/v4.png";
+                this.showId = true;
             }
             else if (this.driverInfo.documents.id == false) {
                 this.picToViewId = "assets/imgs/v4.2.png";
                 this.picToView = "assets/imgs/v4.2.png";
+                this.showId = false;
             }
             else if (this.driverInfo.documents.id == true) {
                 this.picToViewId = "assets/imgs/_v4.3.png";
                 this.picToView = "assets/imgs/_v4.3.png";
+                this.showId = false;
             }
             else {
                 this.picToViewId = "assets/imgs/v4.png";
                 this.picToView = "assets/imgs/v4.png";
+                this.showId = true;
             }
         }
         this.namePicture = this.img2;
         this.description = this.des1;
         this.data = "cedula";
-        this.showId = true;
+        // this.showId = true;
         this.showLicense = false;
     };
     ;
     CarRegistrationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar >\n        <ion-title>SUBIR DOCUMENTOS\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img [src]="picToView">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/,
+            selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar >\n        <ion-title>SUBIR DOCUMENTOS\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img [src]="picToView">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
     ], CarRegistrationPage);

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypoolcars" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waypoolsas.waypooldriver2" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Waypool Cars</name>
     <description>Waypool for students with car</description>
     <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
@@ -37,12 +37,19 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/splash.png" />
     </platform>
     <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" />
     </platform>
     <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
-        <string>Usado para conectarte con otros usuarios de Waypool</string>
+        <string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>
     </config-file>
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
         <string>Necesitamos acceso a tu camara para que nos puedas enviar tus fotos de documentos</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+        <string>Accedemos a tus imagenes para que sea más fácil para ti mandarnos tu documentos</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysUsageDescription">
+        <string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>
     </edit-config>
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />

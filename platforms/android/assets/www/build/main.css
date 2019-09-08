@@ -26683,7 +26683,7 @@ page-confirm-university .center {
 .md page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 600px;
+  height: 550px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27555,7 +27555,7 @@ page-confirmtrip .hot-title {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0px 15px;
+  padding: 5px 15px;
 }
 
 .ios page-findride .search .card-content .searchbar-search-icon {
@@ -27773,14 +27773,7 @@ page-findride .search .card-content {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-page-findride .search .card-content .ios {
   padding: 5px 15px;
-}
-
-page-findride .search .card-content .md {
-  padding: 0px 15px;
 }
 
 page-findride .search .card-content .searchbar-search-icon {
