@@ -16,13 +16,12 @@
     "fetchSpec": "^0.8.8"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-badge/-/cordova-plugin-badge-0.8.8.tgz",
   "_shasum": "0924018699b48f92dd3b33615452737582144c96",
   "_spec": "cordova-plugin-badge@^0.8.8",
-  "_where": "/Users/juandavidjaramillo/Documents/waypoolapp_UNOFICIAL/waypool_driver",
+  "_where": "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver",
   "author": {
     "name": "Sebastián Katzer"
   },

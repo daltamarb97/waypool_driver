@@ -7,11 +7,31 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
     },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "mx.ferreyra.callnumber": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "cordova-plugin-email-composer": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "cordova-plugin-firebase": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
     }
   },
   "dependent_plugins": {}

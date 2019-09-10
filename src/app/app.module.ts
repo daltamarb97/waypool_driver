@@ -24,7 +24,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignUpService } from '../services/signup.service';
 import { authenticationService } from '../services/driverauthentication.service';
-import { Geolocation } from '@ionic-native/geolocation/';
 import { sendCoordsService } from '../services/sendCoords.service';
 import { sendUsersService } from '../services/sendUsers.service';
 import { Camera } from '@ionic-native/camera';
@@ -52,6 +51,7 @@ import { TripsService } from '../services/trips.service';
 import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
 import { MetricsService } from '../services/metrics.service';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 
@@ -97,7 +97,6 @@ export const firebaseConfig = {
     SignUpService,
     authenticationService,
     geofireService,
-    Geolocation,
     EmailComposer,
     sendCoordsService,
     sendUsersService,
@@ -113,7 +112,8 @@ export const firebaseConfig = {
     ChatsService,
     TripsService,
     WindowService,
-    MetricsService
+    MetricsService,
+    Geolocation
 
   ]
 })
