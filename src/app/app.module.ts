@@ -52,8 +52,8 @@ import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
 import { MetricsService } from '../services/metrics.service';
 import { Geolocation } from '@ionic-native/geolocation';
-
-
+import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
@@ -113,7 +113,9 @@ export const firebaseConfig = {
     TripsService,
     WindowService,
     MetricsService,
-    Geolocation
+    Geolocation,
+    Firebase,
+    FCM
 
   ]
 })

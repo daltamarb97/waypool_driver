@@ -14,11 +14,11 @@ import { Geolocation } from '@ionic-native/geolocation/';
 export class MyApp {
   rootPage:any  = 'LoginPage';
   alertInternet:any;
-
+  token:any;
   
 
   constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation) {
-
+    console.log('se cargo')
 
     statusBar.backgroundColorByHexString('#ffffff');     
     splashScreen.hide();
@@ -50,7 +50,6 @@ export class MyApp {
 
      firebase.auth().onAuthStateChanged((user)=>{
       if(user){
-       
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
