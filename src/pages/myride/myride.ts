@@ -272,7 +272,17 @@ tripState:any;
 
 
 	}
+	enterChat() {
+		//send isTrip=true for the chat to know if its a reserve or a trip
+		let isTrip = true;
+		let modal = this.modalCtrl.create('ChattingPage', {
+			reserve: this.trip,
+			isTrip: isTrip
 
+			
+		})
+		modal.present();
+	  }
 	presentToast(message: string, duration, position: string) {
 		const toast = this.toastCtrl.create({
 			message: message,

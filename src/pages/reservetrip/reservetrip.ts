@@ -231,6 +231,15 @@ export class ReservetripPage{
 
   
  
+  enterChat(trip) {
+    //send isTrip=true for the chat to know if its a reserve or a trip
+
+    let modal = this.modalCtrl.create('ChattingPage', {
+        reserve: trip,
+        isTrip: false
+    })
+    modal.present();
+  }
 
  lateReserve(keyTrip,reserve){
   

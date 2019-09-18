@@ -26408,8 +26408,6 @@ page-chatting .chat p small {
 }
 
 page-chatting .fixed-bottom {
-  position: -webkit-sticky;
-  position: sticky;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -28087,6 +28085,18 @@ page-more .love {
   -ms-flex-pack: center;
   justify-content: center;
   color: #4d5853;
+}
+
+page-myride .rowOfButtons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 page-myride p.text-light {
