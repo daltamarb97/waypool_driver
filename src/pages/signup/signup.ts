@@ -174,7 +174,7 @@ export class SignupPage {
                         if(user.emailVerified == false){
                             user.sendEmailVerification();
                             const alert = this.alertCtrl.create({
-                                title: 'Verificación de email',
+                                title: '¡REGISTRO EXITOSO!',
                                 subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
                                 buttons: [
                                     {
@@ -279,7 +279,7 @@ export class SignupPage {
                     if(user.emailVerified == false){
                         user.sendEmailVerification();
                         const alert = this.alertCtrl.create({
-                            title: 'Verificación de email',
+                            title: '¡REGISTRO EXITOSO!',
                             subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
                             buttons: [
                                 {

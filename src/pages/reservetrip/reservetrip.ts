@@ -259,17 +259,6 @@ export class ReservetripPage{
   }
 
 
-  cancelReserve(typeOfReserve, geofireKey, keyTrip){
-
-    //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
-    if(typeOfReserve == 'origin'){
-      this.geofireService.cancelGeoqueryOr(geofireKey);
-    }else if(typeOfReserve == 'destination'){
-      this.geofireService.cancelGeoqueryDest(geofireKey);
-    }
-    this.TripsService.cancelReserve(this.SignUpService.userUniversity, this.userUid,keyTrip);  
-  //eliminate reserve
-  }
   
   help(){
     const toast = this.toastCtrl.create({

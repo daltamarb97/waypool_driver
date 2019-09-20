@@ -20,8 +20,8 @@ import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 import { instancesService } from '../../services/instances.service';
-
-
+import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
  
 declare var google;
 @IonicPage()
@@ -86,7 +86,8 @@ export class FindridePage {
   doGeoquery:boolean;
   keyTrip:any;
   onTrip:any;
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService) {
+  token:any;
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -105,18 +106,28 @@ export class FindridePage {
     
     this.markers = [];
     //meter datos por el id del firebase
-  
-   
+
  } // END OF CONSTRUCTOR
 
 
  ionViewDidLoad(){
 
-  if(this.SignUpService.userUniversity == undefined){
+  if(this.SignUpService.userUniversity === undefined){
 
     let modal = this.modalCtrl.create('ConfirmUniversityPage');
     modal.onDidDismiss(readyToStart =>{
       if(readyToStart){
+
+        this.platform.ready().then(()=>{
+ 
+          this.token = this.fcm.getToken().then((token)=>{
+            console.log('this is the token ' + token);
+            this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+              token: token
+            })
+          })
+      
+      })
 
         this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
           this.userInfo = user;
