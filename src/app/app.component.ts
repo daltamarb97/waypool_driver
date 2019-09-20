@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase';
 import { SignUpService } from '../services/signup.service';
 import { Geolocation } from '@ionic-native/geolocation/';
+import { FCM } from '@ionic-native/fcm';
 
 
 
@@ -17,7 +18,7 @@ export class MyApp {
   token:any;
   
 
-  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation) {
+  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController) {
     console.log('se cargo')
 
     statusBar.backgroundColorByHexString('#ffffff');     
@@ -27,6 +28,25 @@ export class MyApp {
     }).catch((error)=>{
       console.log(error);
     })
+
+    platform.ready().then(()=>{
+
+      this.fcm.onNotification().subscribe(data => {
+        if(data.wasTapped){
+         console.log('app in background');
+         console.log(JSON.stringify(data));
+        }else{
+         console.log(JSON.stringify(data));
+  
+          const toast = this.toastCtrl.create({
+            message: 'testing',
+            duration: 3000
+          })
+          toast.present();
+        }
+      })
+    })
+    
 
 
     setTimeout(() => {
