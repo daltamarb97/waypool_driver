@@ -26,5 +26,77 @@ exports.newUserInReserve = functions.database.ref(`/{university}/reserves/{userI
 
 
 })
-        
 
+
+exports.newMessageInReserve = functions.database.ref(`/{university}/reserves/{userId}/{reserveKey}/chats/messages/{messageId}`).onCreate((snap, context) =>{
+    const university = context.params.university;
+    const userId = context.params.userId;
+    return admin.database().ref(`/${university}/drivers/${userId}/devices/token`).once('value').then(snapshot => snapshot.val()).then(device => {
+         const deviceToken = device
+         console.log(deviceToken)
+
+ 
+         const notificationContent = {
+            notification: {
+                title: 'Nuevo mensaje',
+                body: `Te ha llegado un mensaje en una de tus reservas`
+            }
+        }
+ 
+         return admin.messaging().sendToDevice(deviceToken, notificationContent)
+ 
+ 
+     })
+
+
+})
+
+
+exports.newMessageInTrips = functions.database.ref(`/{university}/trips/{userId}/{reserveKey}/chats/messages/{messageId}`).onCreate((snap, context) =>{
+    const university = context.params.university;
+    const userId = context.params.userId;
+    return admin.database().ref(`/${university}/drivers/${userId}/devices/token`).once('value').then(snapshot => snapshot.val()).then(device => {
+         const deviceToken = device
+         console.log(deviceToken)
+
+ 
+         const notificationContent = {
+            notification: {
+                title: 'Nuevo mensaje',
+                body: `Te ha llegado un mensaje en tu viaje`
+            }
+        }
+ 
+         return admin.messaging().sendToDevice(deviceToken, notificationContent)
+ 
+ 
+     })
+
+
+})
+
+
+
+
+exports.newLMU = functions.database.ref(`/{university}/trips/{userId}/{reserveKey}/lastMinuteUsers/{passengerId}`).onCreate((snap, context) =>{
+    const university = context.params.university;
+    const userId = context.params.userId;
+    return admin.database().ref(`/${university}/drivers/${userId}/devices/token`).once('value').then(snapshot => snapshot.val()).then(device => {
+         const deviceToken = device
+         console.log(deviceToken)
+
+ 
+         const notificationContent = {
+            notification: {
+                title: 'Nuevo Usuario',
+                body: `Alguien quiere compartir el viaje contigo a última hora, aceptalo o recházalo`
+            }
+        }
+ 
+         return admin.messaging().sendToDevice(deviceToken, notificationContent)
+ 
+ 
+     })
+
+
+})

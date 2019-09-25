@@ -37,12 +37,6 @@ export class MyApp {
          console.log(JSON.stringify(data));
         }else{
          console.log(JSON.stringify(data));
-  
-          const toast = this.toastCtrl.create({
-            message: 'testing',
-            duration: 3000
-          })
-          toast.present();
         }
       })
     })

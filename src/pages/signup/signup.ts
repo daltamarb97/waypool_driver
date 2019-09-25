@@ -46,13 +46,13 @@ export class SignupPage {
     windowRef:any;
     verificationCode:string;
     unsubscribe = new Subject;
-
+    noShowButton:boolean = false;
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
         email: ["", Validators.required],
-        fixedemail: ["", Validators.required],
+        fixedemail: ["", Validators],
         password: ["", Validators.required],
         passwordconf: ["", Validators.required],
         phone: ["", Validators.required],

@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 654:
+/***/ 655:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(811);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(812);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var WalletPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 811:
+/***/ 812:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50,9 +50,9 @@ var WalletPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(345);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -119,7 +119,7 @@ var WalletPage = /** @class */ (function () {
     };
     WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-wallet',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\wallet\wallet.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar>\n\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n\n\n    </ion-navbar>\n\n    <div text-center >\n\n        <p><small class="text-white">Ganancias Totales:</small></p>\n\n        <h1 class="text-white">$ {{total}}</h1>\n\n        <ion-row>\n\n           \n\n        </ion-row>\n\n    </div>\n\n\n\n</ion-header>\n\n \n\n<ion-content class="bg-light">\n\n        <p class="love">Historial de viajes</p> \n\n\n\n    <ion-list>\n\n            <ion-card *ngFor = "let user of recordTrips">\n\n                    <ion-item>\n\n                        <ion-avatar item-start>\n\n                            <img src="assets/imgs/userPicture.png">\n\n                        </ion-avatar>\n\n                        <div class="name">\n\n                            <h2>{{user.DestinationTime}}\n\n                            </h2>\n\n                            <p>{{user.car}}</p>\n\n                        </div>\n\n                        <div class="more">                       \n\n                                <ion-badge  class="badge">$ {{user.price}}</ion-badge>                                  \n\n                                    \n\n                        </div>\n\n                    </ion-item>\n\n                    <ion-card-content>\n\n                        <div class="ride-detail">\n\n                            <p>\n\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n\n                            <p>\n\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n\n                        </div>\n\n                       \n\n                    </ion-card-content>       \n\n\n\n                </ion-card>  \n\n    </ion-list>\n\n   \n\n   \n\n    \n\n    \n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\wallet\wallet.html"*/
+            selector: 'page-wallet',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n    </ion-navbar>\n    <div text-center >\n        <p><small class="text-white">Ganancias Totales:</small></p>\n        <h1 class="text-white">$ {{total}}</h1>\n        <ion-row>\n           \n        </ion-row>\n    </div>\n\n</ion-header>\n \n<ion-content class="bg-light">\n        <p class="love">Historial de viajes</p> \n\n    <ion-list>\n            <ion-card *ngFor = "let user of recordTrips">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.DestinationTime}}\n                            </h2>\n                            <p>{{user.car}}</p>\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge">$ {{user.price}}</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>       \n\n                </ion-card>  \n    </ion-list>\n   \n   \n    \n    \n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]])
     ], WalletPage);

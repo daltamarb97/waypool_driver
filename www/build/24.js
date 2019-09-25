@@ -48,7 +48,7 @@ var CarRegistrationPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarRegistrationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(53);
@@ -78,7 +78,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var CarRegistrationPage = /** @class */ (function () {
-    function CarRegistrationPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth, alertCtrl, SignUpService) {
+    function CarRegistrationPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth, alertCtrl, SignUpService, loadingCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -87,6 +87,7 @@ var CarRegistrationPage = /** @class */ (function () {
         this.AngularFireauth = AngularFireauth;
         this.alertCtrl = alertCtrl;
         this.SignUpService = SignUpService;
+        this.loadingCtrl = loadingCtrl;
         this.namePicture = "Licencia";
         this.description = "Sube una foto clara de tu";
         this.img1 = "Licencia";
@@ -113,20 +114,16 @@ var CarRegistrationPage = /** @class */ (function () {
                 if (_this.driverInfo.documents.license == true) {
                     _this.picToViewLicense = "assets/imgs/v2.3.png";
                     _this.picToView = "assets/imgs/v2.3.png";
-                    _this.showLicense = false;
                 }
                 else if (_this.driverInfo.documents.id == true) {
                     _this.picToViewId = "assets/imgs/_v4.3.png";
-                    _this.showId = false;
                 }
                 else if (_this.driverInfo.documents.license == false) {
                     _this.picToViewLicense = "assets/imgs/v2.2.png";
                     _this.picToView = "assets/imgs/v2.2.png";
-                    _this.showLicense = false;
                 }
                 else if (_this.driverInfo.documents.id == false) {
                     _this.picToViewId = "assets/imgs/v4.2.png";
-                    _this.showId = false;
                 }
                 else if (_this.driverInfo.documents.license == undefined) {
                     _this.picToViewLicense = "assets/imgs/v2.png";
@@ -148,15 +145,31 @@ var CarRegistrationPage = /** @class */ (function () {
         this.camera.getPicture(this.options).then(function (imageData) {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
+            var loading = _this.loadingCtrl.create({
+                spinner: 'crescent',
+                content: "\n          <div class=\"custom-spinner-container\">\n            <div class=\"custom-spinner-box\"></div>\n          </div>"
+            });
+            loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
             var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
-            picturesDrivers.putString(base64Image, 'data_url');
-            var alert = _this.alertCtrl.create({
-                title: '¡HECHO!',
-                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
-                buttons: ['OK']
+            picturesDrivers.putString(base64Image, 'data_url').then(function () {
+                loading.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: '¡HECHO!',
+                    subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }).catch(function (error) {
+                loading.dismiss();
+                console.log(error);
+                var alert = _this.alertCtrl.create({
+                    title: 'hubo un error',
+                    subTitle: 'intenta subir el documento otra vez',
+                    buttons: ['OK']
+                });
+                alert.present();
             });
-            alert.present();
             _this.picToViewLicense = "assets/imgs/v2.2.png";
             _this.picToView = "assets/imgs/v2.2.png";
             _this.SignUpService.pushDocsL(_this.SignUpService.userUniversity, _this.driver);
@@ -175,15 +188,31 @@ var CarRegistrationPage = /** @class */ (function () {
         this.camera.getPicture(this.options).then(function (imageData) {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
+            var loading = _this.loadingCtrl.create({
+                spinner: 'crescent',
+                content: "\n          <div class=\"custom-spinner-container\">\n            <div class=\"custom-spinner-box\"></div>\n          </div>"
+            });
+            loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
             var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
-            picturesDrivers.putString(base64Image, 'data_url');
-            var alert = _this.alertCtrl.create({
-                title: '¡HECHO!',
-                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
-                buttons: ['OK']
+            picturesDrivers.putString(base64Image, 'data_url').then(function () {
+                loading.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: '¡HECHO!',
+                    subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }).catch(function (error) {
+                loading.dismiss();
+                console.log(error);
+                var alert = _this.alertCtrl.create({
+                    title: 'hubo un error',
+                    subTitle: 'intenta subir el documento otra vez',
+                    buttons: ['OK']
+                });
+                alert.present();
             });
-            alert.present();
             _this.picToViewId = "assets/imgs/v4.2.png";
             _this.picToView = "assets/imgs/v4.2.png";
             _this.SignUpService.pushDocsId(_this.SignUpService.userUniversity, _this.driver);
@@ -202,17 +231,14 @@ var CarRegistrationPage = /** @class */ (function () {
             if (this.driverInfo.documents.license == undefined) {
                 this.picToViewLicense = "assets/imgs/v2.png";
                 this.picToView = "assets/imgs/v2.png";
-                this.showLicense = true;
             }
             else if (this.driverInfo.documents.license == false) {
                 this.picToViewLicense = "assets/imgs/v2.2.png";
                 this.picToView = "assets/imgs/v2.2.png";
-                this.showLicense = false;
             }
             else if (this.driverInfo.documents.license == true) {
                 this.picToViewLicense = "assets/imgs/v2.3.png";
                 this.picToView = "assets/imgs/v2.3.png";
-                this.showLicense = false;
             }
             else {
                 this.picToViewLicense = "assets/imgs/v2.png";
@@ -223,7 +249,7 @@ var CarRegistrationPage = /** @class */ (function () {
         this.namePicture = this.img1;
         this.description = this.des1;
         this.data = "licencia";
-        // this.showLicense = true;
+        this.showLicense = true;
         this.showId = false;
     };
     ;
@@ -232,36 +258,32 @@ var CarRegistrationPage = /** @class */ (function () {
             if (this.driverInfo.documents.id == undefined) {
                 this.picToViewId = "assets/imgs/v4.png";
                 this.picToView = "assets/imgs/v4.png";
-                this.showId = true;
             }
             else if (this.driverInfo.documents.id == false) {
                 this.picToViewId = "assets/imgs/v4.2.png";
                 this.picToView = "assets/imgs/v4.2.png";
-                this.showId = false;
             }
             else if (this.driverInfo.documents.id == true) {
                 this.picToViewId = "assets/imgs/_v4.3.png";
                 this.picToView = "assets/imgs/_v4.3.png";
-                this.showId = false;
             }
             else {
                 this.picToViewId = "assets/imgs/v4.png";
                 this.picToView = "assets/imgs/v4.png";
-                this.showId = true;
             }
         }
         this.namePicture = this.img2;
         this.description = this.des1;
         this.data = "cedula";
-        // this.showId = true;
+        this.showId = true;
         this.showLicense = false;
     };
     ;
     CarRegistrationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-car-registration',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\car-registration\car-registration.html"*/'<!--\n\n  Generated template for the CarRegistrationPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header class="bg-theme">\n\n    <ion-navbar >\n\n        <ion-title>SUBIR DOCUMENTOS\n\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding-right padding-left>\n\n    <p text-center padding-top margin-top>{{description}}</p>\n\n    <h2 text-center>{{namePicture}}</h2>\n\n\n\n    <ion-row>\n\n        <ion-col col-4 text-center>\n\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n\n        </ion-col>\n\n        <ion-col col-4 text-center>\n\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <div text-center class="verifiy">\n\n        <img [src]="picToView">\n\n    </div>\n\n    <ion-row>\n\n        <ion-col>\n\n            <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>\n\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>\n\n        </ion-col>\n\n    </ion-row>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\car-registration\car-registration.html"*/,
+            selector: 'page-car-registration',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar >\n        <ion-title>SUBIR DOCUMENTOS\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding-right padding-left>\n    <p text-center padding-top margin-top>{{description}}</p>\n    <h2 text-center>{{namePicture}}</h2>\n\n    <ion-row>\n        <ion-col col-4 text-center>\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n        </ion-col>\n        <ion-col col-4 text-center>\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n        </ion-col>\n    </ion-row>\n\n    <div text-center class="verifiy">\n        <img [src]="picToView">\n    </div>\n    <ion-row>\n        <ion-col>\n            <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto de Licencia</button></p>\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto de Cédula</button></p>\n        </ion-col>\n    </ion-row>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration/car-registration.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]])
     ], CarRegistrationPage);
     return CarRegistrationPage;
 }());

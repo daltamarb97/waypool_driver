@@ -49,20 +49,15 @@ export class VerificationImagesPage {
         if(this.driverInfo.documents.carne == true ){
           this.picToViewCarne = "assets/imgs/v2.3.png";
           this.picToView =  "assets/imgs/v2.3.png";
-          this.showCarne = false;
         }else if(this.driverInfo.documents.id == true ){
           this.picToViewId = "assets/imgs/_v4.3.png";
-          this.showId = false;
         }else if(this.driverInfo.documents.carne == false){
           this.picToViewCarne = "assets/imgs/v2.2.png";
           this.picToView =  "assets/imgs/v2.2.png";
-          this.showCarne = false;
         }else if(this.driverInfo.documents.id == false ){
           this.picToViewId = "assets/imgs/v4.2.png";
-          this.showId = false;
         }else if(this.driverInfo.documents.carne == undefined ){
           this.picToViewCarne = "assets/imgs/v2.png";
-          this.picToView =  "assets/imgs/v2.png";
         }else if(this.driverInfo.documents.id == undefined ){
           this.picToViewId = "assets/imgs/v4.png";
         }
@@ -91,14 +86,24 @@ export class VerificationImagesPage {
 
 
       
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+      }).catch((error)=>{
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
+      
 
       this.picToViewCarne = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
@@ -122,18 +127,28 @@ export class VerificationImagesPage {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data)
 
 
 
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+      }).catch((error)=>{
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
+      
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
       this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
@@ -157,26 +172,22 @@ export class VerificationImagesPage {
     if(this.driverInfo.documents.carne == undefined){
       this.picToViewCarne = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
-      this.showCarne = true;
     }else if (this.driverInfo.documents.carne == false){
       this.picToViewCarne = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.showCarne = false;
     }else if(this.driverInfo.documents.carne == true){
       this.picToViewCarne = "assets/imgs/v2.3.png";
       this.picToView = "assets/imgs/v2.3.png";
-      this.showCarne = false;
     }else{
       this.picToViewCarne = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
-      this.showCarne = true;
     }
   }
   
     this.namePicture = this.img1;
     this.description = this.des1;
     this.data = "carné";
-    // this.showCarne = true;
+    this.showCarne = true;
     this.showId = false;
   };
 
@@ -185,19 +196,15 @@ export class VerificationImagesPage {
     if(this.driverInfo.documents.id == undefined){
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
-      this.showId = true;
     }else if(this.driverInfo.documents.id == false){
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.showId = false;
     }else if(this.driverInfo.documents.id == true){
       this.picToViewId = "assets/imgs/_v4.3.png";
       this.picToView = "assets/imgs/_v4.3.png";
-      this.showId = false;
     }else{
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
-      this.showId = true;
     }
 
   }
@@ -205,7 +212,7 @@ export class VerificationImagesPage {
     this.namePicture = this.img2;
     this.description = this.des1;
     this.data = "cédula";
-    // this.showId = true;
+    this.showId = true;
     this.showCarne = false;
  
   };

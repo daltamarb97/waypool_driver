@@ -1,10 +1,6 @@
 webpackJsonp([5],{
 
-<<<<<<< HEAD
-/***/ 652:
-=======
-/***/ 653:
->>>>>>> origin/pushNots
+/***/ 654:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12,11 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationNumberPageModule", function() { return VerificationNumberPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-<<<<<<< HEAD
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(809);
-=======
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(810);
->>>>>>> origin/pushNots
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(811);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -49,18 +41,14 @@ var VerificationNumberPageModule = /** @class */ (function () {
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 809:
-=======
-/***/ 810:
->>>>>>> origin/pushNots
+/***/ 811:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationNumberPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
@@ -117,7 +105,7 @@ var VerificationNumberPage = /** @class */ (function () {
     };
     VerificationNumberPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-verification-number',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\verification-number\verification-number.html"*/'<ion-header class="transparent">\n\n  <ion-navbar>\n\n      <ion-title><span class="text-white">verification</span></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="bg-background-img">\n\n  <div class="logo">\n\n      <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n\n  </div>\n\n  <div class="bg-white login">\n\n      <div class="">\n\n          <p padding text-center>Ingresa el código de confirmación<br>enviado a tu SMS!</p>\n\n          <br>\n\n          <ion-list class="form" text-center>\n\n              <ion-item>\n\n                  <ion-input type="text" [(ngModel)]=\'confText\' text-right></ion-input>\n\n              </ion-item>\n\n          </ion-list>\n\n          <button ion-button full class="bg-theme text-white btn rounded" (click)="code()">Next</button>\n\n          <br>\n\n          <p padding text-center class="resendingButton" (click)= "resendCode()">Reenviar código de verificación</p>      \n\n        </div>\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\pages\verification-number\verification-number.html"*/,
+            selector: 'page-verification-number',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/'<ion-header class="transparent">\n  <ion-navbar>\n      <ion-title><span class="text-white">verification</span></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n  <div class="logo">\n      <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n  </div>\n  <div class="bg-white login">\n      <div class="">\n          <p padding text-center>Ingresa el código de confirmación<br>enviado a tu SMS!</p>\n          <br>\n          <ion-list class="form" text-center>\n              <ion-item>\n                  <ion-input type="text" [(ngModel)]=\'confText\' text-right></ion-input>\n              </ion-item>\n          </ion-list>\n          <button ion-button full class="bg-theme text-white btn rounded" (click)="code()">Next</button>\n          <br>\n          <p padding text-center class="resendingButton" (click)= "resendCode()">Reenviar código de verificación</p>      \n        </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
     ], VerificationNumberPage);

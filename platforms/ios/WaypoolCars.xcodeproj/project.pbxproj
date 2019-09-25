@@ -78,6 +78,7 @@
 		D9B24629375E44538ACCBB9D /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A8D5EF01A94E18B9C1BB7C /* libsqlite3.0.tbd */; };
 		1D67FC84CA064ADF962A9A79 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 128A093C11BD4A82A9A03837 /* Security.framework */; };
 		B1F67A549F0E471EB29880DE /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = B92BEA3C31944C79852C376A /* CDVLocation.m */; };
+		FFC1C3B167294B2AB62CB88E /* CFCallNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBE3B5540764A28AF47ED12 /* CFCallNumber.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,6 +235,8 @@
 		128A093C11BD4A82A9A03837 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		B92BEA3C31944C79852C376A /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		03E8AC48BCAE4159BEA24D9A /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		3CBE3B5540764A28AF47ED12 /* CFCallNumber.m */ = {isa = PBXFileReference; name = "CFCallNumber.m"; path = "call-number/CFCallNumber.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B747CCEA8F9B4A8F985B8411 /* CFCallNumber.h */ = {isa = PBXFileReference; name = "CFCallNumber.h"; path = "call-number/CFCallNumber.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +481,8 @@
 				485EAE15779947F5BAFE7CF3 /* Firebase.h */,
 				B92BEA3C31944C79852C376A /* CDVLocation.m */,
 				03E8AC48BCAE4159BEA24D9A /* CDVLocation.h */,
+				3CBE3B5540764A28AF47ED12 /* CFCallNumber.m */,
+				B747CCEA8F9B4A8F985B8411 /* CFCallNumber.h */,
 			);
 			name = Plugins;
 			path = WaypoolCars/Plugins;
@@ -640,6 +645,7 @@
 				E8E6D8836E624CAF9E0E7531 /* FCMPlugin.m in Sources */,
 				CD4FA872B22B4BF39E5E4F20 /* AppDelegate+FCMPlugin.m in Sources */,
 				B1F67A549F0E471EB29880DE /* CDVLocation.m in Sources */,
+				FFC1C3B167294B2AB62CB88E /* CFCallNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,7 +711,7 @@
 				INFOPLIST_FILE = "WaypoolCars/WaypoolCars-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypooldriver2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypoolcars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -761,7 +767,7 @@
 				INFOPLIST_FILE = "WaypoolCars/WaypoolCars-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypooldriver2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypoolcars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -804,7 +810,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypooldriver2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypoolcars;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 			};
@@ -844,7 +850,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypooldriver2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waypoolsas.waypoolcars;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 			};

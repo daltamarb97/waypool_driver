@@ -169,7 +169,7 @@ var SignUpService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 235:
+/***/ 236:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -182,20 +182,20 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 235;
+webpackEmptyAsyncContext.id = 236;
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/canceltrip/canceltrip.module": [
-		635,
+		640,
 		26
 	],
 	"../pages/car-registration-login/car-registration-login.module": [
-		636,
+		635,
 		25
 	],
 	"../pages/car-registration/car-registration.module": [
@@ -203,19 +203,19 @@ var map = {
 		24
 	],
 	"../pages/chats/chats.module": [
-		638,
+		636,
 		23
 	],
 	"../pages/chatting/chatting.module": [
-		639,
+		638,
 		22
 	],
 	"../pages/confirm-university/confirm-university.module": [
-		640,
+		639,
 		21
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		656,
+		657,
 		3
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
@@ -231,43 +231,31 @@ var map = {
 		18
 	],
 	"../pages/help/help.module": [
-		644,
+		643,
 		17
 	],
 	"../pages/login/login.module": [
-		642,
+		645,
 		16
 	],
 	"../pages/more/more.module": [
-<<<<<<< HEAD
-		643,
+		644,
 		15
 	],
 	"../pages/myride/myride.module": [
-		655,
-		2
-	],
-	"../pages/pickup/pickup.module": [
 		656,
-=======
-		645,
-		15
-	],
-	"../pages/myride/myride.module": [
-		657,
 		2
 	],
 	"../pages/pickup/pickup.module": [
 		658,
->>>>>>> origin/pushNots
 		1
 	],
 	"../pages/profile/profile.module": [
-		646,
+		647,
 		14
 	],
 	"../pages/public-profile/public-profile.module": [
-		647,
+		646,
 		13
 	],
 	"../pages/ratetrip/ratetrip.module": [
@@ -275,11 +263,7 @@ var map = {
 		12
 	],
 	"../pages/reservetrip/reservetrip.module": [
-<<<<<<< HEAD
-		657,
-=======
 		659,
->>>>>>> origin/pushNots
 		0
 	],
 	"../pages/showinfocar/showinfocar.module": [
@@ -291,11 +275,11 @@ var map = {
 		10
 	],
 	"../pages/support/support.module": [
-		651,
+		650,
 		9
 	],
 	"../pages/tabs/tabs.module": [
-		650,
+		651,
 		8
 	],
 	"../pages/terms/terms.module": [
@@ -303,23 +287,15 @@ var map = {
 		7
 	],
 	"../pages/verification-images/verification-images.module": [
-<<<<<<< HEAD
-		651,
-		6
-	],
-	"../pages/verification-number/verification-number.module": [
-		652,
-=======
-		655,
-		6
-	],
-	"../pages/verification-number/verification-number.module": [
 		653,
->>>>>>> origin/pushNots
+		6
+	],
+	"../pages/verification-number/verification-number.module": [
+		654,
 		5
 	],
 	"../pages/wallet/wallet.module": [
-		654,
+		655,
 		4
 	]
 };
@@ -334,12 +310,12 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 277;
+webpackAsyncContext.id = 278;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 343:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -349,7 +325,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -418,7 +394,7 @@ var authenticationService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 344:
+/***/ 345:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -603,7 +579,7 @@ var sendCoordsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 345:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -722,7 +698,7 @@ var sendUsersService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 346:
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -916,7 +892,7 @@ var TripsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 347:
+/***/ 348:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1186,7 +1162,7 @@ var geofireService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 348:
+/***/ 349:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1292,7 +1268,7 @@ var instancesService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 351:
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1333,7 +1309,7 @@ var sendFeedbackService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 352:
+/***/ 354:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1388,7 +1364,7 @@ var MetricsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 354:
+/***/ 355:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1449,7 +1425,7 @@ var ChatsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 355:
+/***/ 356:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1525,7 +1501,7 @@ var priceService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 356:
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1582,33 +1558,33 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(623);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_auth__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_sendCoords_service__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendUsers_service__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_camera__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_sendCoords_service__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendUsers_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_camera__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_geofence__ = __webpack_require__(624);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_geofire_services__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_instances_service__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_geofire_services__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_instances_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_call_number__ = __webpack_require__(353);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_price_service__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_price_service__ = __webpack_require__(356);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(625);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_http__ = __webpack_require__(632);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_email_composer_ngx__ = __webpack_require__(633);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_sendFeedback_service__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_chat_service__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_trips_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_sendFeedback_service__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_chat_service__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_trips_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__mobiscroll_angular_lite__ = __webpack_require__(634);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_window_service__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_metrics_service__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_window_service__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_metrics_service__ = __webpack_require__(354);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_geolocation__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__ionic_native_firebase__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__ionic_native_fcm__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__ionic_native_firebase__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__ionic_native_fcm__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1648,19 +1624,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var firebaseConfig = {
-    // apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
-    //   authDomain: "waypool-511be.firebaseapp.com",
-    //   databaseURL: "https://waypool-511be.firebaseio.com",
-    //   projectId: "waypool-511be",
-    //   storageBucket: "waypool-511be.appspot.com",
-    //   messagingSenderId: "904521954579"
-    apiKey: "AIzaSyCvN6NNgoWCbOOUxBP9H23rbb7QSnBCf60",
-    authDomain: "fixingdatabase.firebaseapp.com",
-    databaseURL: "https://fixingdatabase.firebaseio.com",
-    projectId: "fixingdatabase",
-    storageBucket: "",
-    messagingSenderId: "1090675636677",
-    appId: "1:1090675636677:web:672dbea79f33a407"
+    apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
+    authDomain: "waypool-511be.firebaseapp.com",
+    databaseURL: "https://waypool-511be.firebaseio.com",
+    projectId: "waypool-511be",
+    storageBucket: "waypool-511be.appspot.com",
+    messagingSenderId: "904521954579"
 };
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -1675,37 +1644,29 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], { tabsHideOnSubPages: false,
                 }, {
                     links: [
-                        { loadChildren: '../pages/canceltrip/canceltrip.module#CanceltripPageModule', name: 'CanceltripPage', segment: 'canceltrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirm-university/confirm-university.module#ConfirmUniversityPageModule', name: 'ConfirmUniversityPage', segment: 'confirm-university', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/canceltrip/canceltrip.module#CanceltripPageModule', name: 'CanceltripPage', segment: 'canceltrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
-<<<<<<< HEAD
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-=======
->>>>>>> origin/pushNots
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
-<<<<<<< HEAD
                         { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
-=======
->>>>>>> origin/pushNots
                         { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
@@ -1766,12 +1727,13 @@ var AppModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1788,12 +1750,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MyApp = /** @class */ (function () {
-    function MyApp(alertCtrl, statusBar, splashScreen, signUpService, geolocation) {
+    function MyApp(alertCtrl, statusBar, splashScreen, signUpService, geolocation, platform, fcm, toastCtrl) {
         var _this = this;
         this.alertCtrl = alertCtrl;
         this.signUpService = signUpService;
         this.geolocation = geolocation;
+        this.platform = platform;
+        this.fcm = fcm;
+        this.toastCtrl = toastCtrl;
         this.rootPage = 'LoginPage';
         console.log('se cargo');
         statusBar.backgroundColorByHexString('#ffffff');
@@ -1802,6 +1768,17 @@ var MyApp = /** @class */ (function () {
             console.log('location catched');
         }).catch(function (error) {
             console.log(error);
+        });
+        platform.ready().then(function () {
+            _this.fcm.onNotification().subscribe(function (data) {
+                if (data.wasTapped) {
+                    console.log('app in background');
+                    console.log(JSON.stringify(data));
+                }
+                else {
+                    console.log(JSON.stringify(data));
+                }
+            });
         });
         setTimeout(function () {
             __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('.info/connected').on('value', function (snap) {
@@ -1836,9 +1813,9 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\waypool_driver\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__["a" /* FCM */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
     ], MyApp);
     return MyApp;
 }());

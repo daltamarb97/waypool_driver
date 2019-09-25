@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController } from 'ionic-angular';
 import { FindridePage } from '../findride/findride';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
@@ -51,7 +51,7 @@ export class CarRegistrationPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
     this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
@@ -60,17 +60,13 @@ export class CarRegistrationPage {
         if(this.driverInfo.documents.license == true ){
           this.picToViewLicense = "assets/imgs/v2.3.png";
           this.picToView =  "assets/imgs/v2.3.png";
-          this.showLicense = false;
         }else if(this.driverInfo.documents.id == true ){
           this.picToViewId = "assets/imgs/_v4.3.png";
-          this.showId = false;
         }else if(this.driverInfo.documents.license == false){
           this.picToViewLicense = "assets/imgs/v2.2.png";
           this.picToView =  "assets/imgs/v2.2.png";
-          this.showLicense = false;
         }else if(this.driverInfo.documents.id == false ){
           this.picToViewId = "assets/imgs/v4.2.png";
-          this.showId = false;
         }else if(this.driverInfo.documents.license == undefined ){
           this.picToViewLicense = "assets/imgs/v2.png";
           this.picToView =  "assets/imgs/v2.png";
@@ -94,16 +90,39 @@ export class CarRegistrationPage {
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
+
+      let loading = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: `
+          <div class="custom-spinner-container">
+            <div class="custom-spinner-box"></div>
+          </div>`
+          });
+      loading.present();
+
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        loading.dismiss();
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+      }).catch((error)=>{
+        loading.dismiss();
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
+      
 
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
@@ -125,16 +144,37 @@ export class CarRegistrationPage {
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
+
+      let loading = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: `
+          <div class="custom-spinner-container">
+            <div class="custom-spinner-box"></div>
+          </div>`
+          });
+      loading.present();
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        loading.dismiss();
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+      }).catch((error)=>{
+        loading.dismiss();
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
       this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
@@ -158,18 +198,15 @@ export class CarRegistrationPage {
     if(this.driverInfo.documents.license == undefined ){
       this.picToViewLicense = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
-      this.showLicense = true;
 
     
     }else if (this.driverInfo.documents.license == false){
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.showLicense = false;
 
     }else if(this.driverInfo.documents.license == true){
       this.picToViewLicense = "assets/imgs/v2.3.png";
       this.picToView = "assets/imgs/v2.3.png";
-      this.showLicense = false;
 
     }else{
       this.picToViewLicense = "assets/imgs/v2.png";
@@ -182,7 +219,7 @@ export class CarRegistrationPage {
     this.namePicture = this.img1;
     this.description = this.des1;
     this.data = "licencia";
-    // this.showLicense = true;
+    this.showLicense = true;
     this.showId = false;
   };
 
@@ -191,23 +228,20 @@ export class CarRegistrationPage {
     if(this.driverInfo.documents.id == undefined){
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
-      this.showId = true;
 
     }else if(this.driverInfo.documents.id == false){
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.showId = false;
 
     }else if(this.driverInfo.documents.id == true){
       this.picToViewId = "assets/imgs/_v4.3.png";
       this.picToView = "assets/imgs/_v4.3.png";
-      this.showId = false;
 
     }else{
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
-      this.showId = true;
 
+      
     }
 
   }
@@ -215,7 +249,7 @@ export class CarRegistrationPage {
     this.namePicture = this.img2;
     this.description = this.des1;
     this.data = "cedula";
-    // this.showId = true;
+    this.showId = true;
     this.showLicense = false;
  
   };

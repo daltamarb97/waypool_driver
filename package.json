@@ -42,7 +42,6 @@
     "angularfire2": "^5.0.2",
     "animate.css": "^3.7.2",
     "call-number": "^1.0.1",
-    "cordova-android": "8.1.0",
     "cordova-browser": "5.0.4",
     "cordova-ios": "5.0.1",
     "cordova-plugin-add-swift-support": "^1.6.0",
