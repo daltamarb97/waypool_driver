@@ -8,10 +8,40 @@
   },
   "installed_plugins": {
     "call-number": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-email-composer": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-fcm-with-dependecy-updated": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     }
   },
   "dependent_plugins": {}

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypoolcars" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waypoolsas.waypooldriver2" version="1.5.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WaypoolCars</name>
     <description>Waypool for students with car</description>
     <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
@@ -59,6 +59,10 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
     <plugin name="call-number" spec="^1.0.1" />
-    <plugin name="cordova-plugin-firebase" spec="^2.0.5" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.3" />
+    <plugin name="cordova-plugin-fcm-with-dependecy-updated" spec="3.2.0" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.2" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.4" />
+    <engine name="android" spec="8.1.0" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
