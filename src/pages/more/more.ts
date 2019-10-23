@@ -59,4 +59,9 @@ export class MorePage {
 
     }
 
+    schedule(){
+      this.app.getRootNav().push('SchedulePage');
+
+    }
+
 }

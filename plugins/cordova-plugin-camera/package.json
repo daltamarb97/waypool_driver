@@ -1,31 +1,27 @@
 {
-  "_args": [
-    [
-      "cordova-plugin-camera@4.1.0",
-      "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver"
-    ]
-  ],
-  "_from": "cordova-plugin-camera@4.1.0",
+  "_from": "cordova-plugin-camera@^4.0.3",
   "_id": "cordova-plugin-camera@4.1.0",
   "_inBundle": false,
   "_integrity": "sha512-fCLhWjWYn49q3X5xaypAPgTz6MAWSKFFQvD2Gpi5SuVlrRPRphtX2jIqR2zCBuDTBR082QVnlc+yUDXt65Mjgw==",
   "_location": "/cordova-plugin-camera",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-camera@4.1.0",
+    "raw": "cordova-plugin-camera@^4.0.3",
     "name": "cordova-plugin-camera",
     "escapedName": "cordova-plugin-camera",
-    "rawSpec": "4.1.0",
+    "rawSpec": "^4.0.3",
     "saveSpec": null,
-    "fetchSpec": "4.1.0"
+    "fetchSpec": "^4.0.3"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-camera/-/cordova-plugin-camera-4.1.0.tgz",
-  "_spec": "4.1.0",
+  "_shasum": "6474a3e080c4662aa00fd7425705d301c693ddc0",
+  "_spec": "cordova-plugin-camera@^4.0.3",
   "_where": "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver",
   "author": {
     "name": "Apache Software Foundation"
@@ -33,6 +29,7 @@
   "bugs": {
     "url": "https://github.com/apache/cordova-plugin-camera/issues"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-camera",
     "platforms": [
@@ -43,6 +40,7 @@
       "osx"
     ]
   },
+  "deprecated": false,
   "description": "Cordova Camera Plugin",
   "devDependencies": {
     "eslint": "^4.3.0",

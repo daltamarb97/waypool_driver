@@ -1,31 +1,27 @@
 {
-  "_args": [
-    [
-      "cordova-sqlite-storage@3.3.0",
-      "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver"
-    ]
-  ],
-  "_from": "cordova-sqlite-storage@3.3.0",
-  "_id": "cordova-sqlite-storage@3.3.0",
+  "_from": "cordova-sqlite-storage@^3.2.0",
+  "_id": "cordova-sqlite-storage@3.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-RBgGAe8rf/k54JC12xtt/14PxJrh42C4ISd+P8fqZq5Kw6JfQGh/55/VTsjI29rInl5jO5fwpYee/InGYlmI9w==",
+  "_integrity": "sha512-Uavq3HulVIYXxTFCp5aafiQhYrZF0/cGlyN76RYhIftcD5IRhza9+ghhV5abJYvuGlzY+p9dM5hPcjnYxfAH+g==",
   "_location": "/cordova-sqlite-storage",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-sqlite-storage@3.3.0",
+    "raw": "cordova-sqlite-storage@^3.2.0",
     "name": "cordova-sqlite-storage",
     "escapedName": "cordova-sqlite-storage",
-    "rawSpec": "3.3.0",
+    "rawSpec": "^3.2.0",
     "saveSpec": null,
-    "fetchSpec": "3.3.0"
+    "fetchSpec": "^3.2.0"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-sqlite-storage/-/cordova-sqlite-storage-3.3.0.tgz",
-  "_spec": "3.3.0",
+  "_resolved": "https://registry.npmjs.org/cordova-sqlite-storage/-/cordova-sqlite-storage-3.4.0.tgz",
+  "_shasum": "5a4b96d5120e525d35f9470279d23f6ccdc8bd23",
+  "_spec": "cordova-sqlite-storage@^3.2.0",
   "_where": "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver",
   "author": {
     "name": "various"
@@ -33,6 +29,7 @@
   "bugs": {
     "url": "https://github.com/xpbrew/cordova-sqlite-storage/issues"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-sqlite-storage",
     "platforms": [
@@ -45,6 +42,7 @@
   "dependencies": {
     "cordova-sqlite-storage-dependencies": "2.1.0"
   },
+  "deprecated": false,
   "description": "Native interface to SQLite for PhoneGap/Cordova - cordova-sqlite-storage plugin version",
   "devDependencies": {
     "coffeescript": "1",
@@ -71,5 +69,5 @@
     "prepare-js": "coffee -p SQLitePlugin.coffee.md > www/SQLitePlugin.js",
     "prepare-spec": "node scripts/prepareSpec.js"
   },
-  "version": "3.3.0"
+  "version": "3.4.0"
 }

@@ -1,0 +1,50 @@
+<ion-content>
+
+    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>
+    <ion-card>
+  
+        <ion-card-content>
+            <ion-row style="margin-top: 14px;    display: flex;
+            justify-content: center">
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Hora:</ion-label>
+                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>
+                </ion-item>
+                </ion-list>                    
+            </ion-row>
+    </ion-card-content>
+
+    <br>
+    <h2 text-center>A esta hora vas de tu:</h2>
+     <h1 text-center class="texto1">{{textMessage}}</h1>
+      <ion-row>
+          <ion-col class="col1" *ngIf = 'button1WasntTapped'>
+              <img src="assets/imgs/home2.png"  style="display:inline-block" height="140px" width="50px" (click)="button1()"/>
+          </ion-col>
+          <ion-col class="col1" *ngIf = 'button1WasTapped'>
+              <img src="assets/imgs/home.png"  style="display:inline-block" height="140px" width="50px" (click)="button1()"/>
+          </ion-col>
+          <ion-col  class="col2" *ngIf = 'button2WasntTapped'>
+              <img src="assets/imgs/work2.png"  style="display:inline-block" height="140px" width="50px" (click)="button2()"/>
+            
+          </ion-col>
+          <ion-col  class="col2" *ngIf = 'button2WasTapped'>
+              <img src="assets/imgs/work.png"  style="display:inline-block" height="140px" width="50px" (click)="button2()"/>
+            
+          </ion-col>
+      </ion-row>
+  
+        <ion-card-content>
+            <div class="seats">           
+                <ion-row style="margin-top: 14px;    display: flex;
+                justify-content: center">
+                   
+                    <ion-col col-8>
+                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="confirm()">Confirmar</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -57,7 +57,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "retina4",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-5.png",
+      "filename" : "LaunchImage-568h@2x~iphone_640x1136.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -73,7 +73,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-8.png",
+      "filename" : "LaunchImage-Landscape~ipad_1024x768.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -81,7 +81,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-7.png",
+      "filename" : "LaunchImage-Portrait@2x~ipad_1536x2048.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -89,7 +89,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-9.png",
+      "filename" : "LaunchImage-Landscape@2x~ipad_2048x1536.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -97,21 +97,21 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-10.png",
+      "filename" : "LaunchImage~iphone-320x480-1.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-11.png",
+      "filename" : "LaunchImage~iphone_640x960-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-12.png",
+      "filename" : "LaunchImage-568h@2x~iphone_640x1136-1.png",
       "extent" : "full-screen",
       "subtype" : "retina4",
       "scale" : "2x"
@@ -119,56 +119,56 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-13.png",
+      "filename" : "LaunchImage.png",
       "extent" : "to-status-bar",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-15.png",
+      "filename" : "LaunchImage-Portrait~ipad_768x1024-1.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-17.png",
+      "filename" : "LaunchImage-Landscape~ipad_1024x748.png",
       "extent" : "to-status-bar",
       "scale" : "1x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-19.png",
+      "filename" : "LaunchImage-Landscape~ipad_1024x768-1.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-14.png",
+      "filename" : "LaunchImage~ipad.png",
       "extent" : "to-status-bar",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-16.png",
+      "filename" : "LaunchImage-Portrait@2x~ipad_1536x2048-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-18.png",
+      "filename" : "LaunchImage-Landscape@2x~ipad_2048x1496.png",
       "extent" : "to-status-bar",
       "scale" : "2x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2224x1668-20.png",
+      "filename" : "LaunchImage-Landscape@2x~ipad_2048x1536-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     }

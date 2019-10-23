@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController, App } from 'ionic-angular';
 import { FindridePage } from '../findride/findride';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
@@ -51,7 +51,7 @@ export class CarRegistrationPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController, public app: App) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
     this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
@@ -253,6 +253,10 @@ export class CarRegistrationPage {
     this.showLicense = false;
  
   };
+
+  skip(){
+    this.app.getRootNav().push('TabsPage');
+  }
 
 
 

@@ -1,5 +1,9 @@
 # Changes
 
+#### cordova-sqlite-storage 3.4.0
+
+- quick workaround for `SYNTAX_ERR` redefinition
+
 #### cordova-sqlite-storage 3.3.0
 
 - new default page & cache sizes with cordova-sqlite-storage-dependencies@2.1.0

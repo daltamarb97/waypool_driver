@@ -10,7 +10,7 @@ export class SignUpService {
     
     //gloabl variable for university identifaction
     userUniversity:any;
-
+    schedulePush:any;
     constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
     }
 
@@ -26,6 +26,17 @@ export class SignUpService {
         return this.afDB.list('universities/').valueChanges()
      }
 
+     public getEmails(enterprise){
+        return this.afDB.list('universities/' + enterprise +'/emails' ).valueChanges()
+     }
+
+     public pushEmails(enterprise, email){
+         this.afDB.database.ref('universities/' + enterprise + '/emails').push({
+            email:email
+         })
+     }
+
+    
     public pushDocsL(university, userId){
        this.afDB.database.ref(university + '/drivers/'+userId+'/documents').update({
            license: false
@@ -127,6 +138,31 @@ public addCarProfile(university, userUid,car){
  
 public getCar(university, userId){
     return this.afDB.list(university + '/drivers/'+ userId+'/cars').valueChanges();
+
+}
+
+
+public pushSchedule(university, userId, hour, type, description, image){
+    this.schedulePush = this.afDB.database.ref(university + '/drivers/'+userId+'/schedule/').push({
+        hour: hour, 
+        type: type,
+        description: description,
+        image: image
+    }).then((snap)=>{
+        this.schedulePush = this.schedulePush = this.afDB.database.ref(university + '/drivers/'+userId+'/schedule/'+ snap.key).update({
+            key: snap.key
+        })
+    })
+ }
+
+
+ public getSchedule(university, userId){
+    return this.afDB.list(university + '/drivers/'+userId+'/schedule/').valueChanges();
+
+}
+
+public removeSchedule(university, userId, key){
+     this.afDB.database.ref(university + '/drivers/'+userId+'/schedule/'+ key).remove();
 
 }
 }

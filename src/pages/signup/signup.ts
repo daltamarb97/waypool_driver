@@ -17,6 +17,7 @@ import { WindowService } from '../../services/window.service';
 // import * as firebase from 'firebase';
 import * as firebase from 'firebase';
 import { Subject } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 @IonicPage()
@@ -36,18 +37,20 @@ export class SignupPage {
     private signupGroup: FormGroup;
 
     //variables linked among them 
-    emailVar:any;
     universityVar:any;
     universities = [];
     showReadonly:boolean = true;
     onlyEmail:any;
-
-
+    arrayEmails = [];
+    company:any;
+    companyVar:any;
     windowRef:any;
     verificationCode:string;
     unsubscribe = new Subject;
     noShowButton:boolean = false;
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App) {
+
+
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App, private afDB: AngularFireDatabase) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -63,11 +66,14 @@ export class SignupPage {
         isChecked:[true, Validators.required]
     })
 
+    // this.SignUpService.pushEmails('uninorte', '@uninorte.edu.co');
+    // this.SignUpService.pushEmails('uninorte', '@jhggh.edu.co');
 
     this.SignUpService.getUniversities().takeUntil(this.unsubscribe)
     .subscribe(universities => {
         this.universities = universities;
         console.log(this.universities);
+        
     })
   }
 
@@ -79,10 +85,19 @@ export class SignupPage {
             var count = this.universities.length;
             for(var i=0; i<count; i++){
                 if(this.universities[i].name == this.universityVar){
-                  if(this.universities[i].email == undefined){
+                  if(this.universities[i].emails == undefined){
                             this.showReadonly = false;
                         }else{
-                            this.emailVar = this.universities[i].email
+                            // this.afDB.database.ref('universities/' + this.universities[i].name + '/emails').once('value').then((snapshot)=>{
+                            //     let emailsUni = snapshot.val();
+                            //     console.log(emailsUni);
+                            //     this.arrayEmails = emailsUni;     
+                            // })
+                            
+                            this.SignUpService.getEmails(this.universities[i].name).subscribe(emails =>{
+                                this.arrayEmails = emails;
+                                console.log(this.arrayEmails);
+                            })
                         }
                     }
                 }
@@ -90,6 +105,15 @@ export class SignupPage {
         
     }
 
+    onChangeEmail(){
+        var count = this.arrayEmails.length;
+        for(var i=0; i<count; i++){
+            if(this.arrayEmails[i].email == this.companyVar){
+                this.company = this.arrayEmails[i].company;
+                console.log(this.company);
+            }
+        }
+    }
 
     scrolling(){
         this.content.scrollTo(30, 0);
@@ -97,7 +121,8 @@ export class SignupPage {
 
 
     login(){
-        this.navCtrl.push('LoginPage');
+        this.app.getRootNav().push('LoginPage');
+
     }
      
     verification(){
@@ -133,14 +158,27 @@ export class SignupPage {
           }
 
           // saving data in variable
-          this.user = {
-            name: userName,
-            lastname: userLastName,
-            email: userEmailComplete,
-            phone: '+57'+userPhone,
-            university: userUniversity,
-            createdBy: 'driver'
-        };
+          if(this.company !== undefined || this.company !== null){
+            this.user = {
+                name: userName,
+                lastname: userLastName,
+                email: userEmailComplete,
+                phone: '+57'+userPhone,
+                university: userUniversity,
+                createdBy: 'driver',
+                company: this.company
+            };
+          }else{
+            this.user = {
+                name: userName,
+                lastname: userLastName,
+                email: userEmailComplete,
+                phone: '+57'+userPhone,
+                university: userUniversity,
+                createdBy: 'driver',
+            };  
+          }
+          
 
 
         this.SignUpService.userUniversity = userUniversity;
@@ -180,7 +218,7 @@ export class SignupPage {
                                     {
                                         text: 'OK',
                                         handler: () => {
-                                            this.app.getRootNav().push('LoginPage');
+                                            this.app.getRootNav().push('CarRegistrationLoginPage');
                                         }
                                       }
                                 ]
@@ -237,14 +275,27 @@ export class SignupPage {
           }
 
           // saving data in variable
-          this.user = {
-            name: userName,
-            lastname: userLastName,
-            email: userEmail,
-            phone: '+57'+userPhone,
-            university: userUniversity,
-            createdBy: 'driver'
-        };
+
+          if(this.company !== undefined || this.company !== null){
+            this.user = {
+                name: userName,
+                lastname: userLastName,
+                email: userEmail,
+                phone: '+57'+userPhone,
+                university: userUniversity,
+                createdBy: 'driver',
+                company: this.company
+            };
+          }else{
+            this.user = {
+                name: userName,
+                lastname: userLastName,
+                email: userEmail,
+                phone: '+57'+userPhone,
+                university: userUniversity,
+                createdBy: 'driver',
+            };
+          }       
 
         this.SignUpService.userUniversity = userUniversity;
         
@@ -285,7 +336,7 @@ export class SignupPage {
                                 {
                                     text: 'OK',
                                     handler: () => {
-                                        this.app.getRootNav().push('LoginPage');
+                                        this.app.getRootNav().push('CarRegistrationLoginPage');
                                     }
                                   }
                             ]

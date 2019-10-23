@@ -21,6 +21,7 @@ import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 import { instancesService } from '../../services/instances.service';
 import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
  
 declare var google;
 @IonicPage()
@@ -86,7 +87,7 @@ export class FindridePage {
   keyTrip:any;
   onTrip:any;
   token:any;
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, private platform: Platform, private fcm: FCM ) {
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, private platform: Platform, private fcm: FCM, private firebase: Firebase ) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
@@ -118,13 +119,16 @@ export class FindridePage {
       if(readyToStart){
 
         this.platform.ready().then(()=>{
+
+
+          this.getToken();
  
-          this.token = this.fcm.getToken().then((token)=>{
-            console.log('this is the token ' + token);
-            this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
-              token: token
-            })
-          })
+          // this.token = this.fcm.getToken().then((token)=>{
+          //   console.log('this is the token ' + token);
+          //   this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+          //     token: token
+          //   })
+          // })
       
       })
 
@@ -166,7 +170,7 @@ export class FindridePage {
       setTimeout(() => {
         this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
           this.universityInfo = uni;
-          if(this.universityInfo.email == undefined){
+          if(this.universityInfo.emails == undefined){
             if(this.userInfo.documents){
               if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
                 let modal = this.modalCtrl.create('VerificationImagesPage');
@@ -250,6 +254,33 @@ export class FindridePage {
 
   this.loadMap();
 }
+
+
+
+async getToken() {
+
+  if (this.platform.is('android')) {
+    this.token = await this.firebase.getToken().then((token)=>{
+      console.log('this is the token ' + token);
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+        token: token
+      })
+    })
+  }
+
+  if (this.platform.is('ios')) {
+    this.token = await this.firebase.getToken().then((token)=>{
+      console.log('this is the token ' + token);
+      this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+        token: token
+      })
+    })
+    await this.firebase.grantPermission();
+  }
+
+}
+
+
 
 
  getTrip(){

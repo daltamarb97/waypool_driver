@@ -57,11 +57,11 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
-    "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
-    "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
+    "id": "cordova-plugin-firebase.FirebasePlugin",
+    "file": "plugins/cordova-plugin-firebase/www/firebase.js",
+    "pluginId": "cordova-plugin-firebase",
     "clobbers": [
-      "FCMPlugin"
+      "FirebasePlugin"
     ]
   },
   {
@@ -144,14 +144,14 @@ module.exports.metadata =
   "cordova-plugin-camera": "4.1.0",
   "cordova-plugin-device": "2.0.3",
   "cordova-plugin-email-composer": "0.9.2",
-  "cordova-plugin-fcm-with-dependecy-updated": "3.2.0",
+  "cordova-plugin-firebase": "2.0.5",
   "cordova-plugin-geolocation": "4.0.2",
   "cordova-plugin-ionic-keyboard": "2.2.0",
   "cordova-plugin-ionic-webview": "1.2.1",
   "cordova-plugin-splashscreen": "5.0.3",
   "cordova-plugin-statusbar": "2.4.3",
   "cordova-plugin-whitelist": "1.3.4",
-  "cordova-sqlite-storage": "3.3.0"
+  "cordova-sqlite-storage": "3.4.0"
 };
 // BOTTOM OF METADATA
 });

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController, App } from 'ionic-angular';
 import { FindridePage } from '../findride/findride';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 import { Subject } from 'rxjs';
-
 
 
 /**
@@ -23,7 +22,6 @@ import { Subject } from 'rxjs';
 })
 export class CarRegistrationLoginPage {
   //everything that has number 1 refers to license and number 2 refers to Id (also in HTML)
-
   driver;
   driverInfo;
   namePicture:any = "Licencia" ;
@@ -32,18 +30,20 @@ export class CarRegistrationLoginPage {
   img2 = "Cédula";
   
   des1 = "Sube una foto clara de tu";
-  picToView:string = "assets/imgs/v2.png";
-  picToViewLicense:string = "assets/imgs/v2.png";
-  picToViewId:string = "assets/imgs/v4.png";
+  picToView:string = "assets/imgs/v2.png";;
+  picToViewLicense:string= "assets/imgs/v2.png";
+  picToViewId:string ="assets/imgs/v4.png";
   data;
   accepted1:boolean;
   accepted2:boolean;
   showLicense:boolean = true;
-  showId:boolean = false;
+  showId:boolean = false ;
   cameraPicLicense:boolean = false;
   cameraPicId:boolean = false;
   unsubscribe = new Subject;
-
+  showContinue:boolean = false;
+  licenceWasUploaded:boolean = false;
+  idWasUploaded:boolean= false;
 
   options:CameraOptions = {
     quality: 100,
@@ -51,11 +51,32 @@ export class CarRegistrationLoginPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController, public app: App) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
     this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
       this.driverInfo = user
+      if(this.driverInfo.documents){
+        if(this.driverInfo.documents.license == true ){
+          this.picToViewLicense = "assets/imgs/v2.3.png";
+          this.picToView =  "assets/imgs/v2.3.png";
+        }else if(this.driverInfo.documents.id == true ){
+          this.picToViewId = "assets/imgs/_v4.3.png";
+        }else if(this.driverInfo.documents.license == false){
+          this.picToViewLicense = "assets/imgs/v2.2.png";
+          this.picToView =  "assets/imgs/v2.2.png";
+          this.showContinue = true;
+        }else if(this.driverInfo.documents.id == false ){
+          this.picToViewId = "assets/imgs/v4.2.png";
+          this.showContinue = true;
+        }else if(this.driverInfo.documents.license == undefined ){
+          this.picToViewLicense = "assets/imgs/v2.png";
+          this.picToView =  "assets/imgs/v2.png";
+        }else if(this.driverInfo.documents.id == undefined ){
+          this.picToViewId = "assets/imgs/v4.png";
+          
+        }
+      }
     })
 
     
@@ -66,24 +87,45 @@ export class CarRegistrationLoginPage {
   ionViewDidLeave(){
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
-  }
-  
-
-  
+	}
   usageCameraLicense(){
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
+
+      let loading = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: `
+          <div class="custom-spinner-container">
+            <div class="custom-spinner-box"></div>
+          </div>`
+          });
+      loading.present();
+
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        loading.dismiss();
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+        this.licenceWasUploaded = true;
+      }).catch((error)=>{
+        loading.dismiss();
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
+      
 
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
@@ -105,16 +147,38 @@ export class CarRegistrationLoginPage {
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
+
+      let loading = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: `
+          <div class="custom-spinner-container">
+            <div class="custom-spinner-box"></div>
+          </div>`
+          });
+      loading.present();
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
-      picturesDrivers.putString(base64Image, 'data_url');
-
+      picturesDrivers.putString(base64Image, 'data_url').then(()=>{
+        loading.dismiss();
+        const alert = this.alertCtrl.create({
+          title: '¡HECHO!',
+          subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+          buttons: ['OK']
+        });
+        alert.present();
+        this.idWasUploaded = true;
+      }).catch((error)=>{
+        loading.dismiss();
+        console.log(error);
       const alert = this.alertCtrl.create({
-        title: '¡HECHO!',
-        subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+        title: 'hubo un error',
+        subTitle: 'intenta subir el documento otra vez',
         buttons: ['OK']
       });
       alert.present();
+      })
+
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
       this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
@@ -135,18 +199,24 @@ export class CarRegistrationLoginPage {
   changeNamePicture1(){
 
   if(this.driverInfo.documents){
-    if(this.driverInfo.documents.license == undefined){
+    if(this.driverInfo.documents.license == undefined ){
       this.picToViewLicense = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+
+    
     }else if (this.driverInfo.documents.license == false){
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
+
     }else if(this.driverInfo.documents.license == true){
       this.picToViewLicense = "assets/imgs/v2.3.png";
       this.picToView = "assets/imgs/v2.3.png";
+
     }else{
       this.picToViewLicense = "assets/imgs/v2.png";
       this.picToView = "assets/imgs/v2.png";
+      this.showLicense = true;
+
     }
   }
   
@@ -162,15 +232,20 @@ export class CarRegistrationLoginPage {
     if(this.driverInfo.documents.id == undefined){
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+
     }else if(this.driverInfo.documents.id == false){
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
+
     }else if(this.driverInfo.documents.id == true){
       this.picToViewId = "assets/imgs/_v4.3.png";
       this.picToView = "assets/imgs/_v4.3.png";
+
     }else{
       this.picToViewId = "assets/imgs/v4.png";
       this.picToView = "assets/imgs/v4.png";
+
+      
     }
 
   }
@@ -183,10 +258,55 @@ export class CarRegistrationLoginPage {
  
   };
 
-  findRide(){
-    this.navCtrl.setRoot('TabsPage');
+  skip(){
+    this.app.getRootNav().push('SchedulePage');
   }
 
+  goSchedulePage(){
+    if(this.licenceWasUploaded === false){
+      const alert = this.alertCtrl.create({
+        title: 'Puedes continuar pero aún te falta subir una foto de tu licencia',
+        subTitle: 'Puedes subir esta foto en otro momento, pero tardará más tu aprobación de documentos',
+        buttons: [
+          {
+            text: 'Subir Licencia',
+            role: 'cancel'
+         },
+         {
+           text: 'Hacer en otro momento',
+           handler: ()=> {
+            alert.dismiss();
+            this.app.getRootNav().push('SchedulePage');
+
+           }
+         }
+      ]
+      });
+      alert.present();
+    }else if(this.idWasUploaded === false){
+      const alert = this.alertCtrl.create({
+        title: 'Puedes continuar pero aún te falta subir una foto de tu cédula',
+        subTitle: 'Puedes subir esta foto en otro momento, pero tardará más tu aprobación de documentos',
+        buttons: [
+          {
+            text: 'Subir Cédula',
+            role: 'cancel'
+         },
+         {
+           text: 'Hacer en otro momento',
+           handler: ()=> {
+            alert.dismiss();
+            this.app.getRootNav().push('SchedulePage');
+
+           }
+         }
+      ]
+      });
+      alert.present();
+    }else{
+      this.app.getRootNav().push('SchedulePage');
+    }
+  }
 
 
 }
