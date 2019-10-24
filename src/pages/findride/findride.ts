@@ -14,7 +14,6 @@ import { SignUpService } from '../../services/signup.service';
 import { geofireService } from '../../services/geofire.services';
 import * as GeoFire from 'geofire';
 import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
-import { ConfirmpricePage } from '../confirmprice/confirmprice';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
@@ -22,6 +21,7 @@ import { TripsService } from '../../services/trips.service';
 import { instancesService } from '../../services/instances.service';
 import { Firebase } from '@ionic-native/firebase';
 import { FCM } from '@ionic-native/fcm';
+import { LoginPage } from '../login/login';
  
 declare var google;
 @IonicPage()
@@ -44,7 +44,7 @@ export class FindridePage {
   GooglePlaces: any;
   geocoder: any
   autocompleteItems: any;
-  autocompleteItems2:any;
+  
   // waypoints variables
   directionsService: any = null;
   directionsDisplay: any = null;
@@ -87,16 +87,18 @@ export class FindridePage {
   keyTrip:any;
   onTrip:any;
   token:any;
+  isConected:boolean = false;
+  positionDest:any;
+  lat:any;
+  lng:any;
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
-    
+
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
     this.autocompleteMyPos = { input: '' };
-    this.autocompleteMyDest = { input: '' };
 
     this.autocompleteItems = [];
-    this.autocompleteItems2=[];
     
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer({
@@ -131,9 +133,16 @@ export class FindridePage {
 
         this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
           this.userInfo = user;
+          console.log(this.userInfo);
+          
+          let lat=this.userInfo.fixedLocation.coordinates.lat
+          console.log(this.lat);
+          
+          let lng=this.userInfo.fixedLocation.coordinates.lng
+          this.positionDest = {lat,lng};
+          console.log(this.positionDest);
         })
         //search keyTrip
-
 
         this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
         .subscribe(keyTrip=>{
@@ -221,8 +230,16 @@ export class FindridePage {
 
 
        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-         this.userInfo = user;
-       })  
+        this.userInfo = user;
+        console.log(this.userInfo);
+        
+        let lat=this.userInfo.fixedLocation.coordinates.lat
+        console.log(this.lat);
+        
+        let lng=this.userInfo.fixedLocation.coordinates.lng
+        this.positionDest = {lat,lng};
+        console.log(this.positionDest);
+      })
 
 
        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
@@ -252,7 +269,23 @@ export class FindridePage {
   this.loadMap();
 }
 
-
+conectDriver(){
+  if(this.isConected === true){
+    console.log("estoy true")
+    this.disable();
+    console.log(this.userInfo.fixedLocation.name);
+    let modal = this.modalCtrl.create('ConfirmpricePage');
+    modal.onDidDismiss(accepted => {
+      if(accepted){
+        // // this.navCtrl.push('ListridePage');
+        // this.app.getRootNav().push('ReservetripPage');
+      }
+    })
+ modal.present();
+  }else{
+   this.enable();
+  }
+}
  getTrip(){
 
     this.afDB.database.ref(this.SignUpService.userUniversity + '/trips/'+ this.user +'/'+ this.keyTrip)
@@ -293,65 +326,81 @@ export class FindridePage {
 
  
   loadMap(){
+setTimeout(() => {
+  // this gets current position and set the camera of the map and put a marker in your location
+  this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
- // this gets current position and set the camera of the map and put a marker in your location
-    this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
+    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    console.log(latLng);
 
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-      let mapOptions = {
-          center: latLng,
-          zoom: 17,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          zoomControl: false,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: false,
-            rotateControl: false,
-            fullscreenControl: false,
-            styles: [
-              {
-                featureType: 'poi',
-                elementType: 'labels.icon',
-                stylers: [
-                  {
-                    visibility: 'off'
-                  }
-                ]
-              }
-            ]
-        }
-    //creates the map and give options
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
-
-      this.markerGeolocation = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        position: latLng,
-        draggable:true,
-        icon: {         url: "assets/imgs/marker-origin-driver.png",
-        scaledSize: new google.maps.Size(90, 90)    
-
+    let mapOptions = {
+        center: latLng,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels.icon',
+              stylers: [
+                {
+                  visibility: 'off'
+                }
+              ]
+            }
+          ]
       }
-      });
-      this.markers.push(this.markerGeolocation);
-      //allow the marker to be draged and changed the position
-      this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
-      //to reverse-geocode position
-      this.geocodeLatLng(latLng,this.autocompleteMyPos)
- 
+  //creates the map and give options
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
       
-     
-      },(err) => {
-      console.log(err);    
-     });
+    this.markerGeolocation = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: latLng,
+      draggable:true,
+      icon: {         url: "assets/imgs/house.png",
+      scaledSize: new google.maps.Size(90, 90)    
 
+    }
+    });
+    this.markers.push(this.markerGeolocation);
+
+    //allow the marker to be draged and changed the position
+    this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos);
+    //to reverse-geocode position
+    this.geocodeLatLng(latLng,this.autocompleteMyPos);
+console.log(this.userInfo.fixedLocation.name);
+
+     this.markerDest = new google.maps.Marker({
+            position: this.positionDest,
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            draggable:true,
+               icon: {         url: "assets/imgs/university.png",
+            scaledSize: new google.maps.Size(90, 90)    
+             }})
+            
+
+             this.calculateRoute(latLng,this.positionDest);
+              this.directionsDisplay.setMap(this.map);
+   
+    },(err) => {
+    console.log(err);    
+   });
+}, 8000);
   }
   
    calculateRoute(positionOr,positionDest){
     //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
     //calculate route between markers
+    console.log("LO LOGREEEEEEEEEEEE");
+    
 
     this.bounds.extend(this.myLatLng);
 
@@ -361,7 +410,7 @@ export class FindridePage {
     
     this.directionsService.route({
      origin: positionOr,
-      destination: positionDest,
+      destination: this.positionDest,
       travelMode: google.maps.TravelMode.DRIVING,
       avoidTolls: true
     }, (response, status)=> {
@@ -392,26 +441,6 @@ updateSearchResultsMyPos(){
         this.zone.run(() => {
           predictions.forEach((prediction) => {
             this.autocompleteItems.push(prediction);
-          });
-        });
-      }
-  });
-}
-  ////autocomplete of my destination Searchbar
-  updateSearchResultsMyDest(){
-    if (this.autocompleteMyDest.input == '') {
-      this.autocompleteItems2 = [];
-      return;
-    }
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteMyDest.input, componentRestrictions: {country:'co'} },
-    (predictions, status) => {
-      this.autocompleteItems2 = [];
-      if(predictions){
-
-
-        this.zone.run(() => {
-          predictions.forEach((prediction) => {
-            this.autocompleteItems2.push(prediction);
           });
         });
       }
@@ -448,7 +477,8 @@ selectSearchResultMyPos(item){
       console.log(results[0].geometry.location)
       this.autocompleteMyPos.input=[item.description]
       this.autocompleteMyDest.input=''
-      this.directionsDisplay.setMap(null)
+      this.calculateRoute(results[0].geometry.location,this.positionDest);
+      // this.directionsDisplay.setMap(null)
     }
   })
   
@@ -457,47 +487,29 @@ selectSearchResultMyPos(item){
 
   ////select result of my destination searchbar
 
-selectSearchResultMyDest(item){
-  this.autocompleteItems2=[];
-  if(this.markerDest!==undefined){
-    this.markerDest.setMap(null)
-  }
-  this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
-    if(status === 'OK' && results[0]){
+showMyDest(item){
 
-      // let position = {
-      //   latitude: results[0].geometry.location.lat,
-      //   longitude: results[0].geometry.location.lng
-      // };
-        let position = new google.maps.LatLng( results[0].geometry.location.lat,
-         results[0].geometry.location.lng)
-          console.log(position)
-       this.markerDest = new google.maps.Marker({
-        position: results[0].geometry.location,
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        draggable:true,
-           icon: {         url: "assets/imgs/marker-destination2.png",
-        scaledSize: new google.maps.Size(90, 90)    
+  // this.geocoder.geocode({'placeId': item}, (results, status) => {
+  //   if(status === 'OK' && results[0]){
 
-      }
-      });
-      console.log(position)
-      this.map.fitBounds(this.bounds);     
-      this.markers.push(this.markerDest);
-      this.map.setCenter(results[0].geometry.location);
-      console.log(results[0].geometry.location)
-      this.autocompleteMyDest.input=[item.description]
-      this.dragMarkerDest(this.markerDest,this.autocompleteMyDest)
-      this.directionsDisplay.setMap(this.map);
-      this.myLatLngDest= results[0].geometry.location;
-      this.calculateRoute(this.markerGeolocation.position,results[0].geometry.location);
-     
-     
-    }
-  })
-  
-}
+  //     // let position = {
+  //     //   latitude: results[0].geometry.location.lat,
+  //     //   longitude: results[0].geometry.location.lng
+  //     // };
+  //       let position = new google.maps.LatLng( results[0].geometry.location.lat,
+  //        results[0].geometry.location.lng)
+  //         console.log(position)
+  //      this.markerDest = new google.maps.Marker({
+  //       position: results[0].geometry.location,
+  //       map: this.map,
+  //       animation: google.maps.Animation.DROP,
+  //       draggable:true,
+  //          icon: {         url: "assets/imgs/marker-destination2.png",
+  //       scaledSize: new google.maps.Size(90, 90)    
+  //        }})
+  //     }
+  //   })
+  }  
 ////////Markers
 clearMarkers(){
     for (var i = 0; i < this.markers.length; i++) {
@@ -507,19 +519,7 @@ clearMarkers(){
     this.markers = [];
   }
   
- dragMarkerDest(marker,inputName){
-   //allow destination marker to be draged and calculate route with the new position
-  google.maps.event.addListener(marker, 'dragend',  (evt) => {
-    let lat = marker.getPosition().lat()
-    let lng = marker.getPosition().lng()
-    let latLng = {lat,lng}
-   
-    this.map.setCenter(latLng);
-    this.geocodeLatLng(latLng,inputName)
-    
-   this.calculateRoute(this.markerGeolocation.position,latLng);
-})
-}
+ 
 dragMarkerOr(marker,inputName){
      //allow origin marker to be draged and calculate route with the new position
 
@@ -527,17 +527,17 @@ dragMarkerOr(marker,inputName){
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
     let latLng = {lat,lng}
+   console.log(latLng);
    
-    this.map.setCenter(latLng);
     this.geocodeLatLng(latLng,inputName)
-    if(this.autocompleteMyDest.input == undefined || this.autocompleteMyDest.input==''){
-      console.log("funciona")
-    } else {
+    
+    this.calculateRoute(latLng,this.positionDest);
 
-      this.calculateRoute(latLng,this.markerDest.position);
-
-    }
+    
 })
+}
+centerMap(){
+
 }
 geocodeLatLng(latLng,inputName) {
 
@@ -572,50 +572,53 @@ geocodeLatLng(latLng,inputName) {
         if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
           try {
             this.orFirebase=[this.autocompleteMyPos.input]
-            this.desFirebase=[this.autocompleteMyDest.input]   
+            this.desFirebase=[this.userInfo.fixedLocation.name]   
+
+
             console.log(this.orFirebase);
-          if(this.autocompleteMyDest.input ==''|| this.autocompleteMyPos.input==''){
-                this.presentAlert('No tienes toda la informacion','Por favor asegura que tu origen y destino sean correctos','Ok');
+          if( this.autocompleteMyPos.input==''){
+                this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
                 this.clearMarkers();
                 
                 this.directionsDisplay.setDirections({routes: []});
                 this.loadMap();
                } else {
                  
-                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
-       
-                this.geoInfo1 = this.myLatLng;
-                console.log(this.geoInfo1);
+                
+              this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
+       // TODAVÍA NO SE DE AQUI QUE ES NECESARIO 
+              //   this.geoInfo1 = this.myLatLng;
+              //   console.log(this.geoInfo1);
                
 
 
       
-                this.geoInfo2 = {
-                  lat: this.myLatLngDest.lat(),
-                  lng: this.myLatLngDest.lng()
-                }
+              //   this.geoInfo2 = {
+              //     lat: this.myLatLngDest.lat(),
+              //     lng: this.myLatLngDest.lng()
+              //   }
                
 
-                console.log("AQUIIIIIIIIIIIIIII")
-                console.log(this.geoInfo2.lat);
-                //turn on geoquery university to determine wether the user is in university
-                this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
-               //
-                this.confirmPrice(this.geoInfo1, this.geoInfo2);
+              //   console.log("AQUIIIIIIIIIIIIIII")
+              //   console.log(this.geoInfo2.lat);
+              //   //turn on geoquery university to determine wether the user is in university
+              //   this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+              //  //
+                // this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       
               }
             
              }
              
           catch(error) {
-            console.log(error);
-            if(this.geoInfo2.lat === null || this.geoInfo2.lat === undefined ){
-              //this is to tell the user to select a place before publishing a trip
-              this.presentAlert('Información Incompleta','no puedes publicar un viaje sin antes seleccionar un lugar de la lista.','Ok') 
-            }else {
-              this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
+            // console.log(error);
+            // if(this.geoInfo2.lat === null || this.geoInfo2.lat === undefined ){
+            //   //this is to tell the user to select a place before publishing a trip
+            //   this.presentAlert('Información Incompleta','no puedes publicar un viaje sin antes seleccionar un lugar de la lista.','Ok') 
+            // }else {
+            //   this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
 
-            }
+            // }
             }
       
             console.log(this.orFirebase);
@@ -678,11 +681,7 @@ geocodeLatLng(latLng,inputName) {
       alert.present();
     }
 
-    availableReserves(){
-      this.app.getRootNav().push('ReservetripPage');
-
-
-    }
+  
 
    
   
@@ -706,5 +705,19 @@ geocodeLatLng(latLng,inputName) {
          });
     toast.present();
   }
+  disable() {
+    const inputs: any = document.getElementById("input").getElementsByTagName("INPUT");
+    inputs[0].disabled=true;
+    // const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
+    // inputs2[0].disabled=true;
+        }
+        enable() {
+          const inputs: any = document.getElementById("input").getElementsByTagName("INPUT");
+          inputs[0].disabled=false;
+          // const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
+          // inputs2[0].disabled=false;
+          //     }
   }  
-  
+
+ 
+}

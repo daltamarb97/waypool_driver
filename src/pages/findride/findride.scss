@@ -1,5 +1,6 @@
 .ios{
     page-findride {
+      
       .search {
           border-radius: 10px;
           margin: 10px 0;
@@ -91,7 +92,16 @@
       display: flex;
       flex-direction:row; 
     }
+      ion-header[transparent] .toolbar-background { background: transparent;}
+
         }
+        
+      .item-ios.item-block .item-inner {
+      
+        border-bottom: 0;
+    }
+         
+   
   }
   
   .md{
@@ -187,7 +197,14 @@
       display: flex;
       flex-direction:row; 
     }
+      ion-header[transparent] .toolbar-background { background: transparent;}
+
         }
+        
+      .item-md.item-block .item-inner {
+      
+        border-bottom: 0;
+    }
   }
   // default values not depending on the platform
   page-findride {
@@ -314,7 +331,16 @@
     display: flex;
     flex-direction:row; 
   }
+    .toolbar-background { background: transparent;}
+
       }
   
-  
+      .item-ios.item-block .item-inner {
+      
+        border-bottom: 0;
+    }
+    .item-md.item-block .item-inner {
+      
+      border-bottom: 0;
+  }
   

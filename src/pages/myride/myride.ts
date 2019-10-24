@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController, IonicPage, App, ModalController, ActionSheetController } from 'ionic-angular';
 
 
-import { TabsPage } from '../tabs/tabs';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendUsersService } from '../../services/sendUsers.service';

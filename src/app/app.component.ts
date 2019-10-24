@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { Platform, IonicPage, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, IonicPage, ToastController, AlertController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase';
 import { SignUpService } from '../services/signup.service';
 import { Geolocation } from '@ionic-native/geolocation/';
 import { FCM } from '@ionic-native/fcm';
+import { WalletPage } from '../pages/wallet/wallet';
 
 
 
@@ -13,14 +14,25 @@ import { FCM } from '@ionic-native/fcm';
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav:Nav;
   rootPage:any  = 'LoginPage';
   alertInternet:any;
   token:any;
-  
+  pages:any=[];
 
   constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController) {
     console.log('se cargo')
+    this.pages = [
+      {title:'Mi viajes',component:'ReservetripPage'},
+      {title:'Mi perfil',component:'ProfilePage'},
+      {title:'Mis documentos',component:'CarRegistrationPage'},
+      {title:'Mis vehículos',component:'ShowInfoCarPage'},
+      {title: 'Historial de viajes', component:'WalletPage'},
+      {title: 'Soporte', component:'HelpPage'},
+      {title: 'Terminos y Condiciones', component:'TermsPage'},
+    
 
+    ]
     statusBar.backgroundColorByHexString('#ffffff');     
     splashScreen.hide();
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then(()=>{
@@ -73,11 +85,14 @@ export class MyApp {
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
-          this.rootPage = 'TabsPage';
+          this.rootPage = 'FindridePage';
         }
       }else{
         this.rootPage = 'LoginPage';
       }
     })
+  }
+  openPage(page){
+    this.nav.push(page.component)
   }
 }

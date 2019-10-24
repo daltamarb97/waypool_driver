@@ -103,7 +103,7 @@ export class LoginPage {
                     }else{
                         setTimeout(()=>{
                             if(this.navCtrl.getActive().id === 'LoginPage'){
-                                this.navCtrl.setRoot('TabsPage');
+                                this.navCtrl.setRoot('FindridePage');
 
                             }else{
                                 console.log('actuo el abservable')

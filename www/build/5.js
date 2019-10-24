@@ -5,10 +5,10 @@ webpackJsonp([5],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationNumberPageModule", function() { return VerificationNumberPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationImagesPageModule", function() { return VerificationImagesPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(810);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_images__ = __webpack_require__(810);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,26 +18,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var VerificationNumberPageModule = /** @class */ (function () {
-    function VerificationNumberPageModule() {
+var VerificationImagesPageModule = /** @class */ (function () {
+    function VerificationImagesPageModule() {
     }
-    VerificationNumberPageModule = __decorate([
+    VerificationImagesPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */],
+                __WEBPACK_IMPORTED_MODULE_2__verification_images__["a" /* VerificationImagesPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__verification_images__["a" /* VerificationImagesPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__verification_number__["a" /* VerificationNumberPage */]
+                __WEBPACK_IMPORTED_MODULE_2__verification_images__["a" /* VerificationImagesPage */]
             ]
         })
-    ], VerificationNumberPageModule);
-    return VerificationNumberPageModule;
+    ], VerificationImagesPageModule);
+    return VerificationImagesPageModule;
 }());
 
-//# sourceMappingURL=verification-number.module.js.map
+//# sourceMappingURL=verification-images.module.js.map
 
 /***/ }),
 
@@ -45,13 +45,15 @@ var VerificationNumberPageModule = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationNumberPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationImagesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -66,53 +68,195 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var VerificationNumberPage = /** @class */ (function () {
-    function VerificationNumberPage(navCtrl, navParams, modalCtrl, authenticationService, alertCtrl, AngularFireAuth, signUpService, app) {
+
+var VerificationImagesPage = /** @class */ (function () {
+    function VerificationImagesPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth, alertCtrl, SignUpService) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.modalCtrl = modalCtrl;
-        this.authenticationService = authenticationService;
+        this.viewCtrl = viewCtrl;
+        this.camera = camera;
+        this.AngularFireauth = AngularFireauth;
         this.alertCtrl = alertCtrl;
-        this.AngularFireAuth = AngularFireAuth;
-        this.signUpService = signUpService;
-        this.app = app;
-        this.userId = this.navParams.get('userId');
-    }
-    VerificationNumberPage.prototype.code = function () {
-        var _this = this;
-        this.authenticationService.deleteResendCode(this.signUpService.userUniversity, this.userId);
-        this.authenticationService.sendVerificationCodeToFirebase(this.signUpService.userUniversity, this.userId, this.confText);
-        this.signUpService.getMyInfo(this.signUpService.userUniversity, this.userId).subscribe(function (driver) {
-            _this.driverInfo = driver;
-            if (_this.driverInfo.verificationCodeApproval === true) {
-                _this.app.getRootNav().push('LoginPage');
-                _this.authenticationService.deleteVerificationCode(_this.signUpService.userUniversity, _this.userId);
-            }
-            else if (_this.driverInfo.verificationCodeApproval === false) {
-                _this.authenticationService.deleteVerificationCode(_this.signUpService.userUniversity, _this.userId);
-                var alert_1 = _this.alertCtrl.create({
-                    title: 'Código Errado',
-                    subTitle: 'el código de verificacón está errado',
-                    buttons: ['OK']
-                });
-                alert_1.present();
+        this.SignUpService = SignUpService;
+        this.namePicture = "Cédula";
+        this.description = "Sube una foto clara de tu";
+        this.img1 = "Carné de la U";
+        this.img2 = "Cédula";
+        this.des1 = "Sube una foto clara de tu";
+        this.picToView = "assets/imgs/v2.png";
+        this.picToViewCarne = "assets/imgs/v2.png";
+        this.picToViewId = "assets/imgs/v4.png";
+        this.showCarne = true;
+        this.showId = false;
+        this.cameraPicCarne = false;
+        this.cameraPicId = false;
+        this.options = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+        };
+        this.driver = this.AngularFireauth.auth.currentUser.uid;
+        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(function (user) {
+            _this.driverInfo = user;
+            if (_this.driverInfo.documents) {
+                if (_this.driverInfo.documents.carne == true) {
+                    _this.picToViewCarne = "assets/imgs/v2.3.png";
+                    _this.picToView = "assets/imgs/v2.3.png";
+                    _this.showCarne = false;
+                }
+                else if (_this.driverInfo.documents.id == true) {
+                    _this.picToViewId = "assets/imgs/_v4.3.png";
+                    _this.showId = false;
+                }
+                else if (_this.driverInfo.documents.carne == false) {
+                    _this.picToViewCarne = "assets/imgs/v2.2.png";
+                    _this.picToView = "assets/imgs/v2.2.png";
+                    _this.showCarne = false;
+                }
+                else if (_this.driverInfo.documents.id == false) {
+                    _this.picToViewId = "assets/imgs/v4.2.png";
+                    _this.showId = false;
+                }
+                else if (_this.driverInfo.documents.carne == undefined) {
+                    _this.picToViewCarne = "assets/imgs/v2.png";
+                    _this.picToView = "assets/imgs/v2.png";
+                }
+                else if (_this.driverInfo.documents.id == undefined) {
+                    _this.picToViewId = "assets/imgs/v4.png";
+                }
             }
         });
+    }
+    ;
+    VerificationImagesPage.prototype.skipVerification = function () {
+        this.viewCtrl.dismiss();
     };
-    VerificationNumberPage.prototype.resendCode = function () {
-        this.authenticationService.deleteverificationCodeApproval(this.signUpService.userUniversity, this.userId);
-        this.authenticationService.resendVerificationCode(this.signUpService.userUniversity, this.userId);
+    VerificationImagesPage.prototype.usageCameraCarne = function () {
+        var _this = this;
+        this.camera.getPicture(this.options).then(function (imageData) {
+            // imageData is either a base64 encoded string or a file URI
+            // If it's base64 (DATA_URL):
+            var base64Image = 'data:image/jpeg;base64,' + imageData;
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/verificationDocuments/' + _this.driver + '/' + _this.data);
+            picturesDrivers.putString(base64Image, 'data_url');
+            var alert = _this.alertCtrl.create({
+                title: '¡HECHO!',
+                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+                buttons: ['OK']
+            });
+            alert.present();
+            _this.picToViewCarne = "assets/imgs/v2.2.png";
+            _this.picToView = "assets/imgs/v2.2.png";
+            _this.SignUpService.pushDocsCarne(_this.SignUpService.userUniversity, _this.driver);
+        }, function (err) {
+            console.log(err);
+            var alert = _this.alertCtrl.create({
+                title: 'hubo un error',
+                subTitle: 'intenta subir el documento otra vez',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
     };
-    VerificationNumberPage = __decorate([
+    VerificationImagesPage.prototype.usageCameraId = function () {
+        var _this = this;
+        this.camera.getPicture(this.options).then(function (imageData) {
+            // imageData is either a base64 encoded string or a file URI
+            // If it's base64 (DATA_URL):
+            var base64Image = 'data:image/jpeg;base64,' + imageData;
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/verificationDocuments/' + _this.driver + '/' + _this.data);
+            picturesDrivers.putString(base64Image, 'data_url');
+            var alert = _this.alertCtrl.create({
+                title: '¡HECHO!',
+                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
+                buttons: ['OK']
+            });
+            alert.present();
+            _this.picToViewId = "assets/imgs/v4.2.png";
+            _this.picToView = "assets/imgs/v4.2.png";
+            _this.SignUpService.pushDocsId(_this.SignUpService.userUniversity, _this.driver);
+        }, function (err) {
+            console.log(err);
+            var alert = _this.alertCtrl.create({
+                title: 'hubo un error',
+                subTitle: 'intenta subir el documento otra vez',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
+    };
+    VerificationImagesPage.prototype.changeNamePicture1 = function () {
+        if (this.driverInfo.documents) {
+            if (this.driverInfo.documents.carne == undefined) {
+                this.picToViewCarne = "assets/imgs/v2.png";
+                this.picToView = "assets/imgs/v2.png";
+                this.showCarne = true;
+            }
+            else if (this.driverInfo.documents.carne == false) {
+                this.picToViewCarne = "assets/imgs/v2.2.png";
+                this.picToView = "assets/imgs/v2.2.png";
+                this.showCarne = false;
+            }
+            else if (this.driverInfo.documents.carne == true) {
+                this.picToViewCarne = "assets/imgs/v2.3.png";
+                this.picToView = "assets/imgs/v2.3.png";
+                this.showCarne = false;
+            }
+            else {
+                this.picToViewCarne = "assets/imgs/v2.png";
+                this.picToView = "assets/imgs/v2.png";
+                this.showCarne = true;
+            }
+        }
+        this.namePicture = this.img1;
+        this.description = this.des1;
+        this.data = "carné";
+        // this.showCarne = true;
+        this.showId = false;
+    };
+    ;
+    VerificationImagesPage.prototype.changeNamePicture2 = function () {
+        if (this.driverInfo.documents) {
+            if (this.driverInfo.documents.id == undefined) {
+                this.picToViewId = "assets/imgs/v4.png";
+                this.picToView = "assets/imgs/v4.png";
+                this.showId = true;
+            }
+            else if (this.driverInfo.documents.id == false) {
+                this.picToViewId = "assets/imgs/v4.2.png";
+                this.picToView = "assets/imgs/v4.2.png";
+                this.showId = false;
+            }
+            else if (this.driverInfo.documents.id == true) {
+                this.picToViewId = "assets/imgs/_v4.3.png";
+                this.picToView = "assets/imgs/_v4.3.png";
+                this.showId = false;
+            }
+            else {
+                this.picToViewId = "assets/imgs/v4.png";
+                this.picToView = "assets/imgs/v4.png";
+                this.showId = true;
+            }
+        }
+        this.namePicture = this.img2;
+        this.description = this.des1;
+        this.data = "cédula";
+        // this.showId = true;
+        this.showCarne = false;
+    };
+    ;
+    VerificationImagesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-verification-number',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/'<ion-header class="transparent">\n  <ion-navbar>\n      <ion-title><span class="text-white">verification</span></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-background-img">\n  <div class="logo">\n      <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n  </div>\n  <div class="bg-white login">\n      <div class="">\n          <p padding text-center>Ingresa el código de confirmación<br>enviado a tu SMS!</p>\n          <br>\n          <ion-list class="form" text-center>\n              <ion-item>\n                  <ion-input type="text" [(ngModel)]=\'confText\' text-right></ion-input>\n              </ion-item>\n          </ion-list>\n          <button ion-button full class="bg-theme text-white btn rounded" (click)="code()">Next</button>\n          <br>\n          <p padding text-center class="resendingButton" (click)= "resendCode()">Reenviar código de verificación</p>      \n        </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/verification-number/verification-number.html"*/,
+            selector: 'page-verification-images',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\verification-images\verification-images.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar >\n\n        <ion-title>VERIFÍCATE \n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding-right padding-left>\n\n    <p text-center padding-top margin-top>{{description}}</p>\n\n    <h2 text-center>{{namePicture}}</h2>\n\n\n\n    <ion-row>\n\n        <ion-col col-4 text-center>\n\n            <img  [src]="picToViewCarne" (click)="changeNamePicture1()">\n\n        </ion-col>\n\n        <ion-col col-4 text-center>\n\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <div text-center class="verifiy">\n\n        <img [src]="picToView">\n\n    </div>\n\n    <ion-row>\n\n        <ion-col>\n\n            <p padding-top class="btn-box" *ngIf = \'showCarne\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraCarne()">Subir Foto</button></p>\n\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col>\n\n            <p padding-top class="skipText"  (click)="skipVerification()"> No me quiero verificar ahora </p>\n\n        </ion-col>\n\n    </ion-row>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\verification-images\verification-images.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
-    ], VerificationNumberPage);
-    return VerificationNumberPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
+    ], VerificationImagesPage);
+    return VerificationImagesPage;
 }());
 
-//# sourceMappingURL=verification-number.js.map
+//# sourceMappingURL=verification-images.js.map
 
 /***/ })
 

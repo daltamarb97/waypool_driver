@@ -14,7 +14,10 @@
     </div>
     <img *ngIf="noReserve" src="assets/imgs/noreserve.png">
 
-    <ion-card  *ngFor = "let trip of tripsReserves">
+    <ion-card *ngFor = "let trip of tripsReserves" >
+        <ng-container *ngIf="trip.pendingUsers === 0">
+            <h2>PRUEBA FUNCIONA</h2>
+        </ng-container>
         <ng-container *ngIf="trip.isLate; else noLateBlock">
             <ion-item>
                 <ion-avatar item-start>

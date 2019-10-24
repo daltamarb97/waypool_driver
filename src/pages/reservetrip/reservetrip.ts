@@ -63,7 +63,8 @@ export class ReservetripPage{
       console.log(tripsReserves);
       if(this.tripsReserves.length === 0){
         //there are no reserves to show
-        this.presentLoadingCustom();   
+        this.presentLoadingCustom();
+        // TO-DO: CAMBIAR LA FRASE QUE DIGA "NADIE SE HA UNIDO TODAVÍA A TU VIAJE"
       }else{
         //there are reserves
           this.noReserve = false;
@@ -241,9 +242,9 @@ export class ReservetripPage{
 }
 
   seePassengers(KeyTrip){    
-        
-    let modal = this.modalCtrl.create('ConfirmreservationPage',{reserveKey:KeyTrip});
-    modal.present();
+        this.navCtrl.push('DetailsReservePage',{reserveKey:KeyTrip});
+    // let modal = this.modalCtrl.create('ConfirmreservationPage',{reserveKey:KeyTrip});
+    // modal.present();
     // this.usersFindingTrip.pop();
     
     // this.subscribe.unsubscribe();
@@ -272,7 +273,7 @@ export class ReservetripPage{
   
     loading.onDidDismiss(() => {
       this.noReserve = true;
-  
+      
     });
   
     loading.present();

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { TabsPage } from '../pages/tabs/tabs';
+
 import { MyridePage } from '../pages/myride/myride';
 import { FindridePage } from '../pages/findride/findride';
 import { WalletPage } from '../pages/wallet/wallet';
@@ -34,17 +34,13 @@ import { instancesService } from '../services/instances.service';
 
  
 import { CallNumber } from '@ionic-native/call-number';
-import { ConfirmpricePage } from '../pages/confirmprice/confirmprice';
 import { priceService } from '../services/price.service';
-import { PickupPage } from '../pages/pickup/pickup';
-import { RatetripPage } from '../pages/ratetrip/ratetrip';
+
 // import { ConfirmdirectionPage } from '../pages/confirmdirection/confirmdirection';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { ShowInfoCarPage } from '../pages/showinfocar/showinfocar';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
-import { SupportPage } from '../pages/support/support';
 import { sendFeedbackService } from '../services/sendFeedback.service';
 import { ChatsService } from '../services/chat.service';
 import { TripsService } from '../services/trips.service';
@@ -62,6 +58,13 @@ export const firebaseConfig = {
     projectId: "waypool-511be",
     storageBucket: "waypool-511be.appspot.com",
     messagingSenderId: "904521954579"
+  // apiKey: "AIzaSyCvN6NNgoWCbOOUxBP9H23rbb7QSnBCf60",
+  //   authDomain: "fixingdatabase.firebaseapp.com",
+  //   databaseURL: "https://fixingdatabase.firebaseio.com",
+  //   projectId: "fixingdatabase",
+  //   storageBucket: "fixingdatabase.appspot.com",
+  //   messagingSenderId: "1090675636677",
+  //   appId: "1:1090675636677:web:672dbea79f33a407"
   };
 
 

@@ -1,0 +1,45 @@
+<ion-content>
+      <img src="assets/imgs/compaes.png" width="100%" style="display:inline-block" height="150px"/>
+
+         <ion-card *ngFor = "let passenger of passengers">
+               <ion-item>
+                   <ion-avatar item-start>
+                       <img src="assets/imgs/userPicture.png">
+                   </ion-avatar>
+                   <div class="name">
+                       <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.
+                         <ion-icon *ngIf='user.verifiedPerson' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>
+         
+                       </h2>
+                       <p>{{user.about}}</p>
+                   </div>
+                   <div class="more">
+                           <ion-icon name="md-more" (click)="presentActionSheet(user.userId,user.name)"></ion-icon>
+         
+                   </div>
+               </ion-item>
+               <ion-card-content>
+                   <div class="ride-detail">
+                       <p><small></small>
+                           <span class="icon-location bg-theme"></span>{{user.origin}}</p>
+                       <p><small></small>
+                           <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
+                   </div>
+                   <ion-row>
+                         
+                               <ion-col class="detail-text">
+                                       <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
+           
+                                   </ion-col>
+                       <ion-col col-5>
+                           <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Recoger/Dejar</button>
+                       </ion-col>
+                   </ion-row>
+               </ion-card-content>         
+         
+               
+           </ion-card>
+         
+ </ion-content>
+
+ 
