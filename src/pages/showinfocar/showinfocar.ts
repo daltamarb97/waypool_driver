@@ -22,7 +22,7 @@ unsubscribe = new Subject;
 
   constructor( public modalCtrl: ModalController,public alertCtrl:AlertController,public SignupService:SignUpService,public navParams: NavParams,public viewCtrl: ViewController,public navCtrl: NavController,public toastCtrl: ToastController,  private AngularFireAuth: AngularFireAuth,private afDB: AngularFireDatabase, public SignUpService: SignUpService) {
     this.user = this.navParams.get('user')
-    this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+    this.SignUpService.getCar(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
     .subscribe( car => {
       this.carList = car;
       console.log(this.carList)
@@ -41,7 +41,7 @@ unsubscribe = new Subject;
       });
       alert.present();
     }else{
-      this.SignUpService.addCar(this.SignupService.userUniversity, this.userUid,this.carModel,this.plateNumber,this.color)
+      this.SignUpService.addCar(this.SignupService.userPlace, this.userUid,this.carModel,this.plateNumber,this.color)
 
     }
   this.carModel=null; 
@@ -51,7 +51,7 @@ unsubscribe = new Subject;
   }
  deleteCar(carKey){
    console.log(carKey)
-  this.SignUpService.deleteCar(this.SignupService.userUniversity, this.userUid,carKey)    
+  this.SignUpService.deleteCar(this.SignupService.userPlace, this.userUid,carKey)    
 }
   dismiss() {
     this.viewCtrl.dismiss();

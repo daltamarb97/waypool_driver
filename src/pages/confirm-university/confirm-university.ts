@@ -18,7 +18,7 @@ export class ConfirmUniversityPage {
   user:any;
   showButton:boolean = false;
   constructor(private signUpService: SignUpService, public viewCtrl: ViewController, private angularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private afDB: AngularFireDatabase) {
-    this.signUpService.getUniversities().subscribe(universities => {
+    this.signUpService.getAllPlaces().subscribe(universities => {
       this.universities = universities;
       console.log(this.universities);
     })
@@ -29,10 +29,10 @@ export class ConfirmUniversityPage {
 
   onChange(){
     this.showButton = false;
-    this.signUpService.userUniversity = this.universityChosen;
+    this.signUpService.userPlace = this.universityChosen;
 
     setTimeout(() => {
-      this.afDB.database.ref(this.signUpService.userUniversity + '/drivers/'+ this.userId)
+      this.afDB.database.ref(this.signUpService.userPlace + '/drivers/'+ this.userId)
       .once('value')
       .then((snap)=> {
         let user = snap.val();

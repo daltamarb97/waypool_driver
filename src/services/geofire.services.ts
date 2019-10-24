@@ -14,7 +14,7 @@ dbRef:any;
 geoFire:any;
 geoquery1:any;
 geoquery2:any;
-geoqueryU:any;
+geoqueryP:any;
 
 driverUid:any;
 driver:any;
@@ -88,8 +88,8 @@ constructor(public afDB: AngularFireDatabase, private AngularFireAuth: AngularFi
 ///////////
 
 
-setGeofireOrNEWTEST(university, key, lat, lng){
-  this.dbRef = this.afDB.database.ref(university + '/geofireOr/' );
+setGeofireOrNEWTEST(Place, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(Place + '/geofireOr/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -101,8 +101,8 @@ setGeofireOrNEWTEST(university, key, lat, lng){
    
 }
 
-setGeofireDestNEWTEST(university, key, lat, lng){
-  this.dbRef = this.afDB.database.ref(university + '/geofireDest/' );
+setGeofireDestNEWTEST(Place, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(Place + '/geofireDest/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -115,8 +115,8 @@ setGeofireDestNEWTEST(university, key, lat, lng){
 }
 
 
-setGeofireOrOnTrip(university, key, lat, lng){
-  this.dbRef = this.afDB.database.ref(university + '/geofireOrTrip/' );
+setGeofireOrOnTrip(Place, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(Place + '/geofireOrTrip/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -128,8 +128,8 @@ setGeofireOrOnTrip(university, key, lat, lng){
    
 }
 
-setGeofireDestOnTrip(university, key, lat, lng){
-  this.dbRef = this.afDB.database.ref(university + '/geofireDestTrip/' );
+setGeofireDestOnTrip(Place, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(Place + '/geofireDestTrip/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
           this.geoFire.set(key, [lat, lng]).then(function(){
@@ -208,8 +208,8 @@ public getUsersGeofire(){
   return this.afDB.list('/drivers/'+ this.driverUid + '/trips/usersListRide/').valueChanges();
 }
 
-public deleteUserListRide(university, driverId, userId){
-  this.afDB.database.ref(university + '/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
+public deleteUserListRide(Place, driverId, userId){
+  this.afDB.database.ref(Place + '/drivers/' + driverId + '/trips/usersListRide/' + userId).remove();
 }
 
 public deleteUserListRideTotal(driverId){
@@ -222,8 +222,8 @@ public onTripUserListRide(driverId, userId){
   });
 }
 
-deleteUserGeofireDest(university, keyTrip){
-  this.afDB.database.ref(university + '/geofireDest/' + keyTrip).remove().then(()=>{
+deleteUserGeofireDest(Place, keyTrip){
+  this.afDB.database.ref(Place + '/geofireDest/' + keyTrip).remove().then(()=>{
       console.log("GeofireDest succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -232,8 +232,8 @@ deleteUserGeofireDest(university, keyTrip){
   
 }
 
-deleteUserGeofireOr(university, keyTrip){
-  this.afDB.database.ref(university + '/geofireOr/' + keyTrip).remove().then(()=>{
+deleteUserGeofireOr(Place, keyTrip){
+  this.afDB.database.ref(Place + '/geofireOr/' + keyTrip).remove().then(()=>{
       console.log("GeofireOr succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -243,8 +243,8 @@ deleteUserGeofireOr(university, keyTrip){
 }
 
 
-deleteUserGeofireOrTrip(university, keyTrip){
-  this.afDB.database.ref(university + '/geofireOrTrip/' +  keyTrip).remove().then(()=>{
+deleteUserGeofireOrTrip(Place, keyTrip){
+  this.afDB.database.ref(Place + '/geofireOrTrip/' +  keyTrip).remove().then(()=>{
       console.log("geofireOrTrip succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -253,8 +253,8 @@ deleteUserGeofireOrTrip(university, keyTrip){
 
 
 
-deleteUserGeofireDestTrip(university, keyTrip){
-  this.afDB.database.ref(university + '/geofireDestTrip/' + keyTrip).remove().then(()=>{
+deleteUserGeofireDestTrip(Place, keyTrip){
+  this.afDB.database.ref(Place + '/geofireDestTrip/' + keyTrip).remove().then(()=>{
       console.log("geofireDestTrip succesfully removed");
   }).catch(error =>{
       console.log(error);
@@ -290,9 +290,9 @@ cancelGeoqueryOr(geofirename){
 }
 
 
-// set a new node on firebase which is the location of the university
-setLocationUniversity(university, key, lat, lng){
-  this.dbRef = this.afDB.database.ref(university + '/geofireUniversity/' );
+// set a new node on firebase which is the location of the Place
+setLocationPlace(place, key, lat, lng){
+  this.dbRef = this.afDB.database.ref(place + '/geofirePlace/' );
   this.geoFire = new GeoFire(this.dbRef); 
     this.geoFire.set(key, [lat, lng]).then(function(){
     console.log('location updated');
@@ -301,25 +301,25 @@ setLocationUniversity(university, key, lat, lng){
   });
 }
 
-// set geoquery that determines if the person is in university
-setGeofireUniversity(university, radius:number, lat, lng, driverId):void{ 
+// set geoquery that determines if the person is in place
+setGeofirePlace(place, radius:number, lat, lng, driverId):void{ 
   
-  this.dbRef = this.afDB.database.ref(university + '/geofireUniversity/' );
+  this.dbRef = this.afDB.database.ref(place + '/geofirePlace/' );
   this.geoFire = new GeoFire(this.dbRef); 
 
-  this.geoqueryU = this.geoFire.query({
+  this.geoqueryP = this.geoFire.query({
     center: [lat, lng],
     radius: radius
   })
 
-  this.keyEnteredUniversity(university, driverId);
+  this.keyEnteredPlace(place, driverId);
 
-console.log('geoquery university added');
+console.log('geoquery place added');
 }
 
-keyEnteredUniversity(university, driverId){
-  this.geoqueryU.on("key_entered", function(key){
-   this.afDB.database.ref(university + '/drivers/' + driverId ).update({
+keyEnteredPlace(place, driverId){
+  this.geoqueryP.on("key_entered", function(key){
+   this.afDB.database.ref(place + '/drivers/' + driverId ).update({
      geofireOrigin: true
    }).then(()=>{
      console.log('geofireOrigin = true');
@@ -329,9 +329,9 @@ keyEnteredUniversity(university, driverId){
 
 }
 
-cancelGeoqueryUniversity(){
-  if(this.geoqueryU){
-    this.geoqueryU.cancel()
+cancelGeoqueryPlace(){
+  if(this.geoqueryP){
+    this.geoqueryP.cancel()
     console.log('geoqueryU deleted');
 
   }else{
@@ -340,15 +340,15 @@ cancelGeoqueryUniversity(){
   
 }
 
-public cancelGeofireOrigin(university, driverId){
-  this.afDB.database.ref(university + '/drivers/' + driverId).update({
+public cancelGeofireOrigin(place, driverId){
+  this.afDB.database.ref(place + '/drivers/' + driverId).update({
     geofireOrigin: false
   }).then(()=>{
     console.log('geofireOrigin = false');
   })
 }
 
-public getLocationUniversity(university){
-   return this.afDB.object('/universities/'+ university).valueChanges();
+public getLocationPlace(place){
+   return this.afDB.object('/allPlaces/'+ place).valueChanges();
  }
 }

@@ -75,7 +75,7 @@ var ConfirmUniversityPage = /** @class */ (function () {
         this.afDB = afDB;
         this.universities = [];
         this.showButton = false;
-        this.signUpService.getUniversities().subscribe(function (universities) {
+        this.signUpService.getAllPlaces().subscribe(function (universities) {
             _this.universities = universities;
             console.log(_this.universities);
         });
@@ -84,9 +84,9 @@ var ConfirmUniversityPage = /** @class */ (function () {
     ConfirmUniversityPage.prototype.onChange = function () {
         var _this = this;
         this.showButton = false;
-        this.signUpService.userUniversity = this.universityChosen;
+        this.signUpService.userPlace = this.universityChosen;
         setTimeout(function () {
-            _this.afDB.database.ref(_this.signUpService.userUniversity + '/drivers/' + _this.userId)
+            _this.afDB.database.ref(_this.signUpService.userPlace + '/drivers/' + _this.userId)
                 .once('value')
                 .then(function (snap) {
                 var user = snap.val();

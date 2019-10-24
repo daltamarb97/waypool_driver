@@ -1,6 +1,6 @@
 webpackJsonp([13],{
 
-/***/ 649:
+/***/ 648:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RemoveSchedulePageModule", function() { return RemoveSchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(809);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(808);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var RemoveSchedulePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 809:
+/***/ 808:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var RemoveSchedulePage = /** @class */ (function () {
         this.viewCtrl.dismiss(this.accepted);
     };
     RemoveSchedulePage.prototype.remove = function () {
-        this.signUpService.removeSchedule(this.signUpService.userUniversity, this.userId, this.schedule.key);
+        this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
         this.dismiss();
     };
     RemoveSchedulePage = __decorate([

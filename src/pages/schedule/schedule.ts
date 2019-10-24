@@ -42,7 +42,7 @@ export class SchedulePage {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
 
-    this.signUpService.getSchedule(this.signUpService.userUniversity, this.userId).subscribe(hour => {
+    this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(hour => {
       this.schedules = hour;
       console.log(this.schedules);
       if(this.schedules.length !== 0){        
@@ -104,7 +104,7 @@ export class SchedulePage {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const pictureSchedule = storage().ref(this.signUpService.userUniversity + '/schedules/' + this.userId);
+      const pictureSchedule = storage().ref(this.signUpService.userPlace + '/schedules/' + this.userId);
 
 
       
@@ -157,7 +157,7 @@ export class SchedulePage {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const pictureSchedule = storage().ref(this.signUpService.userUniversity + '/schedules/' + this.userId);
+      const pictureSchedule = storage().ref(this.signUpService.userPlace + '/schedules/' + this.userId);
 
 
       

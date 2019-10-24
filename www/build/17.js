@@ -1,6 +1,6 @@
 webpackJsonp([17],{
 
-/***/ 645:
+/***/ 644:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MorePageModule", function() { return MorePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__more__ = __webpack_require__(804);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var MorePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 805:
+/***/ 804:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -82,7 +82,7 @@ var MorePage = /** @class */ (function () {
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
         this.user = {};
         this.verified = false;
-        this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).subscribe(function (user) {
+        this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).subscribe(function (user) {
             _this.user = user;
             console.log(_this.user);
             if (_this.user.verifiedPerson === true) {
@@ -106,7 +106,7 @@ var MorePage = /** @class */ (function () {
     MorePage.prototype.logout = function () {
         this.authenticationService.logOut();
         console.log(__WEBPACK_IMPORTED_MODULE_3_firebase__["auth"]().currentUser);
-        this.SignupService.userUniversity = undefined;
+        this.SignupService.userPlace = undefined;
         this.navCtrl.setRoot('LoginPage');
     };
     MorePage.prototype.docs = function () {

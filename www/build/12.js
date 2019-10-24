@@ -99,7 +99,7 @@ var SchedulePage = /** @class */ (function () {
             sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
         };
         this.userId = this.angularFireAuth.auth.currentUser.uid;
-        this.signUpService.getSchedule(this.signUpService.userUniversity, this.userId).subscribe(function (hour) {
+        this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(function (hour) {
             _this.schedules = hour;
             console.log(_this.schedules);
             if (_this.schedules.length !== 0) {
@@ -152,7 +152,7 @@ var SchedulePage = /** @class */ (function () {
             });
             loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userUniversity + '/schedules/' + _this.userId);
+            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userPlace + '/schedules/' + _this.userId);
             pictureSchedule.putString(base64Image, 'data_url').then(function () {
                 loading.dismiss();
                 var alert = _this.alertCtrl.create({
@@ -194,7 +194,7 @@ var SchedulePage = /** @class */ (function () {
             });
             loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userUniversity + '/schedules/' + _this.userId);
+            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userPlace + '/schedules/' + _this.userId);
             pictureSchedule.putString(base64Image, 'data_url').then(function () {
                 loading.dismiss();
                 var alert = _this.alertCtrl.create({

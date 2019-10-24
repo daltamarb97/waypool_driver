@@ -17354,17 +17354,17 @@ var ConfirmpricePage = /** @class */ (function () {
         this.geocoordinatesDest = {};
         this.geocoordinatesOr = {};
         //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
-        this.SignUpService.getCar(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
+        this.SignUpService.getCar(this.SignUpService.userPlace, this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (car) {
             //get cars registered
             _this.carModelList = car;
             console.log(_this.carModelList);
         });
-        this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe)
+        this.sendUsersService.getTripsOfReserves(this.SignUpService.userPlace, this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (reserves) {
             _this.reservesAlreadyCreated = reserves;
         });
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
             _this.driver = driver;
             _this.driverInfo.origin = _this.driver.trips.origin;
             _this.driverInfo.destination = _this.driver.trips.destination;
@@ -17378,7 +17378,7 @@ var ConfirmpricePage = /** @class */ (function () {
             _this.driverInfo.verifiedPerson = _this.driver.verifiedPerson;
             console.log('got info here');
         });
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.userDriverUid).takeUntil(this.unsubscribe).subscribe(function (driver) {
             _this.driver2 = driver;
             _this.driverInfoNote.origin = _this.driver2.trips.origin;
             _this.driverInfoNote.destination = _this.driver2.trips.destination;
@@ -17394,7 +17394,7 @@ var ConfirmpricePage = /** @class */ (function () {
         this.geocoder = new google.maps.Geocoder;
     }
     ConfirmpricePage.prototype.ionViewDidEnter = function () {
-        this.geofireService.cancelGeoqueryUniversity();
+        this.geofireService.cancelGeoqueryPlace();
     };
     ConfirmpricePage.prototype.setPriceDriver = function () {
         var _this = this;
@@ -17421,7 +17421,7 @@ var ConfirmpricePage = /** @class */ (function () {
                 }
                 else if (this.note == null || this.note == '') {
                     this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-                    this.PriceService.setPrice(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.car);
+                    this.PriceService.setPrice(this.SignUpService.userPlace, this.userDriverUid, this.precio, this.car);
                     this.accepted = true;
                     this.dismiss();
                     // this.goefireKey = Date.now();
@@ -17429,7 +17429,7 @@ var ConfirmpricePage = /** @class */ (function () {
                         this.typeOfReserve = 'origin';
                         this.note = 'No hay nota.';
                         // IMPORTANT: addService from sendCoordsService is no longer used because it was generating that the availableReserve in user had a deprecated keyTrip
-                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.userDriverUid).push({
                             driver: this.driverInfo,
                             car: this.car,
                             destination: this.driverInfo.destination,
@@ -17442,7 +17442,7 @@ var ConfirmpricePage = /** @class */ (function () {
                             _this.destination = _this.driverInfo.destination[0][0];
                             _this.origin = _this.driverInfo.origin[0][0];
                             var key = snap.key;
-                            _this.MetricsService.createdReserves(_this.SignUpService.userUniversity, _this.userDriverUid, key, _this.driverInfo, _this.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
+                            _this.MetricsService.createdReserves(_this.SignUpService.userPlace, _this.userDriverUid, key, _this.driverInfo, _this.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
                             // geocoding of addresses that came from findRide
                             _this.geocoder.geocode({ 'address': _this.origin }, function (results, status) {
                                 if (status === 'OK') {
@@ -17453,13 +17453,13 @@ var ConfirmpricePage = /** @class */ (function () {
                                 }
                                 // set geofirekey 
                                 // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey, this.driverInfo.userId, key)
-                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
+                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userPlace, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireOr/' + key).update({
                                     driverId: _this.driverInfo.userId
                                 });
                                 console.log('executed geofire Or');
                             });
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
                                 keyTrip: key
                             });
                         });
@@ -17467,7 +17467,7 @@ var ConfirmpricePage = /** @class */ (function () {
                     else {
                         this.typeOfReserve = 'destination';
                         this.note = 'No hay nota.';
-                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.userDriverUid).push({
                             driver: this.driverInfo,
                             car: this.car,
                             destination: this.driverInfo.destination,
@@ -17481,7 +17481,7 @@ var ConfirmpricePage = /** @class */ (function () {
                             _this.destination = _this.driverInfo.destination[0][0];
                             _this.origin = _this.driverInfo.origin[0][0];
                             var key = snap.key;
-                            _this.MetricsService.createdReserves(_this.SignUpService.userUniversity, _this.userDriverUid, key, _this.driverInfo, _this.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
+                            _this.MetricsService.createdReserves(_this.SignUpService.userPlace, _this.userDriverUid, key, _this.driverInfo, _this.car, _this.driverInfo.destination, _this.driverInfo.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
                             // geocoding of addresses that came from findRide
                             _this.geocoder.geocode({ 'address': _this.destination }, function (results, status) {
                                 if (status === 'OK') {
@@ -17492,13 +17492,13 @@ var ConfirmpricePage = /** @class */ (function () {
                                 }
                                 // set geofire key
                                 // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey, this.driverInfo.userId, key);
-                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
+                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userPlace, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireDest/' + key).update({
                                     driverId: _this.driverInfo.userId
                                 });
                                 console.log('executed geofire Dest');
                             });
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
                                 keyTrip: key
                             });
                         });
@@ -17506,7 +17506,7 @@ var ConfirmpricePage = /** @class */ (function () {
                 }
                 else {
                     this.hourToSend = this.nowHour.getHours() + ":" + this.nowHour.getMinutes();
-                    this.PriceService.setPriceAndNote(this.SignUpService.userUniversity, this.userDriverUid, this.precio, this.note, this.car);
+                    this.PriceService.setPriceAndNote(this.SignUpService.userPlace, this.userDriverUid, this.precio, this.note, this.car);
                     this.accepted = true;
                     this.dismiss();
                     // this.goefireKey = Date.now();
@@ -17514,7 +17514,7 @@ var ConfirmpricePage = /** @class */ (function () {
                     // add reserve and command to dismiss modal
                     if (this.driver.geofireOrigin === true) {
                         this.typeOfReserve = 'origin';
-                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.userDriverUid).push({
                             driver: this.driverInfoNote,
                             car: this.car,
                             destination: this.driverInfoNote.destination,
@@ -17528,7 +17528,7 @@ var ConfirmpricePage = /** @class */ (function () {
                             _this.destinationNote = _this.driverInfoNote.destination[0][0];
                             _this.originNote = _this.driverInfoNote.origin[0][0];
                             var key = snap.key;
-                            _this.MetricsService.createdReserves(_this.SignUpService.userUniversity, _this.userDriverUid, key, _this.driverInfoNote, _this.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
+                            _this.MetricsService.createdReserves(_this.SignUpService.userPlace, _this.userDriverUid, key, _this.driverInfoNote, _this.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve);
                             // geocoding of addresses that came from findRide
                             _this.geocoder.geocode({ 'address': _this.originNote }, function (results, status) {
                                 if (status === 'OK') {
@@ -17539,20 +17539,20 @@ var ConfirmpricePage = /** @class */ (function () {
                                 }
                                 // set geofire key 
                                 // this.geofireService.setGeofireOr(2, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng, this.goefireKey,this.driverInfoNote.userId, key)
-                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOr/' + key).update({
+                                _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userPlace, key, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireOr/' + key).update({
                                     driverId: _this.driverInfoNote.userId
                                 });
                                 console.log('executed geofire Or');
                             });
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
                                 keyTrip: key
                             });
                         });
                     }
                     else {
                         this.typeOfReserve = 'destination';
-                        this.afDB.database.ref(this.SignUpService.userUniversity + '/reserves/' + this.userDriverUid).push({
+                        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.userDriverUid).push({
                             driver: this.driverInfoNote,
                             car: this.car,
                             destination: this.driverInfoNote.destination,
@@ -17566,7 +17566,7 @@ var ConfirmpricePage = /** @class */ (function () {
                             _this.destinationNote = _this.driverInfoNote.destination[0][0];
                             _this.originNote = _this.driverInfoNote.origin[0][0];
                             var key = snap.key;
-                            _this.MetricsService.createdReserves(_this.SignUpService.userUniversity, _this.userDriverUid, key, _this.driverInfoNote, _this.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve); // geocoding of addresses that came from findRide
+                            _this.MetricsService.createdReserves(_this.SignUpService.userPlace, _this.userDriverUid, key, _this.driverInfoNote, _this.car, _this.driverInfoNote.destination, _this.driverInfoNote.origin, _this.note, _this.precio, _this.startHour, _this.typeOfReserve); // geocoding of addresses that came from findRide
                             _this.geocoder.geocode({ 'address': _this.destinationNote }, function (results, status) {
                                 if (status === 'OK') {
                                     _this.geocoordinatesDest = {
@@ -17576,13 +17576,13 @@ var ConfirmpricePage = /** @class */ (function () {
                                 }
                                 // this.geofireService.setGeofireDest(2, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng, this.goefireKey,this.driverInfoNote.userId, key)
                                 // set geofire key 
-                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userUniversity, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDest/' + key).update({
+                                _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userPlace, key, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireDest/' + key).update({
                                     driverId: _this.driverInfoNote.userId
                                 });
                                 console.log('executed geofire Dest');
                             });
-                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
                                 keyTrip: key
                             });
                         });
@@ -17608,7 +17608,7 @@ var ConfirmpricePage = /** @class */ (function () {
         // this.unsubscribe.unsubscribe();
     };
     ConfirmpricePage.prototype.ionViewDidLeave = function () {
-        this.geofireService.cancelGeofireOrigin(this.SignUpService.userUniversity, this.userDriverUid);
+        this.geofireService.cancelGeofireOrigin(this.SignUpService.userPlace, this.userDriverUid);
         this.unsubscribe.next();
         this.unsubscribe.complete();
     };

@@ -24,8 +24,8 @@
                                 <ion-input type="text"  text-right  formControlName="lastname" placeholder= "Tú apellido"></ion-input>
                             </ion-item>
                             <ion-item>
-                                <ion-label  text-right >selecciona tu universidad</ion-label>
-                                    <ion-select (ionChange)="onChange()" [(ngModel)]="universityVar" formControlName="university">
+                                <ion-label  text-right >selecciona tu universidad/centro empresarial</ion-label>
+                                    <ion-select (ionChange)="onChange()" [(ngModel)]="enterpriseVar" formControlName="enterprise">
                                         <ion-option *ngFor="let uni of universities">{{uni.name}}</ion-option>
                                     </ion-select>
                             </ion-item>

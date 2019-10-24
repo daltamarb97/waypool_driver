@@ -50,7 +50,7 @@ console.log(this.schedule);
   }
 
   remove(){
-    this.signUpService.removeSchedule(this.signUpService.userUniversity, this.userId, this.schedule.key);
+    this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
     this.dismiss();
   }
 

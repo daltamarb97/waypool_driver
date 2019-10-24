@@ -76,7 +76,7 @@ var ChatsPage = /** @class */ (function () {
         this.signUpService = signUpService;
         this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
         this.pickingUsers = [];
-        this.sendUsersService.getUsersOnTrip(this.signUpService.userUniversity, this.driverUid)
+        this.sendUsersService.getUsersOnTrip(this.signUpService.userPlace, this.driverUid)
             .subscribe(function (user) {
             _this.pickingUsers = user;
             console.log(_this.pickingUsers);

@@ -86,7 +86,7 @@ var ShowInfoCarPage = /** @class */ (function () {
         this.carList = [];
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_5_rxjs__["Subject"];
         this.user = this.navParams.get('user');
-        this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.SignUpService.getCar(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (car) {
             _this.carList = car;
             console.log(_this.carList);
@@ -106,7 +106,7 @@ var ShowInfoCarPage = /** @class */ (function () {
             alert_1.present();
         }
         else {
-            this.SignUpService.addCar(this.SignupService.userUniversity, this.userUid, this.carModel, this.plateNumber, this.color);
+            this.SignUpService.addCar(this.SignupService.userPlace, this.userUid, this.carModel, this.plateNumber, this.color);
         }
         this.carModel = null;
         this.plateNumber = null;
@@ -114,7 +114,7 @@ var ShowInfoCarPage = /** @class */ (function () {
     };
     ShowInfoCarPage.prototype.deleteCar = function (carKey) {
         console.log(carKey);
-        this.SignUpService.deleteCar(this.SignupService.userUniversity, this.userUid, carKey);
+        this.SignUpService.deleteCar(this.SignupService.userPlace, this.userUid, carKey);
     };
     ShowInfoCarPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();

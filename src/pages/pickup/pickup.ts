@@ -43,7 +43,7 @@ export class PickupPage {
     //we get the info of the users with navParams
     this.user= this.navParams.get('user');
     this.keyTrip= this.navParams.get('keyTrip'); 
-    this.TripsService.getSpecificUser(this.SignUpService.userUniversity, this.keyTrip,this.driverUid,this.user.userId).takeUntil(this.unsubscribe)
+    this.TripsService.getSpecificUser(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId).takeUntil(this.unsubscribe)
       .subscribe((user)=>{
         user
         if(user === undefined || user === null){
@@ -60,7 +60,7 @@ export class PickupPage {
     this.bounds = new google.maps.LatLngBounds();
     this.geocoder = new google.maps.Geocoder();
 
-    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.driverUid).takeUntil(this.unsubscribe)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userPlace, this.driverUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
@@ -265,8 +265,8 @@ export class PickupPage {
 
 
     PickUp(){
-      this.TripsService.pickUp(this.SignUpService.userUniversity, this.keyTrip,this.driverUid,this.user.userId,this.user);
-      this.TripsService.eliminatePendingUsers(this.SignUpService.userUniversity, this.keyTrip,this.driverUid,this.user.userId);
+      this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId,this.user);
+      this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId);
       // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
       // this.sendCoordsService.pickUpInstance(this.user.userId);

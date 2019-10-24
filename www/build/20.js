@@ -176,125 +176,64 @@ var FindridePage = /** @class */ (function () {
     } // END OF CONSTRUCTOR
     FindridePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        if (this.SignUpService.userUniversity === undefined) {
-            var modal = this.modalCtrl.create('ConfirmUniversityPage');
-            modal.onDidDismiss(function (readyToStart) {
-                if (readyToStart) {
-                    _this.platform.ready().then(function () {
-                        _this.getToken();
-                        // this.token = this.fcm.getToken().then((token)=>{
-                        //   console.log('this is the token ' + token);
-                        //   this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
-                        //     token: token
-                        //   })
-                        // })
-                    });
-                    _this.SignUpService.getMyInfo(_this.SignUpService.userUniversity, _this.user).subscribe(function (user) {
-                        _this.userInfo = user;
-                    });
-                    //search keyTrip
-                    _this.TripsService.getKeyTrip(_this.SignUpService.userUniversity, _this.user)
-                        .subscribe(function (keyTrip) {
-                        _this.keyTrip = keyTrip;
-                        console.log(_this.user);
-                        console.log(_this.keyTrip);
-                        //if key its deleted don't show VIAJE EN CURSO  
-                        if (_this.keyTrip === undefined || _this.keyTrip === null) {
-                            _this.onTrip = false;
-                            //  this.TripsService.eraseKeyTrip(this.user);
-                            //  this.TripsService.setOnTripFalse(this.user);
-                            console.log("llegue adonde era");
-                        }
-                        else {
-                            //confirm that trip exist and get it
-                            _this.getTrip();
-                        }
-                    });
-                    // set geofire key of university to avoid asking users to put where they are going
-                    _this.geofireService.getLocationUniversity(_this.SignUpService.userUniversity).subscribe(function (university) {
-                        _this.university = university;
-                        _this.locationUniversity = _this.university.location;
-                        _this.geofireService.setLocationUniversity(_this.SignUpService.userUniversity, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
-                    });
-                }
-                setTimeout(function () {
-                    _this.SignUpService.getInfoUniversity(_this.SignUpService.userUniversity).subscribe(function (uni) {
-                        _this.universityInfo = uni;
-                        if (_this.universityInfo.emails == undefined) {
-                            if (_this.userInfo.documents) {
-                                if (_this.userInfo.documents.carne === undefined || _this.userInfo.documents.id === undefined) {
-                                    var modal_1 = _this.modalCtrl.create('VerificationImagesPage');
-                                    modal_1.present();
-                                }
-                                else if (_this.userInfo.documents.carne === true && _this.userInfo.documents.id === true) {
-                                    _this.instancesService.isVerifiedPerson(_this.SignUpService.userUniversity, _this.user);
-                                }
-                            }
-                            else if (!_this.userInfo.documents) {
-                                console.log('no hay docs');
-                                var modal_2 = _this.modalCtrl.create('VerificationImagesPage');
-                                modal_2.present();
-                            }
-                        }
-                        else {
-                            _this.instancesService.isVerifiedPerson(_this.SignUpService.userUniversity, _this.user);
-                        }
-                    });
-                }, 1000);
-            });
-            modal.present();
-        }
-        else {
-            //search keyTrip
-            this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
-                .subscribe(function (keyTrip) {
-                _this.keyTrip = keyTrip;
-                console.log(_this.user);
-                console.log(_this.keyTrip);
-                //if key its deleted don't show VIAJE EN CURSO  
-                if (_this.keyTrip === undefined || _this.keyTrip === null) {
-                    _this.onTrip = false;
-                    //  this.TripsService.eraseKeyTrip(this.user);
-                    //  this.TripsService.setOnTripFalse(this.user);
-                    console.log("llegue adonde era");
-                }
-                else {
-                    //confirm that trip exist and get it
-                    _this.getTrip();
-                }
-            });
-            // set geofire key of university to avoid asking users to put where they are going
-            this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(function (university) {
-                _this.university = university;
-                _this.locationUniversity = _this.university.location;
-                _this.geofireService.setLocationUniversity(_this.SignUpService.userUniversity, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
-            });
-            this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(function (user) {
-                _this.userInfo = user;
-            });
-            this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(function (uni) {
-                _this.universityInfo = uni;
-                if (_this.universityInfo.email == undefined) {
-                    if (_this.userInfo.documents) {
-                        if (_this.userInfo.documents.carne === undefined || _this.userInfo.documents.id === undefined) {
-                            var modal = _this.modalCtrl.create('VerificationImagesPage');
-                            modal.present();
-                        }
-                        else if (_this.userInfo.documents.carne === true && _this.userInfo.documents.id === true) {
-                            _this.instancesService.isVerifiedPerson(_this.SignUpService.userUniversity, _this.user);
-                        }
-                    }
-                    else if (!_this.userInfo.documents) {
-                        console.log('no hay docs');
+        this.platform.ready().then(function () {
+            _this.getToken();
+            // this.token = this.fcm.getToken().then((token)=>{
+            //   console.log('this is the token ' + token);
+            //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+            //     token: token
+            //   })
+            // })
+        });
+        //search keyTrip
+        this.TripsService.getKeyTrip(this.SignUpService.userPlace, this.user)
+            .subscribe(function (keyTrip) {
+            _this.keyTrip = keyTrip;
+            console.log(_this.user);
+            console.log(_this.keyTrip);
+            //if key its deleted don't show VIAJE EN CURSO  
+            if (_this.keyTrip === undefined || _this.keyTrip === null) {
+                _this.onTrip = false;
+                //  this.TripsService.eraseKeyTrip(this.user);
+                //  this.TripsService.setOnTripFalse(this.user);
+                console.log("llegue adonde era");
+            }
+            else {
+                //confirm that trip exist and get it
+                _this.getTrip();
+            }
+        });
+        // set geofire key of university to avoid asking users to put where they are going
+        this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(function (university) {
+            _this.university = university;
+            _this.locationUniversity = _this.university.location;
+            _this.geofireService.setLocationPlace(_this.SignUpService.userPlace, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
+        });
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(function (user) {
+            _this.userInfo = user;
+        });
+        this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(function (uni) {
+            _this.universityInfo = uni;
+            if (_this.universityInfo.email == undefined) {
+                if (_this.userInfo.documents) {
+                    if (_this.userInfo.documents.carne === undefined || _this.userInfo.documents.id === undefined) {
                         var modal = _this.modalCtrl.create('VerificationImagesPage');
                         modal.present();
                     }
+                    else if (_this.userInfo.documents.carne === true && _this.userInfo.documents.id === true) {
+                        _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
+                    }
                 }
-                else {
-                    _this.instancesService.isVerifiedPerson(_this.SignUpService.userUniversity, _this.user);
+                else if (!_this.userInfo.documents) {
+                    console.log('no hay docs');
+                    var modal = _this.modalCtrl.create('VerificationImagesPage');
+                    modal.present();
                 }
-            });
-        }
+            }
+            else {
+                _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
+            }
+        });
         this.loadMap();
     };
     FindridePage.prototype.getToken = function () {
@@ -308,7 +247,7 @@ var FindridePage = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this.firebase.getToken().then(function (token) {
                                 console.log('this is the token ' + token);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/drivers/' + _this.user + '/devices/').update({
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user + '/devices/').update({
                                     token: token
                                 });
                             })];
@@ -320,7 +259,7 @@ var FindridePage = /** @class */ (function () {
                         _b = this;
                         return [4 /*yield*/, this.firebase.getToken().then(function (token) {
                                 console.log('this is the token ' + token);
-                                _this.afDB.database.ref(_this.SignUpService.userUniversity + '/drivers/' + _this.user + '/devices/').update({
+                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user + '/devices/').update({
                                     token: token
                                 });
                             })];
@@ -337,7 +276,7 @@ var FindridePage = /** @class */ (function () {
     };
     FindridePage.prototype.getTrip = function () {
         var _this = this;
-        this.afDB.database.ref(this.SignUpService.userUniversity + '/trips/' + this.user + '/' + this.keyTrip)
+        this.afDB.database.ref(this.SignUpService.userPlace + '/trips/' + this.user + '/' + this.keyTrip)
             .once('value').then(function (snapshot) {
             var trip = snapshot.val();
             console.log(trip);
@@ -353,7 +292,7 @@ var FindridePage = /** @class */ (function () {
     };
     FindridePage.prototype.getOnTrip = function () {
         var _this = this;
-        this.TripsService.getOnTrip(this.SignUpService.userUniversity, this.user)
+        this.TripsService.getOnTrip(this.SignUpService.userPlace, this.user)
             .subscribe(function (onTrip) {
             _this.onTrip = onTrip;
             console.log(_this.onTrip);
@@ -616,7 +555,7 @@ var FindridePage = /** @class */ (function () {
                             this.loadMap();
                         }
                         else {
-                            this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user, this.desFirebase, this.orFirebase);
+                            this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userPlace, this.user, this.desFirebase, this.orFirebase);
                             this.geoInfo1 = this.myLatLng;
                             console.log(this.geoInfo1);
                             this.geoInfo2 = {
@@ -626,7 +565,7 @@ var FindridePage = /** @class */ (function () {
                             console.log("AQUIIIIIIIIIIIIIII");
                             console.log(this.geoInfo2.lat);
                             //turn on geoquery university to determine wether the user is in university
-                            this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+                            this.geofireService.setGeofirePlace(this.SignUpService.userPlace, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
                             //
                             this.confirmPrice(this.geoInfo1, this.geoInfo2);
                         }

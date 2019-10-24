@@ -26,7 +26,7 @@ export class WalletPage {
   constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public signupService: SignUpService) {
     
    
-    this.sendUsersService.getRecordTrips(this.signupService.userUniversity, this.userUid)
+    this.sendUsersService.getRecordTrips(this.signupService.userPlace, this.userUid)
     .subscribe( user => {
     
       this.recordTrips = user;

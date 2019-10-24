@@ -87,6 +87,7 @@ export class FindridePage {
   keyTrip:any;
   onTrip:any;
   token:any;
+  myInfoAboutMyPlace:any;
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, private platform: Platform, private fcm: FCM, private firebase: Firebase ) {
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
@@ -112,92 +113,25 @@ export class FindridePage {
 
  ionViewDidLoad(){
 
-  if(this.SignUpService.userUniversity === undefined){
-
-    let modal = this.modalCtrl.create('ConfirmUniversityPage');
-    modal.onDidDismiss(readyToStart =>{
-      if(readyToStart){
-
-        this.platform.ready().then(()=>{
-
-
-          this.getToken();
- 
-          // this.token = this.fcm.getToken().then((token)=>{
-          //   console.log('this is the token ' + token);
-          //   this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
-          //     token: token
-          //   })
-          // })
       
-      })
-
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-          this.userInfo = user;
-        })
-        //search keyTrip
-
-
-        this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
-        .subscribe(keyTrip=>{
-          this.keyTrip =keyTrip;
-          console.log(this.user)
-          console.log(this.keyTrip)
-          //if key its deleted don't show VIAJE EN CURSO  
-          if(this.keyTrip === undefined || this.keyTrip === null){
-          this.onTrip=false;
-          //  this.TripsService.eraseKeyTrip(this.user);
-          //  this.TripsService.setOnTripFalse(this.user);
-            console.log("llegue adonde era")
-          }else{
-            //confirm that trip exist and get it
-            this.getTrip();
-            
-          }
-   
-  })
-          // set geofire key of university to avoid asking users to put where they are going
-          this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
-            this.university = university
-            this.locationUniversity = this.university.location;
-            this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-          })
-
-
-         
-
-      }
-      setTimeout(() => {
-        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-          this.universityInfo = uni;
-          if(this.universityInfo.emails == undefined){
-            if(this.userInfo.documents){
-              if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
-                let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-              }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-                this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
-              }
-            }else if(!this.userInfo.documents) {
-              console.log('no hay docs')
-              let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-            } 
-          }else{
-            this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
   
-          }
-  
-  
-        })
-      }, 1000);
-       
+      this.platform.ready().then(()=>{
+
+
+        this.getToken();
+
+        // this.token = this.fcm.getToken().then((token)=>{
+        //   console.log('this is the token ' + token);
+        //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+        //     token: token
+        //   })
+        // })
+    
     })
-    modal.present();
 
-  }else{
+
      //search keyTrip
-     this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
+     this.TripsService.getKeyTrip(this.SignUpService.userPlace, this.user)
      .subscribe(keyTrip=>{
        this.keyTrip =keyTrip;
        console.log(this.user)
@@ -216,19 +150,19 @@ export class FindridePage {
 
 })
        // set geofire key of university to avoid asking users to put where they are going
-       this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
+       this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
          this.university = university
          this.locationUniversity = this.university.location;
-         this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+         this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
        })
 
 
-       this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
+       this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(user=>{
          this.userInfo = user;
        })  
 
 
-       this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
+       this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(uni => {
         this.universityInfo = uni;
         if(this.universityInfo.email == undefined){
           if(this.userInfo.documents){
@@ -236,7 +170,7 @@ export class FindridePage {
               let modal = this.modalCtrl.create('VerificationImagesPage');
               modal.present();
             }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-              this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+              this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
             }
           }else if(!this.userInfo.documents) {
             console.log('no hay docs')
@@ -244,13 +178,13 @@ export class FindridePage {
               modal.present();
           } 
         }else{
-          this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+          this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
 
         }
 
 
       })
-  }
+  
 
   this.loadMap();
 }
@@ -262,7 +196,7 @@ async getToken() {
   if (this.platform.is('android')) {
     this.token = await this.firebase.getToken().then((token)=>{
       console.log('this is the token ' + token);
-      this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
         token: token
       })
     })
@@ -271,7 +205,7 @@ async getToken() {
   if (this.platform.is('ios')) {
     this.token = await this.firebase.getToken().then((token)=>{
       console.log('this is the token ' + token);
-      this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
+      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
         token: token
       })
     })
@@ -285,7 +219,7 @@ async getToken() {
 
  getTrip(){
 
-    this.afDB.database.ref(this.SignUpService.userUniversity + '/trips/'+ this.user +'/'+ this.keyTrip)
+    this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+ this.user +'/'+ this.keyTrip)
     .once('value').then((snapshot) => {
       let trip = snapshot.val();
       console.log(trip);
@@ -303,7 +237,7 @@ async getToken() {
 
 
  getOnTrip(){
-   this.TripsService.getOnTrip(this.SignUpService.userUniversity, this.user)
+   this.TripsService.getOnTrip(this.SignUpService.userPlace, this.user)
    .subscribe(onTrip=>{
      this.onTrip =onTrip;
      console.log(this.onTrip)
@@ -612,7 +546,7 @@ geocodeLatLng(latLng,inputName) {
                 this.loadMap();
                } else {
                  
-                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
+                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userPlace, this.user,this.desFirebase,this.orFirebase)
        
                 this.geoInfo1 = this.myLatLng;
                 console.log(this.geoInfo1);
@@ -629,7 +563,7 @@ geocodeLatLng(latLng,inputName) {
                 console.log("AQUIIIIIIIIIIIIIII")
                 console.log(this.geoInfo2.lat);
                 //turn on geoquery university to determine wether the user is in university
-                this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+                this.geofireService.setGeofirePlace(this.SignUpService.userPlace, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
                //
                 this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       

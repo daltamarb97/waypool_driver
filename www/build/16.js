@@ -81,7 +81,7 @@ var ProfilePage = /** @class */ (function () {
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
         this.emailUser = this.AngularFireAuth.auth.currentUser.email;
         this.user = {};
-        this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).subscribe(function (user) {
+        this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).subscribe(function (user) {
             _this.user = user;
             console.log(_this.user);
             _this.showInfoProfile(user);
@@ -93,42 +93,42 @@ var ProfilePage = /** @class */ (function () {
             this.navCtrl.pop();
         }
         else if (this.phone == null && this.user.about == null && this.user.url != null) {
-            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid, this.user.url);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone == null && this.user.about != null && this.user.url == null) {
-            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid, this.user.about);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone != null && this.user.about == null && this.user.url == null) {
-            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid, this.phone);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone != null && this.user.about != null && this.user.url == null) {
-            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
-            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid, this.phone);
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid, this.user.about);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone != null && this.user.about == null && this.user.url != null) {
-            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
-            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid, this.phone);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid, this.user.url);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone == null && this.user.about != null && this.user.url != null) {
-            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
-            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid, this.user.url);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
         else if (this.phone != null && this.user.about != null && this.user.url != null) {
-            this.SignupService.saveInfoProfileAbout(this.SignupService.userUniversity, this.userUid, this.user.about);
-            this.SignupService.saveInfoProfileUrl(this.SignupService.userUniversity, this.userUid, this.user.url);
-            this.SignupService.saveInfoProfilePhone(this.SignupService.userUniversity, this.userUid, this.phone);
+            this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid, this.user.about);
+            this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid, this.user.url);
+            this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid, this.phone);
             this.toastConfirmation();
             this.navCtrl.pop();
         }
@@ -159,7 +159,7 @@ var ProfilePage = /** @class */ (function () {
                 {
                     text: 'Eliminar',
                     handler: function () {
-                        _this.SignupService.deleteAccount(_this.SignupService.userUniversity, _this.userUid);
+                        _this.SignupService.deleteAccount(_this.SignupService.userPlace, _this.userUid);
                         _this.AngularFireAuth.auth.currentUser.delete().then(function () {
                             console.log('user has been deleted');
                         }).catch(function (error) {

@@ -17358,15 +17358,15 @@ var ReservetripPage = /** @class */ (function () {
         this.reserveUser = [];
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_6_rxjs__["Subject"];
         this.geocoder = new google.maps.Geocoder;
-        this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.SignUpService.getMyInfoDriver(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (userDriver) {
             _this.userDriver = userDriver;
             console.log(_this.userDriver);
         });
         //get personal info of the driver
-        this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.sendUsersService.getTripsOfReserves(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (tripsReserves) {
-            console.log(_this.SignUpService.userUniversity);
+            console.log(_this.SignUpService.userPlace);
             _this.tripsReserves = tripsReserves;
             console.log(tripsReserves);
             if (_this.tripsReserves.length === 0) {
@@ -17452,26 +17452,26 @@ var ReservetripPage = /** @class */ (function () {
                                 toast.present();
                             }
                             else {
-                                _this.TripsService.setOnTrip(_this.SignUpService.userUniversity, _this.userUid);
-                                _this.TripsService.getReserveUsers(_this.SignUpService.userUniversity, tripKeyTrip, _this.userUid).takeUntil(_this.unsubscribe)
+                                _this.TripsService.setOnTrip(_this.SignUpService.userPlace, _this.userUid);
+                                _this.TripsService.getReserveUsers(_this.SignUpService.userPlace, tripKeyTrip, _this.userUid).takeUntil(_this.unsubscribe)
                                     .subscribe(function (reservesUser) {
                                     _this.reserveUser = reservesUser;
                                     console.log(_this.reserveUser);
                                     //push the keyTrip,driverId on every User and onTrip = true 
                                     _this.reserveUser.forEach(function (user) {
-                                        _this.TripsService.startTripForUsers(_this.SignUpService.userUniversity, tripKeyTrip, user.userId, _this.userUid);
+                                        _this.TripsService.startTripForUsers(_this.SignUpService.userPlace, tripKeyTrip, user.userId, _this.userUid);
                                     });
                                     //debería ser en vez de navPop, una funcion que te lleve a myRide y te muestre el viaje
                                 });
-                                _this.TripsService.pushKeyInDriver(_this.SignUpService.userUniversity, tripKeyTrip, _this.userUid);
-                                _this.TripsService.startTrip(_this.SignUpService.userUniversity, tripKeyTrip, _this.userUid, trip);
-                                _this.TripsService.createTripState(_this.SignUpService.userUniversity, tripKeyTrip, _this.userUid);
+                                _this.TripsService.pushKeyInDriver(_this.SignUpService.userPlace, tripKeyTrip, _this.userUid);
+                                _this.TripsService.startTrip(_this.SignUpService.userPlace, tripKeyTrip, _this.userUid, trip);
+                                _this.TripsService.createTripState(_this.SignUpService.userPlace, tripKeyTrip, _this.userUid);
                                 // this.navCtrl.pop();
                                 // steps needed to get LMU right
-                                _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userUniversity, tripKeyTrip);
-                                _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userUniversity, tripKeyTrip);
+                                _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, tripKeyTrip);
+                                _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, tripKeyTrip);
                                 setTimeout(function () {
-                                    _this.TripsService.deleteReserve(_this.SignUpService.userUniversity, tripKeyTrip, _this.userUid);
+                                    _this.TripsService.deleteReserve(_this.SignUpService.userPlace, tripKeyTrip, _this.userUid);
                                     if (trip.type == 'origin') {
                                         // geocoding of addresses 
                                         _this.geocoder.geocode({ 'address': trip.origin[0][0] }, function (results, status) {
@@ -17482,8 +17482,8 @@ var ReservetripPage = /** @class */ (function () {
                                                 };
                                             }
                                             // set geofirekey for LMU
-                                            _this.geofireService.setGeofireOrOnTrip(_this.SignUpService.userUniversity, tripKeyTrip, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
-                                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireOrTrip/' + tripKeyTrip).update({
+                                            _this.geofireService.setGeofireOrOnTrip(_this.SignUpService.userPlace, tripKeyTrip, _this.geocoordinatesOr.lat, _this.geocoordinatesOr.lng);
+                                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireOrTrip/' + tripKeyTrip).update({
                                                 driverId: _this.userUid
                                             });
                                             console.log('executed geofire Or on Trip');
@@ -17499,15 +17499,15 @@ var ReservetripPage = /** @class */ (function () {
                                                 };
                                             }
                                             // set geofirekey for LMU
-                                            _this.geofireService.setGeofireDestOnTrip(_this.SignUpService.userUniversity, tripKeyTrip, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
-                                            _this.afDB.database.ref(_this.SignUpService.userUniversity + '/geofireDestTrip/' + tripKeyTrip).update({
+                                            _this.geofireService.setGeofireDestOnTrip(_this.SignUpService.userPlace, tripKeyTrip, _this.geocoordinatesDest.lat, _this.geocoordinatesDest.lng);
+                                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireDestTrip/' + tripKeyTrip).update({
                                                 driverId: _this.userUid
                                             });
                                             console.log('executed geofire Dest on Trip');
                                         });
                                     }
                                     _this.app.getRootNav().push('MyridePage');
-                                    _this.MetricsService.tripsInitiated(_this.SignUpService.userUniversity, _this.userUid, tripKeyTrip, trip);
+                                    _this.MetricsService.tripsInitiated(_this.SignUpService.userPlace, _this.userUid, tripKeyTrip, trip);
                                 }, 2500);
                                 ////
                             }

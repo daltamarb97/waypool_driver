@@ -88,7 +88,7 @@ var ChattingPage = /** @class */ (function () {
         this.reserve = this.navParams.get('reserve');
         this.isTrip = this.navParams.get('isTrip');
         console.log(this.reserve.driver.userId);
-        this.SignUpService.getMyInfoForProfile(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe).subscribe(function (info) {
+        this.SignUpService.getMyInfoForProfile(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe).subscribe(function (info) {
             _this.driver = info;
             console.log(_this.driver);
         });
@@ -101,7 +101,7 @@ var ChattingPage = /** @class */ (function () {
     }
     ChattingPage.prototype.getChatFromTrip = function () {
         var _this = this;
-        this.chatsService.getChatsFromTrip(this.SignUpService.userUniversity, this.reserve.keyTrip, this.reserve.driver.userId)
+        this.chatsService.getChatsFromTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
             .takeUntil(this.unsubscribe).subscribe(function (chat) {
             _this.chats = chat;
             console.log(_this.chats);
@@ -110,7 +110,7 @@ var ChattingPage = /** @class */ (function () {
     };
     ChattingPage.prototype.getChatFromReserve = function () {
         var _this = this;
-        this.chatsService.getChatsFromReserve(this.SignUpService.userUniversity, this.reserve.keyTrip, this.reserve.driver.userId)
+        this.chatsService.getChatsFromReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
             .takeUntil(this.unsubscribe).subscribe(function (chat) {
             _this.chats = chat;
             console.log(_this.chats);
@@ -168,7 +168,7 @@ var ChattingPage = /** @class */ (function () {
                 {
                     text: 'Reportar',
                     handler: function () {
-                        _this.sendFeedbackService.sendFeedback(_this.SignUpService.userUniversity, 'Reporte_de_chat', _this.chats, _this.driver.name, _this.driver.lastname, _this.driver.phone, _this.userUid);
+                        _this.sendFeedbackService.sendFeedback(_this.SignUpService.userPlace, 'Reporte_de_chat', _this.chats, _this.driver.name, _this.driver.lastname, _this.driver.phone, _this.userUid);
                         var toast = _this.toastCtrl.create({
                             message: 'Haz reportado este chat',
                             showCloseButton: true,
@@ -203,12 +203,12 @@ var ChattingPage = /** @class */ (function () {
     };
     ChattingPage.prototype.sendMessageForTrip = function () {
         console.log(this.isTrip);
-        this.chatsService.pushMessageUserInTrip(this.SignUpService.userUniversity, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
+        this.chatsService.pushMessageUserInTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
         this.message = '';
         this.scrollToBottom();
     };
     ChattingPage.prototype.sendMessageForReserve = function () {
-        this.chatsService.pushMessageUserInReserve(this.SignUpService.userUniversity, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
+        this.chatsService.pushMessageUserInReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
         this.message = '';
         this.scrollToBottom();
     };

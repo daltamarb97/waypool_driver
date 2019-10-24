@@ -54,7 +54,7 @@ export class CarRegistrationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController, public app: App) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
-    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
       this.driverInfo = user
       if(this.driverInfo.documents){
         if(this.driverInfo.documents.license == true ){
@@ -102,7 +102,7 @@ export class CarRegistrationPage {
 
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
         const alert = this.alertCtrl.create({
@@ -126,7 +126,7 @@ export class CarRegistrationPage {
 
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.SignUpService.pushDocsL(this.SignUpService.userUniversity, this.driver);
+      this.SignUpService.pushDocsL(this.SignUpService.userPlace, this.driver);
       
 
      }, (err) => {
@@ -155,7 +155,7 @@ export class CarRegistrationPage {
       loading.present();
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
         const alert = this.alertCtrl.create({
@@ -177,7 +177,7 @@ export class CarRegistrationPage {
 
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
+      this.SignUpService.pushDocsId(this.SignUpService.userPlace, this.driver);
 
       
 

@@ -86,7 +86,7 @@ var SupportPage = /** @class */ (function () {
         this.typeOfSituation = this.navParams.get('typeOfSituation');
         this.info = this.navParams.get('info');
         this.today = Date.now();
-        this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (user) {
             _this.user = user;
             console.log(_this.user);
@@ -97,7 +97,7 @@ var SupportPage = /** @class */ (function () {
         this.unsubscribe.complete();
     };
     SupportPage.prototype.sendEmail = function () {
-        this.sendFeedbackService.sendFeedback(this.SignupService.userUniversity, this.typeOfSituation, this.experience, this.user.name, this.user.lastname, this.user.phone, this.userUid);
+        this.sendFeedbackService.sendFeedback(this.SignupService.userPlace, this.typeOfSituation, this.experience, this.user.name, this.user.lastname, this.user.phone, this.userUid);
         this.navCtrl.pop();
     };
     SupportPage = __decorate([

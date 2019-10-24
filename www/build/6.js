@@ -1,6 +1,6 @@
 webpackJsonp([6],{
 
-/***/ 655:
+/***/ 653:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationImagesPageModule", function() { return VerificationImagesPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_images__ = __webpack_require__(815);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_images__ = __webpack_require__(813);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var VerificationImagesPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 815:
+/***/ 813:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,7 +98,7 @@ var VerificationImagesPage = /** @class */ (function () {
             mediaType: this.camera.MediaType.PICTURE
         };
         this.driver = this.AngularFireauth.auth.currentUser.uid;
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(function (user) {
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.driver).subscribe(function (user) {
             _this.driverInfo = user;
             if (_this.driverInfo.documents) {
                 if (_this.driverInfo.documents.carne == true) {
@@ -134,7 +134,7 @@ var VerificationImagesPage = /** @class */ (function () {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/verificationDocuments/' + _this.driver + '/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userPlace + '/verificationDocuments/' + _this.driver + '/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url').then(function () {
                 var alert = _this.alertCtrl.create({
                     title: '¡HECHO!',
@@ -153,7 +153,7 @@ var VerificationImagesPage = /** @class */ (function () {
             });
             _this.picToViewCarne = "assets/imgs/v2.2.png";
             _this.picToView = "assets/imgs/v2.2.png";
-            _this.SignUpService.pushDocsCarne(_this.SignUpService.userUniversity, _this.driver);
+            _this.SignUpService.pushDocsCarne(_this.SignUpService.userPlace, _this.driver);
         }, function (err) {
             console.log(err);
             var alert = _this.alertCtrl.create({
@@ -170,7 +170,7 @@ var VerificationImagesPage = /** @class */ (function () {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64 (DATA_URL):
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/verificationDocuments/' + _this.driver + '/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userPlace + '/verificationDocuments/' + _this.driver + '/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url').then(function () {
                 var alert = _this.alertCtrl.create({
                     title: '¡HECHO!',
@@ -189,7 +189,7 @@ var VerificationImagesPage = /** @class */ (function () {
             });
             _this.picToViewId = "assets/imgs/v4.2.png";
             _this.picToView = "assets/imgs/v4.2.png";
-            _this.SignUpService.pushDocsId(_this.SignUpService.userUniversity, _this.driver);
+            _this.SignUpService.pushDocsId(_this.SignUpService.userPlace, _this.driver);
         }, function (err) {
             console.log(err);
             var alert = _this.alertCtrl.create({

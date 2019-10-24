@@ -34,7 +34,7 @@ export class LoginPage {
     })
 
     if(this.auth.currentUser){
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.auth.currentUser.uid).subscribe(driver => {
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.auth.currentUser.uid).subscribe(driver => {
             this.driverInfo = driver;
         })
     }

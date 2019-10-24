@@ -97,7 +97,7 @@ export class AddSchedulePage {
           {
             text: 'Confirmo este horario',
             handler: () => {
-              this.signUpService.pushSchedule(this.signUpService.userUniversity, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
+              this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
               this.viewCtrl.dismiss();
             }
           }

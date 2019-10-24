@@ -43,7 +43,7 @@ export class VerificationImagesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
 
-    this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).subscribe(user=>{
+    this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.driver).subscribe(user=>{
       this.driverInfo = user
       if(this.driverInfo.documents){
         if(this.driverInfo.documents.carne == true ){
@@ -82,7 +82,7 @@ export class VerificationImagesPage {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data);
+      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/verificationDocuments/' + this.driver + '/' + this.data);
 
 
       
@@ -107,7 +107,7 @@ export class VerificationImagesPage {
 
       this.picToViewCarne = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.SignUpService.pushDocsCarne(this.SignUpService.userUniversity, this.driver);
+      this.SignUpService.pushDocsCarne(this.SignUpService.userPlace, this.driver);
       
 
      }, (err) => {
@@ -127,7 +127,7 @@ export class VerificationImagesPage {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const picturesDrivers = storage().ref(this.SignUpService.userUniversity + '/verificationDocuments/' + this.driver + '/' + this.data)
+      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/verificationDocuments/' + this.driver + '/' + this.data)
 
 
 
@@ -151,7 +151,7 @@ export class VerificationImagesPage {
       
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.SignUpService.pushDocsId(this.SignUpService.userUniversity, this.driver);
+      this.SignUpService.pushDocsId(this.SignUpService.userPlace, this.driver);
 
       
 

@@ -98,7 +98,7 @@ var ConfirmtripPage = /** @class */ (function () {
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_7_rxjs__["Subject"];
         this.user = this.navParams.get('user');
         console.log(this.user);
-        this.SignUpServices.getMyInfo(this.SignUpServices.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.SignUpServices.getMyInfo(this.SignUpServices.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (driverInfo) {
             _this.driver = driverInfo;
             console.log(_this.driver);
@@ -109,13 +109,13 @@ var ConfirmtripPage = /** @class */ (function () {
         this.unsubscribe.complete();
     };
     ConfirmtripPage.prototype.rejectUser = function () {
-        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid, this.driver.keyTrip, this.user.userId);
+        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user.userId);
         console.log("nanai kukas");
         this.dismiss();
     };
     ConfirmtripPage.prototype.acceptUser = function () {
-        this.TripsService.acceptLastMinute(this.SignUpServices.userUniversity, this.userUid, this.driver.keyTrip, this.user);
-        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userUniversity, this.userUid, this.driver.keyTrip, this.user.userId);
+        this.TripsService.acceptLastMinute(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user);
+        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user.userId);
         console.log("bienvenido al combo");
         this.dismiss();
     };

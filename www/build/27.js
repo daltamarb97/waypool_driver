@@ -112,7 +112,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             mediaType: this.camera.MediaType.PICTURE
         };
         this.driver = this.AngularFireauth.auth.currentUser.uid;
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(function (user) {
+        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.driver).takeUntil(this.unsubscribe).subscribe(function (user) {
             _this.driverInfo = user;
             if (_this.driverInfo.documents) {
                 if (_this.driverInfo.documents.license == true) {
@@ -157,7 +157,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             });
             loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userPlace + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url').then(function () {
                 loading.dismiss();
                 var alert = _this.alertCtrl.create({
@@ -179,7 +179,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             });
             _this.picToViewLicense = "assets/imgs/v2.2.png";
             _this.picToView = "assets/imgs/v2.2.png";
-            _this.SignUpService.pushDocsL(_this.SignUpService.userUniversity, _this.driver);
+            _this.SignUpService.pushDocsL(_this.SignUpService.userPlace, _this.driver);
         }, function (err) {
             console.log(err);
             var alert = _this.alertCtrl.create({
@@ -201,7 +201,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             });
             loading.present();
             var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
+            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userPlace + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
             picturesDrivers.putString(base64Image, 'data_url').then(function () {
                 loading.dismiss();
                 var alert = _this.alertCtrl.create({
@@ -223,7 +223,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
             });
             _this.picToViewId = "assets/imgs/v4.2.png";
             _this.picToView = "assets/imgs/v4.2.png";
-            _this.SignUpService.pushDocsId(_this.SignUpService.userUniversity, _this.driver);
+            _this.SignUpService.pushDocsId(_this.SignUpService.userPlace, _this.driver);
         }, function (err) {
             console.log(err);
             var alert = _this.alertCtrl.create({

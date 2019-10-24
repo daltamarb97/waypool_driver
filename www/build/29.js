@@ -132,7 +132,7 @@ var AddSchedulePage = /** @class */ (function () {
                     {
                         text: 'Confirmo este horario',
                         handler: function () {
-                            _this.signUpService.pushSchedule(_this.signUpService.userUniversity, _this.userId, _this.startHour, _this.geofireType, _this.textMessage, _this.imageURL);
+                            _this.signUpService.pushSchedule(_this.signUpService.userPlace, _this.userId, _this.startHour, _this.geofireType, _this.textMessage, _this.imageURL);
                             _this.viewCtrl.dismiss();
                         }
                     }

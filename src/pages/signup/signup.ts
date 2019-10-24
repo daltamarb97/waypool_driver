@@ -37,7 +37,7 @@ export class SignupPage {
     private signupGroup: FormGroup;
 
     //variables linked among them 
-    universityVar:any;
+    enterpriseVar:any;
     universities = [];
     showReadonly:boolean = true;
     onlyEmail:any;
@@ -62,14 +62,14 @@ export class SignupPage {
         carModel: ["", Validators.required],
         plateNumber: ["", Validators.required],
         color: ["", Validators.required],
-        university: ["", Validators.required],
+        enterprise: ["", Validators.required],
         isChecked:[true, Validators.required]
     })
 
     // this.SignUpService.pushEmails('uninorte', '@uninorte.edu.co');
     // this.SignUpService.pushEmails('uninorte', '@jhggh.edu.co');
 
-    this.SignUpService.getUniversities().takeUntil(this.unsubscribe)
+    this.SignUpService.getAllPlaces().takeUntil(this.unsubscribe)
     .subscribe(universities => {
         this.universities = universities;
         console.log(this.universities);
@@ -84,7 +84,7 @@ export class SignupPage {
     if(this.showReadonly == true){
             var count = this.universities.length;
             for(var i=0; i<count; i++){
-                if(this.universities[i].name == this.universityVar){
+                if(this.universities[i].name == this.enterpriseVar){
                   if(this.universities[i].emails == undefined){
                             this.showReadonly = false;
                         }else{
@@ -149,7 +149,7 @@ export class SignupPage {
           let userCarModel = this.signupGroup.controls['carModel'].value;
           let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
           let usercarColor = this.signupGroup.controls['color'].value;
-          let userUniversity = this.signupGroup.controls['university'].value;
+          let userPlace = this.signupGroup.controls['enterprise'].value;
 
           this.car = {
             carModel: userCarModel,
@@ -164,7 +164,7 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmailComplete,
                 phone: '+57'+userPhone,
-                university: userUniversity,
+                enterprise: userPlace,
                 createdBy: 'driver',
                 company: this.company
             };
@@ -174,14 +174,14 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmailComplete,
                 phone: '+57'+userPhone,
-                university: userUniversity,
+                enterprise: userPlace,
                 createdBy: 'driver',
             };  
           }
           
 
 
-        this.SignUpService.userUniversity = userUniversity;
+        this.SignUpService.userPlace = userPlace;
         
           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(() =>{
@@ -195,8 +195,8 @@ export class SignupPage {
                              if(!this.user.userId){
                                 this.user.userId = user.uid;
                             }
-                            this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
-                            this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
+                            this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
+                            this.SignUpService.addCarProfile(this.SignUpService.userPlace, this.user.userId,this.car);
                             //send text message with code
                             // this.sendVerificationCode(this.user.userId);
                             // this.app.getRootNav().push('LoginPage');
@@ -266,7 +266,7 @@ export class SignupPage {
           let userCarModel = this.signupGroup.controls['carModel'].value;
           let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
           let usercarColor = this.signupGroup.controls['color'].value;
-          let userUniversity = this.signupGroup.controls['university'].value;
+          let userPlace = this.signupGroup.controls['enterprise'].value;
 
           this.car = {
             carModel: userCarModel,
@@ -282,7 +282,7 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmail,
                 phone: '+57'+userPhone,
-                university: userUniversity,
+                enterprise: userPlace,
                 createdBy: 'driver',
                 company: this.company
             };
@@ -292,12 +292,12 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmail,
                 phone: '+57'+userPhone,
-                university: userUniversity,
+                enterprise: userPlace,
                 createdBy: 'driver',
             };
           }       
 
-        this.SignUpService.userUniversity = userUniversity;
+        this.SignUpService.userPlace = userPlace;
         
           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
             this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(() => {
@@ -312,8 +312,8 @@ export class SignupPage {
                          if(!this.user.userId){
                             this.user.userId = user.uid;
                         }
-                        this.SignUpService.saveUser(this.SignUpService.userUniversity, this.user);
-                        this.SignUpService.addCarProfile(this.SignUpService.userUniversity, this.user.userId,this.car);
+                        this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
+                        this.SignUpService.addCarProfile(this.SignUpService.userPlace, this.user.userId,this.car);
                         //send text message with code
                         //  this.sendVerificationCode(this.user.userId);
                         // this.app.getRootNav().push('LoginPage');

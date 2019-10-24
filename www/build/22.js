@@ -98,7 +98,7 @@ var ConfirmreservationPage = /** @class */ (function () {
         this.passengers = [];
         this.reserveKey = this.navParams.get('reserveKey');
         console.log(this.reserveKey);
-        this.sendCoordsService.getPendingUsers(this.SignUpService.userUniversity, this.userUid, this.reserveKey).takeUntil(this.unsubscribe)
+        this.sendCoordsService.getPendingUsers(this.SignUpService.userPlace, this.userUid, this.reserveKey).takeUntil(this.unsubscribe)
             .subscribe(function (users) {
             _this.passengers = users;
             console.log(_this.passengers);
@@ -109,7 +109,7 @@ var ConfirmreservationPage = /** @class */ (function () {
         this.unsubscribe.complete();
     };
     ConfirmreservationPage.prototype.deleteUser = function (userId) {
-        this.sendCoordsService.eraseUser(this.SignUpService.userUniversity, userId, this.userUid, this.reserveKey);
+        this.sendCoordsService.eraseUser(this.SignUpService.userPlace, userId, this.userUid, this.reserveKey);
     };
     ConfirmreservationPage.prototype.showProfilePassegner = function (passenger) {
         this.app.getRootNav().push('PublicProfilePage', { passenger: passenger });
@@ -123,9 +123,9 @@ var ConfirmreservationPage = /** @class */ (function () {
         // }else if(typeOfReserve == 'destination'){
         //   this.geofireService.cancelGeoqueryDest(geofireKey);
         // }
-        this.geoFireService.deleteUserGeofireDest(this.SignUpService.userUniversity, this.reserveKey);
-        this.geoFireService.deleteUserGeofireOr(this.SignUpService.userUniversity, this.reserveKey);
-        this.TripsService.cancelReserve(this.SignUpService.userUniversity, this.userUid, this.reserveKey);
+        this.geoFireService.deleteUserGeofireDest(this.SignUpService.userPlace, this.reserveKey);
+        this.geoFireService.deleteUserGeofireOr(this.SignUpService.userPlace, this.reserveKey);
+        this.TripsService.cancelReserve(this.SignUpService.userPlace, this.userUid, this.reserveKey);
         this.dismiss();
     };
     ConfirmreservationPage.prototype.dismiss = function () {
