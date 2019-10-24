@@ -19,12 +19,12 @@ export class MyApp {
   rootPage:any  = 'LoginPage';
   alertInternet:any;
   token:any;
-  userId:any;
+  // userId:any;
 
   constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
     console.log('se cargo')
 
-    this.userId =  this.angularFireAuth.auth.currentUser.uid;
+    // this.userId =  this.angularFireAuth.auth.currentUser.uid;
 
     statusBar.backgroundColorByHexString('#ffffff');     
     splashScreen.hide();
@@ -88,9 +88,10 @@ export class MyApp {
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
-          this.afDB.database.ref('allUsers/' + this.userId).once('value').then((snap)=>{
-            this.signUpService.userPlace = snap.val().place;
-          })
+          // this.afDB.database.ref('allUsers/' + this.userId).once('value').then((snap)=>{
+          //   this.signUpService.userPlace = snap.val().place;
+          //   console.log(this.signUpService.userPlace);
+          // })
 
           this.rootPage = 'TabsPage';
         }

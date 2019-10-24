@@ -47,20 +47,20 @@ var FindridePageModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(204);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -176,65 +176,92 @@ var FindridePage = /** @class */ (function () {
     } // END OF CONSTRUCTOR
     FindridePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.platform.ready().then(function () {
-            _this.getToken();
-            // this.token = this.fcm.getToken().then((token)=>{
-            //   console.log('this is the token ' + token);
-            //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
-            //     token: token
-            //   })
-            // })
-        });
-        //search keyTrip
-        this.TripsService.getKeyTrip(this.SignUpService.userPlace, this.user)
-            .subscribe(function (keyTrip) {
-            _this.keyTrip = keyTrip;
-            console.log(_this.user);
-            console.log(_this.keyTrip);
-            //if key its deleted don't show VIAJE EN CURSO  
-            if (_this.keyTrip === undefined || _this.keyTrip === null) {
-                _this.onTrip = false;
-                //  this.TripsService.eraseKeyTrip(this.user);
-                //  this.TripsService.setOnTripFalse(this.user);
-                console.log("llegue adonde era");
-            }
-            else {
-                //confirm that trip exist and get it
-                _this.getTrip();
-            }
-        });
-        // set geofire key of university to avoid asking users to put where they are going
-        this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(function (university) {
-            _this.university = university;
-            _this.locationUniversity = _this.university.location;
-            _this.geofireService.setLocationPlace(_this.SignUpService.userPlace, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
-        });
-        this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(function (user) {
-            _this.userInfo = user;
-        });
-        this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(function (uni) {
-            _this.universityInfo = uni;
-            if (_this.universityInfo.email == undefined) {
-                if (_this.userInfo.documents) {
-                    if (_this.userInfo.documents.carne === undefined || _this.userInfo.documents.id === undefined) {
-                        var modal = _this.modalCtrl.create('VerificationImagesPage');
-                        modal.present();
+        this.afDB.database.ref('allUsers/' + this.user).once('value').then(function (snap) {
+            _this.SignUpService.userPlace = snap.val().place;
+            console.log(_this.SignUpService.userPlace);
+            _this.platform.ready().then(function () {
+                _this.getToken();
+                // this.token = this.fcm.getToken().then((token)=>{
+                //   console.log('this is the token ' + token);
+                //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+                //     token: token
+                //   })
+                // })
+            });
+            //search keyTrip
+            _this.TripsService.getKeyTrip(_this.SignUpService.userPlace, _this.user)
+                .subscribe(function (keyTrip) {
+                _this.keyTrip = keyTrip;
+                console.log(_this.user);
+                console.log(_this.keyTrip);
+                //if key its deleted don't show VIAJE EN CURSO  
+                if (_this.keyTrip === undefined || _this.keyTrip === null) {
+                    _this.onTrip = false;
+                    //  this.TripsService.eraseKeyTrip(this.user);
+                    //  this.TripsService.setOnTripFalse(this.user);
+                    console.log("llegue adonde era");
+                }
+                else {
+                    //confirm that trip exist and get it
+                    _this.getTrip();
+                }
+            });
+            // set geofire key of university to avoid asking users to put where they are going
+            console.log(_this.SignUpService.userPlace);
+            _this.geofireService.getLocationPlace(_this.SignUpService.userPlace).subscribe(function (university) {
+                _this.university = university;
+                _this.locationUniversity = _this.university.location;
+                _this.geofireService.setLocationPlace(_this.SignUpService.userPlace, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
+            });
+            console.log(_this.SignUpService.userPlace);
+            _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
+                _this.userInfo = user;
+                console.log(_this.userInfo);
+                _this.afDB.database.ref('allPlaces/' + _this.SignUpService.userPlace).once('value').then(function (snap) {
+                    _this.universityInfo = snap.val();
+                    console.log(_this.universityInfo);
+                    if (_this.universityInfo.emails == undefined) {
+                        if (_this.userInfo.documents) {
+                            if (_this.userInfo.documents.carne === undefined || _this.userInfo.documents.id === undefined) {
+                                var modal = _this.modalCtrl.create('VerificationImagesPage');
+                                modal.present();
+                            }
+                            else if (_this.userInfo.documents.carne === true && _this.userInfo.documents.id === true) {
+                                _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
+                            }
+                        }
+                        else if (!_this.userInfo.documents) {
+                            console.log('no hay docs');
+                            var modal = _this.modalCtrl.create('VerificationImagesPage');
+                            modal.present();
+                        }
                     }
-                    else if (_this.userInfo.documents.carne === true && _this.userInfo.documents.id === true) {
+                    else {
                         _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
                     }
-                }
-                else if (!_this.userInfo.documents) {
-                    console.log('no hay docs');
-                    var modal = _this.modalCtrl.create('VerificationImagesPage');
-                    modal.present();
-                }
-            }
-            else {
-                _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
-            }
+                });
+            });
+            //  this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(uni => {
+            //   this.universityInfo = uni;
+            //   if(this.universityInfo.email == undefined){
+            //     if(this.userInfo.documents){
+            //       if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
+            //         let modal = this.modalCtrl.create('VerificationImagesPage');
+            //         modal.present();
+            //       }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
+            //         this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
+            //       }
+            //     }else if(!this.userInfo.documents) {
+            //       console.log('no hay docs')
+            //       let modal = this.modalCtrl.create('VerificationImagesPage');
+            //         modal.present();
+            //     } 
+            //   }else{
+            //     this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
+            //   }
+            // })
+            _this.loadMap();
         });
-        this.loadMap();
     };
     FindridePage.prototype.getToken = function () {
         return __awaiter(this, void 0, void 0, function () {
