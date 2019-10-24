@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 654:
+/***/ 656:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VerificationNumberPageModule", function() { return VerificationNumberPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(811);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verification_number__ = __webpack_require__(816);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,15 +41,15 @@ var VerificationNumberPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 811:
+/***/ 816:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerificationNumberPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -80,16 +80,16 @@ var VerificationNumberPage = /** @class */ (function () {
     }
     VerificationNumberPage.prototype.code = function () {
         var _this = this;
-        this.authenticationService.deleteResendCode(this.signUpService.userUniversity, this.userId);
-        this.authenticationService.sendVerificationCodeToFirebase(this.signUpService.userUniversity, this.userId, this.confText);
-        this.signUpService.getMyInfo(this.signUpService.userUniversity, this.userId).subscribe(function (driver) {
+        this.authenticationService.deleteResendCode(this.signUpService.userPlace, this.userId);
+        this.authenticationService.sendVerificationCodeToFirebase(this.signUpService.userPlace, this.userId, this.confText);
+        this.signUpService.getMyInfo(this.signUpService.userPlace, this.userId).subscribe(function (driver) {
             _this.driverInfo = driver;
             if (_this.driverInfo.verificationCodeApproval === true) {
                 _this.app.getRootNav().push('LoginPage');
-                _this.authenticationService.deleteVerificationCode(_this.signUpService.userUniversity, _this.userId);
+                _this.authenticationService.deleteVerificationCode(_this.signUpService.userPlace, _this.userId);
             }
             else if (_this.driverInfo.verificationCodeApproval === false) {
-                _this.authenticationService.deleteVerificationCode(_this.signUpService.userUniversity, _this.userId);
+                _this.authenticationService.deleteVerificationCode(_this.signUpService.userPlace, _this.userId);
                 var alert_1 = _this.alertCtrl.create({
                     title: 'Código Errado',
                     subTitle: 'el código de verificacón está errado',
@@ -100,8 +100,8 @@ var VerificationNumberPage = /** @class */ (function () {
         });
     };
     VerificationNumberPage.prototype.resendCode = function () {
-        this.authenticationService.deleteverificationCodeApproval(this.signUpService.userUniversity, this.userId);
-        this.authenticationService.resendVerificationCode(this.signUpService.userUniversity, this.userId);
+        this.authenticationService.deleteverificationCodeApproval(this.signUpService.userPlace, this.userId);
+        this.authenticationService.resendVerificationCode(this.signUpService.userPlace, this.userId);
     };
     VerificationNumberPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({

@@ -1,4 +1,8 @@
 page-myride {
+    .rowOfButtons{
+        display: flex;
+        flex-direction:row; 
+      }
     p {
         &.text-light {
             padding: 10px 15px 0;

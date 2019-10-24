@@ -12,20 +12,20 @@ constructor(public afDB: AngularFireDatabase){
               
     }
     
-    public getPendingUsers(university, userUid,pushKey){
-        return  this.afDB.list(university + '/reserves/'+ userUid +'/'+pushKey+'/pendingUsers').valueChanges();
+    public getPendingUsers(place, userUid,pushKey){
+        return  this.afDB.list(place + '/reserves/'+ userUid +'/'+pushKey+'/pendingUsers').valueChanges();
     }
     public getSpecificReserves(userUid,pushKey){
         return  this.afDB.object('/reserves/'+ userUid +'/'+pushKey).valueChanges();
     } 
-    public eraseUser(university, userId,DriverUid,pushKey){
-        this.afDB.database.ref(university + '/reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
+    public eraseUser(place, userId,DriverUid,pushKey){
+        this.afDB.database.ref(place + '/reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
     }
-    public getDestination(university, user){
-        return  this.afDB.list(university+ '/drivers/'+ user +'/trips/destination').valueChanges();
+    public getDestination(place, user){
+        return  this.afDB.list(place+ '/drivers/'+ user +'/trips/destination').valueChanges();
     } 
-    public getOrigin(university, user){
-        return  this.afDB.list(university + '/drivers/'+ user +'/trips/origin').valueChanges();
+    public getOrigin(place, user){
+        return  this.afDB.list(place + '/drivers/'+ user +'/trips/origin').valueChanges();
     }     
        public pushcoordinatesReserves(user , dest, or){
      
@@ -37,9 +37,9 @@ constructor(public afDB: AngularFireDatabase){
              
             
         }
-   public pushcoordinatesDrivers(university, user , dest, or){
+   public pushcoordinatesDrivers(place, user , dest, or){
      
-    this.afDB.database.ref(university + '/drivers/'+ user+'/trips').update({
+    this.afDB.database.ref(place + '/drivers/'+ user+'/trips').update({
         origin: or,
         destination: dest,
         
@@ -47,23 +47,23 @@ constructor(public afDB: AngularFireDatabase){
              
             
         }
-    public recordTripOnDriver(university, userUid,trip){
+    public recordTripOnDriver(place, userUid,trip){
       
 
-        this.afDB.database.ref(university+ '/drivers/'+ userUid + '/recordTrips/').push(trip);
+        this.afDB.database.ref(place+ '/drivers/'+ userUid + '/recordTrips/').push(trip);
 
     }
-    public recordTripOnUser(university, userDriverUid,trip){
+    public recordTripOnUser(place, userDriverUid,trip){
       
      
 
-        this.afDB.database.ref(university + '/users/'+ userDriverUid + '/recordTrips/').push(trip);
+        this.afDB.database.ref(place + '/users/'+ userDriverUid + '/recordTrips/').push(trip);
         
     }
-    public recordTripOnWaypool(university, trip){ 
+    public recordTripOnWaypool(place, trip){ 
      
 
-        this.afDB.database.ref(university + '/allTrips/').push(trip);
+        this.afDB.database.ref(place + '/allTrips/').push(trip);
         
     }
 
@@ -101,32 +101,32 @@ constructor(public afDB: AngularFireDatabase){
         })
 
     }
-    public endTripDriverPickingUsers(university, DriverUid){
-        this.afDB.database.ref(university + '/drivers/' + DriverUid+'/trips/pickingUsers').remove()
+    public endTripDriverPickingUsers(place, DriverUid){
+        this.afDB.database.ref(place + '/drivers/' + DriverUid+'/trips/pickingUsers').remove()
     }
 
-    public eraseChatsUsers(university, userId,DriverUid){
-        this.afDB.database.ref(university + 'drivers/' + DriverUid+'/trips/pickingUsers/'+userId+'/chat').remove()
+    public eraseChatsUsers(place, userId,DriverUid){
+        this.afDB.database.ref(place + 'drivers/' + DriverUid+'/trips/pickingUsers/'+userId+'/chat').remove()
     }
     
-    public endTripDriverPickedUpUsers(university, DriverUid){
-        this.afDB.database.ref(university + '/drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
+    public endTripDriverPickedUpUsers(place, DriverUid){
+        this.afDB.database.ref(place + '/drivers/' + DriverUid+'/trips/pickedUpUsers').remove()
     }
     
     public endTripUserPickingUsers(userUid){
         this.afDB.database.ref('users/' + userUid+'/trips/pickingUsers').remove()
     }
-    public endTripUserPickedUpUsers(university , userUid){
-        this.afDB.database.ref(university + '/users/' + userUid+'/trips/pickedUpUsers').remove()
+    public endTripUserPickedUpUsers(place , userUid){
+        this.afDB.database.ref(place + '/users/' + userUid+'/trips/pickedUpUsers').remove()
     }
-    public endTripUserOnTripInstance(university, userUid){
-        this.afDB.database.ref(university + '/users/' + userUid+'/trips/onTrip').remove()
+    public endTripUserOnTripInstance(place, userUid){
+        this.afDB.database.ref(place + '/users/' + userUid+'/trips/onTrip').remove()
     }
-    public endTripUserPickupInstance(university, userUid){
-        this.afDB.database.ref(university + '/users/' + userUid+'/trips/pickedUp').remove()
+    public endTripUserPickupInstance(place, userUid){
+        this.afDB.database.ref(place + '/users/' + userUid+'/trips/pickedUp').remove()
     }
-    public endTripUserDriverListRide(university, userUid){
-        this.afDB.database.ref(university + '/users/' + userUid+'/trips/driverListRide').remove()
+    public endTripUserDriverListRide(place, userUid){
+        this.afDB.database.ref(place + '/users/' + userUid+'/trips/driverListRide').remove()
     }
     public pickUp(DriverUid,userId,user){
        
@@ -186,8 +186,8 @@ constructor(public afDB: AngularFireDatabase){
         });
     }
 
-    public pushOnTripFinalUser(university, userId){
-        this.afDB.database.ref(university + '/users/'+ userId ).update({
+    public pushOnTripFinalUser(place, userId){
+        this.afDB.database.ref(place + '/users/'+ userId ).update({
             onTripFinal: true
         });
     }

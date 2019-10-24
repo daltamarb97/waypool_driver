@@ -48,23 +48,25 @@ import { MbscModule } from '@mobiscroll/angular-lite';
 import { WindowService } from '../services/window.service';
 import { MetricsService } from '../services/metrics.service';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Firebase } from '@ionic-native/firebase';
 import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
-    authDomain: "waypool-511be.firebaseapp.com",
-    databaseURL: "https://waypool-511be.firebaseio.com",
-    projectId: "waypool-511be",
-    storageBucket: "waypool-511be.appspot.com",
-    messagingSenderId: "904521954579"
-  // apiKey: "AIzaSyCvN6NNgoWCbOOUxBP9H23rbb7QSnBCf60",
-  //   authDomain: "fixingdatabase.firebaseapp.com",
-  //   databaseURL: "https://fixingdatabase.firebaseio.com",
-  //   projectId: "fixingdatabase",
-  //   storageBucket: "fixingdatabase.appspot.com",
-  //   messagingSenderId: "1090675636677",
-  //   appId: "1:1090675636677:web:672dbea79f33a407"
+    // apiKey: "AIzaSyB7Py2pOZEUJD2Ar34a-8z-rReiDtsikxw",
+    // authDomain: "waypool-511be.firebaseapp.com",
+    // databaseURL: "https://waypool-511be.firebaseio.com",
+    // projectId: "waypool-511be",
+    // storageBucket: "waypool-511be.appspot.com",
+    // messagingSenderId: "904521954579"
+
+    apiKey: "AIzaSyCvN6NNgoWCbOOUxBP9H23rbb7QSnBCf60",
+    authDomain: "fixingdatabase.firebaseapp.com",
+    databaseURL: "https://fixingdatabase.firebaseio.com",
+    projectId: "fixingdatabase",
+    storageBucket: "fixingdatabase.appspot.com",
+    messagingSenderId: "1090675636677",
+    appId: "1:1090675636677:web:72c6dba455569079"
   };
 
 
@@ -117,8 +119,10 @@ export const firebaseConfig = {
     WindowService,
     MetricsService,
     Geolocation,
+    FCM,
     Firebase,
-    FCM
+    PhotoLibrary
+
 
   ]
 })

@@ -1,8 +1,8 @@
 {
   "_from": "cordova-sqlite-storage@^3.2.0",
-  "_id": "cordova-sqlite-storage@3.3.0",
+  "_id": "cordova-sqlite-storage@3.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-RBgGAe8rf/k54JC12xtt/14PxJrh42C4ISd+P8fqZq5Kw6JfQGh/55/VTsjI29rInl5jO5fwpYee/InGYlmI9w==",
+  "_integrity": "sha512-Uavq3HulVIYXxTFCp5aafiQhYrZF0/cGlyN76RYhIftcD5IRhza9+ghhV5abJYvuGlzY+p9dM5hPcjnYxfAH+g==",
   "_location": "/cordova-sqlite-storage",
   "_phantomChildren": {},
   "_requested": {
@@ -16,10 +16,11 @@
     "fetchSpec": "^3.2.0"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-sqlite-storage/-/cordova-sqlite-storage-3.3.0.tgz",
-  "_shasum": "f52580102559e5d0b822ffa3170b5bcfdb326846",
+  "_resolved": "https://registry.npmjs.org/cordova-sqlite-storage/-/cordova-sqlite-storage-3.4.0.tgz",
+  "_shasum": "5a4b96d5120e525d35f9470279d23f6ccdc8bd23",
   "_spec": "cordova-sqlite-storage@^3.2.0",
   "_where": "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver",
   "author": {
@@ -68,5 +69,5 @@
     "prepare-js": "coffee -p SQLitePlugin.coffee.md > www/SQLitePlugin.js",
     "prepare-spec": "node scripts/prepareSpec.js"
   },
-  "version": "3.3.0"
+  "version": "3.4.0"
 }

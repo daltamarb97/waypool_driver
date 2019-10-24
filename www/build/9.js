@@ -1,6 +1,6 @@
 webpackJsonp([9],{
 
-/***/ 650:
+/***/ 652:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowInfoCarPageModule", function() { return ShowInfoCarPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__showinfocar__ = __webpack_require__(807);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__showinfocar__ = __webpack_require__(812);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,16 +41,16 @@ var ShowInfoCarPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 807:
+/***/ 812:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ShowInfoCarPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs__ = __webpack_require__(18);
@@ -86,7 +86,7 @@ var ShowInfoCarPage = /** @class */ (function () {
         this.carList = [];
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_5_rxjs__["Subject"];
         this.user = this.navParams.get('user');
-        this.SignUpService.getCar(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+        this.SignUpService.getCar(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (car) {
             _this.carList = car;
             console.log(_this.carList);
@@ -106,7 +106,7 @@ var ShowInfoCarPage = /** @class */ (function () {
             alert_1.present();
         }
         else {
-            this.SignUpService.addCar(this.SignupService.userUniversity, this.userUid, this.carModel, this.plateNumber, this.color);
+            this.SignUpService.addCar(this.SignupService.userPlace, this.userUid, this.carModel, this.plateNumber, this.color);
         }
         this.carModel = null;
         this.plateNumber = null;
@@ -114,7 +114,7 @@ var ShowInfoCarPage = /** @class */ (function () {
     };
     ShowInfoCarPage.prototype.deleteCar = function (carKey) {
         console.log(carKey);
-        this.SignUpService.deleteCar(this.SignupService.userUniversity, this.userUid, carKey);
+        this.SignUpService.deleteCar(this.SignupService.userPlace, this.userUid, carKey);
     };
     ShowInfoCarPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();

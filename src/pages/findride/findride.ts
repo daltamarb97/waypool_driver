@@ -19,9 +19,9 @@ import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 import { instancesService } from '../../services/instances.service';
-import { Firebase } from '@ionic-native/firebase';
 import { FCM } from '@ionic-native/fcm';
 import { LoginPage } from '../login/login';
+import { Firebase } from '@ionic-native/firebase';
  
 declare var google;
 @IonicPage()
@@ -91,8 +91,11 @@ export class FindridePage {
   positionDest:any;
   lat:any;
   lng:any;
+  myInfoAboutMyPlace:any;
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
 
+
+    
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
@@ -114,143 +117,85 @@ export class FindridePage {
 
  ionViewDidLoad(){
 
-  if(this.SignUpService.userUniversity === undefined){
-
-    let modal = this.modalCtrl.create('ConfirmUniversityPage');
-    modal.onDidDismiss(readyToStart =>{
-      if(readyToStart){
-
-        this.platform.ready().then(()=>{
- 
-          this.token = this.fcm.getToken().then((token)=>{
-            console.log('this is the token ' + token);
-            this.afDB.database.ref(this.SignUpService.userUniversity + '/drivers/' + this.user + '/devices/').update({
-              token: token
-            })
-          })
       
-      })
+  this.afDB.database.ref('allUsers/' + this.user).once('value').then((snap)=>{
+    this.SignUpService.userPlace = snap.val().place;
+    console.log(this.SignUpService.userPlace);
 
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-          this.userInfo = user;
-          console.log(this.userInfo);
-          
-          let lat=this.userInfo.fixedLocation.coordinates.lat
-          console.log(this.lat);
-          
-          let lng=this.userInfo.fixedLocation.coordinates.lng
-          this.positionDest = {lat,lng};
-          console.log(this.positionDest);
-        })
-        //search keyTrip
 
-        this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
-        .subscribe(keyTrip=>{
-          this.keyTrip =keyTrip;
-          console.log(this.user)
-          console.log(this.keyTrip)
-          //if key its deleted don't show VIAJE EN CURSO  
-          if(this.keyTrip === undefined || this.keyTrip === null){
-          this.onTrip=false;
-          //  this.TripsService.eraseKeyTrip(this.user);
-          //  this.TripsService.setOnTripFalse(this.user);
-            console.log("llegue adonde era")
-          }else{
-            //confirm that trip exist and get it
-            this.getTrip();
-            
-          }
-   
+    
+    this.platform.ready().then(()=>{
+
+
+      this.getToken();
+
+      // this.token = this.fcm.getToken().then((token)=>{
+      //   console.log('this is the token ' + token);
+      //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+      //     token: token
+      //   })
+      // })
+  
   })
-          // set geofire key of university to avoid asking users to put where they are going
-          this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
-            this.university = university
-            this.locationUniversity = this.university.location;
-            this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-          })
 
+  this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(user=>{
+    this.userInfo = user;
+    console.log(this.userInfo);
+    
+    let lat=this.userInfo.fixedLocation.coordinates.lat
+    console.log(this.lat);
+    
+    let lng=this.userInfo.fixedLocation.coordinates.lng
+    this.positionDest = {lat,lng};
+    console.log(this.positionDest);
+  })
+  //search keyTrip
 
-         
-
-      }
-      setTimeout(() => {
-        this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-          this.universityInfo = uni;
-          if(this.universityInfo.email == undefined){
-            if(this.userInfo.documents){
-              if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
-                let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-              }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-                this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
-              }
-            }else if(!this.userInfo.documents) {
-              console.log('no hay docs')
-              let modal = this.modalCtrl.create('VerificationImagesPage');
-                modal.present();
-            } 
-          }else{
-            this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
-  
-          }
-  
-  
-        })
-      }, 1000);
+   //search keyTrip
+   this.TripsService.getKeyTrip(this.SignUpService.userPlace, this.user)
+   .subscribe(keyTrip=>{
+     this.keyTrip =keyTrip;
+     console.log(this.user)
+     console.log(this.keyTrip)
+     //if key its deleted don't show VIAJE EN CURSO  
+     if(this.keyTrip === undefined || this.keyTrip === null){
+     this.onTrip=false;
+     //  this.TripsService.eraseKeyTrip(this.user);
+     //  this.TripsService.setOnTripFalse(this.user);
+       console.log("llegue adonde era")
+     }else{
+       //confirm that trip exist and get it
+       this.getTrip();
        
-    })
-    modal.present();
-
-  }else{
-     //search keyTrip
-     this.TripsService.getKeyTrip(this.SignUpService.userUniversity, this.user)
-     .subscribe(keyTrip=>{
-       this.keyTrip =keyTrip;
-       console.log(this.user)
-       console.log(this.keyTrip)
-       //if key its deleted don't show VIAJE EN CURSO  
-       if(this.keyTrip === undefined || this.keyTrip === null){
-       this.onTrip=false;
-       //  this.TripsService.eraseKeyTrip(this.user);
-       //  this.TripsService.setOnTripFalse(this.user);
-         console.log("llegue adonde era")
-       }else{
-         //confirm that trip exist and get it
-         this.getTrip();
-         
-       }
+     }
 
 })
-       // set geofire key of university to avoid asking users to put where they are going
-       this.geofireService.getLocationUniversity(this.SignUpService.userUniversity).subscribe(university=>{
-         this.university = university
-         this.locationUniversity = this.university.location;
-         this.geofireService.setLocationUniversity(this.SignUpService.userUniversity, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-       })
+     // set geofire key of university to avoid asking users to put where they are going
+     console.log(this.SignUpService.userPlace);
+     this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
+       this.university = university
+       this.locationUniversity = this.university.location;
+       this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+     })
 
+     console.log(this.SignUpService.userPlace);
+     
+     this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(user=>{
+       this.userInfo = user;
+      console.log(this.userInfo);
+      
 
-       this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.user).subscribe(user=>{
-        this.userInfo = user;
-        console.log(this.userInfo);
+       this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace).once('value').then((snap)=>{
+        this.universityInfo = snap.val();
+        console.log(this.universityInfo);
         
-        let lat=this.userInfo.fixedLocation.coordinates.lat
-        console.log(this.lat);
-        
-        let lng=this.userInfo.fixedLocation.coordinates.lng
-        this.positionDest = {lat,lng};
-        console.log(this.positionDest);
-      })
-
-
-       this.SignUpService.getInfoUniversity(this.SignUpService.userUniversity).subscribe(uni => {
-        this.universityInfo = uni;
-        if(this.universityInfo.email == undefined){
+        if(this.universityInfo.emails == undefined){
           if(this.userInfo.documents){
             if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
               let modal = this.modalCtrl.create('VerificationImagesPage');
               modal.present();
             }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-              this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+              this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
             }
           }else if(!this.userInfo.documents) {
             console.log('no hay docs')
@@ -258,15 +203,69 @@ export class FindridePage {
               modal.present();
           } 
         }else{
-          this.instancesService.isVerifiedPerson(this.SignUpService.userUniversity, this.user);
+          this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
 
         }
 
+       })
+     })  
 
+     
+
+     
+
+
+    //  this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(uni => {
+    //   this.universityInfo = uni;
+    //   if(this.universityInfo.email == undefined){
+    //     if(this.userInfo.documents){
+    //       if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
+    //         let modal = this.modalCtrl.create('VerificationImagesPage');
+    //         modal.present();
+    //       }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
+    //         this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
+    //       }
+    //     }else if(!this.userInfo.documents) {
+    //       console.log('no hay docs')
+    //       let modal = this.modalCtrl.create('VerificationImagesPage');
+    //         modal.present();
+    //     } 
+    //   }else{
+    //     this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
+
+    //   }
+
+
+    // })
+
+
+this.loadMap();
+  })
+}
+
+
+
+async getToken() {
+
+  if (this.platform.is('android')) {
+    this.token = await this.firebaseNative.getToken().then((token)=>{
+      console.log('this is the token ' + token);
+      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+        token: token
       })
+    })
   }
 
-  this.loadMap();
+  if (this.platform.is('ios')) {
+    this.token = await this.firebaseNative.getToken().then((token)=>{
+      console.log('this is the token ' + token);
+      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+        token: token
+      })
+    })
+    await this.firebaseNative.grantPermission();
+  }
+
 }
 
 conectDriver(){
@@ -288,7 +287,7 @@ conectDriver(){
 }
  getTrip(){
 
-    this.afDB.database.ref(this.SignUpService.userUniversity + '/trips/'+ this.user +'/'+ this.keyTrip)
+    this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+ this.user +'/'+ this.keyTrip)
     .once('value').then((snapshot) => {
       let trip = snapshot.val();
       console.log(trip);
@@ -306,7 +305,7 @@ conectDriver(){
 
 
  getOnTrip(){
-   this.TripsService.getOnTrip(this.SignUpService.userUniversity, this.user)
+   this.TripsService.getOnTrip(this.SignUpService.userPlace, this.user)
    .subscribe(onTrip=>{
      this.onTrip =onTrip;
      console.log(this.onTrip)
@@ -326,7 +325,7 @@ conectDriver(){
 
  
   loadMap(){
-setTimeout(() => {
+
   // this gets current position and set the camera of the map and put a marker in your location
   this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
@@ -393,7 +392,7 @@ console.log(this.userInfo.fixedLocation.name);
     },(err) => {
     console.log(err);    
    });
-}, 8000);
+
   }
   
    calculateRoute(positionOr,positionDest){
@@ -584,11 +583,10 @@ geocodeLatLng(latLng,inputName) {
                 this.loadMap();
                } else {
                  
-                
-              this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userUniversity, this.user,this.desFirebase,this.orFirebase)
-       // TODAVÍA NO SE DE AQUI QUE ES NECESARIO 
-              //   this.geoInfo1 = this.myLatLng;
-              //   console.log(this.geoInfo1);
+                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userPlace, this.user,this.desFirebase,this.orFirebase)
+       
+                this.geoInfo1 = this.myLatLng;
+                console.log(this.geoInfo1);
                
 
 
@@ -599,12 +597,12 @@ geocodeLatLng(latLng,inputName) {
               //   }
                
 
-              //   console.log("AQUIIIIIIIIIIIIIII")
-              //   console.log(this.geoInfo2.lat);
-              //   //turn on geoquery university to determine wether the user is in university
-              //   this.geofireService.setGeofireUniversity(this.SignUpService.userUniversity, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
-              //  //
-                // this.confirmPrice(this.geoInfo1, this.geoInfo2);
+                console.log("AQUIIIIIIIIIIIIIII")
+                console.log(this.geoInfo2.lat);
+                //turn on geoquery university to determine wether the user is in university
+                this.geofireService.setGeofirePlace(this.SignUpService.userPlace, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
+               //
+                this.confirmPrice(this.geoInfo1, this.geoInfo2);
                       
               }
             

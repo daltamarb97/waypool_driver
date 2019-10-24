@@ -49,16 +49,16 @@ export class ReservetripPage{
   reserveTime:any;
   constructor(public navCtrl: NavController, public SignUpService: SignUpService,public loadingCtrl: LoadingController,public TripsService:TripsService , private app: App,public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private geofireService: geofireService, public afDB: AngularFireDatabase, public instances: instancesService, public sendUsersService: sendUsersService, public toastCtrl: ToastController, private geoFireService: geofireService, private MetricsService: MetricsService) {
     this.geocoder = new google.maps.Geocoder;
-    this.SignUpService.getMyInfoDriver(this.SignUpService.userUniversity, this.userUid).takeUntil(this.unsubscribe)
+    this.SignUpService.getMyInfoDriver(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe)
 		.subscribe(userDriver => {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
         //get personal info of the driver
       
-    this.sendUsersService.getTripsOfReserves(this.SignUpService.userUniversity,this.userUid).takeUntil(this.unsubscribe)
+    this.sendUsersService.getTripsOfReserves(this.SignUpService.userPlace,this.userUid).takeUntil(this.unsubscribe)
     .subscribe( tripsReserves => {
-      console.log(this.SignUpService.userUniversity)
+      console.log(this.SignUpService.userPlace)
       this.tripsReserves = tripsReserves;
       console.log(tripsReserves);
       if(this.tripsReserves.length === 0){
@@ -150,29 +150,29 @@ export class ReservetripPage{
                  });
             toast.present();
             }else{
-              this.TripsService.setOnTrip(this.SignUpService.userUniversity,this.userUid);   
+              this.TripsService.setOnTrip(this.SignUpService.userPlace,this.userUid);   
 
-              this.TripsService.getReserveUsers(this.SignUpService.userUniversity,tripKeyTrip,this.userUid).takeUntil(this.unsubscribe)
+              this.TripsService.getReserveUsers(this.SignUpService.userPlace,tripKeyTrip,this.userUid).takeUntil(this.unsubscribe)
               .subscribe( reservesUser => {
                 this.reserveUser = reservesUser;
                 console.log(this.reserveUser);
                 //push the keyTrip,driverId on every User and onTrip = true 
                 this.reserveUser.forEach(user => {
-                  this.TripsService.startTripForUsers(this.SignUpService.userUniversity,tripKeyTrip,user.userId,this.userUid);
+                  this.TripsService.startTripForUsers(this.SignUpService.userPlace,tripKeyTrip,user.userId,this.userUid);
                 });    
                 //debería ser en vez de navPop, una funcion que te lleve a myRide y te muestre el viaje
               })
-              this.TripsService.pushKeyInDriver(this.SignUpService.userUniversity,tripKeyTrip,this.userUid);
+              this.TripsService.pushKeyInDriver(this.SignUpService.userPlace,tripKeyTrip,this.userUid);
 
-              this.TripsService.startTrip(this.SignUpService.userUniversity,tripKeyTrip,this.userUid,trip);   
-              this.TripsService.createTripState(this.SignUpService.userUniversity,tripKeyTrip,this.userUid);
+              this.TripsService.startTrip(this.SignUpService.userPlace,tripKeyTrip,this.userUid,trip);   
+              this.TripsService.createTripState(this.SignUpService.userPlace,tripKeyTrip,this.userUid);
               // this.navCtrl.pop();
 
               // steps needed to get LMU right
-               this.geofireService.deleteUserGeofireDest(this.SignUpService.userUniversity, tripKeyTrip);
-               this.geofireService.deleteUserGeofireOr(this.SignUpService.userUniversity, tripKeyTrip);
+               this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, tripKeyTrip);
+               this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, tripKeyTrip);
               setTimeout(() => {
-                this.TripsService.deleteReserve(this.SignUpService.userUniversity,tripKeyTrip,this.userUid); 
+                this.TripsService.deleteReserve(this.SignUpService.userPlace,tripKeyTrip,this.userUid); 
 
                 if(trip.type == 'origin'){
 
@@ -185,8 +185,8 @@ export class ReservetripPage{
                        }
                      }
                      // set geofirekey for LMU
-                       this.geofireService.setGeofireOrOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
-                       this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireOrTrip/' + tripKeyTrip).update({
+                       this.geofireService.setGeofireOrOnTrip(this.SignUpService.userPlace, tripKeyTrip, this.geocoordinatesOr.lat, this.geocoordinatesOr.lng);
+                       this.afDB.database.ref(this.SignUpService.userPlace + '/geofireOrTrip/' + tripKeyTrip).update({
                        driverId: this.userUid
                      })
                      console.log('executed geofire Or on Trip')
@@ -204,8 +204,8 @@ export class ReservetripPage{
                       }
                     }
                     // set geofirekey for LMU
-                    this.geofireService.setGeofireDestOnTrip(this.SignUpService.userUniversity, tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
-                    this.afDB.database.ref(this.SignUpService.userUniversity + '/geofireDestTrip/' + tripKeyTrip).update({
+                    this.geofireService.setGeofireDestOnTrip(this.SignUpService.userPlace, tripKeyTrip, this.geocoordinatesDest.lat, this.geocoordinatesDest.lng);
+                    this.afDB.database.ref(this.SignUpService.userPlace + '/geofireDestTrip/' + tripKeyTrip).update({
                       driverId: this.userUid
                     })
                     console.log('executed geofire Dest on Trip')
@@ -214,7 +214,7 @@ export class ReservetripPage{
  
                 }
                 this.app.getRootNav().push('MyridePage');
-                this.MetricsService.tripsInitiated(this.SignUpService.userUniversity,this.userUid,tripKeyTrip,trip)
+                this.MetricsService.tripsInitiated(this.SignUpService.userPlace,this.userUid,tripKeyTrip,trip)
 
               }, 2500);
              
@@ -232,6 +232,15 @@ export class ReservetripPage{
 
   
  
+  enterChat(trip) {
+    //send isTrip=true for the chat to know if its a reserve or a trip
+
+    let modal = this.modalCtrl.create('ChattingPage', {
+        reserve: trip,
+        isTrip: false
+    })
+    modal.present();
+  }
 
  lateReserve(keyTrip,reserve){
   

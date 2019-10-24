@@ -11,7 +11,8 @@
 
 <ion-content class="bg-light"> 
         <p class="important">¡IMPORTANTE!: No cierres la app mientras estas haciendo un viaje. </p> 
-
+       
+      
         <ion-list >
             <ion-card *ngFor = "let user of pendingUsers">
                 <ion-item>
@@ -38,7 +39,7 @@
                             <span class="icon-location bg-yellow"></span>{{user.destination}}</p>
                     </div>
                     <ion-row>
-                          
+                        
                                 <ion-col class="detail-text">
                                         <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
             
@@ -83,12 +84,14 @@
                     
                 </ion-card> 
 
-
-                <ion-row>
+            
+                <ion-row class="rowOfButtons" >                                 
                 
-                   
                     <ion-col class="detail-text">
-                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 90%;margin-top: 14px;margin-left: 18px;">Finalizar Viaje</button>
+                        <button class="btn bg-darkblue rounded full text-white" style="width: 90%;margin-top: 14px;margin-left: 9px;" (click)="enterChat()">Chat</button>
+                    </ion-col>
+                    <ion-col class="detail-text">
+                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 93%;margin-top: 14px;margin-left: 9px; margin-right: 9px;">Finalizar Viaje</button>
                     </ion-col>
                
                 </ion-row>

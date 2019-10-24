@@ -19,7 +19,7 @@ export class MorePage {
      user:any={};
      verified:boolean = false;
      constructor(public navCtrl: NavController,public modalCtrl: ModalController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService, public app: App) {
-          this.SignupService.getMyInfoForProfile(this.SignupService.userUniversity, this.userUid).subscribe(user=>{
+          this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).subscribe(user=>{
           this.user= user;
             console.log(this.user)
 
@@ -51,11 +51,16 @@ export class MorePage {
          logout(){
           this.authenticationService.logOut();
           console.log(firebase.auth().currentUser);
-          this.SignupService.userUniversity = undefined;
+          this.SignupService.userPlace = undefined;
           this.navCtrl.setRoot('LoginPage');
     }
          docs(){
     this.app.getRootNav().push('CarRegistrationPage');
+
+    }
+
+    schedule(){
+      this.app.getRootNav().push('SchedulePage');
 
     }
 

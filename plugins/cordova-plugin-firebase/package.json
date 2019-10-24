@@ -1,19 +1,19 @@
 {
-  "_from": "cordova-plugin-firebase@^2.0.5",
+  "_from": "cordova-plugin-firebase",
   "_id": "cordova-plugin-firebase@2.0.5",
   "_inBundle": false,
   "_integrity": "sha512-ArrP/FhqrTu+udu1DNFHIMVdwFl2+IskYPsKXHHougfZ0w9WBgQxubWYHy/ds6fabj/QQaANYPpR7mSVpL6hTg==",
   "_location": "/cordova-plugin-firebase",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "tag",
     "registry": true,
-    "raw": "cordova-plugin-firebase@^2.0.5",
+    "raw": "cordova-plugin-firebase",
     "name": "cordova-plugin-firebase",
     "escapedName": "cordova-plugin-firebase",
-    "rawSpec": "^2.0.5",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "^2.0.5"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
     "#USER",
@@ -21,7 +21,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-firebase/-/cordova-plugin-firebase-2.0.5.tgz",
   "_shasum": "11acfb4784711e62a31f84ae414b1ef601a6afd9",
-  "_spec": "cordova-plugin-firebase@^2.0.5",
+  "_spec": "cordova-plugin-firebase",
   "_where": "/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver",
   "author": {
     "name": "Robert Arnesson"

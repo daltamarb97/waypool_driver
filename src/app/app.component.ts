@@ -2,13 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, IonicPage, ToastController, AlertController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import * as firebase from 'firebase';
+import * as firebaseFirst from 'firebase';
 import { SignUpService } from '../services/signup.service';
 import { Geolocation } from '@ionic-native/geolocation/';
 import { FCM } from '@ionic-native/fcm';
-import { WalletPage } from '../pages/wallet/wallet';
-
-
+import { Firebase } from '@ionic-native/firebase';
+import { tap } from 'rxjs/operators';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { WindowService } from '../services/window.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +22,7 @@ export class MyApp {
   token:any;
   pages:any=[];
 
-  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController) {
+  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
     console.log('se cargo')
     this.pages = [
       {title:'Mi viajes',component:'ReservetripPage'},
@@ -35,34 +37,44 @@ export class MyApp {
     ]
     statusBar.backgroundColorByHexString('#ffffff');     
     splashScreen.hide();
+    
     this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then(()=>{
       console.log('location catched');
     }).catch((error)=>{
       console.log(error);
     })
 
-    platform.ready().then(()=>{
 
-      this.fcm.onNotification().subscribe(data => {
-        if(data.wasTapped){
-         console.log('app in background');
-         console.log(JSON.stringify(data));
+
+    platform.ready().then(()=>{
+      
+      this.firebase.onNotificationOpen().subscribe((response)=>{
+        if(response.tap){
+          console.log('received in background');
         }else{
-         console.log(JSON.stringify(data));
-  
-          const toast = this.toastCtrl.create({
-            message: 'testing',
-            duration: 3000
-          })
-          toast.present();
+          const toast = this.toastController.create({
+                  message: response.body,
+                  duration: 3000
+                })
+                toast.present();
         }
-      })
+      });
+
+
+      // this.fcm.onNotification() .subscribe(data => {
+      //   if(data.wasTapped){
+      //    console.log('app in background');
+      //    console.log(JSON.stringify(data));
+      //   }else{
+      //    console.log(JSON.stringify(data));
+      //   }
+      // })
     })
     
 
 
     setTimeout(() => {
-      firebase.database().ref('.info/connected').on('value', (snap)=>{
+      firebaseFirst.database().ref('.info/connected').on('value', (snap)=>{
         if(snap.val() === false){
           this.alertInternet = this.alertCtrl.create({
             title: '¡Oops!',
@@ -80,7 +92,7 @@ export class MyApp {
     }, 2500);
 
 
-     firebase.auth().onAuthStateChanged((user)=>{
+    firebaseFirst.auth().onAuthStateChanged((user)=>{
       if(user){
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';

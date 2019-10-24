@@ -1,4 +1,4 @@
-page-car-registration {
+page-car-registration-login {
     p {
         font-weight: 600;
         font-size: 1.3rem;
@@ -44,5 +44,10 @@ page-car-registration {
     }
     .buttonLight{
         color: light;
+    }
+    .skiptext{
+        color: red;
+        font-size: 10px;
+        margin-left: 95px;
     }
 }

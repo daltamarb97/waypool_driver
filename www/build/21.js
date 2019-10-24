@@ -1,14 +1,14 @@
 webpackJsonp([21],{
 
-/***/ 640:
+/***/ 641:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmUniversityPageModule", function() { return ConfirmUniversityPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmreservationPageModule", function() { return ConfirmreservationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirm_university__ = __webpack_require__(797);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirmreserve__ = __webpack_require__(801);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ConfirmUniversityPageModule = /** @class */ (function () {
-    function ConfirmUniversityPageModule() {
+var ConfirmreservationPageModule = /** @class */ (function () {
+    function ConfirmreservationPageModule() {
     }
-    ConfirmUniversityPageModule = __decorate([
+    ConfirmreservationPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */],
+                __WEBPACK_IMPORTED_MODULE_2__confirmreserve__["a" /* ConfirmreservationPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirmreserve__["a" /* ConfirmreservationPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */]
+                __WEBPACK_IMPORTED_MODULE_2__confirmreserve__["a" /* ConfirmreservationPage */]
             ]
         })
-    ], ConfirmUniversityPageModule);
-    return ConfirmUniversityPageModule;
+    ], ConfirmreservationPageModule);
+    return ConfirmreservationPageModule;
 }());
 
-//# sourceMappingURL=confirm-university.module.js.map
+//# sourceMappingURL=confirmreserve.module.js.map
 
 /***/ }),
 
-/***/ 797:
+/***/ 801:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmUniversityPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmreservationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_fire_auth__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_instances_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_trips_service__ = __webpack_require__(349);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,64 +68,82 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { AngularFireDatabase } from 'angularfire2/database';
 
 
-var ConfirmUniversityPage = /** @class */ (function () {
-    function ConfirmUniversityPage(signUpService, viewCtrl, angularFireAuth, alertCtrl, afDB) {
+
+
+
+
+var ConfirmreservationPage = /** @class */ (function () {
+    function ConfirmreservationPage(navCtrl, TripsService, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geoFireService, instances, toastCtrl, alertCtrl, app) {
         var _this = this;
-        this.signUpService = signUpService;
+        this.navCtrl = navCtrl;
+        this.TripsService = TripsService;
+        this.SignUpService = SignUpService;
+        this.sendCoordsService = sendCoordsService;
+        this.modalCtrl = modalCtrl;
+        this.AngularFireAuth = AngularFireAuth;
         this.viewCtrl = viewCtrl;
-        this.angularFireAuth = angularFireAuth;
+        this.navParams = navParams;
+        this.geoFireService = geoFireService;
+        this.instances = instances;
+        this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
-        this.afDB = afDB;
-        this.universities = [];
-        this.showButton = false;
-        this.signUpService.getUniversities().subscribe(function (universities) {
-            _this.universities = universities;
-            console.log(_this.universities);
+        this.app = app;
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.infoUser = {};
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_7_rxjs__["Subject"];
+        this.reserves = [];
+        this.passengers = [];
+        this.reserveKey = this.navParams.get('reserveKey');
+        console.log(this.reserveKey);
+        this.sendCoordsService.getPendingUsers(this.SignUpService.userPlace, this.userUid, this.reserveKey).takeUntil(this.unsubscribe)
+            .subscribe(function (users) {
+            _this.passengers = users;
+            console.log(_this.passengers);
         });
-        this.userId = this.angularFireAuth.auth.currentUser.uid;
     }
-    ConfirmUniversityPage.prototype.onChange = function () {
-        var _this = this;
-        this.showButton = false;
-        this.signUpService.userUniversity = this.universityChosen;
-        setTimeout(function () {
-            _this.afDB.database.ref(_this.signUpService.userUniversity + '/drivers/' + _this.userId)
-                .once('value')
-                .then(function (snap) {
-                var user = snap.val();
-                if (user === null) {
-                    _this.alertUni();
-                }
-                else {
-                    _this.showButton = true;
-                }
-            });
-        }, 500);
+    ConfirmreservationPage.prototype.ionViewDidLeave = function () {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     };
-    ConfirmUniversityPage.prototype.alertUni = function () {
-        var alert = this.alertCtrl.create({
-            title: '¿estas seguro que es tu universidad?',
-            subTitle: 'Seleccionaste una universidad que no es la misma que seleccionaste cuando te registraste',
-            buttons: ['OK']
-        });
-        alert.present();
+    ConfirmreservationPage.prototype.deleteUser = function (userId) {
+        this.sendCoordsService.eraseUser(this.SignUpService.userPlace, userId, this.userUid, this.reserveKey);
     };
-    ConfirmUniversityPage.prototype.goToFindaride = function () {
-        this.readyToStart = true;
-        this.viewCtrl.dismiss(this.readyToStart);
+    ConfirmreservationPage.prototype.showProfilePassegner = function (passenger) {
+        this.app.getRootNav().push('PublicProfilePage', { passenger: passenger });
+        this.accepted = true;
+        this.dismiss();
     };
-    ConfirmUniversityPage = __decorate([
+    ConfirmreservationPage.prototype.cancelReserve = function () {
+        // //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
+        // if(typeOfReserve == 'origin'){
+        //   this.geofireService.cancelGeoqueryOr(geofireKey);
+        // }else if(typeOfReserve == 'destination'){
+        //   this.geofireService.cancelGeoqueryDest(geofireKey);
+        // }
+        this.geoFireService.deleteUserGeofireDest(this.SignUpService.userPlace, this.reserveKey);
+        this.geoFireService.deleteUserGeofireOr(this.SignUpService.userPlace, this.reserveKey);
+        this.TripsService.cancelReserve(this.SignUpService.userPlace, this.userUid, this.reserveKey);
+        this.dismiss();
+    };
+    ConfirmreservationPage.prototype.dismiss = function () {
+        console.log('deleted on click');
+        this.viewCtrl.dismiss(this.accepted);
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    };
+    ConfirmreservationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-confirm-university',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\confirm-university\confirm-university.html"*/'<ion-content>\n\n  <ion-card>\n\n  <h6 class="text-theme">¿CUÁL ES TU UNIVERSIDAD?</h6>\n\n  <ion-card-content>\n\n      <ion-list>\n\n          <ion-item>\n\n            <ion-label>escoge tu universidad </ion-label>\n\n            <ion-select (ionChange)="onChange()" okText="Ok" cancelText="Cancel" [(ngModel)]= \'universityChosen\'>\n\n              <ion-option  *ngFor="let uni of universities"  name="fieldName" ngDefaultControl>{{uni.name}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        \n\n        </ion-list>\n\n  </ion-card-content>\n\n\n\n  <ion-card-content>\n\n      <div >\n\n          \n\n          <ion-row style="margin-top: 14px;justify-content: center">\n\n              \n\n              <ion-col col-8>\n\n                  <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.5rem;" *ngIf=\'showButton\' (click)="goToFindaride()">Continuar</button>\n\n              </ion-col>\n\n          </ion-row>\n\n\n\n\n\n      </div>\n\n  </ion-card-content>\n\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\confirm-university\confirm-university.html"*/,
+            selector: 'page-confirmreserve',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\confirmreserve\confirmreserve.html"*/'<ion-content>\n\n\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n\n    <ion-card>\n\n         <img src="assets/imgs/compaes.png" width="100px" style="display:inline-block" height="150px"/>\n\n\n\n       <ion-item  *ngFor="let passenger of passengers" >\n\n          <ion-avatar item-start>\n\n             <img src="assets/imgs/userPicture.png">\n\n          </ion-avatar>\n\n          <div class="passenger">\n\n            <div  class="name">\n\n                  <h2 (click) = \'showProfilePassegner(passenger)\'>{{passenger.name |titlecase}} {{passenger.lastname  |titlecase | slice:0:1}}.\n\n                        <ion-icon *ngIf=\'passenger.verifiedPerson\' name="ios-checkmark-circle" class="text-theme"></ion-icon>\n\n                  </h2>\n\n                  <h5>{{passenger.about | slice:0:19}}...</h5>\n\n            </div>\n\n            <div class="more">\n\n               <ion-icon name="close-circle"  (click)="deleteUser(passenger.userId)"></ion-icon>\n\n            </div>\n\n          </div>        \n\n       </ion-item>\n\n   \n\n       <ion-card-content>\n\n          <div class="ride-detail no-before">\n\n             <p>             Estos son tus compañeros que se han unido a tu viaje, puedes iniciar viaje               \n\n              \n\n             </p>\n\n             \n\n          </div>\n\n       </ion-card-content>\n\n       <ion-card-content>\n\n          <div class="seats">\n\n             \n\n             <ion-row style="margin-top: 14px;   display: flex;\n\n             justify-content: center">\n\n               \n\n               <button class="btn bg-red rounded full text-white cancelbutton" (click)="cancelReserve()">Cancelar reserva</button>\n\n\n\n             </ion-row>\n\n          </div>\n\n       </ion-card-content>\n\n    </ion-card>\n\n </ion-content>'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\confirmreserve\confirmreserve.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_fire_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__["AngularFireDatabase"]])
-    ], ConfirmUniversityPage);
-    return ConfirmUniversityPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_6__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
+    ], ConfirmreservationPage);
+    return ConfirmreservationPage;
 }());
 
-//# sourceMappingURL=confirm-university.js.map
+//# sourceMappingURL=confirmreserve.js.map
 
 /***/ })
 

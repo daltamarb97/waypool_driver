@@ -1,14 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 637:
+/***/ 639:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CarRegistrationPageModule", function() { return CarRegistrationPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChattingPageModule", function() { return ChattingPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__car_registration__ = __webpack_require__(794);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chatting__ = __webpack_require__(799);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,42 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CarRegistrationPageModule = /** @class */ (function () {
-    function CarRegistrationPageModule() {
+var ChattingPageModule = /** @class */ (function () {
+    function ChattingPageModule() {
     }
-    CarRegistrationPageModule = __decorate([
+    ChattingPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__car_registration__["a" /* CarRegistrationPage */],
+                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__car_registration__["a" /* CarRegistrationPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__car_registration__["a" /* CarRegistrationPage */]
+                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]
             ]
         })
-    ], CarRegistrationPageModule);
-    return CarRegistrationPageModule;
+    ], ChattingPageModule);
+    return ChattingPageModule;
 }());
 
-//# sourceMappingURL=car-registration.module.js.map
+//# sourceMappingURL=chatting.module.js.map
 
 /***/ }),
 
-/***/ 794:
+/***/ 799:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarRegistrationPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChattingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_chat_service__ = __webpack_require__(356);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -71,202 +70,162 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the CarRegistrationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CarRegistrationPage = /** @class */ (function () {
-    function CarRegistrationPage(navCtrl, navParams, viewCtrl, camera, AngularFireauth, alertCtrl, SignUpService) {
+var ChattingPage = /** @class */ (function () {
+    function ChattingPage(navCtrl, sendFeedbackService, toastCtrl, SignUpService, alertCtrl, actionSheetCtrl, chatsService, navParams, AngularFireAuth) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.camera = camera;
-        this.AngularFireauth = AngularFireauth;
-        this.alertCtrl = alertCtrl;
+        this.sendFeedbackService = sendFeedbackService;
+        this.toastCtrl = toastCtrl;
         this.SignUpService = SignUpService;
-        this.namePicture = "Licencia";
-        this.description = "Sube una foto clara de tu";
-        this.img1 = "Licencia";
-        this.img2 = "Cédula";
-        this.des1 = "Sube una foto clara de tu";
-        this.picToView = "assets/imgs/v2.png";
-        this.picToViewLicense = "assets/imgs/v2.png";
-        this.picToViewId = "assets/imgs/v4.png";
-        this.showLicense = true;
-        this.showId = false;
-        this.cameraPicLicense = false;
-        this.cameraPicId = false;
+        this.alertCtrl = alertCtrl;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.chatsService = chatsService;
+        this.navParams = navParams;
+        this.AngularFireAuth = AngularFireAuth;
+        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.chats = [];
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_6_rxjs__["Subject"];
-        this.options = {
-            quality: 100,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
-        };
-        this.driver = this.AngularFireauth.auth.currentUser.uid;
-        this.SignUpService.getMyInfo(this.SignUpService.userUniversity, this.driver).takeUntil(this.unsubscribe).subscribe(function (user) {
-            _this.driverInfo = user;
-            if (_this.driverInfo.documents) {
-                if (_this.driverInfo.documents.license == true) {
-                    _this.picToViewLicense = "assets/imgs/v2.3.png";
-                    _this.picToView = "assets/imgs/v2.3.png";
-                    _this.showLicense = false;
-                }
-                else if (_this.driverInfo.documents.id == true) {
-                    _this.picToViewId = "assets/imgs/_v4.3.png";
-                    _this.showId = false;
-                }
-                else if (_this.driverInfo.documents.license == false) {
-                    _this.picToViewLicense = "assets/imgs/v2.2.png";
-                    _this.picToView = "assets/imgs/v2.2.png";
-                    _this.showLicense = false;
-                }
-                else if (_this.driverInfo.documents.id == false) {
-                    _this.picToViewId = "assets/imgs/v4.2.png";
-                    _this.showId = false;
-                }
-                else if (_this.driverInfo.documents.license == undefined) {
-                    _this.picToViewLicense = "assets/imgs/v2.png";
-                    _this.picToView = "assets/imgs/v2.png";
-                }
-                else if (_this.driverInfo.documents.id == undefined) {
-                    _this.picToViewId = "assets/imgs/v4.png";
-                }
-            }
+        this.reserve = this.navParams.get('reserve');
+        this.isTrip = this.navParams.get('isTrip');
+        console.log(this.reserve.driver.userId);
+        this.SignUpService.getMyInfoForProfile(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe).subscribe(function (info) {
+            _this.driver = info;
+            console.log(_this.driver);
         });
+        if (this.isTrip === true) {
+            this.getChatFromTrip();
+        }
+        else {
+            this.getChatFromReserve();
+        }
     }
-    ;
-    CarRegistrationPage.prototype.ionViewDidLeave = function () {
+    ChattingPage.prototype.getChatFromTrip = function () {
+        var _this = this;
+        this.chatsService.getChatsFromTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
+            .takeUntil(this.unsubscribe).subscribe(function (chat) {
+            _this.chats = chat;
+            console.log(_this.chats);
+            _this.scrollToBottom();
+        });
+    };
+    ChattingPage.prototype.getChatFromReserve = function () {
+        var _this = this;
+        this.chatsService.getChatsFromReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
+            .takeUntil(this.unsubscribe).subscribe(function (chat) {
+            _this.chats = chat;
+            console.log(_this.chats);
+            _this.scrollToBottom();
+        });
+    };
+    ChattingPage.prototype.scrollToBottom = function () {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.content.scrollToBottom) {
+                _this.content.scrollToBottom();
+            }
+        }, 400);
+    };
+    ChattingPage.prototype.more = function () {
+        var _this = this;
+        var actionSheet = this.actionSheetCtrl.create({
+            title: 'Opciones',
+            buttons: [
+                {
+                    text: 'Reportar Chat',
+                    role: 'destructive',
+                    handler: function () {
+                        _this.reportChat();
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    };
+    ChattingPage.prototype.ionViewDidLeave = function () {
         this.unsubscribe.next();
         this.unsubscribe.complete();
     };
-    CarRegistrationPage.prototype.usageCameraLicense = function () {
+    ChattingPage.prototype.reportChat = function () {
         var _this = this;
-        this.camera.getPicture(this.options).then(function (imageData) {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64 (DATA_URL):
-            var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
-            picturesDrivers.putString(base64Image, 'data_url');
-            var alert = _this.alertCtrl.create({
-                title: '¡HECHO!',
-                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
-                buttons: ['OK']
-            });
-            alert.present();
-            _this.picToViewLicense = "assets/imgs/v2.2.png";
-            _this.picToView = "assets/imgs/v2.2.png";
-            _this.SignUpService.pushDocsL(_this.SignUpService.userUniversity, _this.driver);
-        }, function (err) {
-            console.log(err);
-            var alert = _this.alertCtrl.create({
-                title: 'hubo un error',
-                subTitle: 'intenta subir el documento otra vez',
-                buttons: ['OK']
-            });
-            alert.present();
+        var alert = this.alertCtrl.create({
+            title: 'Reportar',
+            message: 'Reportar este chat es completamente anónimo a tus compañeros y lo revisaremos de inmediato.',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Reportar',
+                    handler: function () {
+                        _this.sendFeedbackService.sendFeedback(_this.SignUpService.userPlace, 'Reporte_de_chat', _this.chats, _this.driver.name, _this.driver.lastname, _this.driver.phone, _this.userUid);
+                        var toast = _this.toastCtrl.create({
+                            message: 'Haz reportado este chat',
+                            showCloseButton: true,
+                            closeButtonText: 'OK',
+                            position: 'top'
+                        });
+                        toast.present();
+                    }
+                }
+            ]
         });
+        alert.present();
     };
-    CarRegistrationPage.prototype.usageCameraId = function () {
-        var _this = this;
-        this.camera.getPicture(this.options).then(function (imageData) {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64 (DATA_URL):
-            var base64Image = 'data:image/jpeg;base64,' + imageData;
-            var picturesDrivers = Object(__WEBPACK_IMPORTED_MODULE_3_firebase__["storage"])().ref(_this.SignUpService.userUniversity + '/documentsDrivers/' + _this.driver + '/documents/' + _this.data);
-            picturesDrivers.putString(base64Image, 'data_url');
-            var alert = _this.alertCtrl.create({
-                title: '¡HECHO!',
-                subTitle: 'ya tenemos tu documento, lo verificaremos en las proximas 24 horas y te enviaremos un correo cuando todo este listo',
-                buttons: ['OK']
+    ChattingPage.prototype.sendMessage = function () {
+        if (this.message === undefined || this.message === null) {
+            var toast = this.toastCtrl.create({
+                message: 'No puedes enviar un mensaje vacío',
+                showCloseButton: true,
+                closeButtonText: 'OK',
+                position: 'top'
             });
-            alert.present();
-            _this.picToViewId = "assets/imgs/v4.2.png";
-            _this.picToView = "assets/imgs/v4.2.png";
-            _this.SignUpService.pushDocsId(_this.SignUpService.userUniversity, _this.driver);
-        }, function (err) {
-            console.log(err);
-            var alert = _this.alertCtrl.create({
-                title: 'hubo un error',
-                subTitle: 'intenta subir el documento otra vez',
-                buttons: ['OK']
-            });
-            alert.present();
-        });
-    };
-    CarRegistrationPage.prototype.changeNamePicture1 = function () {
-        if (this.driverInfo.documents) {
-            if (this.driverInfo.documents.license == undefined) {
-                this.picToViewLicense = "assets/imgs/v2.png";
-                this.picToView = "assets/imgs/v2.png";
-                this.showLicense = true;
-            }
-            else if (this.driverInfo.documents.license == false) {
-                this.picToViewLicense = "assets/imgs/v2.2.png";
-                this.picToView = "assets/imgs/v2.2.png";
-                this.showLicense = false;
-            }
-            else if (this.driverInfo.documents.license == true) {
-                this.picToViewLicense = "assets/imgs/v2.3.png";
-                this.picToView = "assets/imgs/v2.3.png";
-                this.showLicense = false;
+            toast.present();
+        }
+        else {
+            if (this.isTrip === true) {
+                this.sendMessageForTrip();
             }
             else {
-                this.picToViewLicense = "assets/imgs/v2.png";
-                this.picToView = "assets/imgs/v2.png";
-                this.showLicense = true;
+                this.sendMessageForReserve();
             }
         }
-        this.namePicture = this.img1;
-        this.description = this.des1;
-        this.data = "licencia";
-        // this.showLicense = true;
-        this.showId = false;
     };
-    ;
-    CarRegistrationPage.prototype.changeNamePicture2 = function () {
-        if (this.driverInfo.documents) {
-            if (this.driverInfo.documents.id == undefined) {
-                this.picToViewId = "assets/imgs/v4.png";
-                this.picToView = "assets/imgs/v4.png";
-                this.showId = true;
-            }
-            else if (this.driverInfo.documents.id == false) {
-                this.picToViewId = "assets/imgs/v4.2.png";
-                this.picToView = "assets/imgs/v4.2.png";
-                this.showId = false;
-            }
-            else if (this.driverInfo.documents.id == true) {
-                this.picToViewId = "assets/imgs/_v4.3.png";
-                this.picToView = "assets/imgs/_v4.3.png";
-                this.showId = false;
-            }
-            else {
-                this.picToViewId = "assets/imgs/v4.png";
-                this.picToView = "assets/imgs/v4.png";
-                this.showId = true;
-            }
-        }
-        this.namePicture = this.img2;
-        this.description = this.des1;
-        this.data = "cedula";
-        // this.showId = true;
-        this.showLicense = false;
+    ChattingPage.prototype.sendMessageForTrip = function () {
+        console.log(this.isTrip);
+        this.chatsService.pushMessageUserInTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
+        this.message = '';
+        this.scrollToBottom();
     };
-    ;
-    CarRegistrationPage = __decorate([
+    ChattingPage.prototype.sendMessageForReserve = function () {
+        this.chatsService.pushMessageUserInReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
+        this.message = '';
+        this.scrollToBottom();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Content */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Content */])
+    ], ChattingPage.prototype, "content", void 0);
+    ChattingPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-car-registration',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\car-registration\car-registration.html"*/'<!--\n\n  Generated template for the CarRegistrationPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header class="bg-theme">\n\n    <ion-navbar >\n\n        <ion-title>SUBIR DOCUMENTOS\n\n            <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding-right padding-left>\n\n    <p text-center padding-top margin-top>{{description}}</p>\n\n    <h2 text-center>{{namePicture}}</h2>\n\n\n\n    <ion-row>\n\n        <ion-col col-4 text-center>\n\n            <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n\n        </ion-col>\n\n        <ion-col col-4 text-center>\n\n            <img   [src]="picToViewId" (click)="changeNamePicture2()">\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <div text-center class="verifiy">\n\n        <img [src]="picToView">\n\n    </div>\n\n    <ion-row>\n\n        <ion-col>\n\n            <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>\n\n            <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>\n\n        </ion-col>\n\n    </ion-row>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\car-registration\car-registration.html"*/,
+            selector: 'page-chatting',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\chatting\chatting.html"*/'<ion-header class="bg-theme">\n\n    <ion-navbar >\n\n        <ion-item style="display: flex !important;">                \n\n            <ion-icon name="arrow-back" style="font-size: 33px"  class="text-white" end-item navPop></ion-icon>\n\n            <ion-title class="text-white">CHAT GRUPAL</ion-title>\n\n            <ion-icon name="more" (click)="more()" end-item item-end class="text-white"></ion-icon>\n\n\n\n\n\n        </ion-item>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="chat-bg">\n\n    <div class="chatbox"*ngFor="let chat of chats">\n\n            <div  class="cb" >        \n\n                    <div>                        \n\n                         <div *ngIf="userUid === chat.uid" class="chat chat-left bg-theme text-white"  text-left padding float-right style="max-width: 70%;text-align: left">\n\n                            <!-- its driver message -->\n\n                             <p>{{chat.message}}</p>       \n\n                       </div>                       \n\n                   </div>                    \n\n                </div>\n\n                <div class="cb">            \n\n                    <div>  \n\n                            <div *ngIf="chat.uid !== userUid" class="chat chat-right bg-white text-dark" style="max-width: 70%;text-align: left" text-right padding float-left>  \n\n                                <!-- its user message --> \n\n                                    <h6 class="driverText" style="display: flex; color:#4BB543;">{{chat.name | titlecase}}</h6>                         \n\n                                    <p>{{chat.message}}</p>                            \n\n                                </div>                \n\n                    </div>                  \n\n                </div>\n\n               \n\n    </div>\n\n   \n\n   \n\n</ion-content>\n\n<ion-footer class="fixed-bottom">\n\n        \n\n                <ion-list inset>\n\n                    <ion-item>\n\n                        <ion-input type="text" placeholder="Escribe tu mensaje" [(ngModel)]="message" autofocus (keyup.enter)="sendMessage()"></ion-input>\n\n                  \n\n                       <button class="text-theme" item-right (click)="sendMessage()"> <ion-icon name="md-send" ></ion-icon></button>\n\n                    </ion-item>\n\n                </ion-list>\n\n            \n\n      \n\n  \n\n</ion-footer> '/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\chatting\chatting.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
-    ], CarRegistrationPage);
-    return CarRegistrationPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__["a" /* sendFeedbackService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_3__services_chat_service__["a" /* ChatsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], ChattingPage);
+    return ChattingPage;
 }());
 
-//# sourceMappingURL=car-registration.js.map
+//# sourceMappingURL=chatting.js.map
 
 /***/ })
 

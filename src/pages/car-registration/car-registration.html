@@ -30,9 +30,12 @@
     </div>
     <ion-row>
         <ion-col>
-            <p padding-top class="btn-box" *ngIf = 'showLicense'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto</button></p>
-            <p padding-top class="btn-box" *ngIf = 'showId'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto</button></p>
+            <p padding-top class="btn-box" *ngIf = 'showLicense'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto de Licencia</button></p>
+            <p padding-top class="btn-box" *ngIf = 'showId'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto de Cédula</button></p>
         </ion-col>
+    </ion-row>
+    <ion-row>
+            <p justify-content-center align-items-center class="skiptext"><strong  (click)="skip()">No lo quiero hacer ahora</strong></p>
     </ion-row>
 </ion-content>
 

@@ -1,14 +1,14 @@
 webpackJsonp([11],{
 
-/***/ 648:
+/***/ 650:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicProfilePageModule", function() { return PublicProfilePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RemoveSchedulePageModule", function() { return RemoveSchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__public_profile__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(810);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,41 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PublicProfilePageModule = /** @class */ (function () {
-    function PublicProfilePageModule() {
+var RemoveSchedulePageModule = /** @class */ (function () {
+    function RemoveSchedulePageModule() {
     }
-    PublicProfilePageModule = __decorate([
+    RemoveSchedulePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */],
+                __WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */]),
             ],
-            exports: [
-                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]
-            ]
         })
-    ], PublicProfilePageModule);
-    return PublicProfilePageModule;
+    ], RemoveSchedulePageModule);
+    return RemoveSchedulePageModule;
 }());
 
-//# sourceMappingURL=public-profile.module.js.map
+//# sourceMappingURL=remove-schedule.module.js.map
 
 /***/ }),
 
-/***/ 805:
+/***/ 810:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicProfilePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RemoveSchedulePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -66,38 +61,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 /**
- * Generated class for the PublicProfilePage page.
+ * Generated class for the RemoveSchedulePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var PublicProfilePage = /** @class */ (function () {
-    function PublicProfilePage(navCtrl, modalCtrl, toastCtrl, alertCtrl, AngularFireAuth, authenticationService, SignupService, navParams) {
+var RemoveSchedulePage = /** @class */ (function () {
+    function RemoveSchedulePage(navCtrl, navParams, viewCtrl, alertCtrl, signUpService, angularFireAuth) {
         this.navCtrl = navCtrl;
-        this.modalCtrl = modalCtrl;
-        this.toastCtrl = toastCtrl;
-        this.alertCtrl = alertCtrl;
-        this.AngularFireAuth = AngularFireAuth;
-        this.authenticationService = authenticationService;
-        this.SignupService = SignupService;
         this.navParams = navParams;
-        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_5_rxjs__["Subject"];
-        this.passenger = this.navParams.get('passenger');
-        console.log(this.passenger);
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.signUpService = signUpService;
+        this.angularFireAuth = angularFireAuth;
+        this.schedule = this.navParams.get('schedule');
+        console.log(this.schedule);
+        this.userId = this.angularFireAuth.auth.currentUser.uid;
+        this.startHour = this.schedule.hour;
+        this.picToView = this.schedule.image;
+        this.textMessage = this.schedule.description;
     }
-    PublicProfilePage = __decorate([
+    RemoveSchedulePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad RemoveSchedulePage');
+    };
+    RemoveSchedulePage.prototype.dismiss = function () {
+        this.viewCtrl.dismiss(this.accepted);
+    };
+    RemoveSchedulePage.prototype.remove = function () {
+        this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
+        this.dismiss();
+    };
+    RemoveSchedulePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-public-profile',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\public-profile\public-profile.html"*/'<ion-header class="bg-theme">\n\n  <ion-navbar>\n\n      <ion-title>PERFIL DE {{passenger.name | uppercase}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="bg-light">\n\n<!-- <ion-row>\n\n        <ion-item style="position: relative;z-index: 2;">\n\n                <ion-avatar item-start>\n\n                    <img class="image" src="assets/imgs/userPicture.png">\n\n                </ion-avatar>\n\n            </ion-item>\n\n</ion-row> -->\n\n<ion-row>\n\n    <ion-item>\n\n            <div class="name">\n\n                    <h1> \n\n                        {{passenger.name |titlecase}} {{passenger.lastname |titlecase}}\n\n                    </h1>\n\n                    \n\n                </div>\n\n    </ion-item>\n\n \n\n</ion-row>\n\n  \n\n  <div class="textBox">\n\n      <ion-list>   \n\n          <div class="bg-white" padding>\n\n              <ion-list no-lines>\n\n                  <ion-item>\n\n                      <ion-label stacked>Número Telefónico</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.phone" readonly></ion-input>\n\n                    </ion-item>\n\n                    <!-- PROBLEM WITH DISPLAYING THE EMAIL -->\n\n                  <!-- <ion-item>\n\n                      <ion-label stacked>Email</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="email" readonly></ion-input>                        <ion-input type="text" [(ngModel)]="user.name" readonly></ion-input>\n\n                  </ion-item> -->\n\n                  <ion-item>\n\n                      <ion-label stacked >Sobre {{passenger.name}}</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.about" readonly></ion-input>\n\n                    </ion-item>\n\n                  <ion-item>\n\n                      <ion-label stacked>URL de interés</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.url" readonly></ion-input>\n\n                  </ion-item>\n\n                 \n\n              </ion-list>\n\n          </div>\n\n      </ion-list>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\public-profile\public-profile.html"*/,
+            selector: 'page-remove-schedule',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\remove-schedule\remove-schedule.html"*/'<ion-content>\n\n\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n\n    <ion-card>\n\n  \n\n        <ion-card-content>\n\n            <ion-row style="margin-top: 14px;    display: flex;\n\n            justify-content: center">\n\n                <ion-list>\n\n                    <ion-item>\n\n                        <ion-label>Hora:</ion-label>\n\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n\n                </ion-item>\n\n                </ion-list>                    \n\n            </ion-row>\n\n    </ion-card-content>\n\n\n\n    <br>\n\n    <h2 text-center>A esta hora vas de tu:</h2>\n\n     <h1 text-center class="texto1">{{textMessage}}</h1>\n\n      <ion-row>\n\n          <ion-col class="col1">\n\n              <img [src]="picToView" height="100px" width="100%"/>\n\n          </ion-col>\n\n      </ion-row>\n\n  \n\n        <ion-card-content>\n\n            <div class="seats">           \n\n                <ion-row style="margin-top: 14px;    display: flex;\n\n                justify-content: center">\n\n                   \n\n                    <ion-col col-8>\n\n                        <button class="btn bg-red text-white rounded" style="width: 100%;font-size: .95rem;" (click)="remove()">Eliminar este horario</button>\n\n                    </ion-col>\n\n                </ion-row>\n\n            </div>\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\remove-schedule\remove-schedule.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
-    ], PublicProfilePage);
-    return PublicProfilePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], RemoveSchedulePage);
+    return RemoveSchedulePage;
 }());
 
-//# sourceMappingURL=public-profile.js.map
+//# sourceMappingURL=remove-schedule.js.map
 
 /***/ })
 
