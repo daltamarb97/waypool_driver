@@ -88,6 +88,27 @@ export class SignUpService {
 
     }
 
+    public async saveUserInAllUsers(place, user){
+        this.afDB.database.ref('/allUsers/'+ user).update({
+            place: place
+        });
+        
+
+    }
+
+    setFixedLocationCoordinates(place, user, lat, lng){
+        this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation/coordinates').update({
+            lat: lat,
+            lng:lng
+        })
+    }
+
+    setFixedLocationName(place, user, name){
+        this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation').update({
+            name: name
+        })
+    }
+
     
     public getMyInfoForProfile(place, userId){
         return this.afDB.object(place + '/drivers/'+ userId).valueChanges();

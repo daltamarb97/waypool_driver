@@ -11,6 +11,7 @@ import { geofireService } from '../../services/geofire.services';
 import { Subscription, Subject, Subscriber } from 'rxjs';
 import * as moment from 'moment';
 import { MetricsService } from '../../services/metrics.service';
+import { instancesService } from '../../services/instances.service';
 
  
 
@@ -31,7 +32,7 @@ export class AddSchedulePage {
   userId: any;
   geofireType:string;
   imageURL:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
   }

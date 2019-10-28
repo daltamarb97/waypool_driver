@@ -32,6 +32,24 @@ public turnOntripUsersFalse(place, user){
     })
 } 
 
+public scheduleTypeManual(place, user){
+    this.afDB.database.ref(place + '/drivers/' + user).update({
+        scheduleType: 'manual'
+    }, (error)=>{
+        console.log(error);
+        
+    })
+} 
+
+public scheduleTypePicture(place, user){
+    this.afDB.database.ref(place + '/drivers/' + user).update({
+        scheduleType: 'picture'
+    }, (error)=>{
+        console.log(error);
+        
+    })
+} 
+
 public turnOntripUsersListRide(driverId, user){
     this.afDB.database.ref('/drivers/' + driverId + '/trips/usersListRide/' + user).update({
         onTrip: true

@@ -19,7 +19,7 @@ import * as firebase from 'firebase';
 import { Subject } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-
+declare var google;
 @IonicPage()
 @Component({
   selector: 'page-signup',
@@ -48,6 +48,7 @@ export class SignupPage {
     verificationCode:string;
     unsubscribe = new Subject;
     noShowButton:boolean = false;
+    geocoder: any
 
 
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App, private afDB: AngularFireDatabase) {
@@ -65,6 +66,9 @@ export class SignupPage {
         enterprise: ["", Validators.required],
         isChecked:[true, Validators.required]
     })
+
+    this.geocoder = new google.maps.Geocoder;
+
 
     // this.SignUpService.pushEmails('uninorte', '@uninorte.edu.co');
     // this.SignUpService.pushEmails('uninorte', '@jhggh.edu.co');
@@ -164,7 +168,7 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmailComplete,
                 phone: '+57'+userPhone,
-                enterprise: userPlace,
+                place: userPlace,
                 createdBy: 'driver',
                 company: this.company
             };
@@ -174,7 +178,7 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmailComplete,
                 phone: '+57'+userPhone,
-                enterprise: userPlace,
+                place: userPlace,
                 createdBy: 'driver',
             };  
           }
@@ -196,10 +200,22 @@ export class SignupPage {
                                 this.user.userId = user.uid;
                             }
                             this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
+                           
+                            // PROBAR ESTO URGENTE
+                            this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace + '/location').once('value').then((snap)=>{
+                                console.log(snap.val());
+                                this.SignUpService.setFixedLocationCoordinates(this.SignUpService.userPlace, this.user.userId, snap.val().lat, snap.val().lng )
+                                this.geocodingPlace(snap.val().lat, snap.val().lng, this.SignUpService.userPlace, this.user.userId);
+                            })
+                            this.SignUpService.saveUserInAllUsers(this.SignUpService.userPlace, this.user.userId);
                             this.SignUpService.addCarProfile(this.SignUpService.userPlace, this.user.userId,this.car);
+                            
+                            
                             //send text message with code
                             // this.sendVerificationCode(this.user.userId);
                             // this.app.getRootNav().push('LoginPage');
+
+
                         }else{
                             console.log('there is no user');
                         }
@@ -282,9 +298,9 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmail,
                 phone: '+57'+userPhone,
-                enterprise: userPlace,
+                place: userPlace,
                 createdBy: 'driver',
-                company: this.company
+                company: userPlace
             };
           }else{
             this.user = {
@@ -292,7 +308,7 @@ export class SignupPage {
                 lastname: userLastName,
                 email: userEmail,
                 phone: '+57'+userPhone,
-                enterprise: userPlace,
+                place: userPlace,
                 createdBy: 'driver',
             };
           }       
@@ -300,7 +316,7 @@ export class SignupPage {
         this.SignUpService.userPlace = userPlace;
         
           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
-            this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(() => {
+            this.authenticationService.registerWithEmail(userEmail, userPassword).then(() => {
 
             if(!this.user.userId){
                 this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
@@ -313,6 +329,13 @@ export class SignupPage {
                             this.user.userId = user.uid;
                         }
                         this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
+                        // PROBAR ESTO URGENTE
+                        this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace + '/location').once('value').then((snap)=>{
+                            console.log(snap.val());
+                            this.SignUpService.setFixedLocationCoordinates(this.SignUpService.userPlace, this.user.userId, snap.val().lat, snap.val().lng )
+                            this.geocodingPlace(snap.val().lat, snap.val().lng, this.SignUpService.userPlace, this.user.userId);
+                        })
+                        this.SignUpService.saveUserInAllUsers(this.SignUpService.userPlace, user.uid);
                         this.SignUpService.addCarProfile(this.SignUpService.userPlace, this.user.userId,this.car);
                         //send text message with code
                         //  this.sendVerificationCode(this.user.userId);
@@ -380,4 +403,22 @@ export class SignupPage {
     }
 
    
+
+    geocodingPlace(lat, lng, place, userId) {
+
+        this.geocoder.geocode({'location': lat, lng}, (results, status) => {
+          if (status === 'OK') {
+            if (results[0]) {
+               let namePlace =[results[0].formatted_address]
+               this.SignUpService.setFixedLocationName(place, userId, namePlace);
+            } else {
+             alert('No results found');
+            }
+          } else {
+            alert('Geocoder failed due to: ' + status);
+          }
+                      
+      
+        });
+      }
 }

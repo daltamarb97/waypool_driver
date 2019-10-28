@@ -4,6 +4,7 @@ import { SignUpService } from '../../services/signup.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
+import { instancesService } from '../../services/instances.service';
 
 /**
  * Generated class for the SchedulePage page.
@@ -38,7 +39,7 @@ export class SchedulePage {
     destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController, private instances: instancesService) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
 
@@ -92,7 +93,7 @@ export class SchedulePage {
 
   usageCameraSchedule(){
     this.camera.getPicture(this.optionsCamera).then((imageData) => {
-
+      this.instances.scheduleTypePicture(this.signUpService.userPlace, this.userId);
       let loading = this.loadingCtrl.create({
         spinner: 'crescent',
         content: `
@@ -110,11 +111,12 @@ export class SchedulePage {
       
       pictureSchedule.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
+        this.ionViewDidLoad
         const alert = this.alertCtrl.create({
           title: '¡HECHO!',
           subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
           buttons: [{
-            text: 'OK',
+            text: 'OK', 
             handler: () => {
               this.app.getRootNav().push('TabsPage');
             }
@@ -163,6 +165,7 @@ export class SchedulePage {
       
       pictureSchedule.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
+        this.instances.scheduleTypePicture(this.signUpService.userPlace, this.userId);
         const alert = this.alertCtrl.create({
           title: '¡HECHO!',
           subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
@@ -196,7 +199,8 @@ export class SchedulePage {
   }
 
   goFindride(){
-    this.app.getRootNav().push('TabsPage');
+    this.app.getRootNav().push('FindridePage');
+    this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
 
   }
 }
