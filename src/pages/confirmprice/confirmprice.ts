@@ -64,6 +64,9 @@ export class ConfirmpricePage {
    reserve:any;
    startHour:any;
    reservesAlreadyCreated:any;
+   houseAddress:any;
+   placeAddress:any;
+   schedules = [];
   constructor(public navCtrl: NavController, public appCtrl: App, private MetricsService:MetricsService , public PriceService:priceService,public alertCtrl: AlertController,private afDB: AngularFireDatabase,public sendUsersService: sendUsersService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, private geofireService: geofireService) {
     //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
     this.SignUpService.getCar( this.SignUpService.userPlace , this.userDriverUid).takeUntil(this.unsubscribe)
@@ -74,18 +77,20 @@ export class ConfirmpricePage {
     });
 
 
+  
+    
+
+
 
     this.SignUpService.getMyInfo(this.SignUpService.userPlace , this.userDriverUid).takeUntil(this.unsubscribe).subscribe(driver=>{
       this.driver = driver;
-      
-      this.driverInfo.origin = this.driver.trips.origin
-      this.driverInfo.destination = this.driver.trips.destination
+  
+      // this.driverInfo.houseAddr = this.driver.houseAddress.name
+      this.driverInfo.placeAddr = this.driver.fixedLocation.name
       this.driverInfo.name = this.driver.name
       this.driverInfo.lastname = this.driver.lastname
       this.driverInfo.phone = this.driver.phone
       this.driverInfo.userId = this.driver.userId
-      this.driverInfo.car = this.driver.trips.car
-      this.driverInfo.price = this.driver.trips.price
       this.driverInfo.verifiedPerson = this.driver.verifiedPerson
       this.driverInfo.company = this.driver.company
 
@@ -114,6 +119,47 @@ export class ConfirmpricePage {
                   alert.present();
             }else{
               this.PriceService.setPrice(this.SignUpService.userPlace, this.userDriverUid,this.precio,this.car);
+              this.afDB.list(this.SignUpService.userPlace + '/drivers/' + this.userDriverUid + '/schedule/').valueChanges().subscribe((schedules)=>{
+                this.schedules = schedules;
+                this.schedules.forEach(sche => {
+                  if(sche.type === 'origin'){
+                    this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid).push({
+                      driver: this.driverInfo,
+                      car:this.driver.trips.car,
+                      houseAddr: this.driver.houseAddress.name,
+                      placeAddr: this.driverInfo.placeAddr,
+                      price:this.driver.trips.price,
+                      startHour: sche.hour,
+                      type: sche.type,
+                      company: this.driverInfo.company
+              
+                  }).then((snap)=>{
+                    const key = snap.key;
+                    // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
+            
+                   // set geofireOrkey 
+                   this.geofireService.setGeofireOrNEWTEST(this.SignUpService.userPlace, key, this.driver.houseAddress.coordinates.lat, this.driver.houseAddress.coordinates.lng );
+                   this.afDB.database.ref(this.SignUpService.userPlace + '/geofireOr/' + key).update({
+                      driverId: this.driverInfo.userId
+                   })
+                   console.log('executed geofire Or')
+                  
+              
+              
+                      this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid + '/' + key).update({
+                          keyTrip: key 
+                      }) 
+
+                      this.dismiss();
+
+                  })
+                  }else{
+                    console.log('es destination');
+                    
+                  }
+                 
+                });
+              })
 
             }
 
@@ -342,8 +388,11 @@ export class ConfirmpricePage {
 //           console.log('es una fecha pasada');
 //       }   
 
-      // console.log(this.car);
-  // }
+//       console.log(this.car);
+//   }
+
+
+  //---------------------------------------------------------------------------------------------------------------------------//
      
 }; 
         

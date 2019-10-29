@@ -4,7 +4,7 @@ import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
 // import { TabsPage } from '../tabs/tabs';
 // import { Geofence } from '@ionic-native/geofence';
 import { Geolocation } from '@ionic-native/geolocation/';
-import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage, App } from 'ionic-angular';
+import { NavController, Platform, ViewController, AlertController, ModalController, ToastController, IonicPage, App, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 
@@ -59,6 +59,8 @@ export class FindridePage {
   trip:any = {};
   // tripIdFirebase = this.AngularFireAuth.auth.currentUser;
   desFirebase:any;
+  houseAddress:any;
+  placeAddress:any;
   tripId:any = null;
   orFirebase:any;
 
@@ -84,7 +86,7 @@ export class FindridePage {
   locationUniversity:any ={};
   university:any;
   doGeoquery:boolean;
-  keyTrip:any;
+  keyTrip:any; 
   onTrip:any;
   token:any;
   isConected:boolean = false;
@@ -92,7 +94,9 @@ export class FindridePage {
   lat:any;
   lng:any;
   myInfoAboutMyPlace:any;
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
+  schedules = [];
+  geocoordinatesHouse:any;
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController ) {
 
 
     
@@ -171,12 +175,12 @@ export class FindridePage {
 
 })
      // set geofire key of university to avoid asking users to put where they are going
-     console.log(this.SignUpService.userPlace);
-     this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
-       this.university = university
-       this.locationUniversity = this.university.location;
-       this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-     })
+    //  console.log(this.SignUpService.userPlace);
+    //  this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
+    //    this.university = university
+    //    this.locationUniversity = this.university.location;
+    //    this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+    //  })
 
      console.log(this.SignUpService.userPlace);
      
@@ -269,21 +273,142 @@ async getToken() {
 }
 
 conectDriver(){
-  if(this.isConected === true){
-    console.log("estoy true")
-    this.disable();
-    console.log(this.userInfo.fixedLocation.name);
-    let modal = this.modalCtrl.create('ConfirmpricePage');
-    modal.onDidDismiss(accepted => {
-      if(accepted){
-        // // this.navCtrl.push('ListridePage');
-        // this.app.getRootNav().push('ReservetripPage');
-      }
-    })
- modal.present();
+  if(this.currentUser.emailVerified == false){
+    const alert = this.alertCtrl.create({
+      title: 'Oops!',
+      subTitle: 'por favor verifica tu email',
+      buttons: ['OK']
+    });
+    alert.present();  
   }else{
-   this.enable();
+
+    if(this.userInfo.documents){
+      if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
+        try{
+          
+          this.houseAddress = this.autocompleteMyPos.input;
+          this.placeAddress = this.userInfo.fixedLocation.name;
+          console.log(this.houseAddress);
+          
+
+          if(this.autocompleteMyPos.input == ''){
+            this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
+            this.clearMarkers();
+            this.directionsDisplay.setDirections({routes: []});
+            this.loadMap();
+          }else{
+
+
+            if(this.isConected === true){
+              let loading = this.loadingCtrl.create({
+                spinner: 'crescent',
+                content: `
+                  <div class="custom-spinner-container">
+                    <div class="custom-spinner-box"></div>
+                  </div>`
+                  });
+              loading.present();
+              console.log("estoy true")
+              this.disable();
+              console.log(this.userInfo.fixedLocation.name);
+              // this.confirmPrice();
+
+              this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
+                if(status==='OK'){
+                  this.geocoordinatesHouse={
+                    lat:results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                  }
+                }
+                this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
+                this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
+                loading.dismiss();
+              })
+
+              let modal = this.modalCtrl.create('ConfirmpricePage');
+              modal.onDidDismiss(accepted => {
+                if(accepted){
+                  // // this.navCtrl.push('ListridePage');
+                  // this.app.getRootNav().push('ReservetripPage');
+                  let alert = this.alertCtrl.create({
+                    title: '¡Genial!Desde este momento empezarás a compartir tus viajes',
+                    subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
+                   buttons: ['OK']
+
+                  })
+                  alert.present();
+
+                  
+                }
+              })
+           modal.present();
+            }else{
+             this.enable();
+            }
+
+
+
+            
+          }
+        }catch(error){
+          console.log(error);
+          
+        }
+
+
+      }else{
+          let alert = this.alertCtrl.create({
+            title: '¡oh-uh!',
+            subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+           buttons: [
+            { 
+              text: 'Subir mis documentos',
+              handler: () => {
+                this.navCtrl.push('CarRegistrationPage');
+              }
+            },
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+               
+                }
+              }
+            ],
+            cssClass: 'alertDanger'
+          });
+          alert.present();
+        }
+    }else{
+      let alert = this.alertCtrl.create({
+        title: '¡oh-oh!',
+        subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+       buttons: [
+        { 
+          text: 'Subir mis documentos',
+          handler: () => {
+            this.navCtrl.push('CarRegistrationPage');
+          }
+        },
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+           
+            }
+          }
+        ],
+        cssClass: 'alertDanger'
+      });
+      alert.present();
+    }
   }
+
+
+
+
+  
+  
 }
  getTrip(){
 
@@ -459,6 +584,8 @@ selectSearchResultMyPos(item){
       //     lat: results[0].geometry.location.lat,
       //     lng: results[0].geometry.location.lng
       // };
+
+      
         this.markerGeolocation = new google.maps.Marker({
         position: results[0].geometry.location,
         map: this.map,
@@ -473,7 +600,7 @@ selectSearchResultMyPos(item){
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
       this.markers.push( this.markerGeolocation);
       this.map.setCenter(results[0].geometry.location);
-      console.log(results[0].geometry.location)
+      console.log(results[0].geometry.location);
       this.autocompleteMyPos.input=[item.description]
       this.autocompleteMyDest.input=''
       this.calculateRoute(results[0].geometry.location,this.positionDest);
@@ -576,7 +703,7 @@ geocodeLatLng(latLng,inputName) {
 
             console.log(this.orFirebase);
           if( this.autocompleteMyPos.input==''){
-                this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
+                this.presentAlert('No tienes toda la informacion','Por favor asegurate de que la dirección de tu casa sea la correcta','Ok');
                 this.clearMarkers();
                 
                 this.directionsDisplay.setDirections({routes: []});
@@ -670,6 +797,8 @@ geocodeLatLng(latLng,inputName) {
   
 
 }
+
+
     presentAlert(title,text,button) {
       let alert = this.alertCtrl.create({
         title: title,
@@ -683,17 +812,20 @@ geocodeLatLng(latLng,inputName) {
 
    
   
-   confirmPrice(geoInfo1, geoInfo2){
+   confirmPrice(houseAddr, placeAddr){
      this.doGeoquery = false;
-      let modal = this.modalCtrl.create('ConfirmpricePage', {geoInfo1, geoInfo2});
+      let modal = this.modalCtrl.create('ConfirmpricePage', {houseAddr, placeAddr});
       modal.onDidDismiss(accepted => {
         if(accepted){
           // this.navCtrl.push('ListridePage');
-          this.app.getRootNav().push('ReservetripPage');
+          // this.app.getRootNav().push('ReservetripPage');
         }
       })
    modal.present();
    }
+
+
+
    help(){
     const toast = this.toastCtrl.create({
       message: 'En esta página podrás conectarte con compañeros de tu misma universidad que quieran compartir un viaje contigo.',
@@ -709,6 +841,9 @@ geocodeLatLng(latLng,inputName) {
     // const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
     // inputs2[0].disabled=true;
         }
+
+
+
         enable() {
           const inputs: any = document.getElementById("input").getElementsByTagName("INPUT");
           inputs[0].disabled=false;

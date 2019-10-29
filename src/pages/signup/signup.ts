@@ -204,6 +204,8 @@ export class SignupPage {
                             // PROBAR ESTO URGENTE
                             this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace + '/location').once('value').then((snap)=>{
                                 console.log(snap.val());
+                                console.log(snap.val().lng);
+                                
                                 this.SignUpService.setFixedLocationCoordinates(this.SignUpService.userPlace, this.user.userId, snap.val().lat, snap.val().lng )
                                 this.geocodingPlace(snap.val().lat, snap.val().lng, this.SignUpService.userPlace, this.user.userId);
                             })
@@ -406,11 +408,11 @@ export class SignupPage {
 
     geocodingPlace(lat, lng, place, userId) {
 
-        this.geocoder.geocode({'location': lat, lng}, (results, status) => {
+        this.geocoder.geocode({'location': {lat, lng}}, (results, status) => {
           if (status === 'OK') {
             if (results[0]) {
-               let namePlace =[results[0].formatted_address]
-               this.SignUpService.setFixedLocationName(place, userId, namePlace);
+               let namePlace =[results[0].formatted_address];
+               this.SignUpService.setFixedLocationName(place, userId, namePlace[0]);
             } else {
              alert('No results found');
             }

@@ -344,6 +344,19 @@ public cancelGeofireOrigin(place, driverId){
   })
 }
 
+public setHouseAddress(place, driverId, lat, lng){
+  this.afDB.database.ref(place + '/drivers/' + driverId + '/houseAddress/coordinates').update({
+    lat:lat,
+    lng:lng
+  })
+}
+
+public setHouseAddressName(place, driverId, name){
+  this.afDB.database.ref(place + '/drivers/' + driverId + '/houseAddress/').update({
+    name: name
+  })
+}
+
 public getLocationPlace(place){
    return this.afDB.object('/allPlaces/'+ place).valueChanges();
  }

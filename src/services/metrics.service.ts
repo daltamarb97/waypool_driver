@@ -9,14 +9,13 @@ export class MetricsService {
     }
 
 
-    public createdReserves(place, driverUid,keyReserve,driver,car,destination,origin,note,precio,startHour,typeOfReserve){
+    public createdReserves(place,driver,car,house,placeD,precio,startHour,typeOfReserve){
     //send every reserve that were created
     this.afDB.database.ref('data/allReservesCreated/'+place).push({
         driver: driver,
         car:car,
-        destination:destination,
-        origin:origin,
-        note: note,
+        house:house,
+        placeD:placeD,
         price:precio,
         startHour:startHour,
         type: typeOfReserve,

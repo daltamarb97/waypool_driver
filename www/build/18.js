@@ -53,12 +53,12 @@ var FindridePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(204);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -124,7 +124,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 var FindridePage = /** @class */ (function () {
-    function FindridePage(geofireService, TripsService, afDB, navCtrl, SignUpService, modalCtrl, authenticationService, geolocation, zone, sendCoordsService, AngularFireAuth, alertCtrl, toastCtrl, app, sendUsersService, instancesService, firebaseNative, platform, fcm) {
+    function FindridePage(geofireService, TripsService, afDB, navCtrl, SignUpService, modalCtrl, authenticationService, geolocation, zone, sendCoordsService, AngularFireAuth, alertCtrl, toastCtrl, app, sendUsersService, instancesService, firebaseNative, platform, fcm, loadingCtrl) {
         this.geofireService = geofireService;
         this.TripsService = TripsService;
         this.afDB = afDB;
@@ -144,6 +144,7 @@ var FindridePage = /** @class */ (function () {
         this.firebaseNative = firebaseNative;
         this.platform = platform;
         this.fcm = fcm;
+        this.loadingCtrl = loadingCtrl;
         // waypoints variables
         this.directionsService = null;
         this.directionsDisplay = null;
@@ -161,6 +162,7 @@ var FindridePage = /** @class */ (function () {
         this.reserves = [];
         this.locationUniversity = {};
         this.isConected = false;
+        this.schedules = [];
         this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
         this.geocoder = new google.maps.Geocoder;
         this.autocompleteMyPos = { input: '' };
@@ -216,12 +218,12 @@ var FindridePage = /** @class */ (function () {
                 }
             });
             // set geofire key of university to avoid asking users to put where they are going
-            console.log(_this.SignUpService.userPlace);
-            _this.geofireService.getLocationPlace(_this.SignUpService.userPlace).subscribe(function (university) {
-                _this.university = university;
-                _this.locationUniversity = _this.university.location;
-                _this.geofireService.setLocationPlace(_this.SignUpService.userPlace, "some_key", _this.locationUniversity.lat, _this.locationUniversity.lng);
-            });
+            //  console.log(this.SignUpService.userPlace);
+            //  this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
+            //    this.university = university
+            //    this.locationUniversity = this.university.location;
+            //    this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
+            //  })
             console.log(_this.SignUpService.userPlace);
             _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
                 _this.userInfo = user;
@@ -311,21 +313,119 @@ var FindridePage = /** @class */ (function () {
         });
     };
     FindridePage.prototype.conectDriver = function () {
-        if (this.isConected === true) {
-            console.log("estoy true");
-            this.disable();
-            console.log(this.userInfo.fixedLocation.name);
-            var modal = this.modalCtrl.create('ConfirmpricePage');
-            modal.onDidDismiss(function (accepted) {
-                if (accepted) {
-                    // // this.navCtrl.push('ListridePage');
-                    // this.app.getRootNav().push('ReservetripPage');
-                }
+        var _this = this;
+        if (this.currentUser.emailVerified == false) {
+            var alert = this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'por favor verifica tu email',
+                buttons: ['OK']
             });
-            modal.present();
+            alert.present();
         }
         else {
-            this.enable();
+            if (this.userInfo.documents) {
+                if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
+                    try {
+                        this.houseAddress = this.autocompleteMyPos.input;
+                        this.placeAddress = this.userInfo.fixedLocation.name;
+                        console.log(this.houseAddress);
+                        if (this.autocompleteMyPos.input == '') {
+                            this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
+                            this.clearMarkers();
+                            this.directionsDisplay.setDirections({ routes: [] });
+                            this.loadMap();
+                        }
+                        else {
+                            if (this.isConected === true) {
+                                var loading_1 = this.loadingCtrl.create({
+                                    spinner: 'crescent',
+                                    content: "\n                  <div class=\"custom-spinner-container\">\n                    <div class=\"custom-spinner-box\"></div>\n                  </div>"
+                                });
+                                loading_1.present();
+                                console.log("estoy true");
+                                this.disable();
+                                console.log(this.userInfo.fixedLocation.name);
+                                // this.confirmPrice();
+                                this.geocoder.geocode({ 'address': this.houseAddress[0] }, function (results, status) {
+                                    if (status === 'OK') {
+                                        _this.geocoordinatesHouse = {
+                                            lat: results[0].geometry.location.lat(),
+                                            lng: results[0].geometry.location.lng()
+                                        };
+                                    }
+                                    _this.geofireService.setHouseAddressName(_this.SignUpService.userPlace, _this.user, _this.houseAddress[0]);
+                                    _this.geofireService.setHouseAddress(_this.SignUpService.userPlace, _this.user, _this.geocoordinatesHouse.lat, _this.geocoordinatesHouse.lng);
+                                    loading_1.dismiss();
+                                });
+                                var modal = this.modalCtrl.create('ConfirmpricePage');
+                                modal.onDidDismiss(function (accepted) {
+                                    if (accepted) {
+                                        // // this.navCtrl.push('ListridePage');
+                                        // this.app.getRootNav().push('ReservetripPage');
+                                        var alert = _this.alertCtrl.create({
+                                            title: '¡Genial!Desde este momento empezarás a compartir tus viajes',
+                                            subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
+                                            buttons: ['OK']
+                                        });
+                                        alert.present();
+                                    }
+                                });
+                                modal.present();
+                            }
+                            else {
+                                this.enable();
+                            }
+                        }
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                }
+                else {
+                    var alert = this.alertCtrl.create({
+                        title: '¡oh-uh!',
+                        subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+                        buttons: [
+                            {
+                                text: 'Subir mis documentos',
+                                handler: function () {
+                                    _this.navCtrl.push('CarRegistrationPage');
+                                }
+                            },
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            }
+                        ],
+                        cssClass: 'alertDanger'
+                    });
+                    alert.present();
+                }
+            }
+            else {
+                var alert = this.alertCtrl.create({
+                    title: '¡oh-oh!',
+                    subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+                    buttons: [
+                        {
+                            text: 'Subir mis documentos',
+                            handler: function () {
+                                _this.navCtrl.push('CarRegistrationPage');
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            role: 'cancel',
+                            handler: function () {
+                            }
+                        }
+                    ],
+                    cssClass: 'alertDanger'
+                });
+                alert.present();
+            }
         }
     };
     FindridePage.prototype.getTrip = function () {
@@ -555,12 +655,12 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.listride = function () {
         var _this = this;
         if (this.currentUser.emailVerified == false) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Oops!',
                 subTitle: 'por favor verifica tu email',
                 buttons: ['OK']
             });
-            alert_1.present();
+            alert.present();
         }
         else {
             if (this.userInfo.documents) {
@@ -570,7 +670,7 @@ var FindridePage = /** @class */ (function () {
                         this.desFirebase = [this.userInfo.fixedLocation.name];
                         console.log(this.orFirebase);
                         if (this.autocompleteMyPos.input == '') {
-                            this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
+                            this.presentAlert('No tienes toda la informacion', 'Por favor asegurate de que la dirección de tu casa sea la correcta', 'Ok');
                             this.clearMarkers();
                             this.directionsDisplay.setDirections({ routes: [] });
                             this.loadMap();
@@ -603,7 +703,7 @@ var FindridePage = /** @class */ (function () {
                     console.log(this.orFirebase);
                 }
                 else {
-                    var alert_2 = this.alertCtrl.create({
+                    var alert = this.alertCtrl.create({
                         title: '¡oh-uh!',
                         subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                         buttons: [
@@ -622,11 +722,11 @@ var FindridePage = /** @class */ (function () {
                         ],
                         cssClass: 'alertDanger'
                     });
-                    alert_2.present();
+                    alert.present();
                 }
             }
             else {
-                var alert_3 = this.alertCtrl.create({
+                var alert = this.alertCtrl.create({
                     title: '¡oh-oh!',
                     subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                     buttons: [
@@ -645,7 +745,7 @@ var FindridePage = /** @class */ (function () {
                     ],
                     cssClass: 'alertDanger'
                 });
-                alert_3.present();
+                alert.present();
             }
         }
     };
@@ -657,14 +757,13 @@ var FindridePage = /** @class */ (function () {
         });
         alert.present();
     };
-    FindridePage.prototype.confirmPrice = function (geoInfo1, geoInfo2) {
-        var _this = this;
+    FindridePage.prototype.confirmPrice = function (houseAddr, placeAddr) {
         this.doGeoquery = false;
-        var modal = this.modalCtrl.create('ConfirmpricePage', { geoInfo1: geoInfo1, geoInfo2: geoInfo2 });
+        var modal = this.modalCtrl.create('ConfirmpricePage', { houseAddr: houseAddr, placeAddr: placeAddr });
         modal.onDidDismiss(function (accepted) {
             if (accepted) {
                 // this.navCtrl.push('ListridePage');
-                _this.app.getRootNav().push('ReservetripPage');
+                // this.app.getRootNav().push('ReservetripPage');
             }
         });
         modal.present();
@@ -693,15 +792,16 @@ var FindridePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
     ], FindridePage.prototype, "mapElement", void 0);
     FindridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="bg-theme"  >\n    \n    <ion-navbar  >\n        <button ion-button menuToggle>\n            <ion-icon name="menu" style="color: white;"></ion-icon>\n    \n          </button>\n\n          <ion-buttons style="display: flex; justify-content: center;"> \n              <ion-item style="background-color: transparent;">\n                  <ion-toggle  color="primary" (ionChange)="conectDriver()" [(ngModel)]="isConected"  ></ion-toggle>\n\n              </ion-item>\n\n           \n\n          </ion-buttons> \n       \n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n<ion-content  padding>\n\n      <ion-card class="search" >\n          <ion-card-content>\n           \n              <span class="dot bg-theme"></span>\n              <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>\n            \n              <ion-list   [hidden]="autocompleteItems.length == 0">\n                  <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                    {{ item.description }}\n                  </ion-item>\n                </ion-list>\n                <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n          </ion-card-content>\n          <!-- <ion-card-content>\n              <span class="dot bg-yellow"></span>           \n             <ion-searchbar required [(ngModel)]="autocompleteMyDest.input"  id="input2" (ionInput)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>\n  \n  \n              <ion-list   [hidden]="autocompleteItems2.length == 0">\n              <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n                {{ item.description }}\n              </ion-item>\n            </ion-list>\n              <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>\n  \n          <!- </ion-card-content> -->\n           \n      </ion-card>\n      <ion-avatar item-end>\n          <img style="height: 15%; width: 15%;" src="assets/imgs/centermap.png" (click)="centerMap()">\n      </ion-avatar>\n  \n   <div #map id="map"></div>  \n     \n\n  \n            <div *ngIf="onTrip" >\n              <button class="btn rounded bg-theme text-white animated infinite pulse" style=" width: 100% ;\n              position: fixed ;\n              bottom: 0px ;\n              left: 0px ;\n              height: 51px; \n              font-size: large;\n              \n          " (click)="goToTrip() " >VIAJE EN CURSO\n              </button>\n          </div>\n     \n  \n \n    \n   \n    \n\n\n \n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/
+            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="bg-theme"  >\n    \n    <ion-navbar  >\n        <button ion-button menuToggle>\n            <ion-icon name="menu" style="color: white;"></ion-icon>\n    \n          </button>\n\n          <ion-buttons style="display: flex; justify-content: center;"> \n              <ion-item style="background-color: transparent;">\n                  <ion-toggle  color="primary" (ionChange)="conectDriver()" [(ngModel)]="isConected"  ></ion-toggle>\n\n              </ion-item>\n\n           \n \n          </ion-buttons> \n       \n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n<ion-content  padding>\n\n      <ion-card class="search" >\n          <ion-card-content>\n           \n              <span class="dot bg-theme"></span>\n              <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>\n            \n              <ion-list   [hidden]="autocompleteItems.length == 0">\n                  <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                    {{ item.description }}\n                  </ion-item>\n                </ion-list>\n                <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n          </ion-card-content>\n          <!-- <ion-card-content>\n              <span class="dot bg-yellow"></span>           \n             <ion-searchbar required [(ngModel)]="autocompleteMyDest.input"  id="input2" (ionInput)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>\n  \n  \n              <ion-list   [hidden]="autocompleteItems2.length == 0">\n              <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n                {{ item.description }}\n              </ion-item>\n            </ion-list>\n              <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>\n  \n          <!- </ion-card-content> -->\n           \n      </ion-card>\n      <ion-avatar item-end>\n          <img style="height: 15%; width: 15%;" src="assets/imgs/centermap.png" (click)="centerMap()">\n      </ion-avatar>\n  \n   <div #map id="map"></div>  \n     \n\n  \n            <div *ngIf="onTrip" >\n              <button class="btn rounded bg-theme text-white animated infinite pulse" style=" width: 100% ;\n              position: fixed ;\n              bottom: 0px ;\n              left: 0px ;\n              height: 51px; \n              font-size: large;\n              \n          " (click)="goToTrip() " >VIAJE EN CURSO\n              </button>\n          </div>\n     \n  \n \n    \n   \n    \n\n\n \n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_10__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_11__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__["a" /* Firebase */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* Platform */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__["a" /* FCM */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_10__services_trips_service__["a" /* TripsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__services_trips_service__["a" /* TripsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__["AngularFireDatabase"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__["a" /* authenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__["a" /* authenticationService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___["a" /* Geolocation */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ToastController */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* App */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__["a" /* sendUsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__["a" /* sendUsersService */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_11__services_instances_service__["a" /* instancesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__services_instances_service__["a" /* instancesService */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__["a" /* Firebase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__["a" /* Firebase */]) === "function" && _t || Object, typeof (_u = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* Platform */]) === "function" && _u || Object, typeof (_v = typeof __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__["a" /* FCM */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__["a" /* FCM */]) === "function" && _v || Object, typeof (_w = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* LoadingController */]) === "function" && _w || Object])
     ], FindridePage);
     return FindridePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
 }());
 
 //# sourceMappingURL=findride.js.map
