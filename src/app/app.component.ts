@@ -21,7 +21,7 @@ export class MyApp {
   alertInternet:any;
   token:any;
   pages:any=[];
-
+  driverUninorte = [];
   constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
     console.log('se cargo')
     this.pages = [
@@ -43,9 +43,8 @@ export class MyApp {
       console.log('location catched');
     }).catch((error)=>{
       console.log(error);
-    })
-
-
+    }) 
+    
 
     platform.ready().then(()=>{
       
@@ -60,6 +59,8 @@ export class MyApp {
                 toast.present();
         }
       });
+
+
 
 
       // this.fcm.onNotification() .subscribe(data => {

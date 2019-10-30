@@ -80,6 +80,16 @@ export class TripsService {
             this.afDB.database.ref(place + '/reserves/'+driverUid+'/'+ keyTrip).remove();
 
           }
+
+
+          public deleteAllReserves(place,driverUid){
+            this.afDB.database.ref(place + '/reserves/'+driverUid).remove();
+
+          }
+
+          
+
+
         public pushKeyInDriver(place, keyTrip,DriverUid){
           //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
         this.afDB.database.ref(place + '/drivers/'+ DriverUid).update({

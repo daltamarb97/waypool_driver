@@ -228,6 +228,8 @@ deleteUserGeofireDest(Place, keyTrip){
   
 }
 
+
+
 deleteUserGeofireOr(Place, keyTrip){
   this.afDB.database.ref(Place + '/geofireOr/' + keyTrip).remove().then(()=>{
       console.log("GeofireOr succesfully removed");
@@ -237,6 +239,7 @@ deleteUserGeofireOr(Place, keyTrip){
   
   
 }
+
 
 
 deleteUserGeofireOrTrip(Place, keyTrip){

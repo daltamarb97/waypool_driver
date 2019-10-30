@@ -32,7 +32,7 @@ export class SchedulePage {
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
-  };
+  }; 
 
   optionsLibrary:CameraOptions = {
     quality: 100,
@@ -199,7 +199,7 @@ export class SchedulePage {
   }
 
   goFindride(){
-    this.app.getRootNav().push('FindridePage');
+    this.navCtrl.setRoot('FindridePage');
     this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
 
   }

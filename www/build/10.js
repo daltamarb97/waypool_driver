@@ -234,7 +234,7 @@ var SchedulePage = /** @class */ (function () {
         });
     };
     SchedulePage.prototype.goFindride = function () {
-        this.app.getRootNav().push('FindridePage');
+        this.navCtrl.setRoot('FindridePage');
         this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
     };
     SchedulePage = __decorate([

@@ -6,6 +6,8 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { LoginPage } from '../login/login';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { ShowInfoCarPage } from '../showinfocar/showinfocar';
+import * as firebase from 'firebase';
+
 
 @IonicPage()
 
@@ -151,6 +153,33 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
     }).catch((error)=>{
       console.log(error);
     })
+  }
+
+
+  signOut(){
+    let alert = this.alertCtrl.create({
+      title: '¿estás seguro de querer cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'cerrar sesión',
+          handler: () => {
+            this.authenticationService.logOut().then(()=>{
+              console.log(firebase.auth().currentUser);
+              this.SignupService.userPlace = undefined;
+              this.navCtrl.setRoot('LoginPage');
+            })
+          }
+        }
+      ]
+    });
+    alert.present();
   }
   
 }

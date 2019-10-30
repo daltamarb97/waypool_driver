@@ -95,7 +95,9 @@ export class FindridePage {
   lng:any;
   myInfoAboutMyPlace:any;
   schedules = [];
+  myReserves = [];
   geocoordinatesHouse:any;
+  checked:boolean = false;
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController ) {
 
 
@@ -152,6 +154,11 @@ export class FindridePage {
     let lng=this.userInfo.fixedLocation.coordinates.lng
     this.positionDest = {lat,lng};
     console.log(this.positionDest);
+
+    if(this.userInfo.toggleStatus === 'online'){
+      this.checked = true;
+      this.isConected = true;
+    }
   })
   //search keyTrip
 
@@ -300,6 +307,7 @@ conectDriver(){
 
 
             if(this.isConected === true){
+              this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
               let loading = this.loadingCtrl.create({
                 spinner: 'crescent',
                 content: `
@@ -327,11 +335,11 @@ conectDriver(){
 
               let modal = this.modalCtrl.create('ConfirmpricePage');
               modal.onDidDismiss(accepted => {
-                if(accepted){
+                
                   // // this.navCtrl.push('ListridePage');
                   // this.app.getRootNav().push('ReservetripPage');
                   let alert = this.alertCtrl.create({
-                    title: '¡Genial!Desde este momento empezarás a compartir tus viajes',
+                    title: '¡Genial! Desde este momento empezarás a compartir tus viajes',
                     subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
                    buttons: ['OK']
 
@@ -339,10 +347,26 @@ conectDriver(){
                   alert.present();
 
                   
-                }
+                
               })
-           modal.present();
+           modal.present(); 
             }else{
+              this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
+                
+                console.log(snap.val()); 
+                let obj = snap.val();
+                Object.getOwnPropertyNames(obj).forEach(key => {
+                  console.log(obj[key]);
+                  if(obj[key].type === 'origin'){
+                        this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
+                  }else if(obj[key].type === 'destination'){
+                        this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
+                      }             
+                })
+              }).then(()=>{
+                this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
+              })
+              this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
              this.enable();
             }
 

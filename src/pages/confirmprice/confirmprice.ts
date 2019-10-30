@@ -150,12 +150,40 @@ export class ConfirmpricePage {
                           keyTrip: key 
                       }) 
 
-                      this.dismiss();
+                      this.viewCtrl.dismiss();
 
                   })
                   }else{
-                    console.log('es destination');
-                    
+                    this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid).push({
+                      driver: this.driverInfo,
+                      car:this.driver.trips.car,
+                      houseAddr: this.driver.houseAddress.name,
+                      placeAddr: this.driverInfo.placeAddr,
+                      price:this.driver.trips.price,
+                      startHour: sche.hour,
+                      type: sche.type,
+                      company: this.driverInfo.company
+              
+                  }).then((snap)=>{
+                    const key = snap.key;
+                    // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
+            
+                   // set geofireOrkey 
+                   this.geofireService.setGeofireDestNEWTEST(this.SignUpService.userPlace, key, this.driver.houseAddress.coordinates.lat, this.driver.houseAddress.coordinates.lng );
+                   this.afDB.database.ref(this.SignUpService.userPlace + '/geofireDest/' + key).update({
+                      driverId: this.driverInfo.userId
+                   })
+                   console.log('executed geofire Dest')
+                  
+              
+              
+                      this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid + '/' + key).update({
+                          keyTrip: key 
+                      }) 
+
+                      this.viewCtrl.dismiss();
+
+                  })                    
                   }
                  
                 });
@@ -397,15 +425,16 @@ export class ConfirmpricePage {
 }; 
         
   dismiss() {
-    this.viewCtrl.dismiss(this.accepted);
+    this.viewCtrl.dismiss();
     // this.unsubscribe.next();
     // this.unsubscribe.unsubscribe();
-  }  
-
-  ionViewDidLeave(){
-    this.geofireService.cancelGeofireOrigin(this.SignUpService.userPlace, this.userDriverUid);
     this.unsubscribe.next();
     this.unsubscribe.complete();
-  }
+  }  
+
+  // ionViewDidLeave(){
+  //   this.unsubscribe.next();
+  //   this.unsubscribe.complete();
+  // }
  
 }

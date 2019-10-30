@@ -105,5 +105,17 @@ public isVerifiedPerson (place, userId){
     })
 }
 
+public ToggleStatusOnline (place, userId){
+    this.afDB.database.ref(place + '/drivers/' + userId).update({
+        toggleStatus: 'online'
+    })
+}
+
+public ToggleStatusOffline (place, userId){
+    this.afDB.database.ref(place + '/drivers/' + userId).update({
+        toggleStatus: 'offline'
+    })
+}
+
 }
 
