@@ -84,23 +84,23 @@ export class LoginPage {
                       });
                       alert.present();  
                 }else{
-                    let metadata = this.auth.currentUser.metadata;
-                    if(metadata.creationTime === metadata.lastSignInTime){
-                        console.log(metadata.creationTime);
-                        console.log(metadata.lastSignInTime);
+                    // let metadata = this.auth.currentUser.metadata;
+                    // if(metadata.creationTime === metadata.lastSignInTime){
+                    //     console.log(metadata.creationTime);
+                    //     console.log(metadata.lastSignInTime);
     
-                        this.navCtrl.push('CarRegistrationLoginPage');
+                    //     this.navCtrl.push('CarRegistrationLoginPage');
 
-                        setTimeout(()=>{
-                            if(this.navCtrl.getActive().id === 'LoginPage'){
+                    //     setTimeout(()=>{
+                    //         if(this.navCtrl.getActive().id === 'LoginPage'){
 
-                                this.navCtrl.push('CarRegistrationLoginPage');
-                            }else{
-                                console.log('actuo el abservable')
-                            }
-                        }, 500)
+                    //             this.navCtrl.push('CarRegistrationLoginPage');
+                    //         }else{
+                    //             console.log('actuo el abservable')
+                    //         }
+                    //     }, 500)
     
-                    }else{
+                    // }
                         setTimeout(()=>{
                             if(this.navCtrl.getActive().id === 'LoginPage'){
                                 this.navCtrl.setRoot('FindridePage');
@@ -109,7 +109,7 @@ export class LoginPage {
                                 console.log('actuo el abservable')
                             }
                         }, 500) 
-                    }
+                    
                     this.authenticationService.getStatus;  
                 };
             }).catch((error) => {

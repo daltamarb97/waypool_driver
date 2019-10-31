@@ -231,7 +231,6 @@ var SignupPage = /** @class */ (function () {
                                         _this.user.userId = user.uid;
                                     }
                                     _this.SignUpService.saveUser(_this.SignUpService.userPlace, _this.user);
-                                    // PROBAR ESTO URGENTE
                                     _this.afDB.database.ref('allPlaces/' + _this.SignUpService.userPlace + '/location').once('value').then(function (snap) {
                                         console.log(snap.val());
                                         console.log(snap.val().lng);
@@ -271,7 +270,7 @@ var SignupPage = /** @class */ (function () {
                                     console.log("verification email has been sent");
                                 }
                                 else {
-                                    console.log("verification email has not been sent or the email is already verifyied");
+                                    console.log("verification email has not been sent or the email is already verified");
                                 }
                             }
                             else {
@@ -392,7 +391,7 @@ var SignupPage = /** @class */ (function () {
                                     console.log("verification email has been sent");
                                 }
                                 else {
-                                    console.log("verification email has not been sent or the email is already verifyied");
+                                    console.log("verification email has not been sent or the email is already verified");
                                 }
                             }
                             else {

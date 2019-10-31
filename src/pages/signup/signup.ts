@@ -201,7 +201,6 @@ export class SignupPage {
                             }
                             this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
                            
-                            // PROBAR ESTO URGENTE
                             this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace + '/location').once('value').then((snap)=>{
                                 console.log(snap.val());
                                 console.log(snap.val().lng);
@@ -244,7 +243,7 @@ export class SignupPage {
                             alert.present();
                         console.log("verification email has been sent");
                         }else{
-                            console.log("verification email has not been sent or the email is already verifyied");
+                            console.log("verification email has not been sent or the email is already verified");
                         }
                     }else{
                         console.log('there is no user');
@@ -369,7 +368,7 @@ export class SignupPage {
                         alert.present();
                     console.log("verification email has been sent");
                     }else{
-                        console.log("verification email has not been sent or the email is already verifyied");
+                        console.log("verification email has not been sent or the email is already verified");
                     }
                 }else{
                     console.log('there is no user');

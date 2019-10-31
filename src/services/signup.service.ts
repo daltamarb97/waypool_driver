@@ -88,7 +88,7 @@ export class SignUpService {
 
     }
 
-    public async saveUserInAllUsers(place, user){
+    public saveUserInAllUsers(place, user){
         this.afDB.database.ref('/allUsers/'+ user).update({
             place: place
         });

@@ -291,93 +291,118 @@ conectDriver(){
 
     if(this.userInfo.documents){
       if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
-        try{
+        if(this.userInfo.schedule){
+          try{
           
-          this.houseAddress = this.autocompleteMyPos.input;
-          this.placeAddress = this.userInfo.fixedLocation.name;
-          console.log(this.houseAddress);
-          
-
-          if(this.autocompleteMyPos.input == ''){
-            this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
-            this.clearMarkers();
-            this.directionsDisplay.setDirections({routes: []});
-            this.loadMap();
-          }else{
-
-
-            if(this.isConected === true){
-              this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
-              let loading = this.loadingCtrl.create({
-                spinner: 'crescent',
-                content: `
-                  <div class="custom-spinner-container">
-                    <div class="custom-spinner-box"></div>
-                  </div>`
-                  });
-              loading.present();
-              console.log("estoy true")
-              this.disable();
-              console.log(this.userInfo.fixedLocation.name);
-              // this.confirmPrice();
-
-              this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
-                if(status==='OK'){
-                  this.geocoordinatesHouse={
-                    lat:results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
-                  }
-                }
-                this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
-                this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
-                loading.dismiss();
-              })
-
-              let modal = this.modalCtrl.create('ConfirmpricePage');
-              modal.onDidDismiss(accepted => {
-                
-                  // // this.navCtrl.push('ListridePage');
-                  // this.app.getRootNav().push('ReservetripPage');
-                  let alert = this.alertCtrl.create({
-                    title: '¡Genial! Desde este momento empezarás a compartir tus viajes',
-                    subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
-                   buttons: ['OK']
-
-                  })
-                  alert.present();
-
-                  
-                
-              })
-           modal.present(); 
+            this.houseAddress = this.autocompleteMyPos.input;
+            this.placeAddress = this.userInfo.fixedLocation.name;
+            console.log(this.houseAddress);
+            
+  
+            if(this.autocompleteMyPos.input == ''){
+              this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
+              this.clearMarkers();
+              this.directionsDisplay.setDirections({routes: []});
+              this.loadMap();
             }else{
-              this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
-                
-                console.log(snap.val()); 
-                let obj = snap.val();
-                Object.getOwnPropertyNames(obj).forEach(key => {
-                  console.log(obj[key]);
-                  if(obj[key].type === 'origin'){
-                        this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
-                  }else if(obj[key].type === 'destination'){
-                        this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
-                      }             
+  
+  
+              if(this.isConected === true){
+                this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
+                let loading = this.loadingCtrl.create({
+                  spinner: 'crescent',
+                  content: `
+                    <div class="custom-spinner-container">
+                      <div class="custom-spinner-box"></div>
+                    </div>`
+                    });
+                loading.present();
+                console.log("estoy true")
+                this.disable();
+                console.log(this.userInfo.fixedLocation.name);
+                // this.confirmPrice();
+  
+                this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
+                  if(status==='OK'){
+                    this.geocoordinatesHouse={
+                      lat:results[0].geometry.location.lat(),
+                      lng: results[0].geometry.location.lng()
+                    }
+                  }
+                  this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
+                  this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
+                  loading.dismiss();
                 })
-              }).then(()=>{
-                this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
-              })
-              this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
-             this.enable();
+  
+                let modal = this.modalCtrl.create('ConfirmpricePage');
+                modal.onDidDismiss(accepted => {
+                  
+                    // // this.navCtrl.push('ListridePage');
+                    // this.app.getRootNav().push('ReservetripPage');
+                    let alert = this.alertCtrl.create({
+                      title: '¡Genial! Desde este momento empezarás a compartir tus viajes',
+                      subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
+                     buttons: ['OK']
+  
+                    })
+                    alert.present();
+  
+                    
+                  
+                })
+             modal.present(); 
+              }else{
+                this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
+                  
+                  console.log(snap.val()); 
+                  let obj = snap.val();
+                  Object.getOwnPropertyNames(obj).forEach(key => {
+                    console.log(obj[key]);
+                    if(obj[key].type === 'origin'){
+                          this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
+                    }else if(obj[key].type === 'destination'){
+                          this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
+                        }             
+                  })
+                }).then(()=>{
+                  this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
+                })
+                this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+               this.enable();
+              }
+  
+  
+  
+              
             }
-
-
-
+          }catch(error){
+            console.log(error);
             
           }
-        }catch(error){
-          console.log(error);
-          
+        }else{
+          let alert = this.alertCtrl.create({
+            title: 'No tienes ningún horario',
+            subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+           buttons: [
+            { 
+              text: 'Mandar mi horario',
+              handler: () => {
+                this.navCtrl.push('SchedulePage');
+              }
+            },
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+               
+                }
+              }
+            ],
+            cssClass: 'alertDanger'
+          });
+          alert.present();
         }
+        
 
 
       }else{
