@@ -152,5 +152,9 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
       console.log(error);
     })
   }
-  
+  logout(){
+    this.authenticationService.logOut();
+    this.SignupService.userPlace = undefined;
+    this.navCtrl.setRoot('LoginPage');
+}
 }

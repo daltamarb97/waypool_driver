@@ -1,14 +1,14 @@
 webpackJsonp([29],{
 
-/***/ 636:
+/***/ 637:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddSchedulePageModule", function() { return AddSchedulePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CanceltripPageModule", function() { return CanceltripPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_schedule__ = __webpack_require__(796);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__canceltrip__ = __webpack_require__(798);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AddSchedulePageModule = /** @class */ (function () {
-    function AddSchedulePageModule() {
+var CanceltripPageModule = /** @class */ (function () {
+    function CanceltripPageModule() {
     }
-    AddSchedulePageModule = __decorate([
+    CanceltripPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__add_schedule__["a" /* AddSchedulePage */],
+                __WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__add_schedule__["a" /* AddSchedulePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__add_schedule__["a" /* AddSchedulePage */]
+                __WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */]
             ]
         })
-    ], AddSchedulePageModule);
-    return AddSchedulePageModule;
+    ], CanceltripPageModule);
+    return CanceltripPageModule;
 }());
 
-//# sourceMappingURL=add-schedule.module.js.map
+//# sourceMappingURL=canceltrip.module.js.map
 
 /***/ }),
 
-/***/ 796:
+/***/ 798:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddSchedulePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CanceltripPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,98 +59,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-var AddSchedulePage = /** @class */ (function () {
-    function AddSchedulePage(navCtrl, navParams, viewCtrl, alertCtrl, signUpService, angularFireAuth) {
+var CanceltripPage = /** @class */ (function () {
+    function CanceltripPage(navCtrl, viewCtrl) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
         this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
-        this.signUpService = signUpService;
-        this.angularFireAuth = angularFireAuth;
-        this.button1WasntTapped = true;
-        this.button2WasntTapped = true;
-        this.userId = this.angularFireAuth.auth.currentUser.uid;
     }
-    AddSchedulePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad AddSchedulePage');
-    };
-    AddSchedulePage.prototype.dismiss = function () {
+    CanceltripPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss(this.accepted);
+        // this.navCtrl.pop();
     };
-    AddSchedulePage.prototype.button1 = function () {
-        console.log('fue presionado boton 1');
-        this.button1WasTapped = true;
-        this.button2WasTapped = false;
-        this.button1WasntTapped = false;
-        this.button2WasntTapped = true;
-        this.textMessage = 'trabajo/universidad a CASA';
-        this.geofireType = 'destination';
-        this.imageURL = 'assets/imgs/home.png';
-    };
-    AddSchedulePage.prototype.button2 = function () {
-        console.log('fue presionado boton 2');
-        this.button1WasTapped = false;
-        this.button2WasTapped = true;
-        this.button1WasntTapped = true;
-        this.button2WasntTapped = false;
-        this.textMessage = 'casa al TRABAJO/UNIVERSIDAD';
-        this.geofireType = 'origin';
-        this.imageURL = 'assets/imgs/work.png';
-    };
-    AddSchedulePage.prototype.confirm = function () {
-        var _this = this;
-        if (this.button1WasntTapped && this.button2WasntTapped === true) {
-            var alert_1 = this.alertCtrl.create({
-                title: 'Debes seleccionar una opción',
-                subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
-                buttons: ['OK']
-            });
-            alert_1.present();
-        }
-        else if (this.startHour === undefined || this.startHour === null) {
-            var alert_2 = this.alertCtrl.create({
-                title: 'Debes seleccionar una hora de partida',
-                subTitle: '¿A qué hora sales del trabajo o de tu casa?',
-                buttons: ['OK']
-            });
-            alert_2.present();
-        }
-        else if (this.button1WasntTapped === true && this.button2WasntTapped === true && this.startHour === undefined) {
-            var alert_3 = this.alertCtrl.create({
-                title: 'Información incompleta',
-                subTitle: 'Es aqui donde debes decirnos como te movilizas del trabajo a tu casa o de tu casa al trabajo',
-                buttons: ['OK']
-            });
-            alert_3.present();
-        }
-        else {
-            var alert_4 = this.alertCtrl.create({
-                title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
-                buttons: [
-                    {
-                        text: 'Confirmo este horario',
-                        handler: function () {
-                            _this.signUpService.pushSchedule(_this.signUpService.userPlace, _this.userId, _this.startHour, _this.geofireType, _this.textMessage, _this.imageURL);
-                            _this.viewCtrl.dismiss();
-                        }
-                    }
-                ]
-            });
-            alert_4.present();
-        }
-    };
-    AddSchedulePage = __decorate([
+    CanceltripPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-add-schedule',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\add-schedule\add-schedule.html"*/'<ion-content>\n\n\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n\n    <ion-card>\n\n  \n\n        <ion-card-content>\n\n            <ion-row style="margin-top: 14px;    display: flex;\n\n            justify-content: center">\n\n                <ion-list>\n\n                    <ion-item>\n\n                        <ion-label>Hora:</ion-label>\n\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n\n                </ion-item>\n\n                </ion-list>                    \n\n            </ion-row>\n\n    </ion-card-content>\n\n\n\n    <br>\n\n    <h2 text-center>A esta hora vas de tu:</h2>\n\n     <h1 text-center class="texto1">{{textMessage}}</h1>\n\n      <ion-row>\n\n          <ion-col class="col1" *ngIf = \'button1WasntTapped\'>\n\n              <img src="assets/imgs/home2.png"  style="display:inline-block" height="140px" width="50px" (click)="button1()"/>\n\n          </ion-col>\n\n          <ion-col class="col1" *ngIf = \'button1WasTapped\'>\n\n              <img src="assets/imgs/home.png"  style="display:inline-block" height="140px" width="50px" (click)="button1()"/>\n\n          </ion-col>\n\n          <ion-col  class="col2" *ngIf = \'button2WasntTapped\'>\n\n              <img src="assets/imgs/work2.png"  style="display:inline-block" height="140px" width="50px" (click)="button2()"/>\n\n            \n\n          </ion-col>\n\n          <ion-col  class="col2" *ngIf = \'button2WasTapped\'>\n\n              <img src="assets/imgs/work.png"  style="display:inline-block" height="140px" width="50px" (click)="button2()"/>\n\n            \n\n          </ion-col>\n\n      </ion-row>\n\n  \n\n        <ion-card-content>\n\n            <div class="seats">           \n\n                <ion-row style="margin-top: 14px;    display: flex;\n\n                justify-content: center">\n\n                   \n\n                    <ion-col col-8>\n\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: .95rem;" (click)="confirm()">Confirmar</button>\n\n                    </ion-col>\n\n                </ion-row>\n\n            </div>\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\add-schedule\add-schedule.html"*/,
+            selector: 'page-canceltrip',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\canceltrip\canceltrip.html"*/'<ion-content>\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n\n    <ion-card>\n\n            <img src="assets/imgs/cancelacion.png" width="100px" style="display:inline-block" height="150px"/>\n\n\n\n        <!-- <h5 class="text-hot">Este usuario desea irse contigo</h5> -->\n\n        <ion-item>\n\n            \n\n            <div>                \n\n                <h2 class="text">Es posible que hayas eliminado</h2>\n\n                <h2 class="text">el único usuario que estaba en</h2>\n\n\n\n                <h2 class="text">tu viaje o te hayan cancelado.</h2>\n\n\n\n            </div>\n\n        </ion-item>\n\n       \n\n\n\n\n\n        <ion-card-content>\n\n            <ion-row>\n\n                <ion-col>\n\n                    <button class="btn bg-white text-red rounded" (click)="dismiss()"  style="width: 100%;margin-top: 14px;">OK</button>\n\n                </ion-col>               \n\n            </ion-row>\n\n\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\waypool_driver\src\pages\canceltrip\canceltrip.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
-    ], AddSchedulePage);
-    return AddSchedulePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]])
+    ], CanceltripPage);
+    return CanceltripPage;
 }());
 
-//# sourceMappingURL=add-schedule.js.map
+//# sourceMappingURL=canceltrip.js.map
 
 /***/ })
 

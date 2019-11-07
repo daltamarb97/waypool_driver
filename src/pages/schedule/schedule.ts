@@ -69,7 +69,7 @@ export class SchedulePage {
   }
 
   skipSchedule(){
-    this.app.getRootNav().push('TabsPage');
+    this.app.getRootNav().push('FindRidePage');
   }
 
   removeTime(sche){

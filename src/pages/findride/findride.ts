@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef,NgZone } from '@angular/core';
+import { Component, ViewChild, ElementRef,NgZone, Renderer } from '@angular/core';
 
 
 // import { TabsPage } from '../tabs/tabs';
@@ -33,6 +33,9 @@ export class FindridePage {
  
 
   @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('buttonConected',{read:ElementRef}) buttonConected;
+  @ViewChild('buttonDisconected',{read:ElementRef}) buttonDisconected;
+
   map: any;
   markers: any;
   
@@ -92,7 +95,7 @@ export class FindridePage {
   lat:any;
   lng:any;
   myInfoAboutMyPlace:any;
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
+  constructor( private geofireService: geofireService,public renderer:Renderer,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM ) {
 
 
     
@@ -137,9 +140,8 @@ export class FindridePage {
       // })
   
   })
-
-  this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.user).subscribe(user=>{
-    this.userInfo = user;
+  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/'+this.user).once('value').then((snap)=>{
+    this.userInfo = snap.val();
     console.log(this.userInfo);
     
     let lat=this.userInfo.fixedLocation.coordinates.lat
@@ -148,7 +150,10 @@ export class FindridePage {
     let lng=this.userInfo.fixedLocation.coordinates.lng
     this.positionDest = {lat,lng};
     console.log(this.positionDest);
+    this.loadMap();
   })
+    
+  
   //search keyTrip
 
    //search keyTrip
@@ -208,13 +213,8 @@ export class FindridePage {
         }
 
        })
-     })  
-
+     }) 
      
-
-     
-
-
     //  this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(uni => {
     //   this.universityInfo = uni;
     //   if(this.universityInfo.email == undefined){
@@ -239,7 +239,6 @@ export class FindridePage {
     // })
 
 
-this.loadMap();
   })
 }
 
@@ -267,22 +266,55 @@ async getToken() {
   }
 
 }
+changeColor(){
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','green')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','green')
 
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','green')
+
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','transparent')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'font-color','#bfbfbf')
+
+  this.showPopup();
+}
+changeColor2(){
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','rgb(167, 23, 23)')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','rgb(167, 23, 23)')
+
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','rgb(167, 23, 23)')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','transparent')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'font-color','#bfbfbf')
+
+}
 conectDriver(){
   if(this.isConected === true){
     console.log("estoy true")
     this.disable();
     console.log(this.userInfo.fixedLocation.name);
     let modal = this.modalCtrl.create('ConfirmpricePage');
+    this.isConected=false;
+    console.log(this.isConected);
     modal.onDidDismiss(accepted => {
       if(accepted){
+      
         // // this.navCtrl.push('ListridePage');
         // this.app.getRootNav().push('ReservetripPage');
       }
     })
  modal.present();
   }else{
+    
    this.enable();
+   
+   //aqui colocar el cancelar del toggle
   }
 }
  getTrip(){
@@ -309,7 +341,6 @@ conectDriver(){
    .subscribe(onTrip=>{
      this.onTrip =onTrip;
      console.log(this.onTrip)
-    
    })
  }
  goToTrip(){
@@ -381,8 +412,8 @@ console.log(this.userInfo.fixedLocation.name);
             map: this.map,
             animation: google.maps.Animation.DROP,
             draggable:true,
-               icon: {         url: "assets/imgs/university.png",
-            scaledSize: new google.maps.Size(90, 90)    
+               icon: {         url: "assets/imgs/workbuilding.png",
+            scaledSize: new google.maps.Size(150, 150)    
              }})
             
 
@@ -716,6 +747,13 @@ geocodeLatLng(latLng,inputName) {
           // inputs2[0].disabled=false;
           //     }
   }  
+  showPopup() {
+    let profileModal = this.modalCtrl.create('SuccessNotificationPage');
+    profileModal.present();
 
+    setTimeout(() => {
+      profileModal.dismiss();
+  }, 3000);
+  }
  
 }

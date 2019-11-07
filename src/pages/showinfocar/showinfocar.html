@@ -4,11 +4,15 @@
         <h6 class="text-theme">Mis vehículos</h6>
         <ion-item *ngFor="let car of carList">
             <div  style="display: flex">
-                    <div class="name"  style="margin-top:2px">
-                            <h2><ion-icon name="car" class="icon-location" style="margin-right: 15px;"></ion-icon>{{car.carModel}}</h2>
+                <ion-avatar item-start>
+                        <img  style="height:70px; width: 70px;" src="assets/imgs/carBlue.png">
+                </ion-avatar>  
+                    <div class="name" style="display: flex;justify-content: center;margin-top:2px">
+                            <h2>{{car.carModel}}</h2>
                             <p>{{car.plateNumber}} | {{car.color}}</p>
                         </div>
-                            <ion-icon name="close-circle"  (click)="deleteCar(car.keyCar)"></ion-icon>
+                            <ion-icon name="close-circle" style="display: flex;
+                            align-items: center;" (click)="deleteCar(car.keyCar)"></ion-icon>
                          
             </div>
             

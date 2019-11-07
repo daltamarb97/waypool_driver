@@ -28030,9 +28030,9 @@ page-detailsreserve p.text-light {
 page-detailsreserve .card {
   margin-left: 0;
   margin-right: 0;
-  width: 100%;
-  margin-top: 6px;
-  margin-bottom: 5px;
+  width: 90%;
+  margin: 5%;
+  border-radius: 5%;
 }
 
 page-detailsreserve .card ion-item .name {
@@ -28057,7 +28057,6 @@ page-detailsreserve .card ion-item .more {
 page-detailsreserve .card ion-item .more .badge {
   position: absolute;
   right: 21px;
-  top: 19px;
 }
 
 page-detailsreserve .card ion-item .more h2 {
@@ -28216,6 +28215,15 @@ page-detailsreserve .imagenTitle {
   position: absolute;
 }
 
+page-detailsreserve #map {
+  width: 100%;
+  height: 200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .ios page-findride .search {
   border-radius: 10px;
   margin: 10px 0;
@@ -28331,6 +28339,29 @@ page-detailsreserve .imagenTitle {
 
 .ios .item-ios.item-block .item-inner {
   border-bottom: 0;
+}
+
+.ios .buttonDisconected {
+  border-radius: 17px 0 0 17px;
+  height: 29px;
+  margin: 0;
+  border-width: 1.5px;
+  -webkit-transition: 0.15s linear;
+  transition: 0.15s linear;
+  border-style: solid;
+  border-color: red;
+}
+
+.ios .buttonConected {
+  border-radius: 0 17px 17px 0;
+  height: 29px;
+  margin: 0;
+  -webkit-transition: 0.15s linear;
+  transition: 0.15s linear;
+  background-color: transparent;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: red;
 }
 
 .md page-findride .search {
@@ -28450,145 +28481,27 @@ page-detailsreserve .imagenTitle {
   border-bottom: 0;
 }
 
-page-findride .search {
-  border-radius: 10px;
-  margin: 10px 0;
-  width: 100%;
-}
-
-page-findride .search .card-content {
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 5px 15px;
-}
-
-page-findride .search .card-content .searchbar-search-icon {
-  display: none;
-}
-
-page-findride .search .card-content .searchbar-input {
-  padding: 17px  !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  font-size: 1.25rem;
-}
-
-page-findride .search .card-content .searchbar {
-  padding: 0 !important;
-  background: transparent !important;
-  border: none !important;
-}
-
-page-findride .search .card-content .ios .dot {
-  min-width: 10px;
-  min-height: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  border-radius: 50%;
-  width: 10px;
-  margin-bottom: -17px !important;
-  bottom: -10px;
-  position: relative;
-  left: -2px;
-  z-index: 1;
-}
-
-page-findride .search .card-content .ios .dot.icons {
-  border-radius: 0;
-}
-
-page-findride .search .card-content .dot-md {
-  min-width: 10px;
-  min-height: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  border-radius: 50%;
-  width: 10px;
-  margin-bottom: -17px !important;
-  bottom: -20px;
-  position: relative;
-  left: -2px;
-  z-index: 1;
-}
-
-page-findride .search .card-content .dot-md.icons {
-  border-radius: 0;
-}
-
-page-findride .search .ion-list {
+.md .item-md.item-block .item-inner .buttonDisconected {
+  border-radius: 17px 0 0 17px;
+  height: 29px;
   margin: 0;
-  font-size: 130rem;
+  border-width: 1.5px;
+  -webkit-transition: 0.15s linear;
+  transition: 0.15s linear;
+  border-style: solid;
+  border-color: #a71717;
 }
 
-page-findride .search .item-ios {
-  font-size: 1.25rem;
-}
-
-page-findride .search span.search-text {
-  width: 140px;
-  font-size: 1.3rem;
-  text-align: right;
-}
-
-page-findride .scroll {
-  height: 100%;
-}
-
-page-findride #map {
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: block;
-  left: 0px;
-  top: 0px;
-}
-
-page-findride .findRideText {
-  text-align: center;
-}
-
-page-findride .alert {
-  font-weight: bold;
-}
-
-page-findride .btn-left {
-  margin-right: 5px;
-  width: 49%;
-}
-
-page-findride .btn-right {
-  width: 49%;
-}
-
-page-findride .rowOfButtons {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-page-findride .toolbar-background {
-  background: transparent;
-}
-
-.item-ios.item-block .item-inner {
-  border-bottom: 0;
-}
-
-.item-md.item-block .item-inner {
-  border-bottom: 0;
+.md .item-md.item-block .item-inner .buttonConected {
+  border-radius: 0 17px 17px 0;
+  height: 29px;
+  margin: 0;
+  -webkit-transition: 0.15s linear;
+  transition: 0.15s linear;
+  background-color: transparent;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #a71717;
 }
 
 page-help p {
@@ -30484,8 +30397,8 @@ page-reservetrip .card {
   margin-left: 0;
   margin-right: 0;
   width: 100%;
-  margin-bottom: 6px;
-  margin-top: 6px;
+  border-radius: 5%;
+  margin: 2%;
 }
 
 page-reservetrip .card ion-item .name {
@@ -30674,6 +30587,26 @@ page-reservetrip .important {
   color: #4d5853;
 }
 
+page-reservetrip .item-ios ion-avatar ion-img, page-reservetrip .item-ios ion-avatar img {
+  border-radius: 0%;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+}
+
+page-reservetrip .item-md ion-avatar ion-img, page-reservetrip .item-md ion-avatar img {
+  border-radius: 0%;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+}
+
+page-reservetrip ion-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 0% !important;
+}
+
 page-schedule .img {
   width: 60px;
   height: 60px;
@@ -30738,7 +30671,7 @@ page-showinfocar .content {
 page-showinfocar .card {
   width: 80%;
   margin: auto;
-  height: 465px;
+  height: 600px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -30933,6 +30866,26 @@ page-showinfocar .form .car {
   display: flex;
 }
 
+page-showinfocar ion-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 0% !important;
+}
+
+page-showinfocar .item-ios ion-avatar ion-img, page-showinfocar .item-ios ion-avatar img {
+  border-radius: 0%;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+}
+
+page-showinfocar .item-md ion-avatar ion-img, page-showinfocar .item-md ion-avatar img {
+  border-radius: 0%;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+}
+
 page-signup .login {
   position: fixed;
   bottom: 0px;
@@ -31007,6 +30960,48 @@ page-signup .login {
 
 page-signup .col-car {
   padding: 10px;
+}
+
+page-successnotification .content {
+  background: transparent;
+}
+
+page-successnotification .overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: .5;
+  background-color: #333;
+}
+
+page-successnotification .icontent {
+  position: absolute;
+  top: calc(45% - (50%/2));
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 10px;
+  z-index: 100;
+  margin: 0 auto;
+  padding: 10px;
+  color: #333;
+  background: #e8e8e8;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e8e8e8));
+  background: linear-gradient(to bottom, #fff 0%, #e8e8e8 100%);
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 3px rgba(51, 51, 51, 0.35);
+  box-shadow: 0 2px 3px rgba(51, 51, 51, 0.35);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+}
+
+page-successnotification .details {
+  z-index: 2;
+  margin-top: -10vh;
 }
 
 page-support .card {

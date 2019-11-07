@@ -114,7 +114,7 @@ export class ConfirmpricePage {
                   alert.present();
             }else{
               this.PriceService.setPrice(this.SignUpService.userPlace, this.userDriverUid,this.precio,this.car);
-
+              this.dismiss();
             }
 
 
