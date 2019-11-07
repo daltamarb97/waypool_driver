@@ -43,6 +43,8 @@ export class SchedulePage {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
 
+
+    // IMPORTANTE: aqui poner un if scheduleType = 'manual'
     this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(hour => {
       this.schedules = hour;
       console.log(this.schedules);
