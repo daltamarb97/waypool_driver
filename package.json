@@ -74,6 +74,7 @@
     "js-sha512": "^0.8.0",
     "moment": "^2.24.0",
     "mx.ferreyra.callnumber": "0.0.2",
+    "ng-lottie": "^0.3.2",
     "promise-polyfill": "^8.1.0",
     "replace": "^1.0.1",
     "rxjs": "^6.0.0",

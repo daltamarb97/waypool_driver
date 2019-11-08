@@ -25,7 +25,7 @@ page-showinfocar {
         }
         width: 80%;
         margin: auto;
-        height: 465px;
+        height: 600px;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -176,6 +176,24 @@ page-showinfocar {
             display: flex;
         }
     }
+    ion-avatar{
+        width: 70px;
+        height: 70px;
+            border-radius: 0% !important;
+    
+}
+.item-ios ion-avatar ion-img, .item-ios ion-avatar img {
+    border-radius: 0%;
+    overflow: hidden;
+    width: 70px;
+        height: 70px;
+}
+.item-md ion-avatar ion-img, .item-md ion-avatar img {
+    border-radius: 0%;
+    overflow: hidden;
+    width: 70px;
+        height: 70px;
+}
 }
 
 

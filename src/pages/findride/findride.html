@@ -3,13 +3,25 @@
     <ion-navbar  >
         <button ion-button menuToggle>
             <ion-icon name="menu" style="color: white;"></ion-icon>
-    
+           
           </button>
-
+          <!-- <ion-avatar ion-button menuToggle>
+            <img style="height:60px; width:60px" src="assets/imgs/menuIcon2.png">
+        </ion-avatar> -->
           <ion-buttons style="display: flex; justify-content: center;"> 
               <ion-item style="background-color: transparent;">
-                  <ion-toggle  color="primary" (ionChange)="conectDriver()" [(ngModel)]="isConected" checked="checked" ></ion-toggle>
+                <!-- <ion-toggle [(ngModel)]="isConected" [checked]="isConected" (ionChange)="conectDriver()"></ion-toggle> -->
 
+                  <!-- <div><p class="text-white">Conectado</p></div> -->
+              
+                  <ion-row class="center-align row" style="margin-left: 16px;" >
+                    
+                            <button  #buttonDisconected class="btn rounded bg-red  text-white buttonDisconected" (click)="disconectDriver()" >Offline</button>
+                   
+                      <button #buttonConected  class="btn  text-white buttonConected" (click)="conectDriver()" >Online</button>
+                    
+                    
+                </ion-row>
               </ion-item>
 
            

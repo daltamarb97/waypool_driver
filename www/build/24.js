@@ -1,14 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 639:
+/***/ 640:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChattingPageModule", function() { return ChattingPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmUniversityPageModule", function() { return ConfirmUniversityPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chatting__ = __webpack_require__(799);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__confirm_university__ = __webpack_require__(801);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,42 +18,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ChattingPageModule = /** @class */ (function () {
-    function ChattingPageModule() {
+var ConfirmUniversityPageModule = /** @class */ (function () {
+    function ConfirmUniversityPageModule() {
     }
-    ChattingPageModule = __decorate([
+    ConfirmUniversityPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */],
+                __WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__chatting__["a" /* ChattingPage */]
+                __WEBPACK_IMPORTED_MODULE_2__confirm_university__["a" /* ConfirmUniversityPage */]
             ]
         })
-    ], ChattingPageModule);
-    return ChattingPageModule;
+    ], ConfirmUniversityPageModule);
+    return ConfirmUniversityPageModule;
 }());
 
-//# sourceMappingURL=chatting.module.js.map
+//# sourceMappingURL=confirm-university.module.js.map
 
 /***/ }),
 
-/***/ 799:
+/***/ 801:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChattingPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmUniversityPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_chat_service__ = __webpack_require__(356);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_fire_auth__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__ = __webpack_require__(353);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,164 +65,62 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-var ChattingPage = /** @class */ (function () {
-    function ChattingPage(navCtrl, sendFeedbackService, toastCtrl, SignUpService, alertCtrl, actionSheetCtrl, chatsService, navParams, AngularFireAuth) {
+var ConfirmUniversityPage = /** @class */ (function () {
+    function ConfirmUniversityPage(signUpService, viewCtrl, angularFireAuth, alertCtrl, afDB) {
         var _this = this;
-        this.navCtrl = navCtrl;
-        this.sendFeedbackService = sendFeedbackService;
-        this.toastCtrl = toastCtrl;
-        this.SignUpService = SignUpService;
+        this.signUpService = signUpService;
+        this.viewCtrl = viewCtrl;
+        this.angularFireAuth = angularFireAuth;
         this.alertCtrl = alertCtrl;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.chatsService = chatsService;
-        this.navParams = navParams;
-        this.AngularFireAuth = AngularFireAuth;
-        this.userUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.chats = [];
-        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_6_rxjs__["Subject"];
-        this.reserve = this.navParams.get('reserve');
-        this.isTrip = this.navParams.get('isTrip');
-        console.log(this.reserve.driver.userId);
-        this.SignUpService.getMyInfoForProfile(this.SignUpService.userPlace, this.userUid).takeUntil(this.unsubscribe).subscribe(function (info) {
-            _this.driver = info;
-            console.log(_this.driver);
+        this.afDB = afDB;
+        this.universities = [];
+        this.showButton = false;
+        this.signUpService.getAllPlaces().subscribe(function (universities) {
+            _this.universities = universities;
+            console.log(_this.universities);
         });
-        if (this.isTrip === true) {
-            this.getChatFromTrip();
-        }
-        else {
-            this.getChatFromReserve();
-        }
+        this.userId = this.angularFireAuth.auth.currentUser.uid;
     }
-    ChattingPage.prototype.getChatFromTrip = function () {
+    ConfirmUniversityPage.prototype.onChange = function () {
         var _this = this;
-        this.chatsService.getChatsFromTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
-            .takeUntil(this.unsubscribe).subscribe(function (chat) {
-            _this.chats = chat;
-            console.log(_this.chats);
-            _this.scrollToBottom();
-        });
-    };
-    ChattingPage.prototype.getChatFromReserve = function () {
-        var _this = this;
-        this.chatsService.getChatsFromReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId)
-            .takeUntil(this.unsubscribe).subscribe(function (chat) {
-            _this.chats = chat;
-            console.log(_this.chats);
-            _this.scrollToBottom();
-        });
-    };
-    ChattingPage.prototype.scrollToBottom = function () {
-        var _this = this;
+        this.showButton = false;
+        this.signUpService.userPlace = this.universityChosen;
         setTimeout(function () {
-            if (_this.content.scrollToBottom) {
-                _this.content.scrollToBottom();
-            }
-        }, 400);
-    };
-    ChattingPage.prototype.more = function () {
-        var _this = this;
-        var actionSheet = this.actionSheetCtrl.create({
-            title: 'Opciones',
-            buttons: [
-                {
-                    text: 'Reportar Chat',
-                    role: 'destructive',
-                    handler: function () {
-                        _this.reportChat();
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
+            _this.afDB.database.ref(_this.signUpService.userPlace + '/drivers/' + _this.userId)
+                .once('value')
+                .then(function (snap) {
+                var user = snap.val();
+                if (user === null) {
+                    _this.alertUni();
                 }
-            ]
-        });
-        actionSheet.present();
+                else {
+                    _this.showButton = true;
+                }
+            });
+        }, 500);
     };
-    ChattingPage.prototype.ionViewDidLeave = function () {
-        this.unsubscribe.next();
-        this.unsubscribe.complete();
-    };
-    ChattingPage.prototype.reportChat = function () {
-        var _this = this;
+    ConfirmUniversityPage.prototype.alertUni = function () {
         var alert = this.alertCtrl.create({
-            title: 'Reportar',
-            message: 'Reportar este chat es completamente anónimo a tus compañeros y lo revisaremos de inmediato.',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Reportar',
-                    handler: function () {
-                        _this.sendFeedbackService.sendFeedback(_this.SignUpService.userPlace, 'Reporte_de_chat', _this.chats, _this.driver.name, _this.driver.lastname, _this.driver.phone, _this.userUid);
-                        var toast = _this.toastCtrl.create({
-                            message: 'Haz reportado este chat',
-                            showCloseButton: true,
-                            closeButtonText: 'OK',
-                            position: 'top'
-                        });
-                        toast.present();
-                    }
-                }
-            ]
+            title: '¿estas seguro que es tu universidad?',
+            subTitle: 'Seleccionaste una universidad que no es la misma que seleccionaste cuando te registraste',
+            buttons: ['OK']
         });
         alert.present();
     };
-    ChattingPage.prototype.sendMessage = function () {
-        if (this.message === undefined || this.message === null) {
-            var toast = this.toastCtrl.create({
-                message: 'No puedes enviar un mensaje vacío',
-                showCloseButton: true,
-                closeButtonText: 'OK',
-                position: 'top'
-            });
-            toast.present();
-        }
-        else {
-            if (this.isTrip === true) {
-                this.sendMessageForTrip();
-            }
-            else {
-                this.sendMessageForReserve();
-            }
-        }
+    ConfirmUniversityPage.prototype.goToFindaride = function () {
+        this.readyToStart = true;
+        this.viewCtrl.dismiss(this.readyToStart);
     };
-    ChattingPage.prototype.sendMessageForTrip = function () {
-        console.log(this.isTrip);
-        this.chatsService.pushMessageUserInTrip(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
-        this.message = '';
-        this.scrollToBottom();
-    };
-    ChattingPage.prototype.sendMessageForReserve = function () {
-        this.chatsService.pushMessageUserInReserve(this.SignUpService.userPlace, this.reserve.keyTrip, this.reserve.driver.userId, this.userUid, this.message, this.driver.name);
-        this.message = '';
-        this.scrollToBottom();
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Content */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Content */])
-    ], ChattingPage.prototype, "content", void 0);
-    ChattingPage = __decorate([
+    ConfirmUniversityPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chatting',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/chatting/chatting.html"*/'<ion-header class="bg-theme">\n    <ion-navbar >\n        <ion-item style="display: flex !important;">                \n            <ion-icon name="arrow-back" style="font-size: 33px"  class="text-white" end-item navPop></ion-icon>\n            <ion-title class="text-white">CHAT GRUPAL</ion-title>\n            <ion-icon name="more" (click)="more()" end-item item-end class="text-white"></ion-icon>\n\n\n        </ion-item>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="chat-bg">\n    <div class="chatbox"*ngFor="let chat of chats">\n            <div  class="cb" >        \n                    <div>                        \n                         <div *ngIf="userUid === chat.uid" class="chat chat-left bg-theme text-white"  text-left padding float-right style="max-width: 70%;text-align: left">\n                            <!-- its driver message -->\n                             <p>{{chat.message}}</p>       \n                       </div>                       \n                   </div>                    \n                </div>\n                <div class="cb">            \n                    <div>  \n                            <div *ngIf="chat.uid !== userUid" class="chat chat-right bg-white text-dark" style="max-width: 70%;text-align: left" text-right padding float-left>  \n                                <!-- its user message --> \n                                    <h6 class="driverText" style="display: flex; color:#4BB543;">{{chat.name | titlecase}}</h6>                         \n                                    <p>{{chat.message}}</p>                            \n                                </div>                \n                    </div>                  \n                </div>\n               \n    </div>\n   \n   \n</ion-content>\n<ion-footer class="fixed-bottom">\n        \n                <ion-list inset>\n                    <ion-item>\n                        <ion-input type="text" placeholder="Escribe tu mensaje" [(ngModel)]="message" autofocus (keyup.enter)="sendMessage()"></ion-input>\n                  \n                       <button class="text-theme" item-right (click)="sendMessage()"> <ion-icon name="md-send" ></ion-icon></button>\n                    </ion-item>\n                </ion-list>\n            \n      \n  \n</ion-footer> '/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/chatting/chatting.html"*/
+            selector: 'page-confirm-university',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/confirm-university/confirm-university.html"*/'<ion-content>\n  <ion-card>\n  <h6 class="text-theme">¿CUÁL ES TU UNIVERSIDAD?</h6>\n  <ion-card-content>\n      <ion-list>\n          <ion-item>\n            <ion-label>escoge tu universidad </ion-label>\n            <ion-select (ionChange)="onChange()" okText="Ok" cancelText="Cancel" [(ngModel)]= \'universityChosen\'>\n              <ion-option  *ngFor="let uni of universities"  name="fieldName" ngDefaultControl>{{uni.name}}</ion-option>\n            </ion-select>\n          </ion-item>\n        \n        </ion-list>\n  </ion-card-content>\n\n  <ion-card-content>\n      <div >\n          \n          <ion-row style="margin-top: 14px;justify-content: center">\n              \n              <ion-col col-8>\n                  <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.5rem;" *ngIf=\'showButton\' (click)="goToFindaride()">Continuar</button>\n              </ion-col>\n          </ion-row>\n\n\n      </div>\n  </ion-card-content>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/confirm-university/confirm-university.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__["a" /* sendFeedbackService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_3__services_chat_service__["a" /* ChatsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
-    ], ChattingPage);
-    return ChattingPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_fire_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__angular_fire_database__["AngularFireDatabase"]])
+    ], ConfirmUniversityPage);
+    return ConfirmUniversityPage;
 }());
 
-//# sourceMappingURL=chatting.js.map
+//# sourceMappingURL=confirm-university.js.map
 
 /***/ })
 

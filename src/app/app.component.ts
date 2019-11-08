@@ -32,7 +32,7 @@ export class MyApp {
       {title: 'Historial de viajes', component:'WalletPage'},
       {title: 'Soporte', component:'HelpPage'},
       {title: 'Terminos y Condiciones', component:'TermsPage'},
-      { title: 'Mi horario', component:'SchedulePage' }
+      {title: 'Mi horario', component:'SchedulePage'}
     
 
     ]

@@ -263,7 +263,7 @@ export class ReservetripPage{
   
   help(){
     const toast = this.toastCtrl.create({
-      message: 'Todas reservas serán eliminadas al finalizar el día a las 11:59pm ',
+      message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
       showCloseButton:true,
       closeButtonText: 'OK',
       position:'top'

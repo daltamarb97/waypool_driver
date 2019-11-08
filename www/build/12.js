@@ -1,14 +1,14 @@
 webpackJsonp([12],{
 
-/***/ 648:
+/***/ 649:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RatetripPageModule", function() { return RatetripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RemoveSchedulePageModule", function() { return RemoveSchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ratetrip__ = __webpack_require__(808);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(810);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,42 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RatetripPageModule = /** @class */ (function () {
-    function RatetripPageModule() {
+var RemoveSchedulePageModule = /** @class */ (function () {
+    function RemoveSchedulePageModule() {
     }
-    RatetripPageModule = __decorate([
+    RemoveSchedulePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */]),
             ],
-            exports: [
-                __WEBPACK_IMPORTED_MODULE_2__ratetrip__["a" /* RatetripPage */]
-            ]
         })
-    ], RatetripPageModule);
-    return RatetripPageModule;
+    ], RemoveSchedulePageModule);
+    return RemoveSchedulePageModule;
 }());
 
-//# sourceMappingURL=ratetrip.module.js.map
+//# sourceMappingURL=remove-schedule.module.js.map
 
 /***/ }),
 
-/***/ 808:
+/***/ 810:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RatetripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RemoveSchedulePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,46 +61,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-var RatetripPage = /** @class */ (function () {
-    function RatetripPage(navCtrl, navParams, SignUpServices, afDB, SignUpService, AngularFireAuth, sendfeedback, alertCtrl) {
+/**
+ * Generated class for the RemoveSchedulePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var RemoveSchedulePage = /** @class */ (function () {
+    function RemoveSchedulePage(navCtrl, navParams, viewCtrl, alertCtrl, signUpService, angularFireAuth) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.SignUpServices = SignUpServices;
-        this.afDB = afDB;
-        this.SignUpService = SignUpService;
-        this.AngularFireAuth = AngularFireAuth;
-        this.sendfeedback = sendfeedback;
+        this.viewCtrl = viewCtrl;
         this.alertCtrl = alertCtrl;
-        this.userDriverUid = this.AngularFireAuth.auth.currentUser.uid;
-        this.userDriver = {};
-        this.title = 'calificacion de viaje';
-        this.today = Date.now();
-        this.userDriver = this.navParams.get('user');
-        this.trip = this.navParams.get('trip');
+        this.signUpService = signUpService;
+        this.angularFireAuth = angularFireAuth;
+        this.schedule = this.navParams.get('schedule');
+        console.log(this.schedule);
+        this.userId = this.angularFireAuth.auth.currentUser.uid;
+        this.startHour = this.schedule.hour;
+        this.picToView = this.schedule.image;
+        this.textMessage = this.schedule.description;
     }
-    RatetripPage.prototype.sendEmail = function () {
-        if (this.experience === null || this.experience === undefined) {
-            this.experience = 'no hay feedback';
-            this.sendfeedback.sendFeedback(this.SignUpService.userPlace, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-            this.navCtrl.setRoot('TabsPage');
-        }
-        else {
-            this.sendfeedback.sendFeedback(this.SignUpService.userPlace, this.title, this.experience, this.userDriver.name, this.userDriver.lastname, this.userDriver.phone, this.userDriverUid);
-            this.navCtrl.setRoot('TabsPage');
-        }
+    RemoveSchedulePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad RemoveSchedulePage');
     };
-    RatetripPage = __decorate([
+    RemoveSchedulePage.prototype.dismiss = function () {
+        this.viewCtrl.dismiss(this.accepted);
+    };
+    RemoveSchedulePage.prototype.remove = function () {
+        this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
+        this.dismiss();
+    };
+    RemoveSchedulePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ratetrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>Viaje Finalizado</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <ion-card class="slip">\n        <div text-center>\n            <h4 class="text-dark">¡Esperamos que hayas tenido un excelente viaje!</h4>\n            <p class="text-light">{{today | date}}\n\n        </p>\n            <h1 class="text-theme">$ {{trip.price}}</h1>\n            <h4 class="text-dark">Podrás ver tu pago en el ícono<br>Ganancias</h4>\n        </div>\n    </ion-card>\n    <ion-card class="rate">\n        <div text-center>\n                <h4 class="text-dark">Cuéntanos {{userDriver.name}} como ha sido la experiencia con Waypool </h4>           \n            <div class="driver">                \n                <div class="form">\n                    <ion-list no-lines>\n                        <ion-item>\n                            <ion-textarea [(ngModel)]="experience" type="text" placeholder="Déjanos tu sugerencia" ></ion-textarea>\n                        </ion-item>\n                    </ion-list>\n                </div>\n                <p padding-top><button navPop (click)="sendEmail()" class="btn text-white bg-theme rounded" style="width: 100%;">ENVIAR</button></p>\n            </div>\n        </div>\n        <!-- <ion-row>\n            <button navPop (click)="sendEmail()" class="btn text-white bg-theme rounded" style="width: 30%;">ENVIAR</button>\n\n        </ion-row> -->\n    </ion-card>\n    <p class="love">Desarrollado con Amor para universitarios  <ion-icon name="heart"></ion-icon></p> \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/ratetrip/ratetrip.html"*/
+            selector: 'page-remove-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/'<ion-content>\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n  \n        <ion-card-content>\n            <ion-row style="margin-top: 14px;    display: flex;\n            justify-content: center">\n                <ion-list>\n                    <ion-item>\n                        <ion-label>Hora:</ion-label>\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n                </ion-item>\n                </ion-list>                    \n            </ion-row>\n    </ion-card-content>\n\n    <br>\n    <h2 text-center>A esta hora vas de tu:</h2>\n     <h1 text-center class="texto1">{{textMessage}}</h1>\n      <ion-row>\n          <ion-col class="col1">\n              <img [src]="picToView" height="100px" width="100%"/>\n          </ion-col>\n      </ion-row>\n  \n        <ion-card-content>\n            <div class="seats">           \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-red text-white rounded" style="width: 100%;font-size: .95rem;" (click)="remove()">Eliminar este horario</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_5__services_sendFeedback_service__["a" /* sendFeedbackService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
-    ], RatetripPage);
-    return RatetripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], RemoveSchedulePage);
+    return RemoveSchedulePage;
 }());
 
-//# sourceMappingURL=ratetrip.js.map
+//# sourceMappingURL=remove-schedule.js.map
 
 /***/ })
 

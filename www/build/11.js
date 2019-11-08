@@ -1,14 +1,14 @@
 webpackJsonp([11],{
 
-/***/ 654:
+/***/ 651:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RemoveSchedulePageModule", function() { return RemoveSchedulePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SchedulePageModule", function() { return SchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(814);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__schedule__ = __webpack_require__(812);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RemoveSchedulePageModule = /** @class */ (function () {
-    function RemoveSchedulePageModule() {
+var SchedulePageModule = /** @class */ (function () {
+    function SchedulePageModule() {
     }
-    RemoveSchedulePageModule = __decorate([
+    SchedulePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */],
+                __WEBPACK_IMPORTED_MODULE_2__schedule__["a" /* SchedulePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__schedule__["a" /* SchedulePage */]),
             ],
         })
-    ], RemoveSchedulePageModule);
-    return RemoveSchedulePageModule;
+    ], SchedulePageModule);
+    return SchedulePageModule;
 }());
 
-//# sourceMappingURL=remove-schedule.module.js.map
+//# sourceMappingURL=schedule.module.js.map
 
 /***/ }),
 
-/***/ 814:
+/***/ 812:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RemoveSchedulePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SchedulePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_instances_service__ = __webpack_require__(348);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,47 +65,189 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 /**
- * Generated class for the RemoveSchedulePage page.
+ * Generated class for the SchedulePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var RemoveSchedulePage = /** @class */ (function () {
-    function RemoveSchedulePage(navCtrl, navParams, viewCtrl, alertCtrl, signUpService, angularFireAuth) {
+var SchedulePage = /** @class */ (function () {
+    function SchedulePage(navCtrl, navParams, modalCtrl, signUpService, angularFireAuth, app, alertCtrl, camera, loadingCtrl, instances) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
+        this.modalCtrl = modalCtrl;
         this.signUpService = signUpService;
         this.angularFireAuth = angularFireAuth;
-        this.schedule = this.navParams.get('schedule');
-        console.log(this.schedule);
+        this.app = app;
+        this.alertCtrl = alertCtrl;
+        this.camera = camera;
+        this.loadingCtrl = loadingCtrl;
+        this.instances = instances;
+        this.schedule = "makeYourOwn";
+        this.schedules = [];
+        this.showButtonWorkSchedule = false;
+        this.optionsCamera = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+        };
+        this.optionsLibrary = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+        };
         this.userId = this.angularFireAuth.auth.currentUser.uid;
-        this.startHour = this.schedule.hour;
-        this.picToView = this.schedule.image;
-        this.textMessage = this.schedule.description;
+        // IMPORTANTE: aqui poner un if scheduleType = 'manual'
+        this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(function (hour) {
+            _this.schedules = hour;
+            console.log(_this.schedules);
+            if (_this.schedules.length !== 0) {
+                _this.showButtonWorkSchedule = true;
+            }
+            else {
+                _this.showButtonWorkSchedule = false;
+            }
+        });
     }
-    RemoveSchedulePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RemoveSchedulePage');
+    SchedulePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad SchedulePage');
     };
-    RemoveSchedulePage.prototype.dismiss = function () {
-        this.viewCtrl.dismiss(this.accepted);
+    SchedulePage.prototype.makeSchedule = function () {
+        var modal = this.modalCtrl.create('AddSchedulePage');
+        modal.onDidDismiss(function (accepted) {
+            if (accepted) {
+                // this.navCtrl.push('ListridePage');
+                console.log('hola modal nuevo');
+            }
+        });
+        modal.present();
     };
-    RemoveSchedulePage.prototype.remove = function () {
-        this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
-        this.dismiss();
+    SchedulePage.prototype.skipSchedule = function () {
+        this.app.getRootNav().push('FindridePage');
     };
-    RemoveSchedulePage = __decorate([
+    SchedulePage.prototype.removeTime = function (sche) {
+        var _this = this;
+        var modal = this.modalCtrl.create('RemoveSchedulePage', {
+            schedule: sche
+        });
+        modal.onDidDismiss(function (accepted) {
+            if (accepted) {
+                // this.navCtrl.push('ListridePage');
+                var alert_1 = _this.alertCtrl.create({
+                    title: 'Este horario ha sido eliminado',
+                    buttons: ['OK']
+                });
+                alert_1.present();
+            }
+        });
+        modal.present();
+    };
+    SchedulePage.prototype.usageCameraSchedule = function () {
+        var _this = this;
+        this.camera.getPicture(this.optionsCamera).then(function (imageData) {
+            _this.instances.scheduleTypePicture(_this.signUpService.userPlace, _this.userId);
+            var loading = _this.loadingCtrl.create({
+                spinner: 'crescent',
+                content: "\n          <div class=\"custom-spinner-container\">\n            <div class=\"custom-spinner-box\"></div>\n          </div>"
+            });
+            loading.present();
+            var base64Image = 'data:image/jpeg;base64,' + imageData;
+            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userPlace + '/schedules/' + _this.userId);
+            pictureSchedule.putString(base64Image, 'data_url').then(function () {
+                loading.dismiss();
+                _this.ionViewDidLoad;
+                var alert = _this.alertCtrl.create({
+                    title: '¡HECHO!',
+                    subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
+                    buttons: [{
+                            text: 'OK',
+                            handler: function () {
+                                _this.app.getRootNav().push('TabsPage');
+                            }
+                        }]
+                });
+                alert.present();
+            }).catch(function (error) {
+                console.log(error);
+                var alert = _this.alertCtrl.create({
+                    title: 'hubo un error',
+                    subTitle: 'intenta subir el horario otra vez',
+                    buttons: ['OK']
+                });
+                alert.present();
+            });
+        }, function (err) {
+            console.log(err);
+            var alert = _this.alertCtrl.create({
+                title: 'hubo un error',
+                subTitle: 'intenta subir el horario otra vez',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
+    };
+    SchedulePage.prototype.accessLibrary = function () {
+        var _this = this;
+        this.camera.getPicture(this.optionsLibrary).then(function (imageData) {
+            var loading = _this.loadingCtrl.create({
+                spinner: 'crescent',
+                content: "\n          <div class=\"custom-spinner-container\">\n            <div class=\"custom-spinner-box\"></div>\n          </div>"
+            });
+            loading.present();
+            var base64Image = 'data:image/jpeg;base64,' + imageData;
+            var pictureSchedule = Object(__WEBPACK_IMPORTED_MODULE_5_firebase__["storage"])().ref(_this.signUpService.userPlace + '/schedules/' + _this.userId);
+            pictureSchedule.putString(base64Image, 'data_url').then(function () {
+                loading.dismiss();
+                _this.instances.scheduleTypePicture(_this.signUpService.userPlace, _this.userId);
+                var alert = _this.alertCtrl.create({
+                    title: '¡HECHO!',
+                    subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
+                    buttons: [{
+                            text: 'OK',
+                            handler: function () {
+                                _this.app.getRootNav().push('TabsPage');
+                            }
+                        }]
+                });
+                alert.present();
+            }).catch(function (error) {
+                console.log(error);
+                var alert = _this.alertCtrl.create({
+                    title: 'hubo un error',
+                    subTitle: 'intenta subir el horario otra vez',
+                    buttons: ['OK']
+                });
+                alert.present();
+            });
+        }, function (err) {
+            console.log(err);
+            var alert = _this.alertCtrl.create({
+                title: 'hubo un error',
+                subTitle: 'intenta subir el horario otra vez',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
+    };
+    SchedulePage.prototype.goFindride = function () {
+        this.navCtrl.setRoot('FindridePage');
+        this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
+    };
+    SchedulePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-remove-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/'<ion-content>\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n  \n        <ion-card-content>\n            <ion-row style="margin-top: 14px;    display: flex;\n            justify-content: center">\n                <ion-list>\n                    <ion-item>\n                        <ion-label>Hora:</ion-label>\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n                </ion-item>\n                </ion-list>                    \n            </ion-row>\n    </ion-card-content>\n\n    <br>\n    <h2 text-center>A esta hora vas de tu:</h2>\n     <h1 text-center class="texto1">{{textMessage}}</h1>\n      <ion-row>\n          <ion-col class="col1">\n              <img [src]="picToView" height="100px" width="100%"/>\n          </ion-col>\n      </ion-row>\n  \n        <ion-card-content>\n            <div class="seats">           \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-red text-white rounded" style="width: 100%;font-size: .95rem;" (click)="remove()">Eliminar este horario</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/,
+            selector: 'page-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/schedule/schedule.html"*/'<!--\n  Generated template for the SchedulePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">MI HORARIO</ion-title>\n    </ion-navbar>\n    <div padding-left padding-right>\n        <ion-segment [(ngModel)]="schedule">\n            <ion-segment-button value=makeYourOwn>\n                Arma tu horario\n            </ion-segment-button>\n            <ion-segment-button value="picture">\n                Foto de mi horario\n            </ion-segment-button>\n        </ion-segment>\n    </div>\n</ion-header>\n\n\n<ion-content class="bg-light">\n    <div [ngSwitch]="schedule">\n      <div *ngSwitchCase="\'makeYourOwn\'">\n\n\n\n        <p text-center padding-top margin-top>Agrega cada una de las horas en las que vas de tu casa al trabajo/universidad o viceversa</p>\n\n            <ion-card *ngFor = "let sche of schedules" (click) = \'removeTime(sche)\'>\n                    <ng-container>\n                        <ion-card-content >\n                            <ion-row class="center-align">  \n                                    <ion-col col-2  class="img">\n                                            <img [src]="sche.image"  style="display:inline-block" height="140px" width="50px"/>\n                                    </ion-col>                                     \n                            </ion-row>\n                            <ion-col text-center class=\'text\'>\n                                    <p>vas de {{ sche.description }} <br> a las <span style="color:#3fb1df;">{{ sche.hour}}</span></p>\n                            </ion-col>\n                        </ion-card-content>\n                    </ng-container>\n                </ion-card>\n\n\n                <ion-row *ngIf= \'showButtonWorkSchedule\'>\n                        <ion-col>\n                            <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="goFindride()">Continuar</button></p>\n                        </ion-col>\n                    </ion-row>\n\n                    <ion-row >\n                        <div style="position: relative">\n                                <p style="position: fixed; bottom: 10px; width:100%; text-align: left" class="skipText"  (click)="skipSchedule()"> No lo quiero hacer ahora </p>\n\n                        </div>\n                       \n                    </ion-row>\n\n\n\n\n\n          <ion-fab bottom right>\n              <button ion-fab (click)=\'makeSchedule()\'><ion-icon name="add"></ion-icon></button>\n            </ion-fab>\n      </div>\n\n\n      <div *ngSwitchCase="\'picture\'">\n            <p text-center padding-top margin-top>Toma un screenshot o una foto de tu <span style="color:#3fb1df;">HORARIO</span>, mándanoslo y haremos el resto por ti</p>\n        \n            <div text-center class="verifiy">\n                <img src="assets/imgs/v1.png">\n            </div>\n            <ion-row>\n                <ion-col>\n                    <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraSchedule()">Tomar Foto de horario</button></p>\n                </ion-col>\n\n                <ion-col>\n                        <p padding-top class="btn-box"><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="accessLibrary()">Subir Foto de galería</button></p>\n                    </ion-col>\n            </ion-row>\n            <br>\n            <br>\n            <br>\n            <ion-row>\n                \n                    <p padding-top class="skipText"  (click)="skipSchedule()"> No lo quiero hacer ahora </p>\n               \n            </ion-row>\n      </div>\n      \n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/schedule/schedule.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
-    ], RemoveSchedulePage);
-    return RemoveSchedulePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_6__services_instances_service__["a" /* instancesService */]])
+    ], SchedulePage);
+    return SchedulePage;
 }());
 
-//# sourceMappingURL=remove-schedule.js.map
+//# sourceMappingURL=schedule.js.map
 
 /***/ })
 
