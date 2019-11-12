@@ -1,15 +1,15 @@
 webpackJsonp([3],{
 
-/***/ 656:
+/***/ 654:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SuccessNotificationPageModule", function() { return SuccessNotificationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__successnotification__ = __webpack_require__(817);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_lottie__ = __webpack_require__(818);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__successnotification__ = __webpack_require__(816);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_lottie__ = __webpack_require__(817);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,13 +41,13 @@ var SuccessNotificationPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 817:
+/***/ 816:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuccessNotificationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,25 +99,25 @@ var SuccessNotificationPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 818:
+/***/ 817:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__ = __webpack_require__(819);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__ = __webpack_require__(818);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 819:
+/***/ 818:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LottieAnimationViewModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lottieAnimationView_component__ = __webpack_require__(820);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lottieAnimationView_component__ = __webpack_require__(819);
 
 
 
@@ -147,7 +147,7 @@ LottieAnimationViewModule.ctorParameters = function () { return []; };
 
 /***/ }),
 
-/***/ 820:
+/***/ 819:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -156,7 +156,7 @@ LottieAnimationViewModule.ctorParameters = function () { return []; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(54);
 
 
-var lottie = __webpack_require__(821);
+var lottie = __webpack_require__(820);
 var LottieAnimationViewComponent = (function () {
     function LottieAnimationViewComponent(platformId) {
         this.platformId = platformId;
@@ -205,7 +205,7 @@ LottieAnimationViewComponent.propDecorators = {
 
 /***/ }),
 
-/***/ 821:
+/***/ 820:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;(typeof navigator !== "undefined") && (function(root, factory) {

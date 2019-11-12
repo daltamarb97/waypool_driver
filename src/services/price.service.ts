@@ -3,10 +3,11 @@ import { Injectable } from "@angular/core";
 
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from 'firebase';
+import { AlertController } from "ionic-angular";
 
 @Injectable()
 export class priceService {
-    constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth){
+    constructor(public afDB: AngularFireDatabase, public AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController){
     }
 
     
@@ -54,5 +55,22 @@ export class priceService {
           keyLastReserve:arrayReserves.key
        })
         console.log(KeyLastTripSaved); 
+       }
+
+
+
+       sendPaymentInfo(place, driverId, id, bankAccount, bankEntity){
+        this.afDB.database.ref(place + '/drivers/' + driverId).update({
+          idNumber: id,
+          bankAccount: bankAccount,
+          bankEntity: bankEntity
+        }).then(()=>{
+          const alert = this.alertCtrl.create({
+            title: 'Información recibida',
+            subTitle: 'Si tienes un saldo pendiente por recibir mayor o igual a COP$10.000, en los próximos dias estará llegando a tu cuenta bancaria',
+            buttons: ['OK']
+          });
+          alert.present();
+        })
        }
 }

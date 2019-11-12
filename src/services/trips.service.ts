@@ -108,13 +108,14 @@ export class TripsService {
           //eliminate the user from pendingUsers
             this.afDB.database.ref(place+ '/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+ userId).remove();
       }
-      public pickUp(place, keyTrip,driverUid,userId,user){
-       
 
+
+      public pickUp(place, keyTrip,driverUid,userId,user){
         // add the driver to pickedUpUsers 
         this.afDB.database.ref(place + '/trips/'+driverUid+'/'+ keyTrip +'/pickedUpUsers/'+ userId).update(user);
- 
      }
+
+
      public createTripState(place, keyTrip,driverUid){
       this.afDB.database.ref(place + '/tripsState/'+driverUid+'/'+ keyTrip).update({
         saveTrip:false,
@@ -205,6 +206,26 @@ export class TripsService {
         this.afDB.database.ref(place + '/drivers/'+driverUid+'/recordTrips/').push(trip);
    
        }
+
+
+       public sendPaymentInfoOfTrip(place, driverId, amount){
+          this.afDB.database.ref(place + '/drivers/' + driverId ).update({
+            pendingToReceive: amount
+          })
+       }
+
+
+       public sendPaymentInfoOfTripForUser(place, userId, amount){
+        this.afDB.database.ref(place + '/users/' + userId ).update({
+          pendingToPay: amount
+        })
+     }
+
+
+  
+
+
+
        public cancelReserve(place, driverUid,keyTrip){
         this.afDB.database.ref(place + '/reserves/'+driverUid+'/'+ keyTrip).remove();  
         console.log("hola")

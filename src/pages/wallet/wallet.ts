@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, ToastController, IonicPage, App, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { sendCoordsService } from '../../services/sendCoords.service';
 import { SignUpService } from '../../services/signup.service';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Subject } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 @IonicPage()
 @Component({
   selector: 'page-wallet',
@@ -23,7 +24,7 @@ export class WalletPage {
   newNumber:any = 0;
   unsubscribe = new Subject;
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public signupService: SignUpService) {
+  constructor(public navCtrl: NavController,public toastCtrl: ToastController,public sendUsersService:sendUsersService,public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public signupService: SignUpService, private afDB: AngularFireDatabase, private app: App, public modalCtrl: ModalController) {
     
    
     this.sendUsersService.getRecordTrips(this.signupService.userPlace, this.userUid)
@@ -57,7 +58,17 @@ hola(){
 
   })
 
-  this.total = this.total + this.newNumber
+
+  this.afDB.database.ref('/allPlaces/' + this.signupService.userPlace).once('value').then((snap)=>{
+    const amountToCharge = snap.val().feeAmount;
+    if(snap.val().feeActive === true){
+      this.total = (parseInt(this.total)+ parseInt(this.newNumber)) - ((parseInt(this.total)+ parseInt(this.newNumber))*amountToCharge)
+    }else{
+      this.total = this.total + this.newNumber;
+    }
+  })
+
+  
 
 
 }
@@ -70,5 +81,11 @@ hola(){
       position:'top'
          });
     toast.present();
+  }
+
+  goPaymentInfo(){
+
+    let modal = this.modalCtrl.create('PaymentsInfoPage');                      
+    modal.present();
   }
 }

@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 657:
+/***/ 659:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(822);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(825);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,19 +41,21 @@ var WalletPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 822:
+/***/ 825:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WalletPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_database__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angularfire2_database__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -70,8 +72,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var WalletPage = /** @class */ (function () {
-    function WalletPage(navCtrl, toastCtrl, sendUsersService, sendCoordsService, AngularFireAuth, signupService) {
+    function WalletPage(navCtrl, toastCtrl, sendUsersService, sendCoordsService, AngularFireAuth, signupService, afDB, app, modalCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.toastCtrl = toastCtrl;
@@ -79,6 +82,9 @@ var WalletPage = /** @class */ (function () {
         this.sendCoordsService = sendCoordsService;
         this.AngularFireAuth = AngularFireAuth;
         this.signupService = signupService;
+        this.afDB = afDB;
+        this.app = app;
+        this.modalCtrl = modalCtrl;
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
         this.recordTrips = [];
         this.total = 0;
@@ -106,7 +112,15 @@ var WalletPage = /** @class */ (function () {
             console.log(_this.newNumber);
             _this.newNumber = _this.newNumber + _this.totalTrip;
         });
-        this.total = this.total + this.newNumber;
+        this.afDB.database.ref('/allPlaces/' + this.signupService.userPlace).once('value').then(function (snap) {
+            var amountToCharge = snap.val().feeAmount;
+            if (snap.val().feeActive === true) {
+                _this.total = (parseInt(_this.total) + parseInt(_this.newNumber)) - ((parseInt(_this.total) + parseInt(_this.newNumber)) * amountToCharge);
+            }
+            else {
+                _this.total = _this.total + _this.newNumber;
+            }
+        });
     };
     WalletPage.prototype.help = function () {
         var toast = this.toastCtrl.create({
@@ -117,11 +131,15 @@ var WalletPage = /** @class */ (function () {
         });
         toast.present();
     };
+    WalletPage.prototype.goPaymentInfo = function () {
+        var modal = this.modalCtrl.create('PaymentsInfoPage');
+        modal.present();
+    };
     WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-wallet',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n    </ion-navbar>\n    <div text-center >\n        <p><small class="text-white">Ganancias Totales:</small></p>\n        <h1 class="text-white">$ {{total}}</h1>\n        <ion-row>\n           \n        </ion-row>\n    </div>\n\n</ion-header>\n \n<ion-content class="bg-light">\n        <p class="love">Historial de viajes</p> \n\n    <ion-list>\n            <ion-card *ngFor = "let user of recordTrips">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.DestinationTime}}\n                            </h2>\n                            <p>{{user.car}}</p>\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge">$ {{user.totalTrip}}</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>       \n\n                </ion-card>  \n    </ion-list>\n   \n   \n    \n    \n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/
+            selector: 'page-wallet',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">Mis Ganancias</ion-title>\n        <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="float: right;"></ion-icon> \n\n    </ion-navbar>\n    <div text-center >\n        <p><small class="text-white">Ganancias Totales:</small></p>\n        <h1 class="text-white">$ {{total}}</h1>\n        <ion-row>\n           \n        </ion-row>\n    </div>\n\n</ion-header>\n \n<ion-content class="bg-light">\n        <p class="love">Historial de viajes</p> \n\n    <ion-list>\n            <ion-card *ngFor = "let user of recordTrips">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2>{{user.DestinationTime}}\n                            </h2>\n                            <p>{{user.car}}</p>\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge">$ {{user.totalTrip}}</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>       \n\n                </ion-card>  \n    </ion-list>\n\n\n    <ion-row class="center-align row" style="margin-left: 16px; margin-right: 16px" >\n            <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.2rem;" (click)="goPaymentInfo()">Añadir información para recibir pagos</button>\n    </ion-row>\n\n   \n   \n    \n    \n</ion-content>'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/wallet/wallet.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_7_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */]])
     ], WalletPage);
     return WalletPage;
 }());

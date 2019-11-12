@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { geofireService } from '../../services/geofire.services';
 import { TripsService } from '../../services/trips.service';
 import { Subject } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 declare var google; 
 @IonicPage()
@@ -37,8 +38,9 @@ export class PickupPage {
   userFirebase:any;
   keyTrip:string;
   unsubscribe = new Subject;
-
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public TripsService:TripsService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth) {
+  amountToReceive:any;
+  priceOfTrip:any;
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public TripsService:TripsService,public toastCtrl: ToastController,private callNumber: CallNumber,public navParams: NavParams,public SignUpService:SignUpService,private authenticationService:authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, private afDB: AngularFireDatabase) {
     this.markers = [];
     //we get the info of the users with navParams
     this.user= this.navParams.get('user');
@@ -51,6 +53,10 @@ export class PickupPage {
           console.log("me fui")
         }
       })
+
+      this.getPriceOfTrip(this.SignUpService.userPlace, this.driverUid, this.keyTrip);
+
+
        
 
     this.directionsService = new google.maps.DirectionsService();
@@ -91,6 +97,15 @@ export class PickupPage {
     
     this.loadMap();
   
+  }
+
+
+  getPriceOfTrip(place, driverUid, keyTrip){
+    this.afDB.database.ref(place + '/trips/'+driverUid+'/'+ keyTrip+ '/price/').once('value').then((snapPrice)=>{
+      this.priceOfTrip = snapPrice.val();
+      console.log(this.priceOfTrip);
+      
+    })
   }
  
   loadMap(){
@@ -275,7 +290,81 @@ export class PickupPage {
       // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
       // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+      // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
+      this.afDB.database.ref(this.SignUpService.userPlace + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUser)=>{
+        if(snapUser.val()=== undefined || snapUser.val() === null){
+          this.TripsService.sendPaymentInfoOfTripForUser(this.SignUpService.userPlace, this.user.userId, this.priceOfTrip);
+        }else{
+          const amountToPayUser = parseInt(snapUser.val()) + parseInt(this.priceOfTrip);
+          this.TripsService.sendPaymentInfoOfTripForUser(this.SignUpService.userPlace, this.user.userId, amountToPayUser);
+
+        }
+      })
+      ///////// TERMINA LA VIOLACION
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      this.afDB.database.ref('/allPlaces/' + this.SignUpService.userPlace).once('value').then((snapFee)=>{
+        const amountToCharge = snapFee.val().feeAmount;
+        if(snapFee.val().feeActive === true){
+          this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
+            if(snap.val() === null || snap.val() === undefined){
+              this.amountToReceive = parseInt(this.priceOfTrip) - (parseInt(this.priceOfTrip) * amountToCharge)
+            }else{
+              this.amountToReceive = (parseInt(snap.val())  + parseInt(this.priceOfTrip)) - ((parseInt(snap.val())  + parseInt(this.priceOfTrip)) * amountToCharge);
+            }
+            this.TripsService.sendPaymentInfoOfTrip(this.SignUpService.userPlace, this.driverUid, this.amountToReceive);
+    
+          })
+        }else{
+          this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
+            if(snap.val() === null || snap.val() === undefined){
+              this.amountToReceive = this.priceOfTrip;
+            }else{
+              this.amountToReceive = parseInt(snap.val())  + parseInt(this.priceOfTrip);
+            }
+            this.TripsService.sendPaymentInfoOfTrip(this.SignUpService.userPlace, this.driverUid, this.amountToReceive);
+    
+          })
+        }
+      })
+      
     }
+
+
+
+
     ionViewDidLeave(){
       this.unsubscribe.next();
       this.unsubscribe.complete();

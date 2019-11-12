@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { TripsService } from '../../services/trips.service';
 import { ThrowStmt } from '@angular/compiler';
 import { Subject } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -36,8 +37,7 @@ userDriver:any;
 unsubscribe = new Subject;
 lastMinuteUsers:any =[];
 tripState:any;
-
-  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService) {
+  constructor(public navCtrl: NavController,public SignUpService:SignUpService,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService, private afDB: AngularFireDatabase) {
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.SignUpService.userPlace, this.driverUid).takeUntil(this.unsubscribe)
 			.subscribe(userDriver => {
@@ -247,6 +247,7 @@ tripState:any;
 							});
 							this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
 							this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
+							
 							this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
 
 							this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);

@@ -1,14 +1,14 @@
 webpackJsonp([18],{
 
-/***/ 643:
+/***/ 644:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HelpPageModule", function() { return HelpPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__help__ = __webpack_require__(804);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(806);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var HelpPageModule = /** @class */ (function () {
-    function HelpPageModule() {
+var LoginPageModule = /** @class */ (function () {
+    function LoginPageModule() {
     }
-    HelpPageModule = __decorate([
+    LoginPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__help__["a" /* HelpPage */],
+                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__help__["a" /* HelpPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__help__["a" /* HelpPage */]
+                __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
             ]
         })
-    ], HelpPageModule);
-    return HelpPageModule;
+    ], LoginPageModule);
+    return LoginPageModule;
 }());
 
-//# sourceMappingURL=help.module.js.map
+//# sourceMappingURL=login.module.js.map
 
 /***/ }),
 
-/***/ 804:
+/***/ 806:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HelpPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,45 +64,123 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var HelpPage = /** @class */ (function () {
-    function HelpPage(navCtrl) {
+
+
+
+
+// import * as firebase from 'firebase';
+// import { SignUpService } from '../../services/signup.service';
+var LoginPage = /** @class */ (function () {
+    // userFirebase = this.AngularFireAuth.auth.currentUser;
+    function LoginPage(navCtrl, authenticationService, alertCtrl, AngularFireAuth, navParams, formBuilder, SignUpService, platform) {
+        var _this = this;
         this.navCtrl = navCtrl;
+        this.authenticationService = authenticationService;
+        this.alertCtrl = alertCtrl;
+        this.AngularFireAuth = AngularFireAuth;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.SignUpService = SignUpService;
+        this.platform = platform;
+        this.email = '';
+        this.auth = this.AngularFireAuth.auth;
+        this.loginGroup = this.formBuilder.group({
+            email: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
+            password: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required]
+        });
+        if (this.auth.currentUser) {
+            this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.auth.currentUser.uid).subscribe(function (driver) {
+                _this.driverInfo = driver;
+            });
+        }
     }
-    HelpPage.prototype.suggestion = function () {
-        this.typeOfSituation = 'Sugerencia';
-        this.info = 'Amamos las sugerencias ya que nos permiten mejorar cada vez más la aplicación, ¡Gracias de parte de todo el equipo de Waypool!';
-        this.navCtrl.push('SupportPage', { typeOfSituation: this.typeOfSituation, info: this.info });
+    LoginPage.prototype.signup = function () {
+        this.navCtrl.push('SignupPage');
     };
-    HelpPage.prototype.myAccount = function () {
-        this.typeOfSituation = 'Mi Cuenta';
-        this.info = 'Escríbenos cualquier cosa relacionada con tu cuenta';
-        this.navCtrl.push('SupportPage', { typeOfSituation: this.typeOfSituation, info: this.info });
+    ;
+    LoginPage.prototype.resetPassword = function (email) {
+        if (this.loginGroup.controls['email'].value == '') {
+            var alert_1 = this.alertCtrl.create({
+                title: 'no hay ningun email',
+                subTitle: 'ingresa un email para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert_1.present();
+            console.log("reset password email hasn't been sent");
+        }
+        else {
+            this.auth.sendPasswordResetEmail(this.loginGroup.controls['email'].value);
+            var alert_2 = this.alertCtrl.create({
+                title: 'revisa tu email',
+                subTitle: 'un correo te ha sido enviado para resetear tu contraseña',
+                buttons: ['OK']
+            });
+            alert_2.present();
+            console.log("reset password email has been sent");
+        }
+        ;
     };
-    HelpPage.prototype.trip = function () {
-        this.typeOfSituation = 'Viaje';
-        this.info = '¿Haz tenido algún problema en algún viaje? ¡coloca el ID de tu viaje al comenzar el mensaje y con gusto te ayudaremos! ';
-        this.navCtrl.push('SupportPage', { typeOfSituation: this.typeOfSituation, info: this.info });
+    ;
+    LoginPage.prototype.logIn = function () {
+        var _this = this;
+        this.receivedUser = this.navParams.data;
+        var email = this.loginGroup.controls['email'].value;
+        var password = this.loginGroup.controls['password'].value;
+        this.authenticationService.loginWithEmail(email, password).then(function (data) {
+            console.log(data);
+            if (data.user.emailVerified == false) {
+                var alert_3 = _this.alertCtrl.create({
+                    title: 'Oops!',
+                    subTitle: 'por favor verifica tu email',
+                    buttons: ['OK']
+                });
+                alert_3.present();
+            }
+            else {
+                // let metadata = this.auth.currentUser.metadata;
+                // if(metadata.creationTime === metadata.lastSignInTime){
+                //     console.log(metadata.creationTime);
+                //     console.log(metadata.lastSignInTime);
+                //     this.navCtrl.push('CarRegistrationLoginPage');
+                //     setTimeout(()=>{
+                //         if(this.navCtrl.getActive().id === 'LoginPage'){
+                //             this.navCtrl.push('CarRegistrationLoginPage');
+                //         }else{
+                //             console.log('actuo el abservable')
+                //         }
+                //     }, 500)
+                // }
+                setTimeout(function () {
+                    if (_this.navCtrl.getActive().id === 'LoginPage') {
+                        _this.navCtrl.setRoot('FindridePage');
+                    }
+                    else {
+                        console.log('actuo el abservable');
+                    }
+                }, 500);
+                _this.authenticationService.getStatus;
+            }
+            ;
+        }).catch(function (error) {
+            var alert = _this.alertCtrl.create({
+                title: 'Oops!',
+                subTitle: 'El usuario o la contraseña están incorrectas',
+                buttons: ['OK']
+            });
+            alert.present();
+            console.log(error);
+        });
     };
-    HelpPage.prototype.bug = function () {
-        this.typeOfSituation = 'Problema con la App';
-        this.info = ' Muchas gracias por informarnos de estos problemas que ayudan a mejorar la usabilidad de la App cada día mas';
-        this.navCtrl.push('SupportPage', { typeOfSituation: this.typeOfSituation, info: this.info });
-    };
-    HelpPage.prototype.paymentProblem = function () {
-        this.typeOfSituation = 'Problema de Pago';
-        this.info = '¿Haz tenido algún tipo de problema relacionado con la tarjeta con tu tarjeta de crédito? Descríbenos con detalle y nos comunicamos contigo lo más pronto posible';
-        this.navCtrl.push('SupportPage', { typeOfSituation: this.typeOfSituation, info: this.info });
-    };
-    HelpPage = __decorate([
+    LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-help',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/help/help.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>Soporte</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <p class="textHelp" padding>¡Escoje tu situación y escríbenos con mucho detalle para poder ayudarte lo más pronto posible!. También puedes escribirnos a waypooltec@gmail.com</p>\n    <ion-card (click)="suggestion()">\n        <ion-card-header>\n            <h1><strong>Sugerencia</strong>\n                <ion-icon name="ios-arrow-down-outline" class="text-light"></ion-icon>\n            </h1>\n        </ion-card-header>\n        <ion-card-content class="text">\n            Ayúdanos a mejorar el servicio  \n        </ion-card-content>\n    </ion-card>\n    <ion-card (click)="trip()">\n        <ion-card-header>\n            <h1><strong>Viaje</strong>\n                <ion-icon name="ios-arrow-down-outline" class="text-light"></ion-icon>\n            </h1>\n        </ion-card-header>\n        <ion-card-content class="text">\n            Escríbenos cualquier sugerencia/quejas con respecto a algún viaje\n        </ion-card-content>\n    </ion-card>\n    <ion-card (click)="bug()">\n        <ion-card-header>\n            <h1><strong>Problema con la App</strong>\n                <ion-icon name="ios-arrow-down-outline" class="text-light"></ion-icon>\n            </h1>\n        </ion-card-header>\n        <ion-card-content class="text">\n        Escríbenos cualquier problema que tengas con la App \n        </ion-card-content>\n    </ion-card>\n    <ion-card (click)="myAccount()">\n        <ion-card-header>\n            <h1><strong>Mi Cuenta</strong>\n                <ion-icon name="ios-arrow-down-outline" class="text"></ion-icon>\n            </h1>\n        </ion-card-header>\n        <ion-card-content class="text">\n        ¿Tienes alguna pregunta acerca de tu cuenta? ¡Escríbenos!.\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/help/help.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/login/login.html"*/'<ion-header class="transparent">\n    <ion-navbar hide-tabs>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div class="logo">\n        <img src="assets/imgs/logo waypool gris-01.png" alt="logo">\n    </div>\n\n<div class="bg-white login">\n    <div >\n     <div [formGroup]="loginGroup" >\n        <ion-list class="form">\n            <ion-item>\n                <ion-label></ion-label>\n                <ion-input type="email"  text-right  formControlName="email" placeholder= "email universitario"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label></ion-label>\n                <ion-input type="password" text-right  formControlName="password" placeholder= "Tú contraseña"></ion-input>\n            </ion-item>\n        </ion-list>\n    </div>\n    <button ion-button full class="bg-theme text-white btn rounded" (click)="logIn()" [disabled]="!loginGroup.valid">ENTRAR</button>\n\n\n            <ion-row style="padding-top: 8px;">\n                <ion-col class="col"(click)="signup()"><small>Eres Nuevo Usuario? <strong class="text-theme">¡Regístrate!</strong></small></ion-col>\n                <ion-col text-right (click)="resetPassword(email)"><small>Olvidaste tu <strong class="text-theme"> contraseña?</strong></small></ion-col>\n            </ion-row>\n\n\n        </div>\n\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/login/login.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]])
-    ], HelpPage);
-    return HelpPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Platform */]])
+    ], LoginPage);
+    return LoginPage;
 }());
 
-//# sourceMappingURL=help.js.map
+//# sourceMappingURL=login.js.map
 
 /***/ })
 

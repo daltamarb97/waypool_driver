@@ -1,4 +1,4 @@
-webpackJsonp([31],{
+webpackJsonp([32],{
 
 /***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -238,70 +238,74 @@ webpackEmptyAsyncContext.id = 238;
 var map = {
 	"../pages/add-schedule/add-schedule.module": [
 		636,
-		30
+		31
 	],
 	"../pages/canceltrip/canceltrip.module": [
 		637,
-		29
+		30
 	],
 	"../pages/car-registration-login/car-registration-login.module": [
 		660,
-		28
+		29
 	],
 	"../pages/car-registration/car-registration.module": [
-		659,
-		27
+		663,
+		28
 	],
 	"../pages/chats/chats.module": [
 		638,
-		26
+		27
 	],
 	"../pages/chatting/chatting.module": [
 		639,
-		25
+		26
 	],
 	"../pages/confirm-university/confirm-university.module": [
 		640,
-		24
+		25
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		664,
-		23
+		665,
+		24
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
 		641,
-		22
+		23
 	],
 	"../pages/confirmtrip/confirmtrip.module": [
 		642,
-		21
+		22
 	],
 	"../pages/detailsreserve/detailsreserve.module": [
-		644,
-		20
+		643,
+		21
 	],
 	"../pages/findride/findride.module": [
-		666,
-		19
+		667,
+		20
 	],
 	"../pages/help/help.module": [
-		643,
-		18
+		645,
+		19
 	],
 	"../pages/login/login.module": [
-		646,
-		17
+		644,
+		18
 	],
 	"../pages/more/more.module": [
-		645,
-		16
+		651,
+		17
 	],
 	"../pages/myride/myride.module": [
 		661,
 		2
 	],
+	"../pages/payments-info/payments-info.module": [
+		646,
+		16
+	],
 	"../pages/pickup/pickup.module": [
-		663,
+		662,
 		1
 	],
 	"../pages/profile/profile.module": [
@@ -313,51 +317,51 @@ var map = {
 		14
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		648,
+		650,
 		13
 	],
 	"../pages/remove-schedule/remove-schedule.module": [
-		650,
+		648,
 		12
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		662,
+		664,
 		0
 	],
 	"../pages/schedule/schedule.module": [
-		658,
+		652,
 		11
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		651,
+		653,
 		10
 	],
 	"../pages/signup/signup.module": [
-		665,
+		666,
 		9
 	],
 	"../pages/successnotification/successnotification.module": [
-		656,
+		654,
 		3
 	],
 	"../pages/support/support.module": [
-		652,
+		656,
 		8
 	],
 	"../pages/terms/terms.module": [
-		653,
+		655,
 		7
 	],
 	"../pages/verification-images/verification-images.module": [
-		654,
+		657,
 		6
 	],
 	"../pages/verification-number/verification-number.module": [
-		655,
+		658,
 		5
 	],
 	"../pages/wallet/wallet.module": [
-		657,
+		659,
 		4
 	]
 };
@@ -570,7 +574,7 @@ var sendCoordsService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
@@ -1072,6 +1076,16 @@ var TripsService = /** @class */ (function () {
         //save trip in recordTrips
         this.afDB.database.ref(place + '/drivers/' + driverUid + '/recordTrips/').push(trip);
     };
+    TripsService.prototype.sendPaymentInfoOfTrip = function (place, driverId, amount) {
+        this.afDB.database.ref(place + '/drivers/' + driverId).update({
+            pendingToReceive: amount
+        });
+    };
+    TripsService.prototype.sendPaymentInfoOfTripForUser = function (place, userId, amount) {
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            pendingToPay: amount
+        });
+    };
     TripsService.prototype.cancelReserve = function (place, driverUid, keyTrip) {
         this.afDB.database.ref(place + '/reserves/' + driverUid + '/' + keyTrip).remove();
         console.log("hola");
@@ -1406,7 +1420,101 @@ var sendFeedbackService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 355:
+/***/ 354:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return priceService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(122);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var priceService = /** @class */ (function () {
+    function priceService(afDB, AngularFireAuth, alertCtrl) {
+        this.afDB = afDB;
+        this.AngularFireAuth = AngularFireAuth;
+        this.alertCtrl = alertCtrl;
+    }
+    priceService.prototype.setPriceAndNote = function (place, user, price, note, car) {
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref(place + '/drivers/' + user + '/trips').update({
+            //set important information with note
+            price: price,
+            note: note,
+            car: car,
+        });
+    };
+    priceService.prototype.setPrice = function (place, user, price, car) {
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref(place + '/drivers/' + user + '/trips').update({
+            price: price,
+            car: car,
+        });
+    };
+    priceService.prototype.saveTripToReserves = function (driverUid, or, dest, timeLeaving, price, car, note, driver) {
+        var arrayReserves = this.afDB.database.ref('reserves/' + driverUid + '/').push({
+            orReserve: or,
+            destReserve: dest,
+            timeLeaving: timeLeaving,
+            price: price,
+            car: car,
+            note: note,
+            driver: driver
+        });
+        //get key of reserve pushed
+        var KeyLastTripSaved = arrayReserves.key;
+        //save key inside reserve
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('reserves/' + driverUid + '/' + arrayReserves.key + '/').update({
+            keyTrip: arrayReserves.key
+        });
+        //save key inside driver momentarily to access reserve 
+        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('drivers/' + driverUid + '/' + arrayReserves.key).update({
+            keyLastReserve: arrayReserves.key
+        });
+        console.log(KeyLastTripSaved);
+    };
+    priceService.prototype.sendPaymentInfo = function (place, driverId, id, bankAccount, bankEntity) {
+        var _this = this;
+        this.afDB.database.ref(place + '/drivers/' + driverId).update({
+            idNumber: id,
+            bankAccount: bankAccount,
+            bankEntity: bankEntity
+        }).then(function () {
+            var alert = _this.alertCtrl.create({
+                title: 'Información recibida',
+                subTitle: 'Si tienes un saldo pendiente por recibir mayor o igual a COP$10.000, en los próximos dias estará llegando a tu cuenta bancaria',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
+    };
+    priceService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */]])
+    ], priceService);
+    return priceService;
+}());
+
+//# sourceMappingURL=price.service.js.map
+
+/***/ }),
+
+/***/ 356:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1460,7 +1568,7 @@ var MetricsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 356:
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1521,82 +1629,6 @@ var ChatsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 357:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return priceService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var priceService = /** @class */ (function () {
-    function priceService(afDB, AngularFireAuth) {
-        this.afDB = afDB;
-        this.AngularFireAuth = AngularFireAuth;
-    }
-    priceService.prototype.setPriceAndNote = function (place, user, price, note, car) {
-        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref(place + '/drivers/' + user + '/trips').update({
-            //set important information with note
-            price: price,
-            note: note,
-            car: car,
-        });
-    };
-    priceService.prototype.setPrice = function (place, user, price, car) {
-        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref(place + '/drivers/' + user + '/trips').update({
-            price: price,
-            car: car,
-        });
-    };
-    priceService.prototype.saveTripToReserves = function (driverUid, or, dest, timeLeaving, price, car, note, driver) {
-        var arrayReserves = this.afDB.database.ref('reserves/' + driverUid + '/').push({
-            orReserve: or,
-            destReserve: dest,
-            timeLeaving: timeLeaving,
-            price: price,
-            car: car,
-            note: note,
-            driver: driver
-        });
-        //get key of reserve pushed
-        var KeyLastTripSaved = arrayReserves.key;
-        //save key inside reserve
-        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('reserves/' + driverUid + '/' + arrayReserves.key + '/').update({
-            keyTrip: arrayReserves.key
-        });
-        //save key inside driver momentarily to access reserve 
-        __WEBPACK_IMPORTED_MODULE_3_firebase__["database"]().ref('drivers/' + driverUid + '/' + arrayReserves.key).update({
-            keyLastReserve: arrayReserves.key
-        });
-        console.log(KeyLastTripSaved);
-    };
-    priceService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
-    ], priceService);
-    return priceService;
-}());
-
-//# sourceMappingURL=price.service.js.map
-
-/***/ }),
-
 /***/ 358:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1652,11 +1684,11 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(623);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_fire__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_auth__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(199);
@@ -1667,17 +1699,17 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_geofence__ = __webpack_require__(624);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_geofire_services__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_instances_service__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_call_number__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_price_service__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_call_number__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_price_service__ = __webpack_require__(354);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(625);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_http__ = __webpack_require__(632);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_email_composer_ngx__ = __webpack_require__(633);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_sendFeedback_service__ = __webpack_require__(353);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_chat_service__ = __webpack_require__(356);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_chat_service__ = __webpack_require__(357);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__mobiscroll_angular_lite__ = __webpack_require__(634);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_window_service__ = __webpack_require__(358);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_metrics_service__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_metrics_service__ = __webpack_require__(356);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_geolocation__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__ionic_native_fcm__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__ionic_native_firebase__ = __webpack_require__(204);
@@ -1756,27 +1788,28 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/confirm-university/confirm-university.module#ConfirmUniversityPageModule', name: 'ConfirmUniversityPage', segment: 'confirm-university', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detailsreserve/detailsreserve.module#DetailsReservePagePageModule', name: 'DetailsReservePage', segment: 'detailsreserve', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/payments-info/payments-info.module#PaymentsInfoPageModule', name: 'PaymentsInfoPage', segment: 'payments-info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/remove-schedule/remove-schedule.module#RemoveSchedulePageModule', name: 'RemoveSchedulePage', segment: 'remove-schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
@@ -1836,10 +1869,10 @@ var AppModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___ = __webpack_require__(201);
