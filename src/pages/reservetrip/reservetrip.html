@@ -15,14 +15,14 @@
         <ion-icon (click)="help()" name="arrow-dropdown-circle"></ion-icon>
     </div>
 <div style="display: flex;flex-direction: column;    width: 96%;">
+    <img *ngIf="noReserve" src="assets/imgs/noreserve.png">
+
     <ion-card  *ngFor = "let trip of tripsReserves">
-        <img *ngIf="trip.pendingUsers" src="assets/imgs/noreserve.png">
 
         <ng-container *ngIf="trip.pendingUsers === undefined;else showReserveBlock">
               
               </ng-container>     
               <ng-template #showReserveBlock>
-                    <h2>funcionó</h2>
                     <ng-container *ngIf="trip.isLate; else noLateBlock">
                             <ion-item>
                                 <ion-avatar item-start>
@@ -51,9 +51,9 @@
                             <ion-card-content >
                                 <div  class="ride-detail">
                                     <p>
-                                        <span class="icon-location bg-hot"></span>{{trip.origin}}</p>
+                                        <span class="icon-location bg-hot"></span>{{trip.houseAddr}}</p>
                                     <p>
-                                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>
+                                        <span class="icon-location bg-yellow"></span>{{trip.placeAddr}}</p>
                                 </div>
                                 <ion-row class="center-align">  
                                         <ion-col col-2 class="detail-text text-theme">
@@ -94,9 +94,9 @@
                             <ion-card-content>
                                 <div class="ride-detail">
                                     <p  >
-                                        <span class="icon-location bg-theme"></span>{{trip.origin}}</p>
+                                        <span class="icon-location bg-theme"></span>{{trip.houseAddr}}</p>
                                     <p > 
-                                        <span class="icon-location bg-yellow"></span>{{trip.destination}}</p>
+                                        <span class="icon-location bg-yellow"></span>{{trip.placeAddr}}</p>
                                 </div>
                                 <ion-row class="center-align">
                                     <!-- <ion-col col-3 class="detail-text text-theme">

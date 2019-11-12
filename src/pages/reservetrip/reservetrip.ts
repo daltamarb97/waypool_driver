@@ -177,7 +177,7 @@ export class ReservetripPage{
                 if(trip.type == 'origin'){
 
                   // geocoding of addresses 
-                  this.geocoder.geocode({'address': trip.origin[0][0]}, (results, status)=>{
+                  this.geocoder.geocode({'address': trip.houseAddr[0][0]}, (results, status)=>{
                     if(status==='OK'){
                       this.geocoordinatesOr={
                       lat:results[0].geometry.location.lat(),
@@ -196,7 +196,7 @@ export class ReservetripPage{
                 }else if(trip.type == 'destination'){
  
                  // geocoding of addresses 
-                 this.geocoder.geocode({'address': trip.destination[0][0]}, (results, status)=>{
+                 this.geocoder.geocode({'address': trip.placeAddr[0][0]}, (results, status)=>{
                    if(status==='OK'){
                      this.geocoordinatesDest={
                      lat:results[0].geometry.location.lat(),

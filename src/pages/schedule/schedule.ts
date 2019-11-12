@@ -20,6 +20,7 @@ import { instancesService } from '../../services/instances.service';
 })
 export class SchedulePage {
 
+
   schedule:string = "makeYourOwn";
   schedules = [];
   userId:any;
@@ -205,4 +206,5 @@ export class SchedulePage {
     this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
 
   }
+
 }

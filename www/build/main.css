@@ -25976,7 +25976,7 @@ ion-segment-button.segment-button.segment-activated {
 .md page-add-schedule .card {
   width: 80%;
   margin: auto;
-  height: 550px;
+  height: 350px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26139,7 +26139,7 @@ ion-segment-button.segment-button.segment-activated {
 .ios page-add-schedule .card {
   width: 80%;
   margin: auto;
-  height: 500px;
+  height: 350px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26279,6 +26279,16 @@ ion-segment-button.segment-button.segment-activated {
 .ios page-add-schedule .seats .seats-tag strong {
   margin: auto;
   color: #000;
+}
+
+.ios .house {
+  height: 100;
+  width: 100px;
+}
+
+.ios .work {
+  height: 140px;
+  width: 100px;
 }
 
 page-add-schedule .close-icon {
@@ -27324,7 +27334,7 @@ page-confirm-university .center {
 .md page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 355px;
+  height: 400px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27487,7 +27497,7 @@ page-confirm-university .center {
 .ios page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 355px;
+  height: 400px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -28224,6 +28234,10 @@ page-detailsreserve #map {
   display: flex;
 }
 
+page-detailsreserve .item-ios ion-avatar ion-img, page-detailsreserve .item-ios ion-avatar img {
+  border-radius: 0%;
+}
+
 .ios page-findride .search {
   border-radius: 10px;
   margin: 10px 0;
@@ -28345,7 +28359,7 @@ page-detailsreserve #map {
   border-radius: 17px 0 0 17px;
   height: 29px;
   margin: 0;
-  border-width: 1.5px;
+  border-width: 2px;
   -webkit-transition: 0.15s linear;
   transition: 0.15s linear;
   border-style: solid;
@@ -28359,7 +28373,7 @@ page-detailsreserve #map {
   -webkit-transition: 0.15s linear;
   transition: 0.15s linear;
   background-color: transparent;
-  border-width: 1.5px;
+  border-width: 2px;
   border-style: solid;
   border-color: red;
 }

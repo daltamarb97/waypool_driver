@@ -14,10 +14,9 @@
 
                   <!-- <div><p class="text-white">Conectado</p></div> -->
               
-                  <ion-row class="center-align row" style="margin-left: 16px;" >
+                  <ion-row class="center-align row" style="margin-left: 16px; justify-content: flex-end;" >
                     
-                            <button  #buttonDisconected class="btn rounded bg-red  text-white buttonDisconected" (click)="disconectDriver()" >Offline</button>
-                   
+                      <button  #buttonDisconected class="btn rounded bg-red  text-white buttonDisconected" (click)="disconectDriver()" >Offline</button>
                       <button #buttonConected  class="btn  text-white buttonConected" (click)="conectDriver()" >Online</button>
                     
                     
@@ -39,10 +38,11 @@
 
       <ion-card class="search" >
           <ion-card-content>
-           
+              <span style=" z-index: 1;position: relative;" class="text-theme search-text">Tu casa &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>
+
               <span class="dot bg-theme"></span>
               <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>
-            
+
               <ion-list   [hidden]="autocompleteItems.length == 0">
                   <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">
                     {{ item.description }}
@@ -65,9 +65,9 @@
           <!- </ion-card-content> -->
            
       </ion-card>
-      <ion-avatar item-end>
+      <!-- <ion-avatar item-end>
           <img style="height: 15%; width: 15%;" src="assets/imgs/centermap.png" (click)="centerMap()">
-      </ion-avatar>
+      </ion-avatar> -->
   
    <div #map id="map"></div>  
      

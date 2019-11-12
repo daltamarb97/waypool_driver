@@ -12,15 +12,12 @@ import { sendCoordsService } from '../../services/sendCoords.service';
 import { SignUpService } from '../../services/signup.service';
 // import { Geofence } from '@ionic-native/geofence';
 import { geofireService } from '../../services/geofire.services';
-import * as GeoFire from 'geofire';
 import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
 import { authenticationService } from '../../services/driverauthentication.service';
-import { Geofence } from '@ionic-native/geofence';
 import { sendUsersService } from '../../services/sendUsers.service';
 import { TripsService } from '../../services/trips.service';
 import { instancesService } from '../../services/instances.service';
 import { FCM } from '@ionic-native/fcm';
-import { LoginPage } from '../login/login';
 import { Firebase } from '@ionic-native/firebase';
  
 declare var google;
@@ -162,11 +159,11 @@ export class FindridePage {
       // this.checked = true;
       this.isConected = true;
       this.isDisconected = false;
-      this.changeColor();
+      this.changeColorOnline();
     }else{
       this.isConected = false;
       this.isDisconected = true;
-      this.changeColor2();
+      this.changeColorOffline();
     }
     this.loadMap();
   })
@@ -284,13 +281,13 @@ async getToken() {
   }
 
 }
-changeColor(){
+changeColorOnline(){
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','green')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','green')
 
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
   this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
   this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','green')
 
@@ -299,13 +296,13 @@ changeColor(){
 
   this.showPopup();
 }
-changeColor2(){
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','1px')
+changeColorOffline(){
+  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
   this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','rgb(167, 23, 23)')
   this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
   this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','rgb(167, 23, 23)')
 
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','1px')
+  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','rgb(167, 23, 23)')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','transparent')
@@ -313,9 +310,17 @@ changeColor2(){
 
 }
 conectDriver(){
-  this.isConected = true;
+  if(this.userInfo.toggleStatus === 'online'){
+    const alert = this.alertCtrl.create({
+      title: '¡Ya estas conectado!',
+      subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
+      buttons: ['OK']
+    });
+    alert.present(); 
+    }else{
+      this.isConected = true;
   this.isDisconected = false;
-  this.changeColor();
+  
   if(this.currentUser.emailVerified == false){
     const alert = this.alertCtrl.create({
       title: 'Oops!',
@@ -325,7 +330,7 @@ conectDriver(){
     alert.present(); 
     this.isConected = false;
   this.isDisconected = true;
-  this.changeColor2();
+  this.changeColorOffline();
   }else{
 
     if(this.userInfo.documents){
@@ -342,68 +347,41 @@ conectDriver(){
               this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
               this.isConected = false;
               this.isDisconected = true;
-              this.changeColor2();
+              this.changeColorOffline();
               this.clearMarkers();
               this.directionsDisplay.setDirections({routes: []});
               this.loadMap();
             }else{
   
-              // this.isConected = true;
-              // this.isDisconected = false;
-              
-              // if(this.isConected === true){
-
-                this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
-                this.changeColor();
-                let loading = this.loadingCtrl.create({
-                  spinner: 'crescent',
-                  content: `
-                    <div class="custom-spinner-container">
-                      <div class="custom-spinner-box"></div>
-                    </div>`
-                    });
-                loading.present();
-                console.log("estoy true")
-                this.disable();
-                console.log(this.userInfo.fixedLocation.name);
-                // this.confirmPrice();
-  
-                this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
-                  if(status==='OK'){
-                    this.geocoordinatesHouse={
-                      lat:results[0].geometry.location.lat(),
-                      lng: results[0].geometry.location.lng()
-                    }
-                  }
-                  this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
-                  this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
-                  loading.dismiss();
-                })
+               
   
                 let modal = this.modalCtrl.create('ConfirmpricePage');
                 modal.onDidDismiss(accepted => {
-                  
-                    // // this.navCtrl.push('ListridePage');
-                    // this.app.getRootNav().push('ReservetripPage');
-                    let alert = this.alertCtrl.create({
-                      title: '¡Genial! Desde este momento empezarás a compartir tus viajes',
-                      subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
-                     buttons: ['OK']
-  
-                    })
-                    alert.present();
-  
-                    
-                  
+                  if(accepted){
+                    this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
+                    this.changeColorOnline();
+                 
+                    console.log("estoy true")
+                    this.disable();
+                    console.log(this.userInfo.fixedLocation.name);
+                    // this.confirmPrice();
+      
+                    this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
+                      if(status==='OK'){
+                        this.geocoordinatesHouse={
+                          lat:results[0].geometry.location.lat(),
+                          lng: results[0].geometry.location.lng()
+                        }
+                      }
+                      this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
+                      this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
+                    })                  
+                  }else{
+                    this.presentAlert('Información incompleta','Por favor escribe toda la información para conectarte','OK')
+
+                  }         
                 })
-             modal.present(); 
-              // }else{
-                
-              // }
-  
-  
-  
-              
+             modal.present();             
             }
           }catch(error){
             console.log(error);
@@ -433,7 +411,7 @@ conectDriver(){
           alert.present();
           this.isConected = false;
         this.isDisconected = true;
-        this.changeColor2();
+        this.changeColorOffline();
         }
         
 
@@ -463,7 +441,7 @@ conectDriver(){
         }
         this.isConected = false;
         this.isDisconected = true;
-        this.changeColor2();
+        this.changeColorOffline();
     }else{
       let alert = this.alertCtrl.create({
         title: '¡oh-oh!',
@@ -488,41 +466,47 @@ conectDriver(){
       alert.present();
       this.isConected = false;
         this.isDisconected = true;
-        this.changeColor2();
+        this.changeColorOffline();
+     }
     }
+  
   }
 
-
-
-
-  
-  
 }
+
+
+  
+  
+
 
 
 
 disconectDriver(){
-  this.isConected = false;
-  this.isDisconected = true;
-  this.changeColor2();
-  this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
-                  
-    console.log(snap.val()); 
-    let obj = snap.val();
-    Object.getOwnPropertyNames(obj).forEach(key => {
-      console.log(obj[key]);
-      if(obj[key].type === 'origin'){
-            this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
-      }else if(obj[key].type === 'destination'){
-            this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
-          }             
+  if(this.userInfo.toggleStatus === 'offline'){ 
+    //do nothing
+  }else{
+    this.isConected = false;
+    this.isDisconected = true;
+    this.changeColorOffline();
+    this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
+                    
+      console.log(snap.val()); 
+      let obj = snap.val();
+      Object.getOwnPropertyNames(obj).forEach(key => {
+        console.log(obj[key]);
+        if(obj[key].type === 'origin'){
+              this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
+        }else if(obj[key].type === 'destination'){
+              this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
+            }             
+      })
+    }).then(()=>{
+      this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
     })
-  }).then(()=>{
-    this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
-  })
-  this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
- this.enable();
-
+    this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+   this.enable();
+  
+  }  
 }
 
 
@@ -606,7 +590,7 @@ disconectDriver(){
       position: latLng,
       draggable:true,
       icon: {         url: "assets/imgs/house.png",
-      scaledSize: new google.maps.Size(90, 90)    
+      scaledSize: new google.maps.Size(70, 70)    
 
     }
     });
@@ -622,9 +606,8 @@ console.log(this.userInfo.fixedLocation.name);
             position: this.positionDest,
             map: this.map,
             animation: google.maps.Animation.DROP,
-            draggable:true,
                icon: {         url: "assets/imgs/workbuilding.png",
-            scaledSize: new google.maps.Size(150, 150)    
+            // scaledSize: new google.maps.Size(160, 160)    
              }})
             
 
@@ -931,14 +914,10 @@ geocodeLatLng(latLng,inputName) {
   
    confirmPrice(houseAddr, placeAddr){
      this.doGeoquery = false;
+     
       let modal = this.modalCtrl.create('ConfirmpricePage', {houseAddr, placeAddr});
-      modal.onDidDismiss(accepted => {
-        if(accepted){
-          // this.navCtrl.push('ListridePage');
-          // this.app.getRootNav().push('ReservetripPage');
-        }
-      })
-   modal.present();
+      modal.present();
+
    }
 
 
@@ -972,9 +951,9 @@ geocodeLatLng(latLng,inputName) {
     let profileModal = this.modalCtrl.create('SuccessNotificationPage');
     profileModal.present();
 
-    setTimeout(() => {
-      profileModal.dismiss();
-  }, 3000);
+  //   setTimeout(() => {
+  //     profileModal.dismiss();
+  // }, 3000);
   }
  
 }

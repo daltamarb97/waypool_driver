@@ -37,7 +37,7 @@
             }
             width: 80%;
             margin: auto;
-            height: 550px;
+            height: 350px;
             position: absolute;
             top: 0;
             bottom: 0;
@@ -183,7 +183,7 @@
             }
             width: 80%;
             margin: auto;
-            height: 500px;
+            height: 350px;
             position: absolute;
             top: 0;
             bottom: 0;
@@ -297,6 +297,14 @@
                 }
             }
         }
+    }
+    .house{
+        height: 100;
+        width: 100px;
+    }
+    .work{
+        height: 140px;
+        width: 100px;
     }
 }
 page-add-schedule {

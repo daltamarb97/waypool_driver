@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { NavController, ViewController, ModalController, NavParams, Tabs, AlertController, App, IonicPage } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -21,10 +21,11 @@ import { instancesService } from '../../services/instances.service';
   templateUrl: 'add-schedule.html',
 })
 export class AddSchedulePage {
-
+  @ViewChild('house',{read:ElementRef}) house;
+  @ViewChild('work',{read:ElementRef}) work;
   accepted:any;
-  button1WasTapped:boolean;
-  button2WasTapped:boolean;
+  imageHouseToWork:boolean = false;
+  imageWorkToHouse:boolean = false;
   button1WasntTapped:boolean = true;
   button2WasntTapped:boolean = true;
   textMessage: string;
@@ -32,7 +33,7 @@ export class AddSchedulePage {
   userId: any;
   geofireType:string;
   imageURL:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public renderer: Renderer ,public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
   }
@@ -47,66 +48,74 @@ export class AddSchedulePage {
 
   }
 
-  button1(){
-    console.log('fue presionado boton 1')
-    this.button1WasTapped = true;
-    this.button2WasTapped = false;
-    this.button1WasntTapped = false;
-    this.button2WasntTapped = true;
-    this.textMessage = 'trabajo/universidad a CASA';
-    this.geofireType = 'destination';
-    this.imageURL = 'assets/imgs/home.png';
-  }
+  
+  selectImageHouse(){
+    // this is just to change the css
+    this.renderer.setElementStyle(this.house.nativeElement,'border-width','3px')
+    this.renderer.setElementStyle(this.house.nativeElement,'border-style','solid')
+    this.renderer.setElementStyle(this.house.nativeElement,'border-color','green')
+  
+    this.renderer.setElementStyle(this.work.nativeElement,'border-width','0px')
+    this.imageURL = 'assets/imgs/houseToWork.png';
 
-  button2(){
-    console.log('fue presionado boton 2')
-    this.button1WasTapped = false;
-    this.button2WasTapped = true;
-    this.button1WasntTapped = true;
-    this.button2WasntTapped = false;
-    this.textMessage = 'casa al TRABAJO/UNIVERSIDAD'
+    this.textMessage = 'Trabajo'
     this.geofireType = 'origin';
-    this.imageURL = 'assets/imgs/work.png';
+    this.imageHouseToWork = true;
+    this.imageWorkToHouse = false;
   }
+  selectImageWork(){
+    // this is just to change the css
+    this.renderer.setElementStyle(this.work.nativeElement,'border-width','3px')
+    this.renderer.setElementStyle(this.work.nativeElement,'border-style','solid')
+    this.renderer.setElementStyle(this.work.nativeElement,'border-color','green')
+  
+    this.renderer.setElementStyle(this.house.nativeElement,'border-width','0px')
+    this.textMessage = 'Casa';
+    this.geofireType = 'destination';
+    this.imageURL = 'assets/imgs/workToHouse.png';
+    this.imageHouseToWork = false;
+    this.imageWorkToHouse = true;
+  
+  }
+ 
 
   confirm(){
-    if(this.button1WasntTapped && this.button2WasntTapped === true){
+    console.log(this.imageHouseToWork);
+    console.log(this.imageWorkToHouse);
+    
+    if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
+      if(this.startHour === undefined || this.startHour === null){
+        const alert = this.alertCtrl.create({
+          title: 'Debes seleccionar una hora de partida',
+          subTitle: '¿A qué hora sales del trabajo o de tu casa?',
+          buttons: ['OK']
+        });
+        alert.present();
+      }else{
+        const alert = this.alertCtrl.create({
+          title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
+          buttons: [
+            {
+              text: 'Confirmo este horario',
+              handler: () => {
+                this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
+                this.viewCtrl.dismiss();
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
+      
+    }else{
       const alert = this.alertCtrl.create({
         title: 'Debes seleccionar una opción',
         subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
         buttons: ['OK']
       });
       alert.present();
-    }else if(this.startHour === undefined || this.startHour === null){
-      const alert = this.alertCtrl.create({
-        title: 'Debes seleccionar una hora de partida',
-        subTitle: '¿A qué hora sales del trabajo o de tu casa?',
-        buttons: ['OK']
-      });
-      alert.present();
-    }else if(this.button1WasntTapped === true && this.button2WasntTapped === true && this.startHour === undefined ){
-      const alert = this.alertCtrl.create({
-        title: 'Información incompleta',
-        subTitle: 'Es aqui donde debes decirnos como te movilizas del trabajo a tu casa o de tu casa al trabajo',
-        buttons: ['OK']
-      });
-      alert.present();
-    }else{
-      const alert = this.alertCtrl.create({
-        title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
-        buttons: [
-          {
-            text: 'Confirmo este horario',
-            handler: () => {
-              this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
-              this.viewCtrl.dismiss();
-            }
-          }
-        ]
-      });
-      alert.present();
     }
-    
+  
   }
 
 }

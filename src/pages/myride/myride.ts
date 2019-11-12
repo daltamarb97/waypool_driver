@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, IonicPage, App, ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, IonicPage, App, ModalController, ActionSheetController, NavPop } from 'ionic-angular';
 
 
 import { sendCoordsService } from '../../services/sendCoords.service';
@@ -254,9 +254,8 @@ tripState:any;
 							
 							this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
 							}, 3000);
-							
+							this.navCtrl.pop();
 							//TO-DO: AQUI FALTA RATETRIPPAGE
-							this.navCtrl.setRoot('TabsPage');
 							this.navCtrl.push('RatetripPage',{user:this.userDriver, trip:this.trip});
 
 						}
