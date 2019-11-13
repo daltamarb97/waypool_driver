@@ -33,7 +33,7 @@ export class AddSchedulePage {
   userId: any;
   geofireType:string;
   imageURL:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public renderer: Renderer ,public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public renderer: Renderer ,public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService, private afDB: AngularFireDatabase) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
   }
@@ -82,40 +82,98 @@ export class AddSchedulePage {
   confirm(){
     console.log(this.imageHouseToWork);
     console.log(this.imageWorkToHouse);
-    
-    if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
-      if(this.startHour === undefined || this.startHour === null){
+
+    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId + '/scheduleType/').once('value').then((snap)=>{
+      if(snap.val() === 'picture'){
         const alert = this.alertCtrl.create({
-          title: 'Debes seleccionar una hora de partida',
-          subTitle: '¿A qué hora sales del trabajo o de tu casa?',
-          buttons: ['OK']
+          title: 'Ya haz enviado FOTO de tu horario',
+          subTitle: '¿deseas crear tu horario personalizado? Perderás los horarios creados automaticamente por la foto', 
+          buttons: [
+            {
+              text: 'No',
+              handler: (()=>{
+                this.viewCtrl.dismiss();
+              }),
+              role: 'cancel'
+          },
+          {
+            text: 'Si',
+            handler: (()=>{
+              this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId + '/schedule/').remove().then(()=>{
+                if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
+                  if(this.startHour === undefined || this.startHour === null){
+                    const alert = this.alertCtrl.create({
+                      title: 'Debes seleccionar una hora de partida',
+                      subTitle: '¿A qué hora sales del trabajo o de tu casa?',
+                      buttons: ['OK']
+                    });
+                    alert.present();
+                  }else{
+                    const alert = this.alertCtrl.create({
+                      title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
+                      buttons: [
+                        {
+                          text: 'Confirmo este horario',
+                          handler: () => {
+                            this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
+                            this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
+                            this.viewCtrl.dismiss();
+                          }
+                        }
+                      ]
+                    });
+                    alert.present();
+                  }
+                  
+                }else{
+                  const alert = this.alertCtrl.create({
+                    title: 'Debes seleccionar una opción',
+                    subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+                    buttons: ['OK']
+                  });
+                  alert.present();
+                }
+              })
+            })
+          }
+        ]
         });
         alert.present();
       }else{
-        const alert = this.alertCtrl.create({
-          title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
-          buttons: [
-            {
-              text: 'Confirmo este horario',
-              handler: () => {
-                this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
-                this.viewCtrl.dismiss();
-              }
-            }
-          ]
-        });
-        alert.present();
+        if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
+          if(this.startHour === undefined || this.startHour === null){
+            const alert = this.alertCtrl.create({
+              title: 'Debes seleccionar una hora de partida',
+              subTitle: '¿A qué hora sales del trabajo o de tu casa?',
+              buttons: ['OK']
+            });
+            alert.present();
+          }else{
+            const alert = this.alertCtrl.create({
+              title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
+              buttons: [
+                {
+                  text: 'Confirmo este horario',
+                  handler: () => {
+                    this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
+                    this.viewCtrl.dismiss();
+                  }
+                }
+              ]
+            });
+            alert.present();
+          }
+          
+        }else{
+          const alert = this.alertCtrl.create({
+            title: 'Debes seleccionar una opción',
+            subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
       }
-      
-    }else{
-      const alert = this.alertCtrl.create({
-        title: 'Debes seleccionar una opción',
-        subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-  
+    })
   }
 
 }

@@ -29,7 +29,7 @@
 
         <p text-center padding-top margin-top>Agrega cada una de las horas en las que vas de tu casa al trabajo/universidad o viceversa</p>
 
-            <ion-card *ngFor = "let sche of schedules" (click) = 'removeTime(sche)' style="border-radius: 5%;">
+            <ion-card *ngFor = "let sche of schedules" (click) = 'removeTime(sche)' style="border-radius: 5%;" >
                     <ng-container>
                         <ion-card-content style="display: flex; ">
                             <img [src]="sche.image"  style="height:50px; width:150px;     margin-right: 20px;" />

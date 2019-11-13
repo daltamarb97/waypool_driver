@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { instancesService } from '../../services/instances.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 /**
  * Generated class for the SchedulePage page.
@@ -40,36 +41,46 @@ export class SchedulePage {
     destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController, private instances: instancesService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController, private instances: instancesService, private afDB: AngularFireDatabase) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
 
 
-    // IMPORTANTE: aqui poner un if scheduleType = 'manual'
-    this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(hour => {
-      this.schedules = hour;
-      console.log(this.schedules);
-      if(this.schedules.length !== 0){        
-        this.showButtonWorkSchedule = true;
-      }else{
-        this.showButtonWorkSchedule = false;
-      }  
-    })
+        this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(hour => {
+          this.schedules = hour;
+          console.log(this.schedules);
+          if(this.schedules.length !== 0){
+            this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId + '/scheduleType/').once('value').then((snap)=>{
+              if(snap.val() === 'picture'){
+
+              }else{
+                this.showButtonWorkSchedule = true;
+              }
+            })        
+          }else{
+            this.showButtonWorkSchedule = false;
+          }  
+        })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SchedulePage');
-  }
 
   makeSchedule(){
-    let modal = this.modalCtrl.create('AddSchedulePage');
-    modal.onDidDismiss(accepted => {
-      if(accepted){
-        // this.navCtrl.push('ListridePage');
-        console.log('hola modal nuevo');
-      }
+    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId ).once('value').then((snap)=>{
+        if(snap.val().toggleStatus === 'online'){
+          const alert = this.alertCtrl.create({
+            title: 'Para añadir un nuevo horario debes estar offline',
+            buttons: ['OK']
+          });
+          alert.present();
+        }else{
+          let modal = this.modalCtrl.create('AddSchedulePage');
+          modal.onDidDismiss(accepted => {
+            if(accepted){
+            }
+          })
+          modal.present();
+        }
     })
-    modal.present();
   }
 
   skipSchedule(){
@@ -114,7 +125,6 @@ export class SchedulePage {
       
       pictureSchedule.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
-        this.ionViewDidLoad
         const alert = this.alertCtrl.create({
           title: '¡HECHO!',
           subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
@@ -203,8 +213,6 @@ export class SchedulePage {
 
   goFindride(){
     this.navCtrl.setRoot('FindridePage');
-    this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
-
+     this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
   }
-
 }
