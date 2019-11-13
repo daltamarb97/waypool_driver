@@ -1,6 +1,6 @@
 webpackJsonp([20],{
 
-/***/ 667:
+/***/ 666:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FindridePageModule", function() { return FindridePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride__ = __webpack_require__(833);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__findride__ = __webpack_require__(831);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var FindridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 833:
+/***/ 831:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59,8 +59,8 @@ var FindridePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(203);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(203);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -204,12 +204,12 @@ var FindridePage = /** @class */ (function () {
                     // this.checked = true;
                     _this.isConected = true;
                     _this.isDisconected = false;
-                    _this.changeColor();
+                    _this.changeColorOnline();
                 }
                 else {
                     _this.isConected = false;
                     _this.isDisconected = true;
-                    _this.changeColor2();
+                    _this.changeColorOffline();
                 }
                 _this.loadMap();
             });
@@ -326,24 +326,24 @@ var FindridePage = /** @class */ (function () {
             });
         });
     };
-    FindridePage.prototype.changeColor = function () {
+    FindridePage.prototype.changeColorOnline = function () {
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'background-color', 'green');
-        this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-width', '1px');
+        this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-width', '2px');
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-color', 'green');
-        this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-width', '1px');
+        this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-width', '2px');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-color', 'green');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'background-color', 'transparent');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'font-color', '#bfbfbf');
         this.showPopup();
     };
-    FindridePage.prototype.changeColor2 = function () {
-        this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-width', '1px');
+    FindridePage.prototype.changeColorOffline = function () {
+        this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-width', '2px');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'background-color', 'rgb(167, 23, 23)');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.buttonDisconected.nativeElement, 'border-color', 'rgb(167, 23, 23)');
-        this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-width', '1px');
+        this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-width', '2px');
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'border-color', 'rgb(167, 23, 23)');
         this.renderer.setElementStyle(this.buttonConected.nativeElement, 'background-color', 'transparent');
@@ -351,92 +351,112 @@ var FindridePage = /** @class */ (function () {
     };
     FindridePage.prototype.conectDriver = function () {
         var _this = this;
-        this.isConected = true;
-        this.isDisconected = false;
-        this.changeColor();
-        if (this.currentUser.emailVerified == false) {
+        if (this.userInfo.toggleStatus === 'online') {
             var alert_1 = this.alertCtrl.create({
-                title: 'Oops!',
-                subTitle: 'por favor verifica tu email',
+                title: '¡Ya estas conectado!',
+                subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
                 buttons: ['OK']
             });
             alert_1.present();
-            this.isConected = false;
-            this.isDisconected = true;
-            this.changeColor2();
         }
         else {
-            if (this.userInfo.documents) {
-                if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
-                    if (this.userInfo.schedule) {
-                        try {
-                            this.houseAddress = this.autocompleteMyPos.input;
-                            this.placeAddress = this.userInfo.fixedLocation.name;
-                            console.log(this.houseAddress);
-                            if (this.autocompleteMyPos.input == '') {
-                                this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
-                                this.isConected = false;
-                                this.isDisconected = true;
-                                this.changeColor2();
-                                this.clearMarkers();
-                                this.directionsDisplay.setDirections({ routes: [] });
-                                this.loadMap();
-                            }
-                            else {
-                                // this.isConected = true;
-                                // this.isDisconected = false;
-                                // if(this.isConected === true){
-                                this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
-                                this.changeColor();
-                                var loading_1 = this.loadingCtrl.create({
-                                    spinner: 'crescent',
-                                    content: "\n                    <div class=\"custom-spinner-container\">\n                      <div class=\"custom-spinner-box\"></div>\n                    </div>"
-                                });
-                                loading_1.present();
-                                console.log("estoy true");
-                                this.disable();
-                                console.log(this.userInfo.fixedLocation.name);
-                                // this.confirmPrice();
-                                this.geocoder.geocode({ 'address': this.houseAddress[0] }, function (results, status) {
-                                    if (status === 'OK') {
-                                        _this.geocoordinatesHouse = {
-                                            lat: results[0].geometry.location.lat(),
-                                            lng: results[0].geometry.location.lng()
-                                        };
-                                    }
-                                    _this.geofireService.setHouseAddressName(_this.SignUpService.userPlace, _this.user, _this.houseAddress[0]);
-                                    _this.geofireService.setHouseAddress(_this.SignUpService.userPlace, _this.user, _this.geocoordinatesHouse.lat, _this.geocoordinatesHouse.lng);
-                                    loading_1.dismiss();
-                                });
-                                var modal = this.modalCtrl.create('ConfirmpricePage');
-                                modal.onDidDismiss(function (accepted) {
-                                    // // this.navCtrl.push('ListridePage');
-                                    // this.app.getRootNav().push('ReservetripPage');
-                                    var alert = _this.alertCtrl.create({
-                                        title: '¡Genial! Desde este momento empezarás a compartir tus viajes',
-                                        subTitle: 'Te enviaremos una notificación cuando alguien quiera compartir su viaje contigo',
-                                        buttons: ['OK']
+            this.isConected = true;
+            this.isDisconected = false;
+            if (this.currentUser.emailVerified == false) {
+                var alert_2 = this.alertCtrl.create({
+                    title: 'Oops!',
+                    subTitle: 'por favor verifica tu email',
+                    buttons: ['OK']
+                });
+                alert_2.present();
+                this.isConected = false;
+                this.isDisconected = true;
+                this.changeColorOffline();
+            }
+            else {
+                if (this.userInfo.documents) {
+                    if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
+                        if (this.userInfo.schedule) {
+                            try {
+                                this.houseAddress = this.autocompleteMyPos.input;
+                                this.placeAddress = this.userInfo.fixedLocation.name;
+                                console.log(this.houseAddress);
+                                if (this.autocompleteMyPos.input == '') {
+                                    this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
+                                    this.isConected = false;
+                                    this.isDisconected = true;
+                                    this.changeColorOffline();
+                                    this.clearMarkers();
+                                    this.directionsDisplay.setDirections({ routes: [] });
+                                    this.loadMap();
+                                }
+                                else {
+                                    var modal = this.modalCtrl.create('ConfirmpricePage');
+                                    modal.onDidDismiss(function (accepted) {
+                                        if (accepted) {
+                                            _this.instancesService.ToggleStatusOnline(_this.SignUpService.userPlace, _this.user);
+                                            _this.changeColorOnline();
+                                            console.log("estoy true");
+                                            _this.disable();
+                                            console.log(_this.userInfo.fixedLocation.name);
+                                            // this.confirmPrice();
+                                            _this.geocoder.geocode({ 'address': _this.houseAddress[0] }, function (results, status) {
+                                                if (status === 'OK') {
+                                                    _this.geocoordinatesHouse = {
+                                                        lat: results[0].geometry.location.lat(),
+                                                        lng: results[0].geometry.location.lng()
+                                                    };
+                                                }
+                                                _this.geofireService.setHouseAddressName(_this.SignUpService.userPlace, _this.user, _this.houseAddress[0]);
+                                                _this.geofireService.setHouseAddress(_this.SignUpService.userPlace, _this.user, _this.geocoordinatesHouse.lat, _this.geocoordinatesHouse.lng);
+                                            });
+                                        }
+                                        else {
+                                            _this.presentAlert('Información incompleta', 'Por favor escribe toda la información para conectarte', 'OK');
+                                        }
                                     });
-                                    alert.present();
-                                });
-                                modal.present();
-                                // }else{
-                                // }
+                                    modal.present();
+                                }
+                            }
+                            catch (error) {
+                                console.log(error);
                             }
                         }
-                        catch (error) {
-                            console.log(error);
+                        else {
+                            var alert_3 = this.alertCtrl.create({
+                                title: 'No tienes ningún horario',
+                                subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+                                buttons: [
+                                    {
+                                        text: 'Mandar mi horario',
+                                        handler: function () {
+                                            _this.navCtrl.push('SchedulePage');
+                                        }
+                                    },
+                                    {
+                                        text: 'Cancelar',
+                                        role: 'cancel',
+                                        handler: function () {
+                                        }
+                                    }
+                                ],
+                                cssClass: 'alertDanger'
+                            });
+                            alert_3.present();
+                            this.isConected = false;
+                            this.isDisconected = true;
+                            this.changeColorOffline();
                         }
                     }
                     else {
-                        var alert_2 = this.alertCtrl.create({
-                            title: 'No tienes ningún horario',
-                            subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+                        var alert_4 = this.alertCtrl.create({
+                            title: '¡oh-uh!',
+                            subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                             buttons: [
                                 {
-                                    text: 'Mandar mi horario',
+                                    text: 'Subir mis documentos',
                                     handler: function () {
-                                        _this.navCtrl.push('SchedulePage');
+                                        _this.navCtrl.push('CarRegistrationPage');
                                     }
                                 },
                                 {
@@ -448,15 +468,15 @@ var FindridePage = /** @class */ (function () {
                             ],
                             cssClass: 'alertDanger'
                         });
-                        alert_2.present();
-                        this.isConected = false;
-                        this.isDisconected = true;
-                        this.changeColor2();
+                        alert_4.present();
                     }
+                    this.isConected = false;
+                    this.isDisconected = true;
+                    this.changeColorOffline();
                 }
                 else {
-                    var alert_3 = this.alertCtrl.create({
-                        title: '¡oh-uh!',
+                    var alert_5 = this.alertCtrl.create({
+                        title: '¡oh-oh!',
                         subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                         buttons: [
                             {
@@ -474,61 +494,41 @@ var FindridePage = /** @class */ (function () {
                         ],
                         cssClass: 'alertDanger'
                     });
-                    alert_3.present();
+                    alert_5.present();
+                    this.isConected = false;
+                    this.isDisconected = true;
+                    this.changeColorOffline();
                 }
-                this.isConected = false;
-                this.isDisconected = true;
-                this.changeColor2();
-            }
-            else {
-                var alert_4 = this.alertCtrl.create({
-                    title: '¡oh-oh!',
-                    subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-                    buttons: [
-                        {
-                            text: 'Subir mis documentos',
-                            handler: function () {
-                                _this.navCtrl.push('CarRegistrationPage');
-                            }
-                        },
-                        {
-                            text: 'Cancelar',
-                            role: 'cancel',
-                            handler: function () {
-                            }
-                        }
-                    ],
-                    cssClass: 'alertDanger'
-                });
-                alert_4.present();
-                this.isConected = false;
-                this.isDisconected = true;
-                this.changeColor2();
             }
         }
     };
     FindridePage.prototype.disconectDriver = function () {
         var _this = this;
-        this.isConected = false;
-        this.isDisconected = true;
-        this.changeColor2();
-        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(function (snap) {
-            console.log(snap.val());
-            var obj = snap.val();
-            Object.getOwnPropertyNames(obj).forEach(function (key) {
-                console.log(obj[key]);
-                if (obj[key].type === 'origin') {
-                    _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, key);
-                }
-                else if (obj[key].type === 'destination') {
-                    _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, key);
-                }
+        if (this.userInfo.toggleStatus === 'offline') {
+            //do nothing
+        }
+        else {
+            this.isConected = false;
+            this.isDisconected = true;
+            this.changeColorOffline();
+            this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(function (snap) {
+                console.log(snap.val());
+                var obj = snap.val();
+                Object.getOwnPropertyNames(obj).forEach(function (key) {
+                    console.log(obj[key]);
+                    if (obj[key].type === 'origin') {
+                        _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, key);
+                    }
+                    else if (obj[key].type === 'destination') {
+                        _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, key);
+                    }
+                });
+            }).then(function () {
+                _this.TripsService.deleteAllReserves(_this.SignUpService.userPlace, _this.user);
             });
-        }).then(function () {
-            _this.TripsService.deleteAllReserves(_this.SignUpService.userPlace, _this.user);
-        });
-        this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
-        this.enable();
+            this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+            this.enable();
+        }
     };
     FindridePage.prototype.getTrip = function () {
         var _this = this;
@@ -601,7 +601,7 @@ var FindridePage = /** @class */ (function () {
                 position: latLng,
                 draggable: true,
                 icon: { url: "assets/imgs/house.png",
-                    scaledSize: new google.maps.Size(90, 90)
+                    scaledSize: new google.maps.Size(70, 70)
                 }
             });
             _this.markers.push(_this.markerGeolocation);
@@ -614,9 +614,7 @@ var FindridePage = /** @class */ (function () {
                 position: _this.positionDest,
                 map: _this.map,
                 animation: google.maps.Animation.DROP,
-                draggable: true,
                 icon: { url: "assets/imgs/workbuilding.png",
-                    scaledSize: new google.maps.Size(150, 150)
                 }
             });
             _this.calculateRoute(latLng, _this.positionDest);
@@ -680,8 +678,8 @@ var FindridePage = /** @class */ (function () {
                     position: results[0].geometry.location,
                     map: _this.map,
                     draggable: true,
-                    icon: { url: "assets/imgs/marker-origin-driver.png",
-                        scaledSize: new google.maps.Size(90, 90)
+                    icon: { url: "assets/imgs/house.png",
+                        scaledSize: new google.maps.Size(70, 70)
                     },
                     animation: google.maps.Animation.DROP,
                 });
@@ -757,12 +755,12 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.listride = function () {
         var _this = this;
         if (this.currentUser.emailVerified == false) {
-            var alert_5 = this.alertCtrl.create({
+            var alert_6 = this.alertCtrl.create({
                 title: 'Oops!',
                 subTitle: 'por favor verifica tu email',
                 buttons: ['OK']
             });
-            alert_5.present();
+            alert_6.present();
         }
         else {
             if (this.userInfo.documents) {
@@ -805,7 +803,7 @@ var FindridePage = /** @class */ (function () {
                     console.log(this.orFirebase);
                 }
                 else {
-                    var alert_6 = this.alertCtrl.create({
+                    var alert_7 = this.alertCtrl.create({
                         title: '¡oh-uh!',
                         subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                         buttons: [
@@ -824,11 +822,11 @@ var FindridePage = /** @class */ (function () {
                         ],
                         cssClass: 'alertDanger'
                     });
-                    alert_6.present();
+                    alert_7.present();
                 }
             }
             else {
-                var alert_7 = this.alertCtrl.create({
+                var alert_8 = this.alertCtrl.create({
                     title: '¡oh-oh!',
                     subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                     buttons: [
@@ -847,7 +845,7 @@ var FindridePage = /** @class */ (function () {
                     ],
                     cssClass: 'alertDanger'
                 });
-                alert_7.present();
+                alert_8.present();
             }
         }
     };
@@ -862,12 +860,6 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.confirmPrice = function (houseAddr, placeAddr) {
         this.doGeoquery = false;
         var modal = this.modalCtrl.create('ConfirmpricePage', { houseAddr: houseAddr, placeAddr: placeAddr });
-        modal.onDidDismiss(function (accepted) {
-            if (accepted) {
-                // this.navCtrl.push('ListridePage');
-                // this.app.getRootNav().push('ReservetripPage');
-            }
-        });
         modal.present();
     };
     FindridePage.prototype.help = function () {
@@ -895,9 +887,9 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.showPopup = function () {
         var profileModal = this.modalCtrl.create('SuccessNotificationPage');
         profileModal.present();
-        setTimeout(function () {
-            profileModal.dismiss();
-        }, 3000);
+        //   setTimeout(() => {
+        //     profileModal.dismiss();
+        // }, 3000);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
@@ -913,7 +905,7 @@ var FindridePage = /** @class */ (function () {
     ], FindridePage.prototype, "buttonDisconected", void 0);
     FindridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="bg-theme"  >\n    \n    <ion-navbar  >\n        <button ion-button menuToggle>\n            <ion-icon name="menu" style="color: white;"></ion-icon>\n           \n          </button>\n          <!-- <ion-avatar ion-button menuToggle>\n            <img style="height:60px; width:60px" src="assets/imgs/menuIcon2.png">\n        </ion-avatar> -->\n          <ion-buttons style="display: flex; justify-content: center;"> \n              <ion-item style="background-color: transparent;">\n                <!-- <ion-toggle [(ngModel)]="isConected" [checked]="isConected" (ionChange)="conectDriver()"></ion-toggle> -->\n\n                  <!-- <div><p class="text-white">Conectado</p></div> -->\n              \n                  <ion-row class="center-align row" style="margin-left: 16px;" >\n                    \n                            <button  #buttonDisconected class="btn rounded bg-red  text-white buttonDisconected" (click)="disconectDriver()" >Offline</button>\n                   \n                      <button #buttonConected  class="btn  text-white buttonConected" (click)="conectDriver()" >Online</button>\n                    \n                    \n                </ion-row>\n              </ion-item>\n\n           \n \n          </ion-buttons> \n       \n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n<ion-content  padding>\n\n      <ion-card class="search" >\n          <ion-card-content>\n           \n              <span class="dot bg-theme"></span>\n              <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>\n            \n              <ion-list   [hidden]="autocompleteItems.length == 0">\n                  <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                    {{ item.description }}\n                  </ion-item>\n                </ion-list>\n                <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n          </ion-card-content>\n          <!-- <ion-card-content>\n              <span class="dot bg-yellow"></span>           \n             <ion-searchbar required [(ngModel)]="autocompleteMyDest.input"  id="input2" (ionInput)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>\n  \n  \n              <ion-list   [hidden]="autocompleteItems2.length == 0">\n              <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n                {{ item.description }}\n              </ion-item>\n            </ion-list>\n              <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>\n  \n          <!- </ion-card-content> -->\n           \n      </ion-card>\n      <ion-avatar item-end>\n          <img style="height: 15%; width: 15%;" src="assets/imgs/centermap.png" (click)="centerMap()">\n      </ion-avatar>\n  \n   <div #map id="map"></div>  \n     \n\n  \n            <div *ngIf="onTrip" >\n              <button class="btn rounded bg-theme text-white animated infinite pulse" style=" width: 100% ;\n              position: fixed ;\n              bottom: 0px ;\n              left: 0px ;\n              height: 51px; \n              font-size: large;\n              \n          " (click)="goToTrip() " >VIAJE EN CURSO\n              </button>\n          </div>\n     \n  \n \n    \n   \n    \n\n\n \n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/
+            selector: 'page-findride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/'<ion-header class="bg-theme"  >\n    \n    <ion-navbar  >\n        <button ion-button menuToggle>\n            <ion-icon name="menu" style="color: white;"></ion-icon>\n           \n          </button>\n          <!-- <ion-avatar ion-button menuToggle>\n            <img style="height:60px; width:60px" src="assets/imgs/menuIcon2.png">\n        </ion-avatar> -->\n          <ion-buttons style="display: flex; justify-content: center;"> \n              <ion-item style="background-color: transparent;">\n                <!-- <ion-toggle [(ngModel)]="isConected" [checked]="isConected" (ionChange)="conectDriver()"></ion-toggle> -->\n\n                  <!-- <div><p class="text-white">Conectado</p></div> -->\n              \n                  <ion-row class="center-align row" style="margin-left: 16px; justify-content: flex-end;" >\n                    \n                      <button  #buttonDisconected class="btn rounded bg-red  text-white buttonDisconected" (click)="disconectDriver()" >Offline</button>\n                      <button #buttonConected  class="btn  text-white buttonConected" (click)="conectDriver()" >Online</button>\n                    \n                    \n                </ion-row>\n              </ion-item>\n\n           \n \n          </ion-buttons> \n       \n    </ion-navbar>\n\n</ion-header>\n\n\n\n\n<ion-content  padding>\n\n      <ion-card class="search" >\n          <ion-card-content>\n              <span style=" z-index: 1;position: relative;" class="text-theme search-text">Tu casa &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>\n\n              <span class="dot bg-theme"></span>\n              <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>\n\n              <ion-list   [hidden]="autocompleteItems.length == 0">\n                  <ion-item  *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResultMyPos(item)">\n                    {{ item.description }}\n                  </ion-item>\n                </ion-list>\n                <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->\n          </ion-card-content>\n          <!-- <ion-card-content>\n              <span class="dot bg-yellow"></span>           \n             <ion-searchbar required [(ngModel)]="autocompleteMyDest.input"  id="input2" (ionInput)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>\n  \n  \n              <ion-list   [hidden]="autocompleteItems2.length == 0">\n              <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">\n                {{ item.description }}\n              </ion-item>\n            </ion-list>\n              <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>\n  \n          <!- </ion-card-content> -->\n           \n      </ion-card>\n      <!-- <ion-avatar item-end>\n          <img style="height: 15%; width: 15%;" src="assets/imgs/centermap.png" (click)="centerMap()">\n      </ion-avatar> -->\n  \n   <div #map id="map"></div>  \n     \n\n  \n            <div *ngIf="onTrip" >\n              <button class="btn rounded bg-theme text-white animated infinite pulse" style=" width: 100% ;\n              position: fixed ;\n              bottom: 0px ;\n              left: 0px ;\n              height: 51px; \n              font-size: large;\n              \n          " (click)="goToTrip() " >VIAJE EN CURSO\n              </button>\n          </div>\n     \n  \n \n    \n   \n    \n\n\n \n</ion-content>\n\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/findride/findride.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_10__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* ModalController */], __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_11__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__["a" /* Firebase */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* Platform */], __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__["a" /* FCM */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["V" /* Renderer */]])
     ], FindridePage);

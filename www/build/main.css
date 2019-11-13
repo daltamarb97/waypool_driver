@@ -25976,7 +25976,7 @@ ion-segment-button.segment-button.segment-activated {
 .md page-add-schedule .card {
   width: 80%;
   margin: auto;
-  height: 550px;
+  height: 350px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26139,7 +26139,7 @@ ion-segment-button.segment-button.segment-activated {
 .ios page-add-schedule .card {
   width: 80%;
   margin: auto;
-  height: 500px;
+  height: 350px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26279,6 +26279,16 @@ ion-segment-button.segment-button.segment-activated {
 .ios page-add-schedule .seats .seats-tag strong {
   margin: auto;
   color: #000;
+}
+
+.ios .house {
+  height: 100;
+  width: 100px;
+}
+
+.ios .work {
+  height: 140px;
+  width: 100px;
 }
 
 page-add-schedule .close-icon {
@@ -27101,208 +27111,6 @@ page-chats .item .item-inner ion-note span {
   font-size: 10px;
 }
 
-page-confirm-university .close-icon {
-  font-size: 3rem;
-  right: 10px;
-  top: 10px;
-  position: absolute;
-}
-
-page-confirm-university .card-content {
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 26px !important;
-  padding-right: 26px !important;
-}
-
-page-confirm-university .content {
-  background: rgba(0, 0, 0, 0.5) !important;
-}
-
-page-confirm-university .card {
-  width: 80%;
-  margin: auto;
-  height: 170px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-radius: 8px;
-}
-
-page-confirm-university .card h6 {
-  color: #3fb1df;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-page-confirm-university .card ion-item .name {
-  width: calc(100% - 90px);
-  display: inline-block;
-}
-
-page-confirm-university .card ion-item .name h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-page-confirm-university .card ion-item .name h2 ion-icon {
-  margin-left: 5px;
-}
-
-page-confirm-university .card ion-item p {
-  font-size: 1.1rem;
-  color: #777;
-  font-weight: 400;
-}
-
-page-confirm-university ion-card-content {
-  padding-left: 30px !important;
-  position: relative;
-}
-
-page-confirm-university ion-card-content .ride-detail {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-page-confirm-university ion-card-content .ride-detail p {
-  font-size: 1.2rem;
-  padding-left: 10px;
-  position: relative;
-  color: #252525;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  padding-left: 45px;
-}
-
-page-confirm-university ion-card-content .ride-detail p small {
-  display: block;
-  width: 100%;
-  margin-top: 15px;
-  margin-bottom: 3px;
-  font-size: 1.1rem;
-  color: #9E9E9E;
-}
-
-page-confirm-university ion-card-content .ride-detail p small ion-icon {
-  float: right;
-  font-size: 1.3rem;
-  margin-right: 5px;
-}
-
-page-confirm-university ion-card-content .ride-detail p .icon-location {
-  position: absolute;
-  left: 0px;
-  top: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-  bottom: 0;
-  margin: auto;
-  color: #9E9E9E;
-}
-
-page-confirm-university ion-card-content .ride-detail::before {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 60px;
-  position: absolute;
-  left: 5px;
-  bottom: 25px;
-}
-
-page-confirm-university ion-card-content .ride-detail.no-before::before {
-  display: none;
-}
-
-page-confirm-university ion-card-content .detail-text {
-  font-size: 1.23rem;
-  text-transform: none;
-  font-weight: 500;
-}
-
-page-confirm-university ion-card-content .full.btn {
-  width: 100%;
-  text-transform: capitalize;
-  letter-spacing: 0px;
-  font-weight: 400;
-  height: 35px;
-}
-
-page-confirm-university .seats .rate {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: 700;
-  color: #3fb1df;
-  margin: 10px;
-}
-
-page-confirm-university .seats .rate small {
-  font-weight: 300;
-  color: #9E9E9E;
-  display: block;
-}
-
-page-confirm-university .seats .seats-tag {
-  padding: 12px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  border: 1px solid #3fb1df;
-  border-radius: 10px;
-  color: #3fb1df;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-page-confirm-university .seats .seats-tag ion-icon {
-  font-size: 2rem;
-}
-
-page-confirm-university .seats .seats-tag strong {
-  font-size: 24px;
-  margin: auto;
-  color: #000;
-}
-
-page-confirm-university .note {
-  white-space: normal !important;
-}
-
-page-confirm-university .center {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
 .md page-confirmprice .close-icon {
   font-size: 3rem;
   right: 10px;
@@ -27324,7 +27132,7 @@ page-confirm-university .center {
 .md page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 355px;
+  height: 400px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27487,7 +27295,7 @@ page-confirm-university .center {
 .ios page-confirmprice .card {
   width: 80%;
   margin: auto;
-  height: 355px;
+  height: 400px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -28224,6 +28032,10 @@ page-detailsreserve #map {
   display: flex;
 }
 
+page-detailsreserve .item-ios ion-avatar ion-img, page-detailsreserve .item-ios ion-avatar img {
+  border-radius: 0%;
+}
+
 .ios page-findride .search {
   border-radius: 10px;
   margin: 10px 0;
@@ -28345,7 +28157,7 @@ page-detailsreserve #map {
   border-radius: 17px 0 0 17px;
   height: 29px;
   margin: 0;
-  border-width: 1.5px;
+  border-width: 2px;
   -webkit-transition: 0.15s linear;
   transition: 0.15s linear;
   border-style: solid;
@@ -28359,7 +28171,7 @@ page-detailsreserve #map {
   -webkit-transition: 0.15s linear;
   transition: 0.15s linear;
   background-color: transparent;
-  border-width: 1.5px;
+  border-width: 2px;
   border-style: solid;
   border-color: red;
 }

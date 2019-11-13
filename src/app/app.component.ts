@@ -26,13 +26,14 @@ export class MyApp {
     console.log('se cargo')
     this.pages = [
       {title:'Mi viajes',component:'ReservetripPage'},
+      {title: 'Mi horario', component:'SchedulePage'}, 
+
       {title:'Mi perfil',component:'ProfilePage'},
       {title:'Mis documentos',component:'CarRegistrationPage'},
       {title:'Mis vehículos',component:'ShowInfoCarPage'},
       {title: 'Historial de viajes', component:'WalletPage'},
       {title: 'Soporte', component:'HelpPage'},
-      {title: 'Terminos y Condiciones', component:'TermsPage'},
-      {title: 'Mi horario', component:'SchedulePage'}
+      {title: 'Terminos y Condiciones', component:'TermsPage'}
     
 
     ]

@@ -36,9 +36,7 @@ export class SuccessNotificationPage {
 }
 
 dismiss() {
-
-
-  
+  this.viewCtrl.dismiss();
  
 }
 

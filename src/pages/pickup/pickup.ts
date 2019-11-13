@@ -409,10 +409,7 @@ export class PickupPage {
       toast.present();
     }
 
-    more(){
-      
-    }
-  }
-    
+    goToWaze(){
+    }}
 
 

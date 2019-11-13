@@ -174,4 +174,8 @@ page-detailsreserve {
         display: flex;
      
       } 
+      .item-ios ion-avatar ion-img, .item-ios ion-avatar img {
+        border-radius: 0%;
+    }
+   
 }
