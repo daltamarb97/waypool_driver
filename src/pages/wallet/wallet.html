@@ -8,15 +8,18 @@
         <p><small class="text-white">Ganancias Totales:</small></p>
         <h1 class="text-white">$ {{total}}</h1>
         <ion-row>
-           
+              
         </ion-row>
     </div>
 
 </ion-header>
  
 <ion-content class="bg-light">
+        <ion-row class="center-align row" style="margin-left: 16px; margin-right: 16px; margin-top: 15px" >
+                <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.2rem;" (click)="goPaymentInfo()">Añadir información para recibir pagos</button>
+        </ion-row>
         <p class="love">Historial de viajes</p> 
-
+       
     <ion-list>
             <ion-card *ngFor = "let user of recordTrips">
                     <ion-item>
@@ -47,9 +50,7 @@
     </ion-list>
 
 
-    <ion-row class="center-align row" style="margin-left: 16px; margin-right: 16px" >
-            <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.2rem;" (click)="goPaymentInfo()">Añadir información para recibir pagos</button>
-    </ion-row>
+    
 
    
    

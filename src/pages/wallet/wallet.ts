@@ -44,6 +44,9 @@ export class WalletPage {
 
    
 }
+
+
+
 hola(){
   this.newNumber = 0
       this.total = 0

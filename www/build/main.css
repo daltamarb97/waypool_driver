@@ -28738,7 +28738,6 @@ page-myride .imagenTitle {
   width: 80%;
   margin: auto;
   height: 690px;
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -28879,6 +28878,12 @@ page-myride .imagenTitle {
   color: #000;
 }
 
+.md page-payments-info .card-ios h2 {
+  margin: 22px 0;
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
 .ios page-payments-info .close-icon {
   font-size: 3rem;
   right: 10px;
@@ -28901,7 +28906,6 @@ page-myride .imagenTitle {
   width: 80%;
   margin: auto;
   height: 690px;
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -29040,6 +29044,12 @@ page-myride .imagenTitle {
 .ios page-payments-info .seats .seats-tag strong {
   margin: auto;
   color: #000;
+}
+
+.ios page-payments-info .card-ios h2 {
+  margin: 22px 0;
+  font-size: 1.6rem;
+  font-weight: normal;
 }
 
 page-pickup #map {

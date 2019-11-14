@@ -166,6 +166,7 @@ var FindridePage = /** @class */ (function () {
         this.schedules = [];
         this.myReserves = [];
         this.checked = false;
+        this.fullReserves = [];
         this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
         this.geocoder = new google.maps.Geocoder;
         this.autocompleteMyPos = { input: '' };
@@ -351,86 +352,122 @@ var FindridePage = /** @class */ (function () {
     };
     FindridePage.prototype.conectDriver = function () {
         var _this = this;
-        if (this.userInfo.toggleStatus === 'online') {
+        if (this.userInfo.onTrip === true) {
+            // if the user is on trip dont let be offline
             var alert_1 = this.alertCtrl.create({
-                title: '¡Ya estas conectado!',
-                subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
+                title: '¡Cuidado!',
+                subTitle: 'No puedes desconectarte en un viaje en curso, cancélalo primero y después desconectate',
                 buttons: ['OK']
             });
             alert_1.present();
         }
         else {
-            this.isConected = true;
-            this.isDisconected = false;
-            if (this.currentUser.emailVerified == false) {
+            if (this.userInfo.toggleStatus === 'online') {
                 var alert_2 = this.alertCtrl.create({
-                    title: 'Oops!',
-                    subTitle: 'por favor verifica tu email',
+                    title: '¡Ya estas conectado!',
+                    subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
                     buttons: ['OK']
                 });
                 alert_2.present();
-                this.isConected = false;
-                this.isDisconected = true;
-                this.changeColorOffline();
             }
             else {
-                if (this.userInfo.documents) {
-                    if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
-                        if (this.userInfo.schedule) {
-                            try {
-                                this.houseAddress = this.autocompleteMyPos.input;
-                                this.placeAddress = this.userInfo.fixedLocation.name;
-                                console.log(this.houseAddress);
-                                if (this.autocompleteMyPos.input == '') {
-                                    this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
-                                    this.isConected = false;
-                                    this.isDisconected = true;
-                                    this.changeColorOffline();
-                                    this.clearMarkers();
-                                    this.directionsDisplay.setDirections({ routes: [] });
-                                    this.loadMap();
+                this.isConected = true;
+                this.isDisconected = false;
+                if (this.currentUser.emailVerified == false) {
+                    var alert_3 = this.alertCtrl.create({
+                        title: 'Oops!',
+                        subTitle: 'por favor verifica tu email',
+                        buttons: ['OK']
+                    });
+                    alert_3.present();
+                    this.isConected = false;
+                    this.isDisconected = true;
+                    this.changeColorOffline();
+                }
+                else {
+                    if (this.userInfo.documents) {
+                        if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
+                            if (this.userInfo.schedule) {
+                                try {
+                                    this.houseAddress = this.autocompleteMyPos.input;
+                                    this.placeAddress = this.userInfo.fixedLocation.name;
+                                    console.log(this.houseAddress);
+                                    if (this.autocompleteMyPos.input == '') {
+                                        this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa sea correcta', 'Ok');
+                                        this.isConected = false;
+                                        this.isDisconected = true;
+                                        this.changeColorOffline();
+                                        this.clearMarkers();
+                                        this.directionsDisplay.setDirections({ routes: [] });
+                                        this.loadMap();
+                                    }
+                                    else {
+                                        var modal = this.modalCtrl.create('ConfirmpricePage');
+                                        modal.onDidDismiss(function (accepted) {
+                                            if (accepted) {
+                                                _this.instancesService.ToggleStatusOnline(_this.SignUpService.userPlace, _this.user);
+                                                _this.changeColorOnline();
+                                                console.log("estoy true");
+                                                _this.disable();
+                                                console.log(_this.userInfo.fixedLocation.name);
+                                                // this.confirmPrice();
+                                                _this.geocoder.geocode({ 'address': _this.houseAddress[0] }, function (results, status) {
+                                                    if (status === 'OK') {
+                                                        _this.geocoordinatesHouse = {
+                                                            lat: results[0].geometry.location.lat(),
+                                                            lng: results[0].geometry.location.lng()
+                                                        };
+                                                    }
+                                                    _this.geofireService.setHouseAddressName(_this.SignUpService.userPlace, _this.user, _this.houseAddress[0]);
+                                                    _this.geofireService.setHouseAddress(_this.SignUpService.userPlace, _this.user, _this.geocoordinatesHouse.lat, _this.geocoordinatesHouse.lng);
+                                                });
+                                            }
+                                            else {
+                                                _this.presentAlert('Información incompleta', 'Por favor escribe toda la información para conectarte', 'OK');
+                                            }
+                                        });
+                                        modal.present();
+                                    }
                                 }
-                                else {
-                                    var modal = this.modalCtrl.create('ConfirmpricePage');
-                                    modal.onDidDismiss(function (accepted) {
-                                        if (accepted) {
-                                            _this.instancesService.ToggleStatusOnline(_this.SignUpService.userPlace, _this.user);
-                                            _this.changeColorOnline();
-                                            console.log("estoy true");
-                                            _this.disable();
-                                            console.log(_this.userInfo.fixedLocation.name);
-                                            // this.confirmPrice();
-                                            _this.geocoder.geocode({ 'address': _this.houseAddress[0] }, function (results, status) {
-                                                if (status === 'OK') {
-                                                    _this.geocoordinatesHouse = {
-                                                        lat: results[0].geometry.location.lat(),
-                                                        lng: results[0].geometry.location.lng()
-                                                    };
-                                                }
-                                                _this.geofireService.setHouseAddressName(_this.SignUpService.userPlace, _this.user, _this.houseAddress[0]);
-                                                _this.geofireService.setHouseAddress(_this.SignUpService.userPlace, _this.user, _this.geocoordinatesHouse.lat, _this.geocoordinatesHouse.lng);
-                                            });
-                                        }
-                                        else {
-                                            _this.presentAlert('Información incompleta', 'Por favor escribe toda la información para conectarte', 'OK');
-                                        }
-                                    });
-                                    modal.present();
+                                catch (error) {
+                                    console.log(error);
                                 }
                             }
-                            catch (error) {
-                                console.log(error);
+                            else {
+                                var alert_4 = this.alertCtrl.create({
+                                    title: 'No tienes ningún horario',
+                                    subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+                                    buttons: [
+                                        {
+                                            text: 'Mandar mi horario',
+                                            handler: function () {
+                                                _this.navCtrl.push('SchedulePage');
+                                            }
+                                        },
+                                        {
+                                            text: 'Cancelar',
+                                            role: 'cancel',
+                                            handler: function () {
+                                            }
+                                        }
+                                    ],
+                                    cssClass: 'alertDanger'
+                                });
+                                alert_4.present();
+                                this.isConected = false;
+                                this.isDisconected = true;
+                                this.changeColorOffline();
                             }
                         }
                         else {
-                            var alert_3 = this.alertCtrl.create({
-                                title: 'No tienes ningún horario',
-                                subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+                            var alert_5 = this.alertCtrl.create({
+                                title: '¡oh-uh!',
+                                subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                                 buttons: [
                                     {
-                                        text: 'Mandar mi horario',
+                                        text: 'Subir mis documentos',
                                         handler: function () {
-                                            _this.navCtrl.push('SchedulePage');
+                                            _this.navCtrl.push('CarRegistrationPage');
                                         }
                                     },
                                     {
@@ -442,15 +479,15 @@ var FindridePage = /** @class */ (function () {
                                 ],
                                 cssClass: 'alertDanger'
                             });
-                            alert_3.present();
-                            this.isConected = false;
-                            this.isDisconected = true;
-                            this.changeColorOffline();
+                            alert_5.present();
                         }
+                        this.isConected = false;
+                        this.isDisconected = true;
+                        this.changeColorOffline();
                     }
                     else {
-                        var alert_4 = this.alertCtrl.create({
-                            title: '¡oh-uh!',
+                        var alert_6 = this.alertCtrl.create({
+                            title: '¡oh-oh!',
                             subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                             buttons: [
                                 {
@@ -468,36 +505,11 @@ var FindridePage = /** @class */ (function () {
                             ],
                             cssClass: 'alertDanger'
                         });
-                        alert_4.present();
+                        alert_6.present();
+                        this.isConected = false;
+                        this.isDisconected = true;
+                        this.changeColorOffline();
                     }
-                    this.isConected = false;
-                    this.isDisconected = true;
-                    this.changeColorOffline();
-                }
-                else {
-                    var alert_5 = this.alertCtrl.create({
-                        title: '¡oh-oh!',
-                        subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-                        buttons: [
-                            {
-                                text: 'Subir mis documentos',
-                                handler: function () {
-                                    _this.navCtrl.push('CarRegistrationPage');
-                                }
-                            },
-                            {
-                                text: 'Cancelar',
-                                role: 'cancel',
-                                handler: function () {
-                                }
-                            }
-                        ],
-                        cssClass: 'alertDanger'
-                    });
-                    alert_5.present();
-                    this.isConected = false;
-                    this.isDisconected = true;
-                    this.changeColorOffline();
                 }
             }
         }
@@ -508,26 +520,50 @@ var FindridePage = /** @class */ (function () {
             //do nothing
         }
         else {
-            this.isConected = false;
-            this.isDisconected = true;
-            this.changeColorOffline();
-            this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(function (snap) {
-                console.log(snap.val());
-                var obj = snap.val();
+            //get all reserves from driver
+            this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(function (snapReserve) {
+                _this.driverReserves = snapReserve.val();
+                console.log(_this.driverReserves);
+                var obj = _this.driverReserves;
                 Object.getOwnPropertyNames(obj).forEach(function (key) {
                     console.log(obj[key]);
-                    if (obj[key].type === 'origin') {
-                        _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, key);
+                    //check if user have any user in their reserve
+                    console.log(obj[key].pendingUsers);
+                    if (obj[key].pendingUsers !== undefined) {
+                        _this.fullReserves.push(obj[key]);
                     }
-                    else if (obj[key].type === 'destination') {
-                        _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, key);
+                    else {
+                        //there is people in the drivers' reserve
+                        console.log("funciono");
                     }
                 });
             }).then(function () {
-                _this.TripsService.deleteAllReserves(_this.SignUpService.userPlace, _this.user);
+                if (_this.fullReserves.length === 0 || _this.fullReserves.length === undefined) {
+                    _this.isConected = false;
+                    _this.isDisconected = true;
+                    _this.changeColorOffline();
+                    _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.user).once('value').then(function (snap) {
+                        console.log(snap.val());
+                        var obj = snap.val();
+                        Object.getOwnPropertyNames(obj).forEach(function (key) {
+                            console.log(obj[key]);
+                            if (obj[key].type === 'origin') {
+                                _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, key);
+                            }
+                            else if (obj[key].type === 'destination') {
+                                _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, key);
+                            }
+                        });
+                    }).then(function () {
+                        _this.TripsService.deleteAllReserves(_this.SignUpService.userPlace, _this.user);
+                    });
+                    _this.instancesService.ToggleStatusOffline(_this.SignUpService.userPlace, _this.user);
+                    _this.enable();
+                }
+                else {
+                    _this.alertOffline();
+                }
             });
-            this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
-            this.enable();
         }
     };
     FindridePage.prototype.getTrip = function () {
@@ -615,6 +651,7 @@ var FindridePage = /** @class */ (function () {
                 map: _this.map,
                 animation: google.maps.Animation.DROP,
                 icon: { url: "assets/imgs/workbuilding.png",
+                    scaledSize: new google.maps.Size(160, 160)
                 }
             });
             _this.calculateRoute(latLng, _this.positionDest);
@@ -678,8 +715,8 @@ var FindridePage = /** @class */ (function () {
                     position: results[0].geometry.location,
                     map: _this.map,
                     draggable: true,
-                    icon: { url: "assets/imgs/house.png",
-                        scaledSize: new google.maps.Size(70, 70)
+                    icon: { url: "assets/imgs/marker-origin-driver.png",
+                        scaledSize: new google.maps.Size(90, 90)
                     },
                     animation: google.maps.Animation.DROP,
                 });
@@ -755,12 +792,12 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.listride = function () {
         var _this = this;
         if (this.currentUser.emailVerified == false) {
-            var alert_6 = this.alertCtrl.create({
+            var alert_7 = this.alertCtrl.create({
                 title: 'Oops!',
                 subTitle: 'por favor verifica tu email',
                 buttons: ['OK']
             });
-            alert_6.present();
+            alert_7.present();
         }
         else {
             if (this.userInfo.documents) {
@@ -803,7 +840,7 @@ var FindridePage = /** @class */ (function () {
                     console.log(this.orFirebase);
                 }
                 else {
-                    var alert_7 = this.alertCtrl.create({
+                    var alert_8 = this.alertCtrl.create({
                         title: '¡oh-uh!',
                         subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                         buttons: [
@@ -822,11 +859,11 @@ var FindridePage = /** @class */ (function () {
                         ],
                         cssClass: 'alertDanger'
                     });
-                    alert_7.present();
+                    alert_8.present();
                 }
             }
             else {
-                var alert_8 = this.alertCtrl.create({
+                var alert_9 = this.alertCtrl.create({
                     title: '¡oh-oh!',
                     subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
                     buttons: [
@@ -845,7 +882,7 @@ var FindridePage = /** @class */ (function () {
                     ],
                     cssClass: 'alertDanger'
                 });
-                alert_8.present();
+                alert_9.present();
             }
         }
     };
@@ -890,6 +927,47 @@ var FindridePage = /** @class */ (function () {
         //   setTimeout(() => {
         //     profileModal.dismiss();
         // }, 3000);
+    };
+    FindridePage.prototype.alertOffline = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: '¿Quieres desconectarte?',
+            message: 'Waypool te conectó con otra persona, si te desconectas, le cancelarás el viaje',
+            buttons: [
+                {
+                    text: 'Ir a Mis Viajes',
+                    handler: function () {
+                        _this.navCtrl.push('ReservetripPage');
+                    }
+                },
+                {
+                    text: 'Offline :(',
+                    handler: function () {
+                        _this.isConected = false;
+                        _this.isDisconected = true;
+                        _this.changeColorOffline();
+                        _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.user).once('value').then(function (snap) {
+                            console.log(snap.val());
+                            var obj = snap.val();
+                            Object.getOwnPropertyNames(obj).forEach(function (key) {
+                                console.log(obj[key]);
+                                if (obj[key].type === 'origin') {
+                                    _this.geofireService.deleteUserGeofireOr(_this.SignUpService.userPlace, key);
+                                }
+                                else if (obj[key].type === 'destination') {
+                                    _this.geofireService.deleteUserGeofireDest(_this.SignUpService.userPlace, key);
+                                }
+                            });
+                        }).then(function () {
+                            _this.TripsService.deleteAllReserves(_this.SignUpService.userPlace, _this.user);
+                        });
+                        _this.instancesService.ToggleStatusOffline(_this.SignUpService.userPlace, _this.user);
+                        _this.enable();
+                    }
+                }
+            ]
+        });
+        alert.present();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),

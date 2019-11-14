@@ -32,26 +32,15 @@
                             <span class="icon-location bg-yellow"></span>{{user.origin}}</p>
                     </div>
                     <ion-row>
-                       
-                        
-                           <div text-left>
-                                <button class="btn bg-theme rounded full text-white" (click)="goToWaze(user.origin)">waze</button>
-                                
-                            </div> 
-                        
-                        
-                            
+                           <!-- <div text-left>
+                                <button class="btn bg-theme rounded full text-white" (click)="goToWaze(user.origin)">waze</button>                               
+                            </div>  -->                      
                                 <!-- <button class="btn bg-yellow rounded full text-white"><ion-icon name="chatboxes" class="text-white"></ion-icon></button> -->
                                 <button (click)="callUser()" class="btn bg-yellow rounded full text-white"><ion-icon name="ios-call" class="text-white"></ion-icon></button>
-
-                        
-                        
-                            <button navPop class="btn bg-theme rounded full text-white" (click)="PickUp()">Listo</button>
-                        
+                                
+                            <button navPop class="btn bg-theme rounded full text-white" (click)="PickUp()">Listo</button>                      
                     </ion-row>
-                </ion-card-content>
-               
+                </ion-card-content>             
             </ion-card>
-    <div #map id="map"></div>  
-   
+    <div #map id="map"></div>   
 </ion-content>
