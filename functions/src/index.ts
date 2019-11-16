@@ -15,7 +15,7 @@ exports.newUserInReserve = functions.database.ref(`/{university}/reserves/{userI
          const notificationContent = {
             notification: {
                 title: '¡Tienes un nuevo compañero!',
-                body: `Un estudiante se ha unido a tu reserva, haz click y checkea quien es!`
+                body: `Alguien se ha unido a uno de tus viajes, haz click y checkea quién es en 'Mis Viajes!'`
             }
         }
  
@@ -39,7 +39,7 @@ exports.newMessageInReserve = functions.database.ref(`/{university}/reserves/{us
          const notificationContent = {
             notification: {
                 title: 'Nuevo mensaje',
-                body: `Te ha llegado un mensaje en una de tus reservas`
+                body: `Te ha llegado un mensaje en uno de tus viajes`
             }
         }
  
@@ -63,7 +63,7 @@ exports.newMessageInTrips = functions.database.ref(`/{university}/trips/{userId}
          const notificationContent = {
             notification: {
                 title: 'Nuevo mensaje',
-                body: `Te ha llegado un mensaje en tu viaje`
+                body: `Te ha llegado un mensaje en tu viaje en curso`
             }
         }
  
@@ -88,8 +88,8 @@ exports.newLMU = functions.database.ref(`/{university}/trips/{userId}/{reserveKe
  
          const notificationContent = {
             notification: {
-                title: 'Nuevo Usuario',
-                body: `Alguien quiere compartir el viaje contigo a última hora, aceptalo o recházalo`
+                title: 'Viaje de último minuto',
+                body: `Alguien quiere compartir el viaje contigo a última minuto, acéptalo o rechazalo`
             }
         }
  
@@ -114,7 +114,7 @@ exports.newMessageInReserveUser = functions.database.ref(`/{university}/reserves
          const notificationContent = {
             notification: {
                 title: 'Nuevo mensaje',
-                body: `Te ha llegado un mensaje en tu viaje`
+                body: `Te ha llegado un mensaje en uno de tus viajes`
             }
         }
  
@@ -140,7 +140,7 @@ exports.newMessageInTripsUser = functions.database.ref(`/{university}/trips/{use
          const notificationContent = {
             notification: {
                 title: 'Nuevo mensaje',
-                body: `Te ha llegado un mensaje en tu viaje`
+                body: `Te ha llegado un mensaje en tu viaje en curso`
             }
         }
  
@@ -165,7 +165,7 @@ exports.onTripMessage = functions.database.ref(`/{university}/users/{userId}/onT
          const notificationContent = {
             notification: {
                 title: '¡ya estás en viaje!',
-                body: `el driver de la reserva en la que estas ya inició el viaje`
+                body: `en breve estarán yendo por ti, comunícate con el pooler de este viaje`
             }
         }
  
@@ -176,4 +176,3 @@ exports.onTripMessage = functions.database.ref(`/{university}/users/{userId}/onT
 
 
 })
-

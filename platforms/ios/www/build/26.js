@@ -1,14 +1,14 @@
 webpackJsonp([26],{
 
-/***/ 635:
+/***/ 638:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CanceltripPageModule", function() { return CanceltripPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatsPageModule", function() { return ChatsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__canceltrip__ = __webpack_require__(792);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chats__ = __webpack_require__(799);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CanceltripPageModule = /** @class */ (function () {
-    function CanceltripPageModule() {
+var ChatsPageModule = /** @class */ (function () {
+    function ChatsPageModule() {
     }
-    CanceltripPageModule = __decorate([
+    ChatsPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */],
+                __WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__canceltrip__["a" /* CanceltripPage */]
+                __WEBPACK_IMPORTED_MODULE_2__chats__["a" /* ChatsPage */]
             ]
         })
-    ], CanceltripPageModule);
-    return CanceltripPageModule;
+    ], ChatsPageModule);
+    return ChatsPageModule;
 }());
 
-//# sourceMappingURL=canceltrip.module.js.map
+//# sourceMappingURL=chats.module.js.map
 
 /***/ }),
 
-/***/ 792:
+/***/ 799:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CanceltripPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendUsers_service__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,25 +64,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var CanceltripPage = /** @class */ (function () {
-    function CanceltripPage(navCtrl, viewCtrl) {
+
+
+
+var ChatsPage = /** @class */ (function () {
+    function ChatsPage(navCtrl, sendUsersService, AngularFireAuth, signUpService) {
+        var _this = this;
         this.navCtrl = navCtrl;
-        this.viewCtrl = viewCtrl;
+        this.sendUsersService = sendUsersService;
+        this.AngularFireAuth = AngularFireAuth;
+        this.signUpService = signUpService;
+        this.driverUid = this.AngularFireAuth.auth.currentUser.uid;
+        this.pickingUsers = [];
+        this.sendUsersService.getUsersOnTrip(this.signUpService.userPlace, this.driverUid)
+            .subscribe(function (user) {
+            _this.pickingUsers = user;
+            console.log(_this.pickingUsers);
+        });
     }
-    CanceltripPage.prototype.dismiss = function () {
-        this.viewCtrl.dismiss(this.accepted);
-        // this.navCtrl.pop();
+    ChatsPage.prototype.chatting = function (user) {
+        this.navCtrl.push('ChattingPage', { user: user });
     };
-    CanceltripPage = __decorate([
+    ChatsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-canceltrip',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/canceltrip/canceltrip.html"*/'<ion-content>\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n            <img src="assets/imgs/cancelacion.png" width="100px" style="display:inline-block" height="150px"/>\n\n        <!-- <h5 class="text-hot">Este usuario desea irse contigo</h5> -->\n        <ion-item>\n            \n            <div>                \n                <h2 class="text">Es posible que hayas eliminado</h2>\n                <h2 class="text">el único usuario que estaba en</h2>\n\n                <h2 class="text">tu viaje o te hayan cancelado.</h2>\n\n            </div>\n        </ion-item>\n       \n\n\n        <ion-card-content>\n            <ion-row>\n                <ion-col>\n                    <button class="btn bg-white text-red rounded" (click)="dismiss()"  style="width: 100%;margin-top: 14px;">OK</button>\n                </ion-col>               \n            </ion-row>\n\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/canceltrip/canceltrip.html"*/
+            selector: 'page-chats',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/chats/chats.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">CHATS\n        </ion-title>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n    <ion-item (click)="chatting(user)" *ngFor="let user of pickingUsers">\n        <ion-avatar item-start>\n            <img src="assets/imgs/userPicture.png">\n            <ion-badge color="danger">9+</ion-badge>\n        </ion-avatar>\n        <h2 class="text-theme">{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n        </h2>\n        <p>Washington sq Park?</p>\n        <ion-note item-end>Ride on<span class="time">1:12 pm</span></ion-note>\n    </ion-item>\n   \n    <p text-center class="text-light"><small>Este chat se borrará automáticamente cuando  <br>terminado el viaje.</small></p>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/chats/chats.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]])
-    ], CanceltripPage);
-    return CanceltripPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]])
+    ], ChatsPage);
+    return ChatsPage;
 }());
 
-//# sourceMappingURL=canceltrip.js.map
+//# sourceMappingURL=chats.js.map
 
 /***/ })
 

@@ -101,7 +101,7 @@ export class FindridePage {
   isDisconected:boolean;
   driverReserves: any;
   fullReserves = [];
-  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer ) {
+  constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer) {
 
 
     
@@ -364,7 +364,32 @@ conectDriver(){
                   this.directionsDisplay.setDirections({routes: []});
                   this.loadMap();
                 }else{
-    
+                    
+
+
+                  this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
+                    if(status==='OK'){
+                      this.geocoordinatesHouse={
+                        lat:results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                      }
+                    }
+                    this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
+                    this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
+                  })
+
+
+                  let loading = this.loadingCtrl.create({
+                    spinner: 'crescent',
+                    content: `
+                      <div class="custom-spinner-container">
+                        <div class="custom-spinner-box"></div>
+                      </div>`
+                      });
+                  loading.present();
+
+                  setTimeout(() => {
+                    loading.dismiss();
                     let modal = this.modalCtrl.create('ConfirmpricePage');
                     modal.onDidDismiss(accepted => {
                       if(accepted){
@@ -376,22 +401,23 @@ conectDriver(){
                         console.log(this.userInfo.fixedLocation.name);
                         // this.confirmPrice();
           
-                        this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
-                          if(status==='OK'){
-                            this.geocoordinatesHouse={
-                              lat:results[0].geometry.location.lat(),
-                              lng: results[0].geometry.location.lng()
-                            }
-                          }
-                          this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
-                          this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
-                        })                  
+                        // this.geocoder.geocode({'address': this.houseAddress[0]}, (results, status)=>{
+                        //   if(status==='OK'){
+                        //     this.geocoordinatesHouse={
+                        //       lat:results[0].geometry.location.lat(),
+                        //       lng: results[0].geometry.location.lng()
+                        //     }
+                        //   }
+                        //   this.geofireService.setHouseAddressName(this.SignUpService.userPlace, this.user, this.houseAddress[0]);
+                        //   this.geofireService.setHouseAddress(this.SignUpService.userPlace, this.user, this.geocoordinatesHouse.lat, this.geocoordinatesHouse.lng);
+                        // })                  
                       }else{
                         this.presentAlert('Información incompleta','Por favor escribe toda la información para conectarte','OK')
     
                       }         
                     })
-                 modal.present();             
+                 modal.present();
+                  }, 2000);             
                 }
               }catch(error){
                 console.log(error);
@@ -649,7 +675,7 @@ console.log(this.userInfo.fixedLocation.name);
             map: this.map,
             animation: google.maps.Animation.DROP,
                icon: {         url: "assets/imgs/workbuilding.png",
-            scaledSize: new google.maps.Size(160, 160)    
+            scaledSize: new google.maps.Size(250, 250)    
              }})
             
 
@@ -744,8 +770,7 @@ selectSearchResultMyPos(item){
       this.map.setCenter(results[0].geometry.location);
       console.log(results[0].geometry.location);
       this.autocompleteMyPos.input=[item.description]
-      this.autocompleteMyDest.input=''
-      this.calculateRoute(results[0].geometry.location,this.positionDest);
+       this.calculateRoute(results[0].geometry.location,this.positionDest);
       // this.directionsDisplay.setMap(null)
     }
   })
@@ -856,14 +881,7 @@ geocodeLatLng(latLng,inputName) {
        
                 this.geoInfo1 = this.myLatLng;
                 console.log(this.geoInfo1);
-               
-
-
-      
-              //   this.geoInfo2 = {
-              //     lat: this.myLatLngDest.lat(),
-              //     lng: this.myLatLngDest.lng()
-              //   }
+              
                
 
                 console.log("AQUIIIIIIIIIIIIIII")

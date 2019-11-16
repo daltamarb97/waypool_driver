@@ -74,7 +74,6 @@ export class MyApp {
     })
     
 
-
     setTimeout(() => {
       firebaseFirst.database().ref('.info/connected').on('value', (snap)=>{
         if(snap.val() === false){
