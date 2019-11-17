@@ -363,4 +363,21 @@ public setHouseAddressName(place, driverId, name){
 public getLocationPlace(place){
    return this.afDB.object('/allPlaces/'+ place).valueChanges();
  }
+
+
+ deleteKeyUserLMU(place,userId){
+  this.afDB.database.ref(place +'/users/' + userId +'/keyTrip/').remove();
+}
+
+setOntripFalseUserLMU(place,userId){
+  this.afDB.database.ref(place +'/users/' + userId).update({
+      onTrip: false
+  })
+}
+
+deleteDriverFromLMUofUser(place,userId, keyTrip){
+  this.afDB.database.ref(place +'/users/' + userId +'/availableReserves/' + keyTrip).remove();
+}
+
+
 }

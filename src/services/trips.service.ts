@@ -87,6 +87,19 @@ export class TripsService {
 
           }
 
+
+          public notifyLMUitsBeenRejected(place,userId){
+            this.afDB.database.ref(place + '/users/'+userId).update({
+              cancelModalLMU: true
+            }).then(()=>{
+              console.log('se notifico');
+              
+            })
+
+          }
+
+
+
           
 
 
