@@ -249,7 +249,7 @@ var map = {
 		28
 	],
 	"../pages/car-registration/car-registration.module": [
-		661,
+		660,
 		27
 	],
 	"../pages/chats/chats.module": [
@@ -257,19 +257,19 @@ var map = {
 		26
 	],
 	"../pages/chatting/chatting.module": [
-		641,
+		639,
 		25
 	],
 	"../pages/confirmprice/confirmprice.module": [
-		660,
+		661,
 		24
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
-		639,
+		640,
 		23
 	],
 	"../pages/confirmtrip/confirmtrip.module": [
-		640,
+		641,
 		22
 	],
 	"../pages/detailsreserve/detailsreserve.module": [
@@ -301,35 +301,35 @@ var map = {
 		16
 	],
 	"../pages/pickup/pickup.module": [
-		663,
+		664,
 		1
 	],
 	"../pages/profile/profile.module": [
-		647,
+		650,
 		15
 	],
 	"../pages/public-profile/public-profile.module": [
-		648,
+		647,
 		14
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		649,
+		648,
 		13
 	],
 	"../pages/remove-schedule/remove-schedule.module": [
-		650,
+		649,
 		12
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		664,
+		663,
 		0
 	],
 	"../pages/schedule/schedule.module": [
-		651,
+		652,
 		11
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		652,
+		651,
 		10
 	],
 	"../pages/signup/signup.module": [
@@ -341,23 +341,23 @@ var map = {
 		3
 	],
 	"../pages/support/support.module": [
-		655,
+		654,
 		8
 	],
 	"../pages/terms/terms.module": [
-		654,
+		655,
 		7
 	],
 	"../pages/verification-images/verification-images.module": [
-		656,
+		657,
 		6
 	],
 	"../pages/verification-number/verification-number.module": [
-		658,
+		656,
 		5
 	],
 	"../pages/wallet/wallet.module": [
-		657,
+		658,
 		4
 	]
 };
@@ -556,10 +556,9 @@ var sendCoordsService = /** @class */ (function () {
     };
     sendCoordsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
     ], sendCoordsService);
     return sendCoordsService;
-    var _a;
 }());
 
 //# sourceMappingURL=sendCoords.service.js.map
@@ -1388,10 +1387,9 @@ var TripsService = /** @class */ (function () {
     };
     TripsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
     ], TripsService);
     return TripsService;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=trips.service.js.map
@@ -1803,32 +1801,32 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/add-schedule/add-schedule.module#AddSchedulePageModule', name: 'AddSchedulePage', segment: 'add-schedule', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/canceltrip/canceltrip.module#CanceltripPageModule', name: 'CanceltripPage', segment: 'canceltrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detailsreserve/detailsreserve.module#DetailsReservePagePageModule', name: 'DetailsReservePage', segment: 'detailsreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/payments-info/payments-info.module#PaymentsInfoPageModule', name: 'PaymentsInfoPage', segment: 'payments-info', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/remove-schedule/remove-schedule.module#RemoveSchedulePageModule', name: 'RemoveSchedulePage', segment: 'remove-schedule', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]

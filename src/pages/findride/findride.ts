@@ -1575,13 +1575,23 @@ disconectDriver(){
   if(this.userInfo.toggleStatus === 'offline'){ 
     //do nothing
   }else{
+
     //get all reserves from driver
     this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+this.user).once('value').then((snapReserve)=>{
       this.driverReserves = snapReserve.val();
 
       console.log(this.driverReserves);
 
-      let obj = this.driverReserves;
+      
+       //este if sirve para saber si si hay reservas y no crashear la app al desconectarse
+      if(snapReserve.val() === null || snapReserve.val() === undefined ){
+        this.isConected = false;
+        this.isDisconected = true;
+        this.changeColorOffline();
+        this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+        this.enable();
+      }else{
+        let obj = this.driverReserves;
       Object.getOwnPropertyNames(obj).forEach((key)=>{
         console.log(obj[key]);
         //check if user have any user in their reserve
@@ -1598,31 +1608,43 @@ disconectDriver(){
         }
 
       })
+      }
+      
     }).then(()=>{
-      if( this.fullReserves.length === 0 ||  this.fullReserves.length === undefined ){
+
+      //este if sirve para saber si si hay reservas y no crashear la app al desconectarse
+      if(this.driverReserves === null || this.driverReserves === undefined){
         this.isConected = false;
-      this.isDisconected = true;
-      this.changeColorOffline();
-      this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
-                      
-        console.log(snap.val()); 
-        let obj = snap.val();
-        Object.getOwnPropertyNames(obj).forEach(key => {
-          console.log(obj[key]);
-          if(obj[key].type === 'origin'){
-                this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
-          }else if(obj[key].type === 'destination'){
-                this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
-              }             
-        })
-      }).then(()=>{
-        this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
-      })
-      this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
-      this.enable();
-    
+        this.isDisconected = true;
+        this.changeColorOffline();
+        this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+        this.enable();
       }else{
-        this.alertOffline();
+        if( this.fullReserves.length === 0 ||  this.fullReserves.length === undefined ){
+          this.isConected = false;
+        this.isDisconected = true;
+        this.changeColorOffline();
+        this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
+                        
+          console.log(snap.val()); 
+          let obj = snap.val();
+          Object.getOwnPropertyNames(obj).forEach(key => {
+            console.log(obj[key]);
+            if(obj[key].type === 'origin'){
+                  this.geofireService.deleteUserGeofireOr(this.SignUpService.userPlace, key);
+            }else if(obj[key].type === 'destination'){
+                  this.geofireService.deleteUserGeofireDest(this.SignUpService.userPlace, key);
+                }             
+          })
+        }).then(()=>{
+          this.TripsService.deleteAllReserves(this.SignUpService.userPlace, this.user);
+        })
+        this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
+        this.enable();
+      
+        }else{
+          this.alertOffline();
+        }
       }
     })
 
