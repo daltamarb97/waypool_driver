@@ -53,12 +53,12 @@ var ConfirmtripPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_sendUsers_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_instances_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_trips_service__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_trips_service__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_geofire_services__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_geofire_services__ = __webpack_require__(350);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -100,11 +100,21 @@ var ConfirmtripPage = /** @class */ (function () {
         this.userUid = this.AngularFireAuth.auth.currentUser.uid;
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_7_rxjs__["Subject"];
         this.user = this.navParams.get('user');
+        this.keyTrip = this.navParams.get('keyTrip');
         console.log(this.user);
         this.SignUpServices.getMyInfo(this.SignUpServices.userPlace, this.userUid).takeUntil(this.unsubscribe)
             .subscribe(function (driverInfo) {
             _this.driver = driverInfo;
             console.log(_this.driver);
+        });
+        this.sendCoordsService.confirmIfUsersIsStillInLMU(this.SignUpServices.userPlace, this.userUid, this.keyTrip, this.user.userId).takeUntil(this.unsubscribe)
+            .subscribe(function (userInLMU) {
+            console.log(_this.driver);
+            _this.userInLMU = userInLMU;
+            console.log(_this.userInLMU);
+            if (_this.userInLMU === null || _this.userInLMU === undefined) {
+                _this.viewCtrl.dismiss();
+            }
         });
     }
     ConfirmtripPage.prototype.ionViewDidLeave = function () {
@@ -113,17 +123,17 @@ var ConfirmtripPage = /** @class */ (function () {
     };
     ConfirmtripPage.prototype.rejectUser = function () {
         //VIOLACION ABSOLUTA
-        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user.userId);
+        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.keyTrip, this.user.userId);
         console.log("nanai kukas");
         this.geofireServices.deleteKeyUserLMU(this.SignUpServices.userPlace, this.user.userId);
         this.geofireServices.setOntripFalseUserLMU(this.SignUpServices.userPlace, this.user.userId);
-        this.geofireServices.deleteDriverFromLMUofUser(this.SignUpServices.userPlace, this.user.userId, this.driver.keyTrip);
+        this.geofireServices.deleteDriverFromLMUofUser(this.SignUpServices.userPlace, this.user.userId, this.keyTrip);
         this.TripsService.notifyLMUitsBeenRejected(this.SignUpServices.userPlace, this.user.userId);
         this.dismiss();
     };
     ConfirmtripPage.prototype.acceptUser = function () {
-        this.TripsService.acceptLastMinute(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user);
-        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.driver.keyTrip, this.user.userId);
+        this.TripsService.acceptLastMinute(this.SignUpServices.userPlace, this.userUid, this.keyTrip, this.user);
+        this.TripsService.eliminateLastMinuteUser(this.SignUpServices.userPlace, this.userUid, this.keyTrip, this.user.userId);
         console.log("bienvenido al combo");
         this.dismiss();
     };

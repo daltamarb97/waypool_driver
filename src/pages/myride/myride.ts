@@ -83,7 +83,7 @@ tripState:any;
 	
 							let modal = this.modalCtrl.create('ConfirmtripPage', {
 								user: userLastMinute,
-							
+								keyTrip: this.userDriver.keyTrip
 							});
 							modal.present();
 						}
