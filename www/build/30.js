@@ -98,9 +98,9 @@ var AddSchedulePage = /** @class */ (function () {
         this.renderer.setElementStyle(this.house.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.house.nativeElement, 'border-color', 'green');
         this.renderer.setElementStyle(this.work.nativeElement, 'border-width', '0px');
-        this.imageURL = 'assets/imgs/houseToWork.png';
-        this.textMessage = 'Trabajo';
-        this.geofireType = 'origin';
+        this.imageURL = 'assets/imgs/workToHouse.png';
+        this.textMessage = 'Casa';
+        this.geofireType = 'destination';
         this.imageHouseToWork = true;
         this.imageWorkToHouse = false;
     };
@@ -110,9 +110,9 @@ var AddSchedulePage = /** @class */ (function () {
         this.renderer.setElementStyle(this.work.nativeElement, 'border-style', 'solid');
         this.renderer.setElementStyle(this.work.nativeElement, 'border-color', 'green');
         this.renderer.setElementStyle(this.house.nativeElement, 'border-width', '0px');
-        this.textMessage = 'Casa';
-        this.geofireType = 'destination';
-        this.imageURL = 'assets/imgs/workToHouse.png';
+        this.textMessage = 'Trabajo';
+        this.geofireType = 'origin';
+        this.imageURL = 'assets/imgs/houseToWork.png';
         this.imageHouseToWork = false;
         this.imageWorkToHouse = true;
     };
@@ -148,7 +148,7 @@ var AddSchedulePage = /** @class */ (function () {
                                         }
                                         else {
                                             var alert_3 = _this.alertCtrl.create({
-                                                title: '¿vas de tu ' + _this.textMessage + ' a las ' + _this.startHour + '?',
+                                                title: '¿vas a tu ' + _this.textMessage + ' a las ' + _this.startHour + '?',
                                                 buttons: [
                                                     {
                                                         text: 'Confirmo este horario',
@@ -166,7 +166,7 @@ var AddSchedulePage = /** @class */ (function () {
                                     else {
                                         var alert_4 = _this.alertCtrl.create({
                                             title: 'Debes seleccionar una opción',
-                                            subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+                                            subTitle: '¿a esta hora vas a tu casa o a tu trabajo?',
                                             buttons: ['OK']
                                         });
                                         alert_4.present();
@@ -190,7 +190,7 @@ var AddSchedulePage = /** @class */ (function () {
                     }
                     else {
                         var alert_6 = _this.alertCtrl.create({
-                            title: '¿vas de tu ' + _this.textMessage + ' a las ' + _this.startHour + '?',
+                            title: '¿vas a tu ' + _this.textMessage + ' a las ' + _this.startHour + '?',
                             buttons: [
                                 {
                                     text: 'Confirmo este horario',
@@ -207,7 +207,7 @@ var AddSchedulePage = /** @class */ (function () {
                 else {
                     var alert_7 = _this.alertCtrl.create({
                         title: 'Debes seleccionar una opción',
-                        subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+                        subTitle: '¿a esta hora vas a tu casa o a tu trabajo?',
                         buttons: ['OK']
                     });
                     alert_7.present();
@@ -225,7 +225,7 @@ var AddSchedulePage = /** @class */ (function () {
     ], AddSchedulePage.prototype, "work", void 0);
     AddSchedulePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-add-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/add-schedule/add-schedule.html"*/'<ion-content>\n\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n\n        <ion-card-content>\n                <h2 text-center class="text-theme">AÑADE UN VIAJE</h2>\n\n            <ion-row style="margin-top: 14px;    display: flex;\n            justify-content: center">\n                <ion-list>\n             <h2 text-center>Coloca la hora a la que te vas:</h2>\n\n                    <ion-item>\n                        <ion-label>Hora:</ion-label>\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n                </ion-item>\n                </ion-list>                    \n            </ion-row>\n    </ion-card-content>\n\n    <br>\n    <h2 style="margin-bottom: 20px;" text-center>¿Vas al trabajo o la casa?</h2>\n      <ion-row  style="display: flex; flex-direction: row;">\n            <ion-avatar style="border-radius: 15%;" #house>\n                <p text-center class="texto1">A la casa</p>\n\n                    <img class="house" style="width: 138px;" src="assets/imgs/workToHouse.png" (click)="selectImageHouse()"/>\n\n                </ion-avatar>\n\n                <ion-avatar  style="border-radius: 15%;" #work>\n                    <p text-center class="texto1">Al Trabajo</p>\n\n                        <img src="assets/imgs/houseToWork.png" style="width: 138px;" (click)="selectImageWork()"/>\n                 </ion-avatar>\n     \n      </ion-row>\n  \n        <ion-card-content>\n            <div class="seats">           \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.25rem;" (click)="confirm()">Confirmar</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/add-schedule/add-schedule.html"*/,
+            selector: 'page-add-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/add-schedule/add-schedule.html"*/'<ion-content>\n\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n\n        <ion-card-content>\n                <h2 text-center class="text-theme">AÑADE UN HORARIO</h2>\n\n            <ion-row style="margin-top: 14px;    display: flex;\n            justify-content: center">\n                <ion-list>\n             <h2 text-center>Coloca la hora a la que te vas:</h2>\n\n                    <ion-item>\n                        <ion-label>Hora:</ion-label>\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n                </ion-item>\n                </ion-list>                    \n            </ion-row>\n    </ion-card-content>\n\n    <br>\n    <h2 style="margin-bottom: 20px;" text-center>¿Vas al trabajo o la casa?</h2>\n      <ion-row  style="display: flex; flex-direction: row;">\n            <ion-avatar style="border-radius: 15%;" #house>\n                <p text-center class="texto1">A la casa</p>\n\n                    <img class="house" style="width: 138px;" src="assets/imgs/workToHouse.png" (click)="selectImageHouse()"/>\n\n                </ion-avatar>\n\n                <ion-avatar  style="border-radius: 15%;" #work>\n                    <p text-center class="texto1">Al Trabajo</p>\n\n                        <img src="assets/imgs/houseToWork.png" style="width: 138px;" (click)="selectImageWork()"/>\n                 </ion-avatar>\n     \n      </ion-row>\n  \n        <ion-card-content>\n            <div class="seats">           \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.25rem;" (click)="confirm()">Confirmar</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/add-schedule/add-schedule.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["V" /* Renderer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_5__services_instances_service__["a" /* instancesService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]])
     ], AddSchedulePage);

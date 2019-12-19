@@ -285,11 +285,11 @@ var map = {
 		19
 	],
 	"../pages/login/login.module": [
-		645,
+		644,
 		18
 	],
 	"../pages/more/more.module": [
-		644,
+		645,
 		17
 	],
 	"../pages/myride/myride.module": [
@@ -301,35 +301,35 @@ var map = {
 		16
 	],
 	"../pages/pickup/pickup.module": [
-		664,
+		663,
 		1
 	],
 	"../pages/profile/profile.module": [
-		650,
+		647,
 		15
 	],
 	"../pages/public-profile/public-profile.module": [
-		647,
+		648,
 		14
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		648,
+		649,
 		13
 	],
 	"../pages/remove-schedule/remove-schedule.module": [
-		649,
+		650,
 		12
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		663,
+		664,
 		0
 	],
 	"../pages/schedule/schedule.module": [
-		652,
+		651,
 		11
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		651,
+		652,
 		10
 	],
 	"../pages/signup/signup.module": [
@@ -349,11 +349,11 @@ var map = {
 		7
 	],
 	"../pages/verification-images/verification-images.module": [
-		657,
+		656,
 		6
 	],
 	"../pages/verification-number/verification-number.module": [
-		656,
+		657,
 		5
 	],
 	"../pages/wallet/wallet.module": [
@@ -1298,6 +1298,11 @@ var TripsService = /** @class */ (function () {
         // add the driver to pickedUpUsers 
         this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
     };
+    TripsService.prototype.addSavedKMGlobal = function (place, savedKM) {
+        this.afDB.database.ref('/data/allTrips' + place).update({
+            savedKM: savedKM
+        });
+    };
     TripsService.prototype.createTripState = function (place, keyTrip, driverUid) {
         this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
             saveTrip: false,
@@ -1806,27 +1811,27 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detailsreserve/detailsreserve.module#DetailsReservePagePageModule', name: 'DetailsReservePage', segment: 'detailsreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/payments-info/payments-info.module#PaymentsInfoPageModule', name: 'PaymentsInfoPage', segment: 'payments-info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/remove-schedule/remove-schedule.module#RemoveSchedulePageModule', name: 'RemoveSchedulePage', segment: 'remove-schedule', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]
@@ -1952,27 +1957,29 @@ var MyApp = /** @class */ (function () {
         }).catch(function (error) {
             console.log(error);
         });
+        console.log('esta notificacion la queria ver');
         platform.ready().then(function () {
-            _this.firebase.onNotificationOpen().subscribe(function (response) {
-                if (response.tap) {
-                    console.log('received in background');
+            // this.firebase.onNotificationOpen().subscribe((response)=>{
+            //   if(response.tap){
+            //     console.log('received in background');
+            //   }else{
+            //     const toast = this.toastController.create({
+            //             message: response.body,
+            //             duration: 3000
+            //           })
+            //           toast.present();
+            //   }
+            // });
+            console.log('esta notificacion la queria ver');
+            _this.fcm.onNotification().subscribe(function (data) {
+                if (data.wasTapped) {
+                    console.log('app in background');
+                    console.log(JSON.stringify(data));
                 }
                 else {
-                    var toast = _this.toastController.create({
-                        message: response.body,
-                        duration: 3000
-                    });
-                    toast.present();
+                    console.log(JSON.stringify(data));
                 }
             });
-            // this.fcm.onNotification() .subscribe(data => {
-            //   if(data.wasTapped){
-            //    console.log('app in background');
-            //    console.log(JSON.stringify(data));
-            //   }else{
-            //    console.log(JSON.stringify(data));
-            //   }
-            // })
         });
         setTimeout(function () {
             __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('.info/connected').on('value', function (snap) {

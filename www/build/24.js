@@ -81,6 +81,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ConfirmpricePage = /** @class */ (function () {
     function ConfirmpricePage(navCtrl, appCtrl, MetricsService, PriceService, alertCtrl, afDB, sendUsersService, SignUpService, sendCoordsService, modalCtrl, AngularFireAuth, viewCtrl, navParams, geofireService) {
+        // this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.userDriverUid).once('value').then((snap)=>{
+        //   console.log(snap.val());
         var _this = this;
         this.navCtrl = navCtrl;
         this.appCtrl = appCtrl;
@@ -110,6 +112,11 @@ var ConfirmpricePage = /** @class */ (function () {
         this.geocoordinatesDest = {};
         this.geocoordinatesOr = {};
         this.schedules = [];
+        //   let obj = snap.val();
+        //   Object.getOwnPropertyNames(obj).forEach(key => {
+        //    console.log(obj[key]);
+        //   });
+        // })
         //hay dos variables, driver y driver2 lo cual significa que debo llamar a la info del driver en dos ocasiones distintas, cuando hay nota y cuando no
         this.SignUpService.getCar(this.SignUpService.userPlace, this.userDriverUid).takeUntil(this.unsubscribe)
             .subscribe(function (car) {
@@ -147,28 +154,30 @@ var ConfirmpricePage = /** @class */ (function () {
         }
         else {
             this.PriceService.setPrice(this.SignUpService.userPlace, this.userDriverUid, this.precio, this.car);
-            this.afDB.list(this.SignUpService.userPlace + '/drivers/' + this.userDriverUid + '/schedule/').valueChanges().subscribe(function (schedules) {
-                _this.schedules = schedules;
-                _this.schedules.forEach(function (sche) {
-                    if (sche.type === 'origin') {
+            // HERE YOU ARE, DOUCHEBAG
+            this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.userDriverUid + '/schedule/').once('value').then(function (snapSchedule) {
+                var obj = snapSchedule.val();
+                console.log(obj);
+                Object.getOwnPropertyNames(obj).forEach(function (key) {
+                    if (obj[key].type === 'origin') {
                         _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid).push({
                             driver: _this.driverInfo,
                             car: _this.car,
                             houseAddr: _this.driver.houseAddress.name,
                             placeAddr: _this.driverInfo.placeAddr,
                             price: _this.precio,
-                            startHour: sche.hour,
-                            type: sche.type,
+                            startHour: obj[key].hour,
+                            type: obj[key].type,
                         }).then(function (snap) {
-                            var key = snap.key;
+                            var key1 = snap.key;
                             // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
                             // set geofireOrkey 
-                            _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userPlace, key, _this.driver.houseAddress.coordinates.lat, _this.driver.houseAddress.coordinates.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireOr/' + key).update({
+                            _this.geofireService.setGeofireOrNEWTEST(_this.SignUpService.userPlace, key1, _this.driver.houseAddress.coordinates.lat, _this.driver.houseAddress.coordinates.lng);
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireOr/' + key1).update({
                                 driverId: _this.driverInfo.userId
                             });
                             console.log('executed geofire Or');
-                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key1).update({
                                 keyTrip: key
                             });
                             _this.accepted = true;
@@ -184,18 +193,18 @@ var ConfirmpricePage = /** @class */ (function () {
                             houseAddr: _this.driver.houseAddress.name,
                             placeAddr: _this.driverInfo.placeAddr,
                             price: _this.precio,
-                            startHour: sche.hour,
-                            type: sche.type,
+                            startHour: obj[key].hour,
+                            type: obj[key].type,
                         }).then(function (snap) {
-                            var key = snap.key;
+                            var key2 = snap.key;
                             // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
                             // set geofireOrkey 
-                            _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userPlace, key, _this.driver.houseAddress.coordinates.lat, _this.driver.houseAddress.coordinates.lng);
-                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireDest/' + key).update({
+                            _this.geofireService.setGeofireDestNEWTEST(_this.SignUpService.userPlace, key2, _this.driver.houseAddress.coordinates.lat, _this.driver.houseAddress.coordinates.lng);
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/geofireDest/' + key2).update({
                                 driverId: _this.driverInfo.userId
                             });
                             console.log('executed geofire Dest');
-                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key).update({
+                            _this.afDB.database.ref(_this.SignUpService.userPlace + '/reserves/' + _this.userDriverUid + '/' + key2).update({
                                 keyTrip: key
                             });
                             _this.accepted = true;

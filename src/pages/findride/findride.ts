@@ -1206,14 +1206,16 @@ export class FindridePage {
     this.platform.ready().then(()=>{
 
 
-      this.getToken();
+      // this.getToken();
 
-      // this.token = this.fcm.getToken().then((token)=>{
-      //   console.log('this is the token ' + token);
-      //   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
-      //     token: token
-      //   })
-      // })
+      console.log('aqui cogi el token');
+
+      this.token = this.fcm.getToken().then((token)=>{
+        console.log('this is the token ' + token);
+        this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
+          token: token
+        })
+      })
   
   })
   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/'+this.user).once('value').then((snap)=>{

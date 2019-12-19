@@ -139,12 +139,17 @@ tripState:any;
 			// erase trip because driver decide to cancel
 			this.unSubscribeServices();
 			this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid)
-			this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
 			this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
 			this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 			this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 			this.navCtrl.pop();
-			this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+			// this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+
+			// Trip needs to be deleted first and then keyTrip is deleted, otherwise the trip node would still remain at the databse - REGLA DE SEGURIDAD NO LO PERMITE
+			this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+this.driverUid+'/'+ this.userDriver.keyTrip).remove().then(()=>{
+				this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid)
+			})
+
 		
 			// this.navCtrl.setRoot(this.navCtrl.getActive().component);
 			let modal = this.modalCtrl.create('CanceltripPage');
@@ -171,6 +176,10 @@ tripState:any;
 
 		}     
 	 }
+
+
+
+	 
 	callUser(number) {
 		this.callNumber.callNumber(number, true)
 			.then(res => console.log('Launched dialer!', res))
@@ -245,9 +254,10 @@ tripState:any;
 
 
 							});
-							this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
+							this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip); 
+
 							this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
-							
+
 							this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
 
 							this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);

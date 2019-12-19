@@ -128,6 +128,12 @@ export class TripsService {
         this.afDB.database.ref(place + '/trips/'+driverUid+'/'+ keyTrip +'/pickedUpUsers/'+ userId).update(user);
      }
 
+     public addSavedKMGlobal(place, savedKM){
+      this.afDB.database.ref('/data/allTrips'+place ).update({
+        savedKM:savedKM
+      });
+     }
+
 
      public createTripState(place, keyTrip,driverUid){
       this.afDB.database.ref(place + '/tripsState/'+driverUid+'/'+ keyTrip).update({

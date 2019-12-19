@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 664:
+/***/ 663:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PickupPageModule", function() { return PickupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pickup__ = __webpack_require__(829);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pickup__ = __webpack_require__(828);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 796;
 
 /***/ }),
 
-/***/ 829:
+/***/ 828:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17538,6 +17538,25 @@ var PickupPage = /** @class */ (function () {
     PickupPage.prototype.PickUp = function () {
         var _this = this;
         this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId, this.user);
+        /// HACER REGLA DE SEGURIDAD///////
+        this.afDB.database.ref('/data/allTrips/' + this.SignUpService.userPlace + '/savedKM/').once('value').then(function (snap) {
+            var currentKM = snap.val();
+            var savedKM = currentKM + _this.user.distance;
+            _this.TripsService.addSavedKMGlobal(_this.SignUpService.userPlace, savedKM);
+        });
+        this.afDB.database.ref('data/allTrips/' + this.SignUpService.userPlace + '/' + this.driverUid + '/savedKM/').once('value').then(function (snap) {
+            if (snap.val() === null || snap.val() === undefined) {
+                _this.afDB.database.ref('data/allTrips/' + _this.SignUpService.userPlace + '/' + _this.driverUid).update({
+                    savedKM: _this.user.distance
+                });
+            }
+            else {
+                _this.afDB.database.ref('data/allTrips/' + _this.SignUpService.userPlace + '/' + _this.driverUid).update({
+                    savedKM: snap.val() + _this.user.distance
+                });
+            }
+        });
+        //////// TERMINA REGLA DE SEGURIDAD ////////
         this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId);
         // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
         this.presentToast("Acabas de recoger a " + this.user.name + ", \u00A1Sal\u00FAdalo por nosotros!", 4000, 'top');

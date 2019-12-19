@@ -88,21 +88,31 @@ export class SchedulePage {
   }
 
   removeTime(sche){
-    let modal = this.modalCtrl.create('RemoveSchedulePage', {
-      schedule: sche
-    });
-    modal.onDidDismiss(accepted => {
-      if(accepted){
-        // this.navCtrl.push('ListridePage');
+
+    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId ).once('value').then((snap)=>{
+      if(snap.val().toggleStatus === 'online'){
         const alert = this.alertCtrl.create({
-          title: 'Este horario ha sido eliminado',
+          title: 'Para eliminar este horario debes estar offline',
           buttons: ['OK']
         });
         alert.present();
+      }else{
+        let modal = this.modalCtrl.create('RemoveSchedulePage', {
+          schedule: sche
+        });
+        modal.onDidDismiss(accepted => {
+          if(accepted){
+            // this.navCtrl.push('ListridePage');
+            const alert = this.alertCtrl.create({
+              title: 'Este horario ha sido eliminado',
+              buttons: ['OK']
+            });
+            alert.present();
+          }
+        })
+        modal.present();
       }
     })
-    modal.present();
-    
   }
 
   usageCameraSchedule(){

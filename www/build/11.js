@@ -1,6 +1,6 @@
 webpackJsonp([11],{
 
-/***/ 652:
+/***/ 651:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SchedulePageModule", function() { return SchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__schedule__ = __webpack_require__(813);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__schedule__ = __webpack_require__(812);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var SchedulePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 813:
+/***/ 812:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -148,20 +148,31 @@ var SchedulePage = /** @class */ (function () {
     };
     SchedulePage.prototype.removeTime = function (sche) {
         var _this = this;
-        var modal = this.modalCtrl.create('RemoveSchedulePage', {
-            schedule: sche
-        });
-        modal.onDidDismiss(function (accepted) {
-            if (accepted) {
-                // this.navCtrl.push('ListridePage');
+        this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then(function (snap) {
+            if (snap.val().toggleStatus === 'online') {
                 var alert_2 = _this.alertCtrl.create({
-                    title: 'Este horario ha sido eliminado',
+                    title: 'Para eliminar este horario debes estar offline',
                     buttons: ['OK']
                 });
                 alert_2.present();
             }
+            else {
+                var modal = _this.modalCtrl.create('RemoveSchedulePage', {
+                    schedule: sche
+                });
+                modal.onDidDismiss(function (accepted) {
+                    if (accepted) {
+                        // this.navCtrl.push('ListridePage');
+                        var alert_3 = _this.alertCtrl.create({
+                            title: 'Este horario ha sido eliminado',
+                            buttons: ['OK']
+                        });
+                        alert_3.present();
+                    }
+                });
+                modal.present();
+            }
         });
-        modal.present();
     };
     SchedulePage.prototype.usageCameraSchedule = function () {
         var _this = this;

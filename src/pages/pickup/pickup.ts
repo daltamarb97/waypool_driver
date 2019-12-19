@@ -281,6 +281,35 @@ export class PickupPage {
 
     PickUp(){
       this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId,this.user);
+
+
+
+
+      /// HACER REGLA DE SEGURIDAD///////
+      this.afDB.database.ref('/data/allTrips/'+ this.SignUpService.userPlace + '/savedKM/' ).once('value').then((snap)=>{
+        let currentKM = snap.val();
+
+        let savedKM = currentKM + this.user.distance;
+        this.TripsService.addSavedKMGlobal(this.SignUpService.userPlace, savedKM);
+
+      })
+
+
+      this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid+'/savedKM/').once('value').then((snap)=>{
+        if(snap.val() === null || snap.val() === undefined ){
+          this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid).update({
+            savedKM: this.user.distance
+          })
+        }else{
+          this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid).update({
+            savedKM: snap.val() + this.user.distance
+          })
+        }
+      })
+
+
+      //////// TERMINA REGLA DE SEGURIDAD ////////
+
       this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId);
       // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
       this.presentToast(`Acabas de recoger a ${this.user.name}, ¡Salúdalo por nosotros!`,4000,'top');
@@ -289,19 +318,6 @@ export class PickupPage {
       let currDate = moment().format('MMMM Do YYYY, h:mm:ss a');
       // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
       // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
-
-
-
-
-
-
-
-
-
-
-      
-
-
 
 
 
@@ -317,19 +333,6 @@ export class PickupPage {
         }
       })
       ///////// TERMINA LA VIOLACION
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -359,6 +362,10 @@ export class PickupPage {
           })
         }
       })
+
+
+
+
       
     }
 

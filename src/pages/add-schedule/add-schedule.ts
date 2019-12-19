@@ -56,10 +56,10 @@ export class AddSchedulePage {
     this.renderer.setElementStyle(this.house.nativeElement,'border-color','green')
   
     this.renderer.setElementStyle(this.work.nativeElement,'border-width','0px')
-    this.imageURL = 'assets/imgs/houseToWork.png';
+    this.imageURL = 'assets/imgs/workToHouse.png';
 
-    this.textMessage = 'Trabajo'
-    this.geofireType = 'origin';
+    this.textMessage = 'Casa'
+    this.geofireType = 'destination';
     this.imageHouseToWork = true;
     this.imageWorkToHouse = false;
   }
@@ -70,9 +70,10 @@ export class AddSchedulePage {
     this.renderer.setElementStyle(this.work.nativeElement,'border-color','green')
   
     this.renderer.setElementStyle(this.house.nativeElement,'border-width','0px')
-    this.textMessage = 'Casa';
-    this.geofireType = 'destination';
-    this.imageURL = 'assets/imgs/workToHouse.png';
+    this.textMessage = 'Trabajo';
+    this.geofireType = 'origin';
+    this.imageURL = 'assets/imgs/houseToWork.png';
+    
     this.imageHouseToWork = false;
     this.imageWorkToHouse = true;
   
@@ -110,7 +111,7 @@ export class AddSchedulePage {
                     alert.present();
                   }else{
                     const alert = this.alertCtrl.create({
-                      title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
+                      title: '¿vas a tu ' + this.textMessage + ' a las ' + this.startHour + '?',
                       buttons: [
                         {
                           text: 'Confirmo este horario',
@@ -128,7 +129,7 @@ export class AddSchedulePage {
                 }else{
                   const alert = this.alertCtrl.create({
                     title: 'Debes seleccionar una opción',
-                    subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+                    subTitle: '¿a esta hora vas a tu casa o a tu trabajo?',
                     buttons: ['OK']
                   });
                   alert.present();
@@ -150,7 +151,7 @@ export class AddSchedulePage {
             alert.present();
           }else{
             const alert = this.alertCtrl.create({
-              title: '¿vas de tu ' + this.textMessage + ' a las ' + this.startHour + '?',
+              title: '¿vas a tu ' + this.textMessage + ' a las ' + this.startHour + '?',
               buttons: [
                 {
                   text: 'Confirmo este horario',
@@ -167,7 +168,7 @@ export class AddSchedulePage {
         }else{
           const alert = this.alertCtrl.create({
             title: 'Debes seleccionar una opción',
-            subTitle: '¿a esta hora vas de tu trabajo a tu casa o de tu casa a tu trabajo?',
+            subTitle: '¿a esta hora vas a tu casa o a tu trabajo?',
             buttons: ['OK']
           });
           alert.present();

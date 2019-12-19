@@ -45,32 +45,35 @@ export class MyApp {
       console.log(error);
     }) 
     
+    console.log('esta notificacion la queria ver');
+
 
     platform.ready().then(()=>{
+
       
-      this.firebase.onNotificationOpen().subscribe((response)=>{
-        if(response.tap){
-          console.log('received in background');
-        }else{
-          const toast = this.toastController.create({
-                  message: response.body,
-                  duration: 3000
-                })
-                toast.present();
-        }
-      });
-
-
-
-
-      // this.fcm.onNotification() .subscribe(data => {
-      //   if(data.wasTapped){
-      //    console.log('app in background');
-      //    console.log(JSON.stringify(data));
+      // this.firebase.onNotificationOpen().subscribe((response)=>{
+      //   if(response.tap){
+      //     console.log('received in background');
       //   }else{
-      //    console.log(JSON.stringify(data));
+      //     const toast = this.toastController.create({
+      //             message: response.body,
+      //             duration: 3000
+      //           })
+      //           toast.present();
       //   }
-      // })
+      // });
+
+
+      console.log('esta notificacion la queria ver');
+
+      this.fcm.onNotification() .subscribe(data => {
+        if(data.wasTapped){
+         console.log('app in background');
+         console.log(JSON.stringify(data));
+        }else{
+         console.log(JSON.stringify(data));
+        }
+      })
     })
     
 
