@@ -37,17 +37,17 @@ export class SignupPage {
     private signupGroup: FormGroup;
 
     //variables linked among them 
-    enterpriseVar:any;
-    universities = [];
+    cityVar:any;
+    cities = [];
     showReadonly:boolean = true;
-    onlyEmail:any;
+    // onlyEmail:any;
     arrayEmails = [];
     company:any;
     companyVar:any;
     windowRef:any;
     verificationCode:string;
     unsubscribe = new Subject;
-    noShowButton:boolean = false;
+    email:any;
     geocoder: any
 
 
@@ -63,7 +63,7 @@ export class SignupPage {
         carModel: ["", Validators.required],
         plateNumber: ["", Validators.required],
         color: ["", Validators.required],
-        enterprise: ["", Validators.required],
+        city: ["", Validators.required],
         isChecked:[true, Validators.required]
     })
 
@@ -73,51 +73,63 @@ export class SignupPage {
     // this.SignUpService.pushEmails('uninorte', '@uninorte.edu.co');
     // this.SignUpService.pushEmails('uninorte', '@jhggh.edu.co');
 
-    this.SignUpService.getAllPlaces().takeUntil(this.unsubscribe)
-    .subscribe(universities => {
-        this.universities = universities;
-        console.log(this.universities);
+    this.SignUpService.getAllCities().takeUntil(this.unsubscribe)
+    .subscribe(cities => {
+        this.cities = cities;
+        console.log(this.cities);
         
     })
+
   }
 
   
 
   onChange(){
-    this.showReadonly = true;
-    if(this.showReadonly == true){
-            var count = this.universities.length;
-            for(var i=0; i<count; i++){
-                if(this.universities[i].name == this.enterpriseVar){
-                  if(this.universities[i].emails == undefined){
-                            this.showReadonly = false;
-                        }else{
-                            // this.afDB.database.ref('universities/' + this.universities[i].name + '/emails').once('value').then((snapshot)=>{
-                            //     let emailsUni = snapshot.val();
-                            //     console.log(emailsUni);
-                            //     this.arrayEmails = emailsUni;     
-                            // })
+    this.arrayEmails = [];
+    this.afDB.database.ref('allCities/' + this.cityVar + '/allPlaces').once('value').then((snap)=>{
+        let obj = snap.val();
+
+        Object.getOwnPropertyNames(obj).forEach((key)=>{
+            this.arrayEmails.push(obj[key].email);
+            console.log(this.arrayEmails);
+            
+            
+        })
+    })
+    // this.showReadonly = true;
+    // if(this.showReadonly == true){
+    //         var count = this.universities.length;
+    //         for(var i=0; i<count; i++){
+    //             if(this.universities[i].name == this.enterpriseVar){
+    //               if(this.universities[i].emails == undefined){
+    //                         this.showReadonly = false;
+    //                     }else{
+    //                         // this.afDB.database.ref('universities/' + this.universities[i].name + '/emails').once('value').then((snapshot)=>{
+    //                         //     let emailsUni = snapshot.val();
+    //                         //     console.log(emailsUni);
+    //                         //     this.arrayEmails = emailsUni;     
+    //                         // })
                             
-                            this.SignUpService.getEmails(this.universities[i].name).subscribe(emails =>{
-                                this.arrayEmails = emails;
-                                console.log(this.arrayEmails);
-                            })
-                        }
-                    }
-                }
-        }
+    //                         this.SignUpService.getEmails(this.universities[i].name).subscribe(emails =>{
+    //                             this.arrayEmails = emails;
+    //                             console.log(this.arrayEmails);
+    //                         })
+    //                     }
+    //                 }
+    //             }
+    //     }
         
     }
 
-    onChangeEmail(){
-        var count = this.arrayEmails.length;
-        for(var i=0; i<count; i++){
-            if(this.arrayEmails[i].email == this.companyVar){
-                this.company = this.arrayEmails[i].company;
-                console.log(this.company);
-            }
-        }
-    }
+    // onChangeEmail(){
+    //     var count = this.arrayEmails.length;
+    //     for(var i=0; i<count; i++){
+    //         if(this.arrayEmails[i].email == this.companyVar){
+    //             this.company = this.arrayEmails[i].company;
+    //             console.log(this.company);
+    //         }
+    //     }
+    // }
 
     scrolling(){
         this.content.scrollTo(30, 0);

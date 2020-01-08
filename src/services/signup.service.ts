@@ -31,6 +31,10 @@ export class SignUpService {
         return this.afDB.list('allPlaces/').valueChanges()
      }
 
+     public getAllCities(){
+        return this.afDB.list('allCities/').valueChanges()
+     }
+
      public getEmails(enterprise){
         return this.afDB.list('allPlaces/' + enterprise +'/emails' ).valueChanges()
      }
