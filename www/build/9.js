@@ -102,6 +102,10 @@ var SignupPage = /** @class */ (function () {
         // onlyEmail:any;
         this.arrayEmails = [];
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_7_rxjs__["Subject"];
+        this.zones = [];
+        this.multipleZones = false;
+        this.forLoopsCompleted = 0;
+        this.companyIdentified = false;
         this.signupGroup = this.formBuilder.group({
             name: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             lastname: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
@@ -135,37 +139,20 @@ var SignupPage = /** @class */ (function () {
                 console.log(_this.arrayEmails);
             });
         });
-        // this.showReadonly = true;
-        // if(this.showReadonly == true){
-        //         var count = this.universities.length;
-        //         for(var i=0; i<count; i++){
-        //             if(this.universities[i].name == this.enterpriseVar){
-        //               if(this.universities[i].emails == undefined){
-        //                         this.showReadonly = false;
-        //                     }else{
-        //                         // this.afDB.database.ref('universities/' + this.universities[i].name + '/emails').once('value').then((snapshot)=>{
-        //                         //     let emailsUni = snapshot.val();
-        //                         //     console.log(emailsUni);
-        //                         //     this.arrayEmails = emailsUni;     
-        //                         // })
-        //                         this.SignUpService.getEmails(this.universities[i].name).subscribe(emails =>{
-        //                             this.arrayEmails = emails;
-        //                             console.log(this.arrayEmails);
-        //                         })
-        //                     }
-        //                 }
-        //             }
-        //     }
     };
-    // onChangeEmail(){
-    //     var count = this.arrayEmails.length;
-    //     for(var i=0; i<count; i++){
-    //         if(this.arrayEmails[i].email == this.companyVar){
-    //             this.company = this.arrayEmails[i].company;
-    //             console.log(this.company);
-    //         }
-    //     }
-    // }
+    SignupPage.prototype.noCompanyIdentified = function (numberToExecute) {
+        ++this.forLoopsCompleted;
+        if (this.forLoopsCompleted === numberToExecute) {
+            if (this.companyIdentified === false) {
+                var alert = this.alertCtrl.create({
+                    title: 'El correo que ingresaste no concuerda con el de ninguna empresa de la red de Waypool',
+                    subTitle: 'Revisa si escribiste el correo bien o si tu empresa no está en Waypool, envianos un correo a waypooltec@gmail.com',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }
+        }
+    };
     SignupPage.prototype.scrolling = function () {
         this.content.scrollTo(30, 0);
     };
@@ -175,277 +162,179 @@ var SignupPage = /** @class */ (function () {
     };
     SignupPage.prototype.verification = function () {
         var _this = this;
-        if (!this.signupGroup.controls['isChecked'].value === true) {
-            var alert = this.alertCtrl.create({
-                title: 'No aceptaste nuestros términos y condiciones',
-                subTitle: 'Debes estar de acuerdo con nustros términos y condiciones para usar Waypool',
-                buttons: ['OK']
-            });
-            alert.present();
-        }
-        else {
-            if (this.showReadonly == true) {
-                var userName = this.signupGroup.controls['name'].value;
-                var userLastName = this.signupGroup.controls['lastname'].value;
-                var userPhone = this.signupGroup.controls['phone'].value;
-                var userEmail = this.signupGroup.controls['email'].value;
-                var userFixedemail = this.signupGroup.controls['fixedemail'].value;
-                var userEmailComplete = userEmail + userFixedemail;
-                var userPassword = this.signupGroup.controls['password'].value;
-                var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
-                //   let userPhone = this.signupGroup.controls['phone'].value;
-                var userCarModel = this.signupGroup.controls['carModel'].value;
-                var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
-                var usercarColor = this.signupGroup.controls['color'].value;
-                var userPlace = this.signupGroup.controls['enterprise'].value;
-                this.car = {
-                    carModel: userCarModel,
-                    plateNumber: userPlateNumber,
-                    color: usercarColor
-                };
-                // saving data in variable
-                if (this.company !== undefined || this.company !== null) {
-                    this.user = {
-                        name: userName,
-                        lastname: userLastName,
-                        email: userEmailComplete,
-                        phone: '+57' + userPhone,
-                        place: userPlace,
-                        createdBy: 'driver',
-                        company: this.company
-                    };
-                }
-                else {
-                    this.user = {
-                        name: userName,
-                        lastname: userLastName,
-                        email: userEmailComplete,
-                        phone: '+57' + userPhone,
-                        place: userPlace,
-                        createdBy: 'driver',
-                    };
-                }
-                this.SignUpService.userPlace = userPlace;
-                if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
-                    this.authenticationService.registerWithEmail(userEmailComplete, userPassword).then(function () {
-                        if (!_this.user.userId) {
-                            _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                                if (user) {
-                                    user.getIdToken().then(function (token) {
-                                        _this.user.tokenId = token;
-                                    });
-                                    if (!_this.user.userId) {
-                                        _this.user.userId = user.uid;
-                                    }
-                                    _this.SignUpService.saveUser(_this.SignUpService.userPlace, _this.user);
-                                    _this.afDB.database.ref('allPlaces/' + _this.SignUpService.userPlace + '/location').once('value').then(function (snap) {
-                                        console.log(snap.val());
-                                        console.log(snap.val().lng);
-                                        _this.SignUpService.setFixedLocationCoordinates(_this.SignUpService.userPlace, _this.user.userId, snap.val().lat, snap.val().lng);
-                                        _this.geocodingPlace(snap.val().lat, snap.val().lng, _this.SignUpService.userPlace, _this.user.userId);
-                                    });
-                                    _this.SignUpService.saveUserInAllUsers(_this.SignUpService.userPlace, _this.user.userId);
-                                    _this.SignUpService.addCarProfile(_this.SignUpService.userPlace, _this.user.userId, _this.car);
-                                    //send text message with code
-                                    // this.sendVerificationCode(this.user.userId);
-                                    // this.app.getRootNav().push('LoginPage');
-                                }
-                                else {
-                                    console.log('there is no user');
-                                }
-                            });
-                        }
-                        ;
-                        //sending email verification and verifying weather email is verified or not
-                        _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                            if (user) {
-                                if (user.emailVerified == false) {
-                                    user.sendEmailVerification();
-                                    var alert = _this.alertCtrl.create({
-                                        title: '¡REGISTRO EXITOSO!',
-                                        subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
-                                        buttons: [
-                                            {
-                                                text: 'OK',
-                                                handler: function () {
-                                                    _this.app.getRootNav().push('CarRegistrationLoginPage');
-                                                }
-                                            }
-                                        ]
-                                    });
-                                    alert.present();
-                                    console.log("verification email has been sent");
-                                }
-                                else {
-                                    console.log("verification email has not been sent or the email is already verified");
-                                }
+        this.forLoopsCompleted = 0;
+        this.companyIdentified = false;
+        var count = this.arrayEmails.length;
+        for (var i = 0; i < count; i++) {
+            this.emailStringVerification = this.email.indexOf(this.arrayEmails[i]);
+            console.log(this.emailStringVerification);
+            if (this.emailStringVerification > -1) {
+                this.companyIdentified = true;
+                this.rightEmailOnDatabase = this.arrayEmails[i];
+                this.afDB.database.ref('allCities/' + this.cityVar + '/allPlaces').once('value').then(function (snap) {
+                    var obj = snap.val();
+                    Object.getOwnPropertyNames(obj).forEach(function (key) {
+                        if (obj[key].email === _this.rightEmailOnDatabase) {
+                            console.log("la empresa es " + obj[key].name);
+                            _this.company = obj[key].name;
+                            if (obj[key].zones.length === 1) {
+                                _this.zones = [];
+                                _this.zone = obj[key].zones[0];
                             }
                             else {
-                                console.log('there is no user');
+                                _this.zone = undefined;
+                                obj[key].zones.forEach(function (zone) {
+                                    _this.zones.push(zone);
+                                });
                             }
+                        }
+                    });
+                }).then(function () {
+                    if (!_this.signupGroup.controls['isChecked'].value === true) {
+                        var alert = _this.alertCtrl.create({
+                            title: 'No aceptaste nuestros términos y condiciones',
+                            subTitle: 'Debes estar de acuerdo con nustros términos y condiciones para usar Waypool',
+                            buttons: ['OK']
                         });
-                    }).catch(function (error) {
-                        if (error.code === "auth/email-already-in-use") {
+                        alert.present();
+                    }
+                    else {
+                        var userName = _this.signupGroup.controls['name'].value;
+                        var userLastName = _this.signupGroup.controls['lastname'].value;
+                        var userPhone = _this.signupGroup.controls['phone'].value;
+                        var userEmail = _this.signupGroup.controls['email'].value;
+                        var userPassword = _this.signupGroup.controls['password'].value;
+                        // let userPasswordconf = this.signupGroup.controls['passwordconf'].value;
+                        var userCarModel = _this.signupGroup.controls['carModel'].value;
+                        var userPlateNumber = _this.signupGroup.controls['plateNumber'].value;
+                        var usercarColor = _this.signupGroup.controls['color'].value;
+                        if (_this.zones === []) {
+                            _this.userPlace = _this.zone;
+                            _this.multipleZones = false;
+                        }
+                        else {
+                            _this.multipleZones = true;
+                        }
+                        _this.car = {
+                            carModel: userCarModel,
+                            plateNumber: userPlateNumber,
+                            color: usercarColor
+                        };
+                        // saving data in variable
+                        _this.user = {
+                            name: userName,
+                            lastname: userLastName,
+                            email: userEmail,
+                            phone: '+57' + userPhone,
+                            createdBy: 'driver',
+                            company: _this.company,
+                            city: _this.cityVar
+                        };
+                        _this.SignUpService.userPlace = _this.userPlace;
+                        if (_this.signupGroup.controls['password'].value === _this.signupGroup.controls['passwordconf'].value) {
+                            _this.authenticationService.registerWithEmail(userEmail, userPassword).then(function () {
+                                if (!_this.user.userId) {
+                                    _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                                        if (user) {
+                                            user.getIdToken().then(function (token) {
+                                                _this.user.tokenId = token;
+                                            });
+                                            if (!_this.user.userId) {
+                                                _this.user.userId = user.uid;
+                                            }
+                                            if (_this.multipleZones === false) {
+                                                _this.SignUpService.saveUser(_this.SignUpService.userPlace, _this.user);
+                                            }
+                                            else {
+                                                _this.zones.forEach(function (zone) {
+                                                    _this.SignUpService.saveUser(zone, _this.user);
+                                                });
+                                            }
+                                            _this.afDB.database.ref('allCities/' + _this.cityVar + '/allPlaces/' + _this.company + '/location').once('value').then(function (snap) {
+                                                console.log(snap.val());
+                                                if (_this.multipleZones === false) {
+                                                    _this.SignUpService.setFixedLocationCoordinates(_this.SignUpService.userPlace, _this.user.userId, snap.val()[0].lat, snap.val()[0].lng);
+                                                    _this.SignUpService.setFixedLocationName(_this.SignUpService.userPlace, _this.user.userId, snap.val()[0].name);
+                                                    _this.SignUpService.addCarProfile(_this.SignUpService.userPlace, _this.user.userId, _this.car);
+                                                    _this.SignUpService.addPlaceZone(_this.SignUpService.userPlace, _this.user.userId);
+                                                }
+                                                else {
+                                                    snap.val().forEach(function (location) {
+                                                        _this.SignUpService.setFixedLocationCoordinates(location.zone, _this.user.userId, location.lat, location.lng);
+                                                        _this.SignUpService.setFixedLocationName(location.zone, _this.user.userId, location.name);
+                                                        _this.SignUpService.addCarProfile(location.zone, _this.user.userId, _this.car);
+                                                        _this.SignUpService.addPlaceZone(location.zone, _this.user.userId);
+                                                    });
+                                                }
+                                            }).then(function () {
+                                                _this.SignUpService.saveUserInAllUsers(_this.company, _this.user.userId);
+                                            });
+                                            //send text message with code - LATER ON
+                                            // this.sendVerificationCode(this.user.userId);
+                                            // this.app.getRootNav().push('LoginPage');
+                                        }
+                                        else {
+                                            console.log('there is no user');
+                                        }
+                                    });
+                                }
+                                ;
+                                //sending email verification and verifying weather email is verified or not
+                                _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
+                                    if (user) {
+                                        if (user.emailVerified == false) {
+                                            user.sendEmailVerification();
+                                            var alert = _this.alertCtrl.create({
+                                                title: '¡REGISTRO EXITOSO!',
+                                                subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
+                                                buttons: [
+                                                    {
+                                                        text: 'OK',
+                                                        handler: function () {
+                                                            _this.app.getRootNav().push('CarRegistrationLoginPage');
+                                                        }
+                                                    }
+                                                ]
+                                            });
+                                            alert.present();
+                                            console.log("verification email has been sent");
+                                        }
+                                        else {
+                                            console.log("verification email has not been sent or the email is already verified");
+                                        }
+                                    }
+                                    else {
+                                        console.log('there is no user');
+                                    }
+                                });
+                            }).catch(function (error) {
+                                if (error.code === "auth/email-already-in-use") {
+                                    var alert = _this.alertCtrl.create({
+                                        title: 'ya existe una cuenta con este correo',
+                                        subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                                        buttons: ['OK']
+                                    });
+                                    alert.present();
+                                }
+                            });
+                            // this.navCtrl.push('LoginPage', this.user);
+                        }
+                        else {
                             var alert = _this.alertCtrl.create({
-                                title: 'ya existe una cuenta con este correo',
-                                subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
+                                title: 'Oops!',
+                                subTitle: 'las contraseñas no coinciden, intenta de nuevo',
                                 buttons: ['OK']
                             });
                             alert.present();
                         }
-                    });
-                    // this.navCtrl.push('LoginPage', this.user);
-                }
-                else {
-                    var alert = this.alertCtrl.create({
-                        title: 'Oops!',
-                        subTitle: 'las contraseñas no coinciden, intenta de nuevo',
-                        buttons: ['OK']
-                    });
-                    alert.present();
-                }
+                    }
+                });
             }
-            else if (this.showReadonly === false) {
-                var userName = this.signupGroup.controls['name'].value;
-                var userLastName = this.signupGroup.controls['lastname'].value;
-                var userPhone = this.signupGroup.controls['phone'].value;
-                var userEmail = this.signupGroup.controls['email'].value;
-                var userFixedemail = this.signupGroup.controls['fixedemail'].value;
-                var userEmailComplete = userEmail + userFixedemail;
-                var userPassword = this.signupGroup.controls['password'].value;
-                var userPasswordconf = this.signupGroup.controls['passwordconf'].value;
-                //   let userPhone = this.signupGroup.controls['phone'].value;
-                var userCarModel = this.signupGroup.controls['carModel'].value;
-                var userPlateNumber = this.signupGroup.controls['plateNumber'].value;
-                var usercarColor = this.signupGroup.controls['color'].value;
-                var userPlace = this.signupGroup.controls['enterprise'].value;
-                this.car = {
-                    carModel: userCarModel,
-                    plateNumber: userPlateNumber,
-                    color: usercarColor
-                };
-                // saving data in variable
-                if (this.company !== undefined || this.company !== null) {
-                    this.user = {
-                        name: userName,
-                        lastname: userLastName,
-                        email: userEmail,
-                        phone: '+57' + userPhone,
-                        place: userPlace,
-                        createdBy: 'driver',
-                        company: userPlace
-                    };
-                }
-                else {
-                    this.user = {
-                        name: userName,
-                        lastname: userLastName,
-                        email: userEmail,
-                        phone: '+57' + userPhone,
-                        place: userPlace,
-                        createdBy: 'driver',
-                    };
-                }
-                this.SignUpService.userPlace = userPlace;
-                if (this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value) {
-                    this.authenticationService.registerWithEmail(userEmail, userPassword).then(function () {
-                        if (!_this.user.userId) {
-                            _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                                if (user) {
-                                    user.getIdToken().then(function (token) {
-                                        _this.user.tokenId = token;
-                                    });
-                                    if (!_this.user.userId) {
-                                        _this.user.userId = user.uid;
-                                    }
-                                    _this.SignUpService.saveUser(_this.SignUpService.userPlace, _this.user);
-                                    // PROBAR ESTO URGENTE
-                                    _this.afDB.database.ref('allPlaces/' + _this.SignUpService.userPlace + '/location').once('value').then(function (snap) {
-                                        console.log(snap.val());
-                                        _this.SignUpService.setFixedLocationCoordinates(_this.SignUpService.userPlace, _this.user.userId, snap.val().lat, snap.val().lng);
-                                        _this.geocodingPlace(snap.val().lat, snap.val().lng, _this.SignUpService.userPlace, _this.user.userId);
-                                    });
-                                    _this.SignUpService.saveUserInAllUsers(_this.SignUpService.userPlace, user.uid);
-                                    _this.SignUpService.addCarProfile(_this.SignUpService.userPlace, _this.user.userId, _this.car);
-                                    //send text message with code
-                                    //  this.sendVerificationCode(this.user.userId);
-                                    // this.app.getRootNav().push('LoginPage');
-                                }
-                                else {
-                                    console.log('there is no user');
-                                }
-                            });
-                        }
-                        ;
-                        // sending email verification and verifying weather email is verified or not
-                        _this.AngularFireAuth.auth.onAuthStateChanged(function (user) {
-                            if (user) {
-                                if (user.emailVerified == false) {
-                                    user.sendEmailVerification();
-                                    var alert = _this.alertCtrl.create({
-                                        title: '¡REGISTRO EXITOSO!',
-                                        subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
-                                        buttons: [
-                                            {
-                                                text: 'OK',
-                                                handler: function () {
-                                                    _this.app.getRootNav().push('CarRegistrationLoginPage');
-                                                }
-                                            }
-                                        ]
-                                    });
-                                    alert.present();
-                                    console.log("verification email has been sent");
-                                }
-                                else {
-                                    console.log("verification email has not been sent or the email is already verified");
-                                }
-                            }
-                            else {
-                                console.log('there is no user');
-                            }
-                        });
-                    }).catch(function (error) {
-                        if (error.code === "auth/email-already-in-use") {
-                            var alert = _this.alertCtrl.create({
-                                title: 'ya existe una cuenta con este correo',
-                                subTitle: 'Si ya te registraste en WAYPOOL, sólo debes iniciar sesión con los datos con los que te registraste. También puedes estar registrandote con un correo ya existente',
-                                buttons: ['OK']
-                            });
-                            alert.present();
-                        }
-                    });
-                }
-                else {
-                    var alert = this.alertCtrl.create({
-                        title: 'Oops!',
-                        subTitle: 'las contraseñas no coinciden, intenta de nuevo',
-                        buttons: ['OK']
-                    });
-                    alert.present();
-                }
-            }
+            this.noCompanyIdentified(count);
         }
     };
     SignupPage.prototype.sendVerificationCode = function (userId) {
         this.navCtrl.push('VerificationNumberPage', { userId: userId });
-    };
-    SignupPage.prototype.geocodingPlace = function (lat, lng, place, userId) {
-        var _this = this;
-        this.geocoder.geocode({ 'location': { lat: lat, lng: lng } }, function (results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    var namePlace = [results[0].formatted_address];
-                    _this.SignUpService.setFixedLocationName(place, userId, namePlace[0]);
-                }
-                else {
-                    alert('No results found');
-                }
-            }
-            else {
-                alert('Geocoder failed due to: ' + status);
-            }
-        });
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Content */]),

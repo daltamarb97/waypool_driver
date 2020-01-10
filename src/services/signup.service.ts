@@ -103,7 +103,7 @@ export class SignUpService {
     setFixedLocationCoordinates(place, user, lat, lng){
         this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation/coordinates').update({
             lat: lat,
-            lng:lng
+            lng:lng,
         })
     }
 
@@ -164,6 +164,12 @@ public deleteCar(place, driverUid,carKey){
 }
 public addCarProfile(place, userUid,car){
     this.afDB.database.ref(place + '/drivers/'+userUid+'/cars/').push(car)
+}
+
+public addPlaceZone(place, userUid){
+    this.afDB.database.ref(place + '/drivers/'+ userUid).update({place: place});
+    this.afDB.database.ref(place + '/users/'+ userUid).update({place: place});
+
 }
  
 public getCar(place, userId){
