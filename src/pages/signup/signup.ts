@@ -50,10 +50,10 @@ export class SignupPage {
     geocoder: any
     emailStringVerification:any;
     rightEmailOnDatabase:any;
-    zone:any;
+    // zone:any;
     zones = [];
-    userPlace:any;
-    multipleZones:boolean = false;
+    // userPlace:any;
+    // multipleZones:boolean = false;
     forLoopsCompleted:any = 0;
     companyIdentified:boolean = false;
 
@@ -146,16 +146,10 @@ noCompanyIdentified(numberToExecute){
                         if(obj[key].email === this.rightEmailOnDatabase){
                             console.log(`la empresa es ${obj[key].name}`);  
                             this.company = obj[key].name;
-
-                            if(obj[key].zones.length === 1){
-                                this.zones = [];
-                                this.zone = obj[key].zones[0];                                
-                            }else{
-                                this.zone = undefined;
                                 obj[key].zones.forEach(zone => {
                                     this.zones.push(zone);
                                 });                                  
-                            }
+                            
                             
                             
                         }
@@ -181,12 +175,12 @@ noCompanyIdentified(numberToExecute){
                             let userCarModel = this.signupGroup.controls['carModel'].value;
                             let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
                             let usercarColor = this.signupGroup.controls['color'].value;
-                            if(this.zones === []){
-                                this.userPlace = this.zone;
-                                this.multipleZones = false;
-                            }else{
-                                this.multipleZones = true;
-                            }
+                            // if(this.zones === []){
+                            //     this.userPlace = this.zone;
+                            //     // this.multipleZones = false;
+                            // }else{
+                            //     // this.multipleZones = true;
+                            // }
                 
                           this.car = {
                             carModel: userCarModel,
@@ -207,7 +201,7 @@ noCompanyIdentified(numberToExecute){
                             };
                             
                             
-                        this.SignUpService.userPlace = this.userPlace;
+                        // this.SignUpService.userPlace = this.userPlace;
                         
                           if(this.signupGroup.controls['password'].value === this.signupGroup.controls['passwordconf'].value){
                             this.authenticationService.registerWithEmail(userEmail, userPassword).then(() =>{
@@ -222,31 +216,24 @@ noCompanyIdentified(numberToExecute){
                                                 this.user.userId = user.uid;
                                             }
                 
-                                            if(this.multipleZones === false){
-                                                this.SignUpService.saveUser(this.SignUpService.userPlace, this.user);
-                                            }else{
+                                            
                                                 this.zones.forEach(zone => {
                                                     this.SignUpService.saveUser(zone, this.user);
                                                 })
-                                            }
+                                            
                                            
                                             
                                             this.afDB.database.ref('allCities/'+ this.cityVar + '/allPlaces/' + this.company + '/location').once('value').then((snap)=>{
                                                 console.log(snap.val());
                                                 
-                                                if(this.multipleZones === false){
-                                                    this.SignUpService.setFixedLocationCoordinates(this.SignUpService.userPlace, this.user.userId, snap.val()[0].lat, snap.val()[0].lng );
-                                                    this.SignUpService.setFixedLocationName(this.SignUpService.userPlace, this.user.userId, snap.val()[0].name); 
-                                                    this.SignUpService.addCarProfile(this.SignUpService.userPlace, this.user.userId,this.car);
-                                                    this.SignUpService.addPlaceZone(this.SignUpService.userPlace, this.user.userId);
-                                                }else{
+                                                
                                                     snap.val().forEach(location => {
                                                         this.SignUpService.setFixedLocationCoordinates(location.zone, this.user.userId, location.lat, location.lng );
                                                         this.SignUpService.setFixedLocationName(location.zone, this.user.userId, location.name);  
                                                         this.SignUpService.addCarProfile(location.zone, this.user.userId,this.car);   
                                                         this.SignUpService.addPlaceZone(location.zone, this.user.userId);  
                                                     }) 
-                                                }
+                                                
                                                 
                                             }).then(()=>{
                                                 this.SignUpService.saveUserInAllUsers(this.company, this.user.userId);
@@ -277,7 +264,11 @@ noCompanyIdentified(numberToExecute){
                                                     {
                                                         text: 'OK',
                                                         handler: () => {
-                                                            this.app.getRootNav().push('CarRegistrationLoginPage');
+                                                            
+                                                                this.afDB.database.ref('allCities/'+ this.cityVar + '/allPlaces/' + this.company + '/zones').once('value').then((snap)=>{
+                                                                    this.app.getRootNav().push('CarRegistrationLoginPage', {defaultZone: snap.val()[0]});  
+                                                                })
+                                                            
                                                         }
                                                       }
                                                 ]

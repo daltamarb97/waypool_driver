@@ -28,6 +28,7 @@ export class SchedulePage {
   picToView:any;
   description:any;
   showButtonWorkSchedule:boolean = false;
+  userInfo:any;
 
   optionsCamera:CameraOptions = {
     quality: 100,
@@ -44,6 +45,10 @@ export class SchedulePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController, private instances: instancesService, private afDB: AngularFireDatabase) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
+
+        this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then((snap)=>{
+          this.userInfo = snap.val();
+        })
 
 
         this.signUpService.getSchedule(this.signUpService.userPlace, this.userId).subscribe(hour => {
@@ -117,7 +122,15 @@ export class SchedulePage {
 
   usageCameraSchedule(){
     this.camera.getPicture(this.optionsCamera).then((imageData) => {
-      this.instances.scheduleTypePicture(this.signUpService.userPlace, this.userId);
+      this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+        let obj = snap.val();
+        Object.getOwnPropertyNames(obj).forEach((key)=>{
+
+          this.instances.scheduleTypePicture(obj[key], this.userId);
+
+        })
+      })
+
       let loading = this.loadingCtrl.create({
         spinner: 'crescent',
         content: `
@@ -129,7 +142,7 @@ export class SchedulePage {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const pictureSchedule = storage().ref(this.signUpService.userPlace + '/schedules/' + this.userId);
+      const pictureSchedule = storage().ref(this.userInfo.company + '/schedules/' + this.userId);
 
 
       
@@ -182,13 +195,20 @@ export class SchedulePage {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      const pictureSchedule = storage().ref(this.signUpService.userPlace + '/schedules/' + this.userId);
+      const pictureSchedule = storage().ref(this.userInfo.company + '/schedules/' + this.userId);
 
-
-      
       pictureSchedule.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
-        this.instances.scheduleTypePicture(this.signUpService.userPlace, this.userId);
+
+        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+          let obj = snap.val();
+          Object.getOwnPropertyNames(obj).forEach((key)=>{
+  
+            this.instances.scheduleTypePicture(obj[key], this.userId);
+  
+          })
+        })
+
         const alert = this.alertCtrl.create({
           title: '¡HECHO!',
           subTitle: 'ya tenemos tu horario, en las próximas horas empezarás a recibir solicitudes de compañeros de viaje',
@@ -223,6 +243,14 @@ export class SchedulePage {
 
   goFindride(){
     this.navCtrl.setRoot('FindridePage');
-     this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
+
+    this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+      let obj = snap.val();
+      Object.getOwnPropertyNames(obj).forEach((key)=>{
+
+        this.instances.scheduleTypeManual(obj[key], this.userId);
+
+      })
+    })
   }
 }

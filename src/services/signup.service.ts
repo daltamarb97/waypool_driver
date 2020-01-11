@@ -199,6 +199,6 @@ public pushSchedule(place, userId, hour, type, description, image){
 
 public removeSchedule(place, userId, key){
      this.afDB.database.ref(place + '/drivers/'+userId+'/schedule/'+ key).remove();
-
+       
 }
 }

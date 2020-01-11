@@ -6,6 +6,7 @@ import { storage } from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { SignUpService } from '../../services/signup.service';
 import { Subject } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 /**
@@ -44,6 +45,7 @@ export class CarRegistrationLoginPage {
   showContinue:boolean = false;
   licenceWasUploaded:boolean = false;
   idWasUploaded:boolean= false;
+  defaultZone:any;
 
   options:CameraOptions = {
     quality: 100,
@@ -51,8 +53,12 @@ export class CarRegistrationLoginPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController, public app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private camera: Camera, public AngularFireauth: AngularFireAuth, public alertCtrl: AlertController, public SignUpService:SignUpService, public loadingCtrl: LoadingController, public app: App, private afDB: AngularFireDatabase) {
     this.driver =  this.AngularFireauth.auth.currentUser.uid;
+    this.defaultZone = navParams.get('defaultZone');
+    console.log(this.defaultZone);
+    
+    this.SignUpService.userPlace = this.defaultZone;
 
     this.SignUpService.getMyInfo(this.SignUpService.userPlace, this.driver).takeUntil(this.unsubscribe).subscribe(user=>{
       this.driverInfo = user
@@ -78,16 +84,14 @@ export class CarRegistrationLoginPage {
         }
       }
     })
-
-    
-    
-    
   }
 
   ionViewDidLeave(){
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
-	}
+  }
+  
+
   usageCameraLicense(){
     this.camera.getPicture(this.options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
@@ -104,7 +108,7 @@ export class CarRegistrationLoginPage {
 
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.driverInfo.company + '/documentsDrivers/' + this.driver + '/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
         const alert = this.alertCtrl.create({
@@ -129,7 +133,15 @@ export class CarRegistrationLoginPage {
 
       this.picToViewLicense = "assets/imgs/v2.2.png";
       this.picToView = "assets/imgs/v2.2.png";
-      this.SignUpService.pushDocsL(this.SignUpService.userPlace, this.driver);
+
+      this.afDB.database.ref('allCities/' + this.driverInfo.city + '/allPlaces/' + this.driverInfo.company + '/zones').once('value').then((snap)=>{
+        let obj = snap.val();
+        Object.getOwnPropertyNames(obj).forEach((key)=>{
+
+          this.SignUpService.pushDocsL(obj[key], this.driver);
+
+        })
+      })
       
 
      }, (err) => {
@@ -158,7 +170,7 @@ export class CarRegistrationLoginPage {
       loading.present();
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const picturesDrivers = storage().ref(this.SignUpService.userPlace + '/documentsDrivers/' + this.driver + '/documents/' + this.data);
+      const picturesDrivers = storage().ref(this.driverInfo.company + '/documentsDrivers/' + this.driver + '/' + this.data);
       picturesDrivers.putString(base64Image, 'data_url').then(()=>{
         loading.dismiss();
         const alert = this.alertCtrl.create({
@@ -181,8 +193,16 @@ export class CarRegistrationLoginPage {
 
       this.picToViewId = "assets/imgs/v4.2.png";
       this.picToView = "assets/imgs/v4.2.png";
-      this.SignUpService.pushDocsId(this.SignUpService.userPlace, this.driver);
 
+
+      this.afDB.database.ref('allCities/' + this.driverInfo.city + '/allPlaces/' + this.driverInfo.company + '/zones').once('value').then((snap)=>{
+        let obj = snap.val();
+        Object.getOwnPropertyNames(obj).forEach((key)=>{
+
+          this.SignUpService.pushDocsId(obj[key], this.driver);
+
+        })
+      })
       
 
      }, (err) => {
@@ -275,8 +295,8 @@ export class CarRegistrationLoginPage {
          {
            text: 'Hacer en otro momento',
            handler: ()=> {
-            alert.dismiss();
-            this.app.getRootNav().push('SchedulePage');
+            // alert.dismiss();
+            this.skip()
 
            }
          }
@@ -295,8 +315,8 @@ export class CarRegistrationLoginPage {
          {
            text: 'Hacer en otro momento',
            handler: ()=> {
-            alert.dismiss();
-            this.app.getRootNav().push('SchedulePage');
+            // alert.dismiss();
+            this.skip();
 
            }
          }
@@ -304,7 +324,8 @@ export class CarRegistrationLoginPage {
       });
       alert.present();
     }else{
-      this.app.getRootNav().push('SchedulePage');
+      this.skip();
+    
     }
   }
 

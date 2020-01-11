@@ -26,7 +26,9 @@ export class RemoveSchedulePage {
   geofireType:string;
   picToView:any;
   schedule:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth) {
+  userInfo:any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, public afDB: AngularFireDatabase) {
 
     this.schedule= this.navParams.get('schedule') 
 console.log(this.schedule);
@@ -37,10 +39,11 @@ console.log(this.schedule);
     this.picToView = this.schedule.image;
     this.textMessage = this.schedule.description;
 
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RemoveSchedulePage');
+    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then((snap)=>{
+      this.userInfo = snap.val();
+    })
+
   }
 
 
@@ -50,8 +53,17 @@ console.log(this.schedule);
   }
 
   remove(){
-    this.signUpService.removeSchedule(this.signUpService.userPlace, this.userId, this.schedule.key);
-    this.dismiss();
+
+
+    this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+      let obj = snap.val();
+      Object.getOwnPropertyNames(obj).forEach((key)=>{
+        this.signUpService.removeSchedule(obj[key], this.userId, this.schedule.key);
+      })
+    }).then(()=>{
+      this.afDB.database.ref('allSchedules/'+this.userId+'/'+ this.schedule.key).remove(); 
+      this.dismiss();
+    })
   }
 
 }

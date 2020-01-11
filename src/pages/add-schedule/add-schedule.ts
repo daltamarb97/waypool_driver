@@ -33,13 +33,14 @@ export class AddSchedulePage {
   userId: any;
   geofireType:string;
   imageURL:any;
+  userInfo:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public renderer: Renderer ,public alertCtrl: AlertController, public signUpService: SignUpService, public angularFireAuth: AngularFireAuth, private instances: instancesService, private afDB: AngularFireDatabase) {
   
     this.userId = this.angularFireAuth.auth.currentUser.uid;
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddSchedulePage');
+    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then((snap)=>{
+      this.userInfo = snap.val();
+    })
   }
 
 
@@ -84,63 +85,7 @@ export class AddSchedulePage {
     console.log(this.imageHouseToWork);
     console.log(this.imageWorkToHouse);
 
-    this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId + '/scheduleType/').once('value').then((snap)=>{
-      if(snap.val() === 'picture'){
-        const alert = this.alertCtrl.create({
-          title: 'Ya haz enviado FOTO de tu horario',
-          subTitle: '¿deseas crear tu horario personalizado? Perderás los horarios creados automaticamente por la foto', 
-          buttons: [
-            {
-              text: 'No',
-              handler: (()=>{
-                this.viewCtrl.dismiss();
-              }),
-              role: 'cancel'
-          },
-          {
-            text: 'Si',
-            handler: (()=>{
-              this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId + '/schedule/').remove().then(()=>{
-                if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
-                  if(this.startHour === undefined || this.startHour === null){
-                    const alert = this.alertCtrl.create({
-                      title: 'Debes seleccionar una hora de partida',
-                      subTitle: '¿A qué hora sales del trabajo o de tu casa?',
-                      buttons: ['OK']
-                    });
-                    alert.present();
-                  }else{
-                    const alert = this.alertCtrl.create({
-                      title: '¿vas a tu ' + this.textMessage + ' a las ' + this.startHour + '?',
-                      buttons: [
-                        {
-                          text: 'Confirmo este horario',
-                          handler: () => {
-                            this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
-                            this.instances.scheduleTypeManual(this.signUpService.userPlace, this.userId);
-                            this.viewCtrl.dismiss();
-                          }
-                        }
-                      ]
-                    });
-                    alert.present();
-                  }
-                  
-                }else{
-                  const alert = this.alertCtrl.create({
-                    title: 'Debes seleccionar una opción',
-                    subTitle: '¿a esta hora vas a tu casa o a tu trabajo?',
-                    buttons: ['OK']
-                  });
-                  alert.present();
-                }
-              })
-            })
-          }
-        ]
-        });
-        alert.present();
-      }else{
+      
         if(this.imageHouseToWork === true  || this.imageWorkToHouse === true){ 
           if(this.startHour === undefined || this.startHour === null){
             const alert = this.alertCtrl.create({
@@ -156,8 +101,38 @@ export class AddSchedulePage {
                 {
                   text: 'Confirmo este horario',
                   handler: () => {
-                    this.signUpService.pushSchedule(this.signUpService.userPlace, this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
-                    this.viewCtrl.dismiss();
+                    this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+                      let obj = snap.val();
+
+                      this.afDB.database.ref('allSchedules/' +this.userId).push({
+                        hour: this.startHour, 
+                        type: this.geofireType,
+                        description: this.textMessage,
+                        image: this.imageURL
+                    }).then((snap1)=>{
+                        this.afDB.database.ref('allSchedules/' +this.userId + '/' + snap1.key).update({
+                            key: snap1.key                              
+                        })
+                         
+                      Object.getOwnPropertyNames(obj).forEach((keyZ)=>{
+                        // this.signUpService.pushSchedule(obj[key], this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
+                        
+
+                            this.afDB.database.ref(obj[keyZ] + '/drivers/'+this.userId+'/schedule/' + snap1.key).update({
+                              hour: this.startHour, 
+                              type: this.geofireType,
+                              description: this.textMessage,
+                              image: this.imageURL,
+                              key: snap1.key
+                          })
+
+                                 
+                             
+                      })
+                      })
+                    }).then(()=>{
+                      this.viewCtrl.dismiss();
+                    })
                   }
                 }
               ]
@@ -173,8 +148,8 @@ export class AddSchedulePage {
           });
           alert.present();
         }
-      }
-    })
+      
+    
   }
 
 }
