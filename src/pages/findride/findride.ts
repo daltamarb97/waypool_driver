@@ -99,7 +99,8 @@ export class FindridePage {
   driverReserves: any;
   fullReserves = [];
   multipleLocations:boolean;
-  
+  zonesToIterate:any;
+
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer ) {
 
     
@@ -131,7 +132,7 @@ export class FindridePage {
   this.afDB.database.ref('allUsers/' + this.user).once('value').then((snap)=>{
     this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then((snapshot)=>{
       console.log(snapshot.val().multipleLocations);
-     
+      this.zonesToIterate = snapshot.val().zones;
       
       if(snapshot.val().multipleLocations === true){
         // temporary location until user chooses the right location of their company
@@ -160,9 +161,8 @@ export class FindridePage {
       }
       
     }).then(()=>{
-
-    console.log(this.SignUpService.userPlace);
-
+      console.log(this.zonesToIterate);
+      
     this.platform.ready().then(()=>{
 
       // this.getToken();
@@ -171,8 +171,15 @@ export class FindridePage {
 
       this.token = this.fcm.getToken().then((token)=>{
         console.log('this is the token ' + token);
-        this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
-          token: token
+
+        Object.getOwnPropertyNames(this.zonesToIterate).forEach((key)=>{
+          if(this.zonesToIterate[key] === 2 || this.zonesToIterate[key] === 3 || this.zonesToIterate[key] === 4 || this.zonesToIterate[key] === 5 || this.zonesToIterate[key] === 6 || this.zonesToIterate[key] === 1 || this.zonesToIterate[key] === 7 || this.zonesToIterate[key] === 8 || this.zonesToIterate[key] === 9 || this.zonesToIterate[key] === 10){
+
+          }else{
+            this.afDB.database.ref(this.zonesToIterate[key] + '/drivers/' + this.user + '/devices/').update({
+              token: token
+            })
+          }
         })
       })
   })
@@ -317,8 +324,15 @@ async getToken() {
   if (this.platform.is('android')) {
     this.token = await this.firebaseNative.getToken().then((token)=>{
       console.log('this is the token ' + token);
-      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
-        token: token
+
+      Object.getOwnPropertyNames(this.zonesToIterate).forEach((key)=>{
+        if(this.zonesToIterate[key] === 2 || this.zonesToIterate[key] === 3 || this.zonesToIterate[key] === 4 || this.zonesToIterate[key] === 5 || this.zonesToIterate[key] === 6 || this.zonesToIterate[key] === 1 || this.zonesToIterate[key] === 7 || this.zonesToIterate[key] === 8 || this.zonesToIterate[key] === 9 || this.zonesToIterate[key] === 10){
+
+        }else{
+          this.afDB.database.ref(this.zonesToIterate[key] + '/drivers/' + this.user + '/devices/').update({
+            token: token
+          })
+        }
       })
     })
   }
@@ -326,14 +340,23 @@ async getToken() {
   if (this.platform.is('ios')) {
     this.token = await this.firebaseNative.getToken().then((token)=>{
       console.log('this is the token ' + token);
-      this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/devices/').update({
-        token: token
+      Object.getOwnPropertyNames(this.zonesToIterate).forEach((key)=>{
+        if(this.zonesToIterate[key] === 2 || this.zonesToIterate[key] === 3 || this.zonesToIterate[key] === 4 || this.zonesToIterate[key] === 5 || this.zonesToIterate[key] === 6 || this.zonesToIterate[key] === 1 || this.zonesToIterate[key] === 7 || this.zonesToIterate[key] === 8 || this.zonesToIterate[key] === 9 || this.zonesToIterate[key] === 10){
+
+        }else{
+          this.afDB.database.ref(this.zonesToIterate[key] + '/drivers/' + this.user + '/devices/').update({
+            token: token
+          })
+        }
       })
     })
     await this.firebaseNative.grantPermission();
   }
 
 }
+
+
+
 changeColorOnline(){
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','green')
   this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')

@@ -183,6 +183,7 @@ var FindridePage = /** @class */ (function () {
         this.afDB.database.ref('allUsers/' + this.user).once('value').then(function (snap) {
             _this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then(function (snapshot) {
                 console.log(snapshot.val().multipleLocations);
+                _this.zonesToIterate = snapshot.val().zones;
                 if (snapshot.val().multipleLocations === true) {
                     // temporary location until user chooses the right location of their company
                     _this.SignUpService.userPlace = snapshot.val().zones[0];
@@ -204,14 +205,20 @@ var FindridePage = /** @class */ (function () {
                     _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
                 }
             }).then(function () {
-                console.log(_this.SignUpService.userPlace);
+                console.log(_this.zonesToIterate);
                 _this.platform.ready().then(function () {
                     // this.getToken();
                     console.log('aqui cogi el token');
                     _this.token = _this.fcm.getToken().then(function (token) {
                         console.log('this is the token ' + token);
-                        _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user + '/devices/').update({
-                            token: token
+                        Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                            if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                            }
+                            else {
+                                _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
+                                    token: token
+                                });
+                            }
                         });
                     });
                 });
@@ -329,8 +336,14 @@ var FindridePage = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this.firebaseNative.getToken().then(function (token) {
                                 console.log('this is the token ' + token);
-                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user + '/devices/').update({
-                                    token: token
+                                Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                                    if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                                    }
+                                    else {
+                                        _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
+                                            token: token
+                                        });
+                                    }
                                 });
                             })];
                     case 1:
@@ -341,8 +354,14 @@ var FindridePage = /** @class */ (function () {
                         _b = this;
                         return [4 /*yield*/, this.firebaseNative.getToken().then(function (token) {
                                 console.log('this is the token ' + token);
-                                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user + '/devices/').update({
-                                    token: token
+                                Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                                    if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                                    }
+                                    else {
+                                        _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
+                                            token: token
+                                        });
+                                    }
                                 });
                             })];
                     case 3:
