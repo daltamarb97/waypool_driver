@@ -115,9 +115,10 @@ export class AddSchedulePage {
                         })
                          
                       Object.getOwnPropertyNames(obj).forEach((keyZ)=>{
-                        // this.signUpService.pushSchedule(obj[key], this.userId, this.startHour, this.geofireType, this.textMessage, this.imageURL );
-                        
 
+                          if(obj[keyZ] === 2){
+
+                          }else{
                             this.afDB.database.ref(obj[keyZ] + '/drivers/'+this.userId+'/schedule/' + snap1.key).update({
                               hour: this.startHour, 
                               type: this.geofireType,
@@ -125,10 +126,8 @@ export class AddSchedulePage {
                               image: this.imageURL,
                               key: snap1.key
                           })
-
-                                 
-                             
-                      })
+                          }              
+                        })
                       })
                     }).then(()=>{
                       this.viewCtrl.dismiss();

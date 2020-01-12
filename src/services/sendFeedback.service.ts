@@ -1,11 +1,12 @@
 import { AngularFireDatabase } from "@angular/fire/database";
 import { Injectable } from "@angular/core";
+import { AlertController } from "ionic-angular";
 
 
 @Injectable()
 export class sendFeedbackService {
 
-constructor(public afDB: AngularFireDatabase){
+constructor(public afDB: AngularFireDatabase, public alertCtrl: AlertController){
               
     }
     
@@ -15,6 +16,14 @@ constructor(public afDB: AngularFireDatabase){
             name: name,
             lastname: lastname,
             number: number
+        }).then(()=>{
+            let alert = this.alertCtrl.create({
+                title: 'Hemos recibido tu mensaje',
+                subTitle: 'Revisaremos tu inquietud y nos pondremos en contácto contigo lo antes posible',
+               buttons: ['OK'],
+                
+              });
+              alert.present();
         })
     }
  

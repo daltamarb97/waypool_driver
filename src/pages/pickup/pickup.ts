@@ -71,28 +71,11 @@ export class PickupPage {
 			this.userDriver = userDriver;
 			console.log(this.userDriver);
 		});
-    // this.SignUpService.getInfoUser(this.user.userId)
-		// .subscribe(userFirebase => {
-    //   //modificar
-    //   //get info user and observe if user has not canceled
-    //   this.userFirebase = userFirebase;
 
-    // // if(this.userFirebase.trips.onTrip === true ){
-
-    // // } else {
-    // //   //if canceled go back to myRidePage
-    // //   this.navCtrl.pop();
-    // //   const toast = this.toastCtrl.create({
-    // //     message: `El estudiante ${this.user.name} que ibas a recoger te ha cancelado`,
-    // //     showCloseButton:true,
-    // //     closeButtonText: 'OK',
-    // //     position:'middle'
-    // //        });
-    // //   toast.present();
-    // // }
-			
-		// });
   }
+
+
+
   ionViewDidLoad(){
     
     this.loadMap();
@@ -280,35 +263,71 @@ export class PickupPage {
 
 
     PickUp(){
+
       this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId,this.user);
 
 
 
-
       /// HACER REGLA DE SEGURIDAD///////
-      this.afDB.database.ref('/data/allTrips/'+ this.SignUpService.userPlace + '/savedKM/' ).once('value').then((snap)=>{
+
+
+      // 1. KMS SAVED ON THAT SPECIFIC COMPANY BY POOLERS GLOBAL
+      this.afDB.database.ref('/data/allTrips/'+ this.userDriver.company + '/savedKM/' ).once('value').then((snap)=>{
         let currentKM = snap.val();
 
-        let savedKM = currentKM + this.user.distance;
-        this.TripsService.addSavedKMGlobal(this.SignUpService.userPlace, savedKM);
+        if(currentKM === undefined || currentKM === null){
+          this.TripsService.addSavedKMGlobal(this.userDriver.company, this.user.distance);
+        }else{
+          let savedKM = currentKM + this.user.distance;
+          this.TripsService.addSavedKMGlobal(this.userDriver.company, savedKM);
+        }
+      })
 
+      // 2. KMS SAVED ON THAT SPECIFIC COMPANY BY PASSENGERS GLOBAL
+      this.afDB.database.ref('/data/kmsSavedByPassengers/'+ this.user.company + '/savedKM/' ).once('value').then((snap)=>{
+        let currentKM = snap.val();
+
+        if(currentKM === undefined || currentKM === null){
+          this.TripsService.addSavedKMGlobalPassengers(this.userDriver.company, this.user.distance);
+        }else{
+          let savedKM = currentKM + this.user.distance;
+          this.TripsService.addSavedKMGlobalPassengers(this.userDriver.company, savedKM);
+        }
       })
 
 
-      this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid+'/savedKM/').once('value').then((snap)=>{
+      // 3. KMS SAVED BY EACH POOLER OF A SPECIFIC COMPANY
+      this.afDB.database.ref('data/allTrips/'+this.userDriver.company+'/'+this.driverUid+'/savedKM/').once('value').then((snap)=>{
         if(snap.val() === null || snap.val() === undefined ){
-          this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid).update({
+          this.afDB.database.ref('data/allTrips/'+this.userDriver.company+'/'+this.driverUid).update({
             savedKM: this.user.distance
           })
         }else{
-          this.afDB.database.ref('data/allTrips/'+this.SignUpService.userPlace+'/'+this.driverUid).update({
+          this.afDB.database.ref('data/allTrips/'+this.userDriver.company+'/'+this.driverUid).update({
             savedKM: snap.val() + this.user.distance
           })
         }
       })
 
 
-      //////// TERMINA REGLA DE SEGURIDAD ////////
+
+      // 4. KMS SAVED BY EACH PASSENGER OF A SPECIFIC COMPANY
+      this.afDB.database.ref('data/kmsSavedByPassengers/'+this.user.company+'/'+this.user.userId+'/savedKM/').once('value').then((snap)=>{
+        if(snap.val() === null || snap.val() === undefined ){
+          this.afDB.database.ref('data/kmsSavedByPassengers/'+this.user.company+'/'+this.user.userId).update({
+            savedKM: this.user.distance
+          })
+        }else{
+          this.afDB.database.ref('data/kmsSavedByPassengers/'+this.user.company+'/'+this.user.userId).update({
+            savedKM: snap.val() + this.user.distance
+          })
+        }
+      })
+
+
+
+
+      //////// TERMINAR REGLA DE SEGURIDAD ////////
 
       this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId);
       // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
@@ -323,14 +342,23 @@ export class PickupPage {
 
 
       // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
-      this.afDB.database.ref(this.SignUpService.userPlace + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUser)=>{
-        if(snapUser.val()=== undefined || snapUser.val() === null){
-          this.TripsService.sendPaymentInfoOfTripForUser(this.SignUpService.userPlace, this.user.userId, this.priceOfTrip);
-        }else{
-          const amountToPayUser = parseInt(snapUser.val()) + parseInt(this.priceOfTrip);
-          this.TripsService.sendPaymentInfoOfTripForUser(this.SignUpService.userPlace, this.user.userId, amountToPayUser);
+      this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then((snapZonesUser)=>{
+        let objZonesUser = snapZonesUser.val();
+        Object.getOwnPropertyNames(objZonesUser).forEach((key)=>{
+          if(objZonesUser[key] === 2 || objZonesUser[key] === 3 || objZonesUser[key] === 4 || objZonesUser[key] === 5 || objZonesUser[key] === 6 || objZonesUser[key] === 1 || objZonesUser[key] === 7 || objZonesUser[key] === 8 || objZonesUser[key] === 9 || objZonesUser[key] === 10 ){
 
-        }
+          }else{
+            this.afDB.database.ref(objZonesUser[key] + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUser)=>{
+              if(snapUser.val()=== undefined || snapUser.val() === null){
+                this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], this.user.userId, this.priceOfTrip);
+              }else{
+                const amountToPayUser = parseInt(snapUser.val()) + parseInt(this.priceOfTrip);
+                this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], this.user.userId, amountToPayUser);
+      
+              }
+            })
+          }
+        })
       })
       ///////// TERMINA LA VIOLACION
 
@@ -338,36 +366,47 @@ export class PickupPage {
 
 
 
-      this.afDB.database.ref('/allPlaces/' + this.SignUpService.userPlace).once('value').then((snapFee)=>{
+      this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company).once('value').then((snapFee)=>{
         const amountToCharge = snapFee.val().feeAmount;
         if(snapFee.val().feeActive === true){
-          this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
-            if(snap.val() === null || snap.val() === undefined){
-              this.amountToReceive = parseInt(this.priceOfTrip) - (parseInt(this.priceOfTrip) * amountToCharge)
+
+          let obj = snapFee.val().zones
+          Object.getOwnPropertyNames(obj).forEach((key)=>{
+            if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10 ){
+
             }else{
-              this.amountToReceive = (parseInt(snap.val())  + parseInt(this.priceOfTrip)) - ((parseInt(snap.val())  + parseInt(this.priceOfTrip)) * amountToCharge);
+              this.afDB.database.ref(obj[key] + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
+                if(snap.val() === null || snap.val() === undefined){
+                  this.amountToReceive = parseInt(this.priceOfTrip) - (parseInt(this.priceOfTrip) * amountToCharge)
+                }else{
+                  this.amountToReceive = (parseInt(snap.val())  + parseInt(this.priceOfTrip)) - ((parseInt(snap.val())  + parseInt(this.priceOfTrip)) * amountToCharge);
+                }
+                this.TripsService.sendPaymentInfoOfTrip(obj[key], this.driverUid, this.amountToReceive);
+        
+              })
             }
-            this.TripsService.sendPaymentInfoOfTrip(this.SignUpService.userPlace, this.driverUid, this.amountToReceive);
-    
           })
-        }else{
-          this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
-            if(snap.val() === null || snap.val() === undefined){
-              this.amountToReceive = this.priceOfTrip;
-            }else{
-              this.amountToReceive = parseInt(snap.val())  + parseInt(this.priceOfTrip);
-            }
-            this.TripsService.sendPaymentInfoOfTrip(this.SignUpService.userPlace, this.driverUid, this.amountToReceive);
-    
-          })
-        }
-      })
+      }else{
 
+        let obj = snapFee.val().zones
+        Object.getOwnPropertyNames(obj).forEach((key)=>{
+          if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10 ){
 
-
-
+          }else{
+            this.afDB.database.ref(obj[key] + '/drivers/' + this.driverUid + '/pendingToReceive/').once('value').then((snap)=>{
+              if(snap.val() === null || snap.val() === undefined){
+                this.amountToReceive = this.priceOfTrip;
+              }else{
+                this.amountToReceive = parseInt(snap.val())  + parseInt(this.priceOfTrip);
+              }
+              this.TripsService.sendPaymentInfoOfTrip(obj[key], this.driverUid, this.amountToReceive);
       
-    }
+            })
+          }
+        })
+      }
+   })
+}
 
 
 

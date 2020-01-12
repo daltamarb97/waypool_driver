@@ -17295,7 +17295,7 @@ webpackContext.id = 796;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__ = __webpack_require__(356);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(667);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(351);
@@ -17368,24 +17368,6 @@ var PickupPage = /** @class */ (function () {
             _this.userDriver = userDriver;
             console.log(_this.userDriver);
         });
-        // this.SignUpService.getInfoUser(this.user.userId)
-        // .subscribe(userFirebase => {
-        //   //modificar
-        //   //get info user and observe if user has not canceled
-        //   this.userFirebase = userFirebase;
-        // // if(this.userFirebase.trips.onTrip === true ){
-        // // } else {
-        // //   //if canceled go back to myRidePage
-        // //   this.navCtrl.pop();
-        // //   const toast = this.toastCtrl.create({
-        // //     message: `El estudiante ${this.user.name} que ibas a recoger te ha cancelado`,
-        // //     showCloseButton:true,
-        // //     closeButtonText: 'OK',
-        // //     position:'middle'
-        // //        });
-        // //   toast.present();
-        // // }
-        // });
     }
     PickupPage.prototype.ionViewDidLoad = function () {
         this.loadMap();
@@ -17539,24 +17521,55 @@ var PickupPage = /** @class */ (function () {
         var _this = this;
         this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId, this.user);
         /// HACER REGLA DE SEGURIDAD///////
-        this.afDB.database.ref('/data/allTrips/' + this.SignUpService.userPlace + '/savedKM/').once('value').then(function (snap) {
+        // 1. KMS SAVED ON THAT SPECIFIC COMPANY BY POOLERS GLOBAL
+        this.afDB.database.ref('/data/allTrips/' + this.userDriver.company + '/savedKM/').once('value').then(function (snap) {
             var currentKM = snap.val();
-            var savedKM = currentKM + _this.user.distance;
-            _this.TripsService.addSavedKMGlobal(_this.SignUpService.userPlace, savedKM);
+            if (currentKM === undefined || currentKM === null) {
+                _this.TripsService.addSavedKMGlobal(_this.userDriver.company, _this.user.distance);
+            }
+            else {
+                var savedKM = currentKM + _this.user.distance;
+                _this.TripsService.addSavedKMGlobal(_this.userDriver.company, savedKM);
+            }
         });
-        this.afDB.database.ref('data/allTrips/' + this.SignUpService.userPlace + '/' + this.driverUid + '/savedKM/').once('value').then(function (snap) {
+        // 2. KMS SAVED ON THAT SPECIFIC COMPANY BY PASSENGERS GLOBAL
+        this.afDB.database.ref('/data/kmsSavedByPassengers/' + this.user.company + '/savedKM/').once('value').then(function (snap) {
+            var currentKM = snap.val();
+            if (currentKM === undefined || currentKM === null) {
+                _this.TripsService.addSavedKMGlobalPassengers(_this.userDriver.company, _this.user.distance);
+            }
+            else {
+                var savedKM = currentKM + _this.user.distance;
+                _this.TripsService.addSavedKMGlobalPassengers(_this.userDriver.company, savedKM);
+            }
+        });
+        // 3. KMS SAVED BY EACH POOLER OF A SPECIFIC COMPANY
+        this.afDB.database.ref('data/allTrips/' + this.userDriver.company + '/' + this.driverUid + '/savedKM/').once('value').then(function (snap) {
             if (snap.val() === null || snap.val() === undefined) {
-                _this.afDB.database.ref('data/allTrips/' + _this.SignUpService.userPlace + '/' + _this.driverUid).update({
+                _this.afDB.database.ref('data/allTrips/' + _this.userDriver.company + '/' + _this.driverUid).update({
                     savedKM: _this.user.distance
                 });
             }
             else {
-                _this.afDB.database.ref('data/allTrips/' + _this.SignUpService.userPlace + '/' + _this.driverUid).update({
+                _this.afDB.database.ref('data/allTrips/' + _this.userDriver.company + '/' + _this.driverUid).update({
                     savedKM: snap.val() + _this.user.distance
                 });
             }
         });
-        //////// TERMINA REGLA DE SEGURIDAD ////////
+        // 4. KMS SAVED BY EACH PASSENGER OF A SPECIFIC COMPANY
+        this.afDB.database.ref('data/kmsSavedByPassengers/' + this.user.company + '/' + this.user.userId + '/savedKM/').once('value').then(function (snap) {
+            if (snap.val() === null || snap.val() === undefined) {
+                _this.afDB.database.ref('data/kmsSavedByPassengers/' + _this.user.company + '/' + _this.user.userId).update({
+                    savedKM: _this.user.distance
+                });
+            }
+            else {
+                _this.afDB.database.ref('data/kmsSavedByPassengers/' + _this.user.company + '/' + _this.user.userId).update({
+                    savedKM: snap.val() + _this.user.distance
+                });
+            }
+        });
+        //////// TERMINAR REGLA DE SEGURIDAD ////////
         this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId);
         // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
         this.presentToast("Acabas de recoger a " + this.user.name + ", \u00A1Sal\u00FAdalo por nosotros!", 4000, 'top');
@@ -17566,38 +17579,61 @@ var PickupPage = /** @class */ (function () {
         // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
         // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
         // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
-        this.afDB.database.ref(this.SignUpService.userPlace + '/users/' + this.user.userId + '/pendingToPay/').once('value').then(function (snapUser) {
-            if (snapUser.val() === undefined || snapUser.val() === null) {
-                _this.TripsService.sendPaymentInfoOfTripForUser(_this.SignUpService.userPlace, _this.user.userId, _this.priceOfTrip);
-            }
-            else {
-                var amountToPayUser = parseInt(snapUser.val()) + parseInt(_this.priceOfTrip);
-                _this.TripsService.sendPaymentInfoOfTripForUser(_this.SignUpService.userPlace, _this.user.userId, amountToPayUser);
-            }
+        this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then(function (snapZonesUser) {
+            var objZonesUser = snapZonesUser.val();
+            Object.getOwnPropertyNames(objZonesUser).forEach(function (key) {
+                if (objZonesUser[key] === 2 || objZonesUser[key] === 3 || objZonesUser[key] === 4 || objZonesUser[key] === 5 || objZonesUser[key] === 6 || objZonesUser[key] === 1 || objZonesUser[key] === 7 || objZonesUser[key] === 8 || objZonesUser[key] === 9 || objZonesUser[key] === 10) {
+                }
+                else {
+                    _this.afDB.database.ref(objZonesUser[key] + '/users/' + _this.user.userId + '/pendingToPay/').once('value').then(function (snapUser) {
+                        if (snapUser.val() === undefined || snapUser.val() === null) {
+                            _this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], _this.user.userId, _this.priceOfTrip);
+                        }
+                        else {
+                            var amountToPayUser = parseInt(snapUser.val()) + parseInt(_this.priceOfTrip);
+                            _this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], _this.user.userId, amountToPayUser);
+                        }
+                    });
+                }
+            });
         });
         ///////// TERMINA LA VIOLACION
-        this.afDB.database.ref('/allPlaces/' + this.SignUpService.userPlace).once('value').then(function (snapFee) {
+        this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company).once('value').then(function (snapFee) {
             var amountToCharge = snapFee.val().feeAmount;
             if (snapFee.val().feeActive === true) {
-                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.driverUid + '/pendingToReceive/').once('value').then(function (snap) {
-                    if (snap.val() === null || snap.val() === undefined) {
-                        _this.amountToReceive = parseInt(_this.priceOfTrip) - (parseInt(_this.priceOfTrip) * amountToCharge);
+                var obj_1 = snapFee.val().zones;
+                Object.getOwnPropertyNames(obj_1).forEach(function (key) {
+                    if (obj_1[key] === 2 || obj_1[key] === 3 || obj_1[key] === 4 || obj_1[key] === 5 || obj_1[key] === 6 || obj_1[key] === 1 || obj_1[key] === 7 || obj_1[key] === 8 || obj_1[key] === 9 || obj_1[key] === 10) {
                     }
                     else {
-                        _this.amountToReceive = (parseInt(snap.val()) + parseInt(_this.priceOfTrip)) - ((parseInt(snap.val()) + parseInt(_this.priceOfTrip)) * amountToCharge);
+                        _this.afDB.database.ref(obj_1[key] + '/drivers/' + _this.driverUid + '/pendingToReceive/').once('value').then(function (snap) {
+                            if (snap.val() === null || snap.val() === undefined) {
+                                _this.amountToReceive = parseInt(_this.priceOfTrip) - (parseInt(_this.priceOfTrip) * amountToCharge);
+                            }
+                            else {
+                                _this.amountToReceive = (parseInt(snap.val()) + parseInt(_this.priceOfTrip)) - ((parseInt(snap.val()) + parseInt(_this.priceOfTrip)) * amountToCharge);
+                            }
+                            _this.TripsService.sendPaymentInfoOfTrip(obj_1[key], _this.driverUid, _this.amountToReceive);
+                        });
                     }
-                    _this.TripsService.sendPaymentInfoOfTrip(_this.SignUpService.userPlace, _this.driverUid, _this.amountToReceive);
                 });
             }
             else {
-                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.driverUid + '/pendingToReceive/').once('value').then(function (snap) {
-                    if (snap.val() === null || snap.val() === undefined) {
-                        _this.amountToReceive = _this.priceOfTrip;
+                var obj_2 = snapFee.val().zones;
+                Object.getOwnPropertyNames(obj_2).forEach(function (key) {
+                    if (obj_2[key] === 2 || obj_2[key] === 3 || obj_2[key] === 4 || obj_2[key] === 5 || obj_2[key] === 6 || obj_2[key] === 1 || obj_2[key] === 7 || obj_2[key] === 8 || obj_2[key] === 9 || obj_2[key] === 10) {
                     }
                     else {
-                        _this.amountToReceive = parseInt(snap.val()) + parseInt(_this.priceOfTrip);
+                        _this.afDB.database.ref(obj_2[key] + '/drivers/' + _this.driverUid + '/pendingToReceive/').once('value').then(function (snap) {
+                            if (snap.val() === null || snap.val() === undefined) {
+                                _this.amountToReceive = _this.priceOfTrip;
+                            }
+                            else {
+                                _this.amountToReceive = parseInt(snap.val()) + parseInt(_this.priceOfTrip);
+                            }
+                            _this.TripsService.sendPaymentInfoOfTrip(obj_2[key], _this.driverUid, _this.amountToReceive);
+                        });
                     }
-                    _this.TripsService.sendPaymentInfoOfTrip(_this.SignUpService.userPlace, _this.driverUid, _this.amountToReceive);
                 });
             }
         });
@@ -17649,15 +17685,16 @@ var PickupPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
     ], PickupPage.prototype, "mapElement", void 0);
     PickupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-pickup',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/pickup/pickup.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title>Escoger Compañero\n                <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n        <ion-card class="cardOnTrip">\n                <ion-item>\n                    <ion-avatar item-start>\n                        <img src="assets/imgs/userPicture.png">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname |titlecase | slice:0:1}}.\n                        </h2>\n                       \n                    </div>\n                    <div class="more">\n                        <h2 class="text-theme">\n                            <!-- <ion-icon name="md-more"></ion-icon> -->\n                        </h2>\n                    </div>\n                </ion-item>\n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p>\n                            <span class="icon-location bg-theme"></span>{{addressOrigin}}</p>\n                        <p>\n                            <span class="icon-location bg-yellow"></span>{{user.origin}}</p>\n                    </div>\n                    <ion-row>\n                           <!-- <div text-left>\n                                <button class="btn bg-theme rounded full text-white" (click)="goToWaze(user.origin)">waze</button>                               \n                            </div>  -->                      \n                                <!-- <button class="btn bg-yellow rounded full text-white"><ion-icon name="chatboxes" class="text-white"></ion-icon></button> -->\n                                <button (click)="callUser()" class="btn bg-yellow rounded full text-white"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n                                \n                            <button navPop class="btn bg-theme rounded full text-white" (click)="PickUp()">Listo</button>                      \n                    </ion-row>\n                </ion-card-content>             \n            </ion-card>\n    <div #map id="map"></div>   \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/pickup/pickup.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__["AngularFireDatabase"]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__["a" /* CallNumber */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_call_number__["a" /* CallNumber */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_driverauthentication_service__["a" /* authenticationService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__["AngularFireDatabase"]) === "function" && _p || Object])
     ], PickupPage);
     return PickupPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
 }());
 
 //# sourceMappingURL=pickup.js.map

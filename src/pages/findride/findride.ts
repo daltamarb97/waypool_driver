@@ -138,22 +138,25 @@ export class FindridePage {
         this.SignUpService.userPlace = snapshot.val().zones[0]
         this.multipleLocations = true;
 
+        //user get their check sign of verficiation here
         let objVerifiedPerson = snapshot.val().zones;
-
-        console.log(objVerifiedPerson);
+        Object.getOwnPropertyNames(objVerifiedPerson).forEach((key)=>{    
         
-        Object.getOwnPropertyNames(objVerifiedPerson).forEach((key)=>{
+          if(objVerifiedPerson[key] === 2){
 
-          
-          
-          this.instancesService.isVerifiedPerson(objVerifiedPerson[key], this.user);
-
+          }else{
+            this.instancesService.isVerifiedPerson(objVerifiedPerson[key], this.user);
+          }
         })
 
 
       }else{
         this.SignUpService.userPlace = snapshot.val().zones[0]
         this.multipleLocations = false;
+
+        //user get their check sign of verficiation here
+        this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
+
       }
       
     }).then(()=>{

@@ -254,9 +254,26 @@ tripState:any;
 
 
 							});
-							this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip); 
+							this.TripsService.allTrips(this.userDriver.company,this.driverUid,this.userDriver.keyTrip,this.trip); 
 
-							this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
+
+
+							// here I have to save the trip for this driver in every zone he is, it doesnt matter if the user is not operating in certain zone in the moment
+							this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company + '/zones').once('value').then((snap)=>{
+								let obj = snap.val();
+								Object.getOwnPropertyNames(obj).forEach((key)=>{
+						
+								  if(obj[key] === 2){
+									
+								  }else{
+
+									this.TripsService.saveTripOnRecords(obj[key],this.driverUid, this.trip);
+
+								}
+								}) 
+							  })							 
+							///////////
+
 
 							this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
 

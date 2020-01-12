@@ -89,6 +89,7 @@ var PaymentsInfoPage = /** @class */ (function () {
             console.log(snap.val());
             _this.bankList = snap.val();
         });
+        this.userInfo = this.navParams.get('userInfo');
         this.driverId = this.angularFireAuth.auth.currentUser.uid;
     }
     PaymentsInfoPage.prototype.onChange = function () {
@@ -100,31 +101,50 @@ var PaymentsInfoPage = /** @class */ (function () {
         }
     };
     PaymentsInfoPage.prototype.setPaymentInfo = function () {
+        var _this = this;
         if (this.bankEntity === 'Otro') {
             if (this.id === null || this.id === undefined || this.bankEntityOther === null || this.bankEntityOther === undefined || this.bankAccount === null || this.bankAccount === undefined) {
-                var alert_1 = this.alertCtrl.create({
+                var alert = this.alertCtrl.create({
                     title: 'Informacion Incompleta',
                     subTitle: 'Por favor revisa que pusiste toda la información correctamente',
                     buttons: ['OK']
                 });
-                alert_1.present();
+                alert.present();
             }
             else {
-                this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntityOther);
+                this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then(function (snap) {
+                    var obj = snap.val();
+                    Object.getOwnPropertyNames(obj).forEach(function (key) {
+                        if (obj[key] === 2) {
+                        }
+                        else {
+                            _this.priceServices.sendPaymentInfo(obj[key], _this.driverId, _this.id, _this.bankAccount, _this.bankEntityOther);
+                        }
+                    });
+                });
                 this.dismiss();
             }
         }
         else {
             if (this.id === null || this.id === undefined || this.bankEntity === null || this.bankEntity === undefined || this.bankAccount === null || this.bankAccount === undefined) {
-                var alert_2 = this.alertCtrl.create({
+                var alert = this.alertCtrl.create({
                     title: 'Informacion Incompleta',
                     subTitle: 'Por favor revisa que pusiste toda la información correctamente',
                     buttons: ['OK']
                 });
-                alert_2.present();
+                alert.present();
             }
             else {
-                this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntity);
+                this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then(function (snap) {
+                    var obj = snap.val();
+                    Object.getOwnPropertyNames(obj).forEach(function (key) {
+                        if (obj[key] === 2) {
+                        }
+                        else {
+                            _this.priceServices.sendPaymentInfo(obj[key], _this.driverId, _this.id, _this.bankAccount, _this.bankEntity);
+                        }
+                    });
+                });
                 this.dismiss();
             }
         }
@@ -136,9 +156,10 @@ var PaymentsInfoPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-payments-info',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/payments-info/payments-info.html"*/'<ion-content>\n  <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n  <ion-card>\n      <ion-card-content>\n          <h2>INFORMACIÓN PARA RECIBIR DINERO</h2>\n          <div class="ride-detail">\n              <ion-item class="form">\n                  <ion-label floating>Tu cédula</ion-label>\n                  <ion-input type="number" [(ngModel)]="id"></ion-input>\n                </ion-item>                \n          </div>\n      </ion-card-content>\n      <ion-card-content>\n        <div class="ride-detail">\n          <ion-list>\n            <ion-item class="form">\n              <ion-label floating>Tu número de cuenta</ion-label>\n              <ion-input type="number" [(ngModel)]="bankAccount"></ion-input>\n            </ion-item>\n          </ion-list>               \n        </div>\n    </ion-card-content>\n\n    <ion-card-content>\n        <ion-row style="margin-top: 14px;    display: flex;\n              justify-content: center">\n                 <ion-list>\n                      <ion-item>\n                        <ion-label>Tu banco</ion-label>\n                        <ion-select [(ngModel)]="bankEntity" (ionChange)="onChange()">\n                          <ion-option *ngFor="let bank of bankList" >{{bank}}</ion-option>\n                        </ion-select>\n                      </ion-item>\n                      <ion-item *ngIf=\'showOther\'>\n                          <ion-label floating>Nombre de tu banco</ion-label>\n                          <ion-input  [(ngModel)]="bankEntityOther"></ion-input>\n                      </ion-item>\n                  </ion-list>\n              </ion-row>\n    </ion-card-content>\n    <br/>\n      <ion-card-content>\n          <div class="ride-detail no-before">\n              <p>Esta información es necesaria para que puedas recibir el dinero que ganaste por compartir tu carro.</p>      \n              <br/>\n              <p>Recuerda que esta información es tuya y por lo tanto nos tomamos enserio su protección. Tus datos estan protegidos bajo las normas de nuestra politica de  privacidad de datos. <a href="https://waypooltech.wordpress.com/" style="color: #0081ad">Más Información</a></p>\n          </div>\n              \n             \n     \n          <div class="seats">\n              \n              <ion-row style="margin-top: 14px;    display: flex;\n              justify-content: center">\n                 \n                  <ion-col col-8>\n                      <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.2rem;" (click)="setPaymentInfo()">Listo</button>\n                  </ion-col>\n              </ion-row>\n             \n\n          </div>\n      </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/payments-info/payments-info.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_price_service__["a" /* priceService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["AngularFireDatabase"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__services_price_service__["a" /* priceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_price_service__["a" /* priceService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]) === "function" && _h || Object])
     ], PaymentsInfoPage);
     return PaymentsInfoPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
 //# sourceMappingURL=payments-info.js.map

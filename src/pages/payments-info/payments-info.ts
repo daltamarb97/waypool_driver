@@ -22,14 +22,17 @@ export class PaymentsInfoPage {
   id:any;
   bankAccount:any;
   bankEntity:any;
-  bankEntityOther:any;
+  bankEntityOther:any; 
   driverId:any;
   showOther:boolean = false;
+  userInfo:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private afDB: AngularFireDatabase, public viewCtrl: ViewController, public alertCtrl: AlertController, private priceServices: priceService, private signUpServices: SignUpService, private angularFireAuth: AngularFireAuth) {
     this.afDB.database.ref('/bankList/').once('value').then((snap)=>{
       console.log(snap.val());
       this.bankList = snap.val();
     })
+
+    this.userInfo = this.navParams.get('userInfo');
 
     this.driverId = this.angularFireAuth.auth.currentUser.uid;
 
@@ -55,7 +58,18 @@ export class PaymentsInfoPage {
         });
         alert.present();
       }else{
-        this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntityOther);
+
+        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+          let obj = snap.val();
+					Object.getOwnPropertyNames(obj).forEach((key)=>{
+						
+								  if(obj[key] === 2){
+									
+								  }else{
+                    this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntityOther);
+								}
+						}) 
+        })
         this.dismiss();
       }
     }else{
@@ -67,7 +81,18 @@ export class PaymentsInfoPage {
         });
         alert.present();
       }else{
-        this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntity);
+
+        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+          let obj = snap.val();
+					Object.getOwnPropertyNames(obj).forEach((key)=>{
+						
+								  if(obj[key] === 2){
+									
+								  }else{
+                    this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntity);
+                }
+						}) 
+        })
         this.dismiss();
       }
     }

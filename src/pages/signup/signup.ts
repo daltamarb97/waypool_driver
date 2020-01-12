@@ -236,7 +236,7 @@ noCompanyIdentified(numberToExecute){
                                                 
                                                 
                                             }).then(()=>{
-                                                this.SignUpService.saveUserInAllUsers(this.company, this.user.userId);
+                                                this.SignUpService.saveUserInAllUsers(this.company, this.user.userId, this.cityVar);
                                             })
                                             
                                             

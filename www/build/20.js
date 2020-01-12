@@ -187,15 +187,21 @@ var FindridePage = /** @class */ (function () {
                     // temporary location until user chooses the right location of their company
                     _this.SignUpService.userPlace = snapshot.val().zones[0];
                     _this.multipleLocations = true;
+                    //user get their check sign of verficiation here
                     var objVerifiedPerson_1 = snapshot.val().zones;
-                    console.log(objVerifiedPerson_1);
                     Object.getOwnPropertyNames(objVerifiedPerson_1).forEach(function (key) {
-                        _this.instancesService.isVerifiedPerson(objVerifiedPerson_1[key], _this.user);
+                        if (objVerifiedPerson_1[key] === 2) {
+                        }
+                        else {
+                            _this.instancesService.isVerifiedPerson(objVerifiedPerson_1[key], _this.user);
+                        }
                     });
                 }
                 else {
                     _this.SignUpService.userPlace = snapshot.val().zones[0];
                     _this.multipleLocations = false;
+                    //user get their check sign of verficiation here
+                    _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
                 }
             }).then(function () {
                 console.log(_this.SignUpService.userPlace);

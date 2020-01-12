@@ -92,9 +92,10 @@ export class SignUpService {
 
     }
 
-    public saveUserInAllUsers(place, user){
+    public saveUserInAllUsers(place, user, city){
         this.afDB.database.ref('/allUsers/'+ user).update({
-            place: place
+            place: place, 
+            city: city
         });
         
 
@@ -159,6 +160,8 @@ public addCar(place, DriverUid,carModel,plateNumber,color){
 
     })
 }
+
+
 public deleteCar(place, driverUid,carKey){
     this.afDB.database.ref(place + '/drivers/'+driverUid +'/cars/'+ carKey).remove();
 }

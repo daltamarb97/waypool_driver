@@ -134,6 +134,15 @@ export class TripsService {
       });
      }
 
+     
+
+     public addSavedKMGlobalPassengers(place, savedKM){
+      this.afDB.database.ref('/data/kmsSavedByPassengers/'+ place).update({
+        savedKM:savedKM
+      });
+     }
+
+
 
      public createTripState(place, keyTrip,driverUid){
       this.afDB.database.ref(place + '/tripsState/'+driverUid+'/'+ keyTrip).update({
