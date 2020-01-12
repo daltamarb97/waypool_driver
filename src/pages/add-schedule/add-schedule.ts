@@ -3,14 +3,6 @@ import { NavController, ViewController, ModalController, NavParams, Tabs, AlertC
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
-import { sendCoordsService } from '../../services/sendCoords.service';
-
-import { sendUsersService } from '../../services/sendUsers.service';
-import { priceService } from '../../services/price.service';
-import { geofireService } from '../../services/geofire.services';
-import { Subscription, Subject, Subscriber } from 'rxjs';
-import * as moment from 'moment';
-import { MetricsService } from '../../services/metrics.service';
 import { instancesService } from '../../services/instances.service';
 
  
@@ -116,7 +108,7 @@ export class AddSchedulePage {
                          
                       Object.getOwnPropertyNames(obj).forEach((keyZ)=>{
 
-                          if(obj[keyZ] === 2){
+                          if(obj[keyZ] === 2 || obj[keyZ] === 3 || obj[keyZ] === 4 || obj[keyZ] === 5 || obj[keyZ] === 6 || obj[keyZ] === 1 || obj[keyZ] === 7 || obj[keyZ] === 8 || obj[keyZ] === 9 || obj[keyZ] === 10){
 
                           }else{
                             this.afDB.database.ref(obj[keyZ] + '/drivers/'+this.userId+'/schedule/' + snap1.key).update({

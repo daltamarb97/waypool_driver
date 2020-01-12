@@ -126,8 +126,11 @@ export class SchedulePage {
         let obj = snap.val();
         Object.getOwnPropertyNames(obj).forEach((key)=>{
 
-          this.instances.scheduleTypePicture(obj[key], this.userId);
+          if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
 
+          }else{
+            this.instances.scheduleTypePicture(obj[key], this.userId);
+          }
         })
       })
 
@@ -203,9 +206,12 @@ export class SchedulePage {
         this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
           let obj = snap.val();
           Object.getOwnPropertyNames(obj).forEach((key)=>{
-  
-            this.instances.scheduleTypePicture(obj[key], this.userId);
-  
+            
+            if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+
+            }else{
+              this.instances.scheduleTypePicture(obj[key], this.userId);
+            }  
           })
         })
 
@@ -241,15 +247,20 @@ export class SchedulePage {
      });
   }
 
+
+
   goFindride(){
     this.navCtrl.setRoot('FindridePage');
 
     this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
       let obj = snap.val();
       Object.getOwnPropertyNames(obj).forEach((key)=>{
+        
+        if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
 
-        this.instances.scheduleTypeManual(obj[key], this.userId);
-
+        }else{
+          this.instances.scheduleTypeManual(obj[key], this.userId);        
+        } 
       })
     })
   }

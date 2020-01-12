@@ -323,6 +323,8 @@ export class PickupPage {
           })
         }
       })
+      ///////////////////
+
 
 
 
@@ -338,9 +340,11 @@ export class PickupPage {
       // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
       // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
 
+      /////////////////////
 
 
 
+      //PAYMENTS LOGIC PASSENGERS
       // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
       this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then((snapZonesUser)=>{
         let objZonesUser = snapZonesUser.val();
@@ -365,7 +369,7 @@ export class PickupPage {
 
 
 
-
+      //PAYMENTS LOGIC POOLERS
       this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company).once('value').then((snapFee)=>{
         const amountToCharge = snapFee.val().feeAmount;
         if(snapFee.val().feeActive === true){
@@ -379,7 +383,7 @@ export class PickupPage {
                 if(snap.val() === null || snap.val() === undefined){
                   this.amountToReceive = parseInt(this.priceOfTrip) - (parseInt(this.priceOfTrip) * amountToCharge)
                 }else{
-                  this.amountToReceive = (parseInt(snap.val())  + parseInt(this.priceOfTrip)) - ((parseInt(snap.val())  + parseInt(this.priceOfTrip)) * amountToCharge);
+                  this.amountToReceive = (parseInt(snap.val())  + parseInt(this.priceOfTrip)) - (parseInt(this.priceOfTrip) * amountToCharge);
                 }
                 this.TripsService.sendPaymentInfoOfTrip(obj[key], this.driverUid, this.amountToReceive);
         

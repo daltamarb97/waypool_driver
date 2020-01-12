@@ -26,17 +26,35 @@ export class PaymentsInfoPage {
   driverId:any;
   showOther:boolean = false;
   userInfo:any;
+  showInputsToEdit:boolean;
+  fullInformation:boolean;
   constructor(public navCtrl: NavController, public navParams: NavParams, private afDB: AngularFireDatabase, public viewCtrl: ViewController, public alertCtrl: AlertController, private priceServices: priceService, private signUpServices: SignUpService, private angularFireAuth: AngularFireAuth) {
     this.afDB.database.ref('/bankList/').once('value').then((snap)=>{
       console.log(snap.val());
       this.bankList = snap.val();
-    })
+    }) 
 
     this.userInfo = this.navParams.get('userInfo');
+
+    this.afDB.database.ref(this.signUpServices.userPlace + '/drivers/' + this.userInfo.userId).once('value').then(snap =>{
+      if(snap.val().bankAccount !== null && snap.val().idNumber !== null && snap.val().bankEntity !== null && snap.val().bankAccount !== undefined && snap.val().idNumber !== undefined && snap.val().bankEntity !== undefined){
+        this.fullInformation = true;
+        this.showInputsToEdit = false;
+      }else{
+        this.showInputsToEdit = true;
+        this.fullInformation = false;
+      }
+    })
 
     this.driverId = this.angularFireAuth.auth.currentUser.uid;
 
 
+  }
+
+  editPaymentInfo(){
+    this.fullInformation = false;
+    this.showInputsToEdit = true;
+    
   }
 
   onChange(){
@@ -49,51 +67,55 @@ export class PaymentsInfoPage {
   }
 
   setPaymentInfo(){
-    if(this.bankEntity === 'Otro'){
-      if(this.id === null || this.id === undefined || this.bankEntityOther === null || this.bankEntityOther === undefined || this.bankAccount === null || this.bankAccount === undefined){
-        const alert = this.alertCtrl.create({
-          title: 'Informacion Incompleta',
-          subTitle: 'Por favor revisa que pusiste toda la información correctamente',
-          buttons: ['OK']
-        });
-        alert.present();
-      }else{
-
-        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
-          let obj = snap.val();
-					Object.getOwnPropertyNames(obj).forEach((key)=>{
-						
-								  if(obj[key] === 2){
-									
-								  }else{
-                    this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntityOther);
-								}
-						}) 
-        })
-        this.dismiss();
-      }
+    if(this.fullInformation === true){
+      this.dismiss();
     }else{
-      if(this.id === null || this.id === undefined || this.bankEntity === null || this.bankEntity === undefined || this.bankAccount === null || this.bankAccount === undefined){
-        const alert = this.alertCtrl.create({
-          title: 'Informacion Incompleta',
-          subTitle: 'Por favor revisa que pusiste toda la información correctamente',
-          buttons: ['OK']
-        });
-        alert.present();
+      if(this.bankEntity === 'Otro'){
+        if(this.id === null || this.id === undefined || this.bankEntityOther === null || this.bankEntityOther === undefined || this.bankAccount === null || this.bankAccount === undefined){
+          const alert = this.alertCtrl.create({
+            title: 'Informacion Incompleta',
+            subTitle: 'Por favor revisa que pusiste toda la información correctamente',
+            buttons: ['OK']
+          });
+          alert.present();
+        }else{
+  
+          this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+            let obj = snap.val();
+            Object.getOwnPropertyNames(obj).forEach((key)=>{
+              
+                    if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+                    
+                    }else{
+                      this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntityOther);
+                  }
+              }) 
+          })
+          this.dismiss();
+        }
       }else{
-
-        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
-          let obj = snap.val();
-					Object.getOwnPropertyNames(obj).forEach((key)=>{
-						
-								  if(obj[key] === 2){
-									
-								  }else{
-                    this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntity);
-                }
-						}) 
-        })
-        this.dismiss();
+        if(this.id === null || this.id === undefined || this.bankEntity === null || this.bankEntity === undefined || this.bankAccount === null || this.bankAccount === undefined){
+          const alert = this.alertCtrl.create({
+            title: 'Informacion Incompleta',
+            subTitle: 'Por favor revisa que pusiste toda la información correctamente',
+            buttons: ['OK']
+          });
+          alert.present();
+        }else{
+  
+          this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
+            let obj = snap.val();
+            Object.getOwnPropertyNames(obj).forEach((key)=>{
+              
+                    if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+                    
+                    }else{
+                      this.priceServices.sendPaymentInfo(obj[key], this.driverId, this.id, this.bankAccount, this.bankEntity);
+                  }
+              }) 
+          })
+          this.dismiss();
+        }
       }
     }
   }

@@ -133,7 +133,7 @@ export class CarRegistrationPage {
         let obj = snap.val();
         Object.getOwnPropertyNames(obj).forEach((key)=>{
 
-          if(obj[key] === 2){
+          if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
 
           }else{
             this.SignUpService.pushDocsL(obj[key], this.driver);
@@ -196,7 +196,7 @@ export class CarRegistrationPage {
         let obj = snap.val();
         Object.getOwnPropertyNames(obj).forEach((key)=>{
 
-          if(obj[key] === 2){
+          if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
             
           }else{
             this.SignUpService.pushDocsId(obj[key], this.driver);

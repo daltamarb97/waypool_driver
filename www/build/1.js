@@ -7,7 +7,7 @@ webpackJsonp([1],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PickupPageModule", function() { return PickupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pickup__ = __webpack_require__(828);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -17288,7 +17288,7 @@ webpackContext.id = 796;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PickupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
@@ -17569,6 +17569,7 @@ var PickupPage = /** @class */ (function () {
                 });
             }
         });
+        ///////////////////
         //////// TERMINAR REGLA DE SEGURIDAD ////////
         this.TripsService.eliminatePendingUsers(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId);
         // this.sendCoordsService.pushPriceOnUser(this.useruid,this.user.userId,this.userDriver.trips.price);
@@ -17578,6 +17579,8 @@ var PickupPage = /** @class */ (function () {
         var currDate = __WEBPACK_IMPORTED_MODULE_8_moment__().format('MMMM Do YYYY, h:mm:ss a');
         // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
         // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
+        /////////////////////
+        //PAYMENTS LOGIC PASSENGERS
         // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
         this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then(function (snapZonesUser) {
             var objZonesUser = snapZonesUser.val();
@@ -17598,6 +17601,7 @@ var PickupPage = /** @class */ (function () {
             });
         });
         ///////// TERMINA LA VIOLACION
+        //PAYMENTS LOGIC POOLERS
         this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company).once('value').then(function (snapFee) {
             var amountToCharge = snapFee.val().feeAmount;
             if (snapFee.val().feeActive === true) {
@@ -17611,7 +17615,7 @@ var PickupPage = /** @class */ (function () {
                                 _this.amountToReceive = parseInt(_this.priceOfTrip) - (parseInt(_this.priceOfTrip) * amountToCharge);
                             }
                             else {
-                                _this.amountToReceive = (parseInt(snap.val()) + parseInt(_this.priceOfTrip)) - ((parseInt(snap.val()) + parseInt(_this.priceOfTrip)) * amountToCharge);
+                                _this.amountToReceive = (parseInt(snap.val()) + parseInt(_this.priceOfTrip)) - (parseInt(_this.priceOfTrip) * amountToCharge);
                             }
                             _this.TripsService.sendPaymentInfoOfTrip(obj_1[key], _this.driverUid, _this.amountToReceive);
                         });

@@ -49,32 +49,9 @@ export class WalletPage {
 
 
 calculationOfTotalAmount(){
-  // this.newNumber = 0
-  //     this.total = 0
-  // console.log(this.total)
-  // this.recordTrips.forEach(trip => {
-    
-  //   this.trip=trip
-  //   this.pickedUpUsers =  Object.keys(this.trip.pickedUpUsers)
-  //  this.totalTrip = this.pickedUpUsers.length*this.trip.price 
-  //   console.log(this.newNumber)
-  //   this.newNumber = this.newNumber + this.totalTrip 
-
-  // })
-
-  // REVISAR ESTO 
   
   this.total = this.userInfo.pendingToReceive;
- 
-
-  this.afDB.database.ref('/allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company).once('value').then((snap)=>{
-    const amountToCharge = snap.val().feeAmount;
-    if(snap.val().feeActive === true){
-      this.total = (parseInt(this.total)+ parseInt(this.newNumber)) - ((parseInt(this.total)+ parseInt(this.newNumber))*amountToCharge)
-    }else{
-      this.total = this.total + this.newNumber;
-    }
-  })
+  
 }
 
  

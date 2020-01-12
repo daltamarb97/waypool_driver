@@ -7,7 +7,7 @@ webpackJsonp([4],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(823);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -47,7 +47,7 @@ var WalletPageModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WalletPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(346);
@@ -104,27 +104,7 @@ var WalletPage = /** @class */ (function () {
         console.log(this.total);
     }
     WalletPage.prototype.calculationOfTotalAmount = function () {
-        // this.newNumber = 0
-        //     this.total = 0
-        // console.log(this.total)
-        // this.recordTrips.forEach(trip => {
-        var _this = this;
-        //   this.trip=trip
-        //   this.pickedUpUsers =  Object.keys(this.trip.pickedUpUsers)
-        //  this.totalTrip = this.pickedUpUsers.length*this.trip.price 
-        //   console.log(this.newNumber)
-        //   this.newNumber = this.newNumber + this.totalTrip 
-        // })
         this.total = this.userInfo.pendingToReceive;
-        this.afDB.database.ref('/allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company).once('value').then(function (snap) {
-            var amountToCharge = snap.val().feeAmount;
-            if (snap.val().feeActive === true) {
-                _this.total = (parseInt(_this.total) + parseInt(_this.newNumber)) - ((parseInt(_this.total) + parseInt(_this.newNumber)) * amountToCharge);
-            }
-            else {
-                _this.total = _this.total + _this.newNumber;
-            }
-        });
     };
     WalletPage.prototype.help = function () {
         var toast = this.toastCtrl.create({

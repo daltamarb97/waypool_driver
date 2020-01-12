@@ -193,6 +193,7 @@ tripState:any;
 				console.log('Error launching dialer', err)
 			});
 	}
+	
 	unSubscribeServices(){
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
@@ -263,7 +264,7 @@ tripState:any;
 								let obj = snap.val();
 								Object.getOwnPropertyNames(obj).forEach((key)=>{
 						
-								  if(obj[key] === 2){
+								  if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
 									
 								  }else{
 

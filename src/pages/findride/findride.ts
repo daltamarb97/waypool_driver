@@ -142,7 +142,7 @@ export class FindridePage {
         let objVerifiedPerson = snapshot.val().zones;
         Object.getOwnPropertyNames(objVerifiedPerson).forEach((key)=>{    
         
-          if(objVerifiedPerson[key] === 2){
+          if(objVerifiedPerson[key] === 2 || objVerifiedPerson[key] === 3 || objVerifiedPerson[key] === 4 || objVerifiedPerson[key] === 5 || objVerifiedPerson[key] === 6 || objVerifiedPerson[key] === 1 || objVerifiedPerson[key] === 7 || objVerifiedPerson[key] === 8 || objVerifiedPerson[key] === 9 || objVerifiedPerson[key] === 10){
 
           }else{
             this.instancesService.isVerifiedPerson(objVerifiedPerson[key], this.user);

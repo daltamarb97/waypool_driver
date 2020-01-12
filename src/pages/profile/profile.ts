@@ -7,6 +7,8 @@ import { LoginPage } from '../login/login';
 import { authenticationService } from '../../services/driverauthentication.service';
 import { ShowInfoCarPage } from '../showinfocar/showinfocar';
 import * as firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Subject } from 'rxjs';
 
 
 @IonicPage()
@@ -14,12 +16,12 @@ import * as firebase from 'firebase';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
-})
+}) 
 export class ProfilePage {
 myprofile: string = "about";
 name:string;
 lastname:string;
-phone:string;
+newPhone:string;
 emailComplete:string;
 about:string;
 url:any;
@@ -27,8 +29,9 @@ userForDelete = this.AngularFireAuth.auth.currentUser;
 userUid=this.AngularFireAuth.auth.currentUser.uid;
 emailUser = this.AngularFireAuth.auth.currentUser.email;
 user:any={};
-constructor(public navCtrl: NavController, public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService) {  
-  this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).subscribe(user=>{
+unsubscribe = new Subject;
+constructor(public navCtrl: NavController, public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController, public AngularFireAuth:AngularFireAuth,private authenticationService: authenticationService,public SignupService:SignUpService, private afDB: AngularFireDatabase) {  
+  this.SignupService.getMyInfoForProfile(this.SignupService.userPlace, this.userUid).takeUntil(this.unsubscribe).subscribe(user=>{
       this.user= user;
       
         console.log(this.user)
@@ -41,53 +44,64 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
 
   saveChanges(){
     
-    if(this.phone == null && this.user.about == null && this.user.url == null){
-      
+
+    this.afDB.database.ref('allCities/' + this.user.city + '/allPlaces/' + this.user.company + '/zones').once('value').then((snap)=>{
+      let obj = snap.val();
+      Object.getOwnPropertyNames(obj).forEach((key)=>{
+
+        if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+          
+        }else{
+          if(this.newPhone == null && this.user.about == null && this.user.url == null){
+               
+          }else if(this.newPhone == null && this.user.about == null && this.user.url != null){
+            this.SignupService.saveInfoProfileUrl(obj[key], this.userUid,this.user.url);
+            
+          }else if(this.newPhone == null && this.user.about != null && this.user.url == null){
+            this.SignupService.saveInfoProfileAbout(obj[key], this.userUid,this.user.about);
+            
+          }else if(this.newPhone != null && this.user.about == null && this.user.url == null){
+            this.SignupService.saveInfoProfilePhone(obj[key], this.userUid,this.newPhone);
+            
+          }else if(this.newPhone != null && this.user.about != null && this.user.url == null){
+            this.SignupService.saveInfoProfilePhone(obj[key], this.userUid,this.newPhone);
+            this.SignupService.saveInfoProfileAbout(obj[key], this.userUid,this.user.about);
+            
+          }else if(this.newPhone != null && this.user.about == null && this.user.url != null){
+            this.SignupService.saveInfoProfilePhone(obj[key], this.userUid,this.newPhone);
+            this.SignupService.saveInfoProfileUrl(obj[key], this.userUid,this.user.url);
+            
+          }else if(this.newPhone == null && this.user.about != null && this.user.url != null){
+            this.SignupService.saveInfoProfileAbout(obj[key], this.userUid,this.user.about);
+            this.SignupService.saveInfoProfileUrl(obj[key], this.userUid,this.user.url);
+            
+            this.navCtrl.pop(); 
+          }else if(this.newPhone != null && this.user.about != null && this.user.url != null){
+            this.SignupService.saveInfoProfileAbout(obj[key], this.userUid,this.user.about);
+            this.SignupService.saveInfoProfileUrl(obj[key], this.userUid,this.user.url);
+            this.SignupService.saveInfoProfilePhone(obj[key], this.userUid, this.newPhone);
+            
+          }else{
+            console.log('go to the f*cking hell');
+          }
+        }
+      }) 
+    }).then(()=>{
       this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone == null && this.user.about == null && this.user.url != null){
-      this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid,this.user.url);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone == null && this.user.about != null && this.user.url == null){
-      this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid,this.user.about);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone != null && this.user.about == null && this.user.url == null){
-      this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid,this.phone);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone != null && this.user.about != null && this.user.url == null){
-      this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid,this.phone);
-      this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid,this.user.about);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone != null && this.user.about == null && this.user.url != null){
-      this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid,this.phone);
-      this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid,this.user.url);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else if(this.phone == null && this.user.about != null && this.user.url != null){
-      this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid,this.user.about);
-      this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid,this.user.url);
-      this.toastConfirmation();
-      this.navCtrl.pop(); 
-    }else if(this.phone != null && this.user.about != null && this.user.url != null){
-      this.SignupService.saveInfoProfileAbout(this.SignupService.userPlace, this.userUid,this.user.about);
-      this.SignupService.saveInfoProfileUrl(this.SignupService.userPlace, this.userUid,this.user.url);
-      this.SignupService.saveInfoProfilePhone(this.SignupService.userPlace, this.userUid, this.phone);
-      this.toastConfirmation();
-      this.navCtrl.pop();
-    }else{
-      console.log('go to the f*cking hell');
-    }
+    })
   }
 
     toastConfirmation(){
-      let toast = this.toastCtrl.create({
-        message: 'Información actualizada',
-        duration: 1000,
-        position: 'bottom'
+      let toast = this.alertCtrl.create({
+        title : 'Información actualizada',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+                this.navCtrl.pop();    
+            }
+          }
+        ]
       })
       toast.present();
     }
@@ -134,6 +148,8 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
       alert.present();
      
     }
+
+
   showInfoProfile(user){
     this.name = user.name;
     this.lastname = user.lastname;
@@ -145,7 +161,7 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
   changePassword(){
     this.AngularFireAuth.auth.sendPasswordResetEmail(this.emailUser).then(()=>{
       let alert = this.alertCtrl.create({
-        title: 'Revisa tu email',
+        title: 'Revisa el email con el que te registraste en Waypool',
         subTitle: 'te enviamos un correo donde podras reestablecer tu contraseña',
         buttons: ['OK']
       });
@@ -180,6 +196,12 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
       ]
     });
     alert.present();
+  }
+
+
+  ionViewWillLeave(){
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
   
 }

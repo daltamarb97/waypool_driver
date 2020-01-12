@@ -22,7 +22,7 @@
     </ion-item>
     
     <div>
-        <ion-list>
+        <ion-list> 
               
                      
             <div class="bg-white" padding>
@@ -39,11 +39,11 @@
                     </ion-item>
                     <ion-item>
                         <ion-label floating>Número Telefónico Actual</ion-label>
-                        <ion-input type="number"  [(ngModel)]="user.phone" readonly></ion-input>
+                        <ion-input type="text"  [(ngModel)]="user.phone" readonly></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label stacked>Número Telefónico Nuevo</ion-label>
-                        <ion-input type="number" placeholder="modifica aqui tu número" [(ngModel)]="phone"></ion-input>
+                        <ion-input type="number" placeholder="modifica aqui tu número" [(ngModel)]="newPhone"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label floating>Email</ion-label>

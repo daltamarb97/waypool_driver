@@ -4,12 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { SignUpService } from '../../services/signup.service';
 import { sendCoordsService } from '../../services/sendCoords.service';
-/**
- * Generated class for the RemoveSchedulePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
 
 @IonicPage()
 @Component({
@@ -58,7 +54,13 @@ console.log(this.schedule);
     this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
       let obj = snap.val();
       Object.getOwnPropertyNames(obj).forEach((key)=>{
-        this.signUpService.removeSchedule(obj[key], this.userId, this.schedule.key);
+
+        if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+
+        }else{
+          this.signUpService.removeSchedule(obj[key], this.userId, this.schedule.key);
+        } 
+
       })
     }).then(()=>{
       this.afDB.database.ref('allSchedules/'+this.userId+'/'+ this.schedule.key).remove(); 
