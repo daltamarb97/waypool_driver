@@ -106,10 +106,19 @@ export class SignUpService {
             lat: lat,
             lng:lng,
         })
+
+        this.afDB.database.ref(place + '/users/' + user + '/fixedLocation/coordinates').update({
+            lat: lat,
+            lng:lng,
+        })
     }
 
     setFixedLocationName(place, user, name){
         this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation').update({
+            name: name
+        })
+
+        this.afDB.database.ref(place + '/users/' + user + '/fixedLocation').update({
             name: name
         })
     }

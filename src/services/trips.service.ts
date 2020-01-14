@@ -250,6 +250,20 @@ export class TripsService {
      }
 
 
+     public reduceNumberPersonalFreeRides(place, userId, remainingRides){
+      this.afDB.database.ref(place + '/users/' + userId ).update({
+        personalFreeRides: remainingRides
+      })
+   }
+
+
+   public reduceNumberCompanyFreeRides(city, userCompany, remainingRides){
+    this.afDB.database.ref('allCities/' + city +  '/allPlaces/' + userCompany ).update({
+      freeRidesNumber: remainingRides
+    })
+ }
+
+
   
 
 

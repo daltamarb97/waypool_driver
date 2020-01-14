@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 663:
+/***/ 665:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PickupPageModule", function() { return PickupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pickup__ = __webpack_require__(828);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pickup__ = __webpack_require__(830);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 796;
 
 /***/ }),
 
-/***/ 828:
+/***/ 830:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17520,6 +17520,85 @@ var PickupPage = /** @class */ (function () {
     PickupPage.prototype.PickUp = function () {
         var _this = this;
         this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip, this.driverUid, this.user.userId, this.user);
+        // FREE RIDES LOGIC
+        this.afDB.database.ref('/allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company).once('value').then(function (snap) {
+            var freeRidesCompany = snap.val().freeRidesNumber;
+            var obj = snap.val().zones;
+            if (freeRidesCompany > 0) {
+                _this.afDB.database.ref(_this.SignUpService.userPlace + '/users/' + _this.user.userId).once('value').then(function (snapUser) {
+                    var personalFreeRidesNumber = snapUser.val().personalFreeRides;
+                    if (personalFreeRidesNumber > 0) {
+                        console.log('si hay viaje gratis');
+                        //PAYMENTS LOGIC PASSENGERS
+                        // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
+                        Object.getOwnPropertyNames(obj).forEach(function (key) {
+                            if (obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10) {
+                            }
+                            else {
+                                _this.afDB.database.ref(obj[key] + '/users/' + _this.user.userId + '/pendingToPay/').once('value').then(function (snapUserPay) {
+                                    if (snapUserPay.val() === undefined || snapUserPay.val() === null) {
+                                        _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, 0);
+                                        var remainingPersonalFreeRides = personalFreeRidesNumber - 1;
+                                        console.log(remainingPersonalFreeRides);
+                                        var remainingCompanyFreeRides = freeRidesCompany - 1;
+                                        console.log(remainingCompanyFreeRides);
+                                        _this.TripsService.reduceNumberCompanyFreeRides(_this.userDriver.city, _this.user.company, remainingCompanyFreeRides);
+                                        _this.TripsService.reduceNumberPersonalFreeRides(obj[key], _this.user.userId, remainingPersonalFreeRides);
+                                    }
+                                    else {
+                                        var amountToPayUser = parseInt(snapUserPay.val()) + 0;
+                                        _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, amountToPayUser);
+                                        var remainingPersonalFreeRides = personalFreeRidesNumber - 1;
+                                        console.log(remainingPersonalFreeRides);
+                                        var remainingCompanyFreeRides = freeRidesCompany - 1;
+                                        console.log(remainingCompanyFreeRides);
+                                        _this.TripsService.reduceNumberCompanyFreeRides(_this.userDriver.city, _this.user.company, remainingCompanyFreeRides);
+                                        _this.TripsService.reduceNumberPersonalFreeRides(obj[key], _this.user.userId, remainingPersonalFreeRides);
+                                    }
+                                });
+                            }
+                        });
+                        ///////// TERMINA LA VIOLACION
+                    }
+                    else {
+                        Object.getOwnPropertyNames(obj).forEach(function (key) {
+                            if (obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10) {
+                            }
+                            else {
+                                _this.afDB.database.ref(obj[key] + '/users/' + _this.user.userId + '/pendingToPay/').once('value').then(function (snapUserPay) {
+                                    if (snapUserPay.val() === undefined || snapUserPay.val() === null) {
+                                        _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, _this.priceOfTrip);
+                                    }
+                                    else {
+                                        var amountToPayUser = parseInt(snapUserPay.val()) + parseInt(_this.priceOfTrip);
+                                        _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, amountToPayUser);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                console.log('no hay viaje gratis');
+                Object.getOwnPropertyNames(obj).forEach(function (key) {
+                    if (obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10) {
+                    }
+                    else {
+                        _this.afDB.database.ref(obj[key] + '/users/' + _this.user.userId + '/pendingToPay/').once('value').then(function (snapUserPay) {
+                            if (snapUserPay.val() === undefined || snapUserPay.val() === null) {
+                                _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, _this.priceOfTrip);
+                            }
+                            else {
+                                var amountToPayUser = parseInt(snapUserPay.val()) + parseInt(_this.priceOfTrip);
+                                _this.TripsService.sendPaymentInfoOfTripForUser(obj[key], _this.user.userId, amountToPayUser);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        ///////
         /// HACER REGLA DE SEGURIDAD///////
         // 1. KMS SAVED ON THAT SPECIFIC COMPANY BY POOLERS GLOBAL
         this.afDB.database.ref('/data/allTrips/' + this.userDriver.company + '/savedKM/').once('value').then(function (snap) {
@@ -17580,27 +17659,6 @@ var PickupPage = /** @class */ (function () {
         // this.sendCoordsService.timeOfPickedUpDriver(this.driverUid,currDate,this.user.userId);
         // this.sendCoordsService.timeOfPickedUpUser(this.user.userId,currDate);
         /////////////////////
-        //PAYMENTS LOGIC PASSENGERS
-        // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
-        this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then(function (snapZonesUser) {
-            var objZonesUser = snapZonesUser.val();
-            Object.getOwnPropertyNames(objZonesUser).forEach(function (key) {
-                if (objZonesUser[key] === 2 || objZonesUser[key] === 3 || objZonesUser[key] === 4 || objZonesUser[key] === 5 || objZonesUser[key] === 6 || objZonesUser[key] === 1 || objZonesUser[key] === 7 || objZonesUser[key] === 8 || objZonesUser[key] === 9 || objZonesUser[key] === 10) {
-                }
-                else {
-                    _this.afDB.database.ref(objZonesUser[key] + '/users/' + _this.user.userId + '/pendingToPay/').once('value').then(function (snapUser) {
-                        if (snapUser.val() === undefined || snapUser.val() === null) {
-                            _this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], _this.user.userId, _this.priceOfTrip);
-                        }
-                        else {
-                            var amountToPayUser = parseInt(snapUser.val()) + parseInt(_this.priceOfTrip);
-                            _this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], _this.user.userId, amountToPayUser);
-                        }
-                    });
-                }
-            });
-        });
-        ///////// TERMINA LA VIOLACION
         //PAYMENTS LOGIC POOLERS
         this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company).once('value').then(function (snapFee) {
             var amountToCharge = snapFee.val().feeAmount;

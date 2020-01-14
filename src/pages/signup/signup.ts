@@ -48,12 +48,10 @@ export class SignupPage {
     unsubscribe = new Subject;
     email:any;
     geocoder: any
+
     emailStringVerification:any;
     rightEmailOnDatabase:any;
-    // zone:any;
     zones = [];
-    // userPlace:any;
-    // multipleZones:boolean = false;
     forLoopsCompleted:any = 0;
     companyIdentified:boolean = false;
 
@@ -62,7 +60,6 @@ export class SignupPage {
         name: ["", Validators.required],
         lastname: ["", Validators.required],
         email: ["", Validators.required],
-        fixedemail: ["", Validators],
         password: ["", Validators.required],
         passwordconf: ["", Validators.required],
         phone: ["", Validators.required],
@@ -126,7 +123,7 @@ noCompanyIdentified(numberToExecute){
 
 
     login(){
-        this.app.getRootNav().push('LoginPage');
+        this.navCtrl.setRoot('LoginPage');
     }
      
     verification(){
@@ -171,16 +168,10 @@ noCompanyIdentified(numberToExecute){
                             let userPhone = this.signupGroup.controls['phone'].value;
                             let userEmail = this.signupGroup.controls['email'].value 
                             let userPassword = this.signupGroup.controls['password'].value;
-                            // let userPasswordconf = this.signupGroup.controls['passwordconf'].value;
                             let userCarModel = this.signupGroup.controls['carModel'].value;
                             let userPlateNumber = this.signupGroup.controls['plateNumber'].value;
                             let usercarColor = this.signupGroup.controls['color'].value;
-                            // if(this.zones === []){
-                            //     this.userPlace = this.zone;
-                            //     // this.multipleZones = false;
-                            // }else{
-                            //     // this.multipleZones = true;
-                            // }
+
                 
                           this.car = {
                             carModel: userCarModel,
@@ -252,7 +243,7 @@ noCompanyIdentified(numberToExecute){
                                     })
                                 };
                     
-                                //sending email verification and verifying weather email is verified or not
+                                //sending email verification and verifying whether email is verified or not
                                 this.AngularFireAuth.auth.onAuthStateChanged((user)=>{
                                     if(user){
                                         if(user.emailVerified == false){
@@ -292,7 +283,6 @@ noCompanyIdentified(numberToExecute){
                                       alert.present(); 
                                 }
                             })
-                            // this.navCtrl.push('LoginPage', this.user);
                                
                         }else{
                             const alert = this.alertCtrl.create({
@@ -311,27 +301,13 @@ noCompanyIdentified(numberToExecute){
         }
  }
 
+
+
+ 
     sendVerificationCode(userId){
             this.navCtrl.push('VerificationNumberPage', {userId: userId});
     }
 
    
 
-    // geocodingPlace(lat, lng, place, userId) {
-
-    //     this.geocoder.geocode({'location': {lat, lng}}, (results, status) => {
-    //       if (status === 'OK') {
-    //         if (results[0]) {
-    //            let namePlace =[results[0].formatted_address];
-    //            this.SignUpService.setFixedLocationName(place, userId, namePlace[0]);
-    //         } else {
-    //          alert('No results found');
-    //         }
-    //       } else {
-    //         alert('Geocoder failed due to: ' + status);
-    //       }
-                      
-      
-    //     });
-    //   }
 }

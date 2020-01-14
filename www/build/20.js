@@ -271,57 +271,11 @@ var FindridePage = /** @class */ (function () {
                         _this.getTrip();
                     }
                 });
-                // set geofire key of university to avoid asking users to put where they are going
-                //  console.log(this.SignUpService.userPlace);
-                //  this.geofireService.getLocationPlace(this.SignUpService.userPlace).subscribe(university=>{
-                //    this.university = university
-                //    this.locationUniversity = this.university.location;
-                //    this.geofireService.setLocationPlace(this.SignUpService.userPlace, "some_key", this.locationUniversity.lat, this.locationUniversity.lng);
-                //  })
                 console.log(_this.SignUpService.userPlace);
                 _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
                     _this.userInfo = user;
                     console.log(_this.userInfo);
-                    //  this.afDB.database.ref('allPlaces/' + this.SignUpService.userPlace).once('value').then((snap)=>{
-                    //   this.universityInfo = snap.val();
-                    //   console.log(this.universityInfo);
-                    //   if(this.universityInfo.emails == undefined){
-                    //     if(this.userInfo.documents){
-                    //       if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
-                    //         let modal = this.modalCtrl.create('VerificationImagesPage');
-                    //         modal.present();
-                    //       }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-                    //         this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
-                    //       }
-                    //     }else if(!this.userInfo.documents) {
-                    //       console.log('no hay docs')
-                    //       let modal = this.modalCtrl.create('VerificationImagesPage');
-                    //         modal.present();
-                    //     } 
-                    //   }else{
-                    //     this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
-                    //   }
-                    //  })
                 });
-                //  this.SignUpService.getInfoPlace(this.SignUpService.userPlace).subscribe(uni => {
-                //   this.universityInfo = uni;
-                //   if(this.universityInfo.email == undefined){
-                //     if(this.userInfo.documents){
-                //       if(this.userInfo.documents.carne === undefined || this.userInfo.documents.id === undefined){
-                //         let modal = this.modalCtrl.create('VerificationImagesPage');
-                //         modal.present();
-                //       }else if(this.userInfo.documents.carne === true && this.userInfo.documents.id === true){
-                //         this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
-                //       }
-                //     }else if(!this.userInfo.documents) {
-                //       console.log('no hay docs')
-                //       let modal = this.modalCtrl.create('VerificationImagesPage');
-                //         modal.present();
-                //     } 
-                //   }else{
-                //     this.instancesService.isVerifiedPerson(this.SignUpService.userPlace, this.user);
-                //   }
-                // })
             });
         });
     };

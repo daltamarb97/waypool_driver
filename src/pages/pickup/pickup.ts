@@ -266,6 +266,94 @@ export class PickupPage {
 
       this.TripsService.pickUp(this.SignUpService.userPlace, this.keyTrip,this.driverUid,this.user.userId,this.user);
 
+      // FREE RIDES LOGIC
+      this.afDB.database.ref('/allCities/'+ this.userDriver.city + '/allPlaces/' + this.user.company ).once('value').then((snap)=>{
+        let freeRidesCompany = snap.val().freeRidesNumber;
+        let obj = snap.val().zones;
+        if(freeRidesCompany > 0){
+          this.afDB.database.ref(this.SignUpService.userPlace + '/users/' + this.user.userId).once('value').then((snapUser)=>{
+            let personalFreeRidesNumber = snapUser.val().personalFreeRides;
+
+              if(personalFreeRidesNumber > 0){
+                console.log('si hay viaje gratis');
+
+                 //PAYMENTS LOGIC PASSENGERS
+                    // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
+         
+                      Object.getOwnPropertyNames(obj).forEach((key)=>{
+                        if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10 ){
+
+                        }else{
+                          this.afDB.database.ref(obj[key] + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUserPay)=>{
+                            if(snapUserPay.val()=== undefined || snapUserPay.val() === null){
+                              this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, 0);
+                              let remainingPersonalFreeRides = personalFreeRidesNumber - 1;
+                              console.log(remainingPersonalFreeRides);
+                              let remainingCompanyFreeRides = freeRidesCompany - 1;
+                              console.log(remainingCompanyFreeRides);
+                              this.TripsService.reduceNumberCompanyFreeRides(this.userDriver.city, this.user.company, remainingCompanyFreeRides );
+                              this.TripsService.reduceNumberPersonalFreeRides(obj[key], this.user.userId, remainingPersonalFreeRides);
+                            }else{
+                              let amountToPayUser = parseInt(snapUserPay.val()) + 0;
+                              this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, amountToPayUser); 
+                              let remainingPersonalFreeRides = personalFreeRidesNumber - 1;
+                              console.log(remainingPersonalFreeRides);
+                              let remainingCompanyFreeRides = freeRidesCompany - 1;
+                              console.log(remainingCompanyFreeRides);
+                              this.TripsService.reduceNumberCompanyFreeRides(this.userDriver.city, this.user.company, remainingCompanyFreeRides );
+                              this.TripsService.reduceNumberPersonalFreeRides(obj[key], this.user.userId, remainingPersonalFreeRides);
+                            }
+                          })
+                        }
+                      })
+                    
+                    ///////// TERMINA LA VIOLACION
+                
+                
+              }else{
+
+                Object.getOwnPropertyNames(obj).forEach((key)=>{
+                  if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10 ){
+
+                  }else{
+                    this.afDB.database.ref(obj[key] + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUserPay)=>{
+                      if(snapUserPay.val()=== undefined || snapUserPay.val() === null){
+                        this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, this.priceOfTrip);
+                
+                      }else{
+                        let amountToPayUser = parseInt(snapUserPay.val()) + parseInt(this.priceOfTrip);
+                        this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, amountToPayUser); 
+                      }
+                    })
+                  }
+                })
+
+              }
+          
+          })
+        }else{
+          console.log('no hay viaje gratis');
+
+          Object.getOwnPropertyNames(obj).forEach((key)=>{
+            if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10 ){
+
+            }else{
+              this.afDB.database.ref(obj[key] + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUserPay)=>{
+                if(snapUserPay.val()=== undefined || snapUserPay.val() === null){
+                  this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, this.priceOfTrip);
+          
+                }else{
+                  let amountToPayUser = parseInt(snapUserPay.val()) + parseInt(this.priceOfTrip);
+                  this.TripsService.sendPaymentInfoOfTripForUser(obj[key], this.user.userId, amountToPayUser); 
+                }
+              })
+            }
+          })
+          
+        }
+      })
+
+      ///////
 
 
       /// HACER REGLA DE SEGURIDAD///////
@@ -342,29 +430,6 @@ export class PickupPage {
 
       /////////////////////
 
-
-
-      //PAYMENTS LOGIC PASSENGERS
-      // REGLA DE SEGURIDAD PARA ESTO: ES VIOLACIÓN ABSOLUTA
-      this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.user.company + '/zones').once('value').then((snapZonesUser)=>{
-        let objZonesUser = snapZonesUser.val();
-        Object.getOwnPropertyNames(objZonesUser).forEach((key)=>{
-          if(objZonesUser[key] === 2 || objZonesUser[key] === 3 || objZonesUser[key] === 4 || objZonesUser[key] === 5 || objZonesUser[key] === 6 || objZonesUser[key] === 1 || objZonesUser[key] === 7 || objZonesUser[key] === 8 || objZonesUser[key] === 9 || objZonesUser[key] === 10 ){
-
-          }else{
-            this.afDB.database.ref(objZonesUser[key] + '/users/' + this.user.userId + '/pendingToPay/').once('value').then((snapUser)=>{
-              if(snapUser.val()=== undefined || snapUser.val() === null){
-                this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], this.user.userId, this.priceOfTrip);
-              }else{
-                const amountToPayUser = parseInt(snapUser.val()) + parseInt(this.priceOfTrip);
-                this.TripsService.sendPaymentInfoOfTripForUser(objZonesUser[key], this.user.userId, amountToPayUser);
-      
-              }
-            })
-          }
-        })
-      })
-      ///////// TERMINA LA VIOLACION
 
 
 
