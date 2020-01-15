@@ -360,13 +360,15 @@ export class ReservetripPage{
 
   
   help(){
-    const toast = this.toastCtrl.create({
-      message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
-      showCloseButton:true,
-      closeButtonText: 'OK',
-      position:'top'
-         });
-    toast.present();
+    // const toast = this.toastCtrl.create({
+    //   message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
+    //   showCloseButton:true,
+    //   closeButtonText: 'OK',
+    //   position:'top'
+    //      });
+    // toast.present();
+    this.navCtrl.push('WalkthroughPage');
+    
   }
   presentLoadingCustom() {
     let loading = this.loadingCtrl.create({

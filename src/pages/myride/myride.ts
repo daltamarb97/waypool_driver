@@ -224,65 +224,48 @@ tripState:any;
 						text: 'Si',
 						handler: () => {
 
-							moment.locale('es'); //to make the date be in spanish  
-
-							// this.geofireServices.cancelGeoqueryOr()
-
-							// this.geofireServices.cancelGeoqueryDest()
-
-							let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
-							this.TripsService.timeFinishedTrip(this.SignUpService.userPlace,this.userDriver.keyTrip, this.driverUid, today);
-							console.log(this.trip)
-							// this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
-							console.log("praise the sun")
-							console.log(this.trip)
-							
-
-							console.log(this.trip)
-							// this.TripsService.saveTripUser(this.SignUpService.userPlace,this.driverUid, this.userDriver.keyTrip);
-
-							setTimeout(() => {
-								console.log("MIRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-								this.unSubscribeServices();
-							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
-							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
-							this.pickedUpUsers.forEach(user => {
-								this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
-
-								this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);
-
-								this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
-
-
-							});
-							this.TripsService.allTrips(this.userDriver.company,this.driverUid,this.userDriver.keyTrip,this.trip); 
-
-
-
-							// here I have to save the trip for this driver in every zone he is, it doesnt matter if the user is not operating in certain zone in the moment
-							this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company + '/zones').once('value').then((snap)=>{
-								let obj = snap.val();
-								Object.getOwnPropertyNames(obj).forEach((key)=>{
 						
-								  if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+									//set time
+									moment.locale('es'); //to make the date be in spanish  
+
+									let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
+									this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+ this.driverUid+'/'+ this.userDriver.keyTrip).update({
+									  DestinationTime:today
+									}).then((snap)=>{
+										this.unSubscribeServices();
+										this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
+										this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
+										this.pickedUpUsers.forEach(user => {
+											this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
+											this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);			
+											this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
+										});
+										this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
+
+										// here I have to save the trip for this driver in every zone he is, it doesnt matter if the user is not operating in certain zone in the moment
+											this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + this.userDriver.company + '/zones').once('value').then((snap)=>{
+												let obj = snap.val();
+												Object.getOwnPropertyNames(obj).forEach((key)=>{
+										
+												if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+													
+												}else{
+
+													this.TripsService.saveTripOnRecords(obj[key],this.driverUid, this.trip);
+
+												}
+												}) 
+											})							 
+											///////////
+
+										this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
+			
+										this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+										this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
+										
+										this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);										
+								    })
 									
-								  }else{
-
-									this.TripsService.saveTripOnRecords(obj[key],this.driverUid, this.trip);
-
-								}
-								}) 
-							  })							 
-							///////////
-
-
-							this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
-
-							this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
-							this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
-							
-							this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
-							}, 3000);
 							this.navCtrl.pop();
 							//TO-DO: AQUI FALTA RATETRIPPAGE
 							this.navCtrl.push('RatetripPage',{user:this.userDriver, trip:this.trip});

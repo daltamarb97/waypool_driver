@@ -40,7 +40,8 @@ export class FindridePage {
   GooglePlaces: any;
   geocoder: any
   autocompleteItems: any;
-  
+  autocompleteItems2: any[];
+
   // waypoints variables
   directionsService: any = null;
   directionsDisplay: any = null;
@@ -98,21 +99,29 @@ export class FindridePage {
   isDisconected:boolean;
   driverReserves: any;
   fullReserves = [];
+  multipleDestinations:any = [];
+  showList: boolean;
+  positionOrMarker: any;
+  markersOr: any = [];
+  markersDest: any = [];
+  geocoordinatesDestName: any;
+  destName: any;
   multipleLocations:boolean;
   zonesToIterate:any;
-
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer ) {
 
     
-    console.log(this.user);
+    
     
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
 
     this.autocompleteMyPos = { input: '' };
+    this.autocompleteMyDest = { input: '' };
 
     this.autocompleteItems = [];
-    
+    this.autocompleteItems2 = [];
+
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer({
       suppressMarkers: true,
@@ -133,7 +142,9 @@ export class FindridePage {
     this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then((snapshot)=>{
       console.log(snapshot.val().multipleLocations);
       this.zonesToIterate = snapshot.val().zones;
+      this.multipleDestinations = snapshot.val().location;
       
+
       if(snapshot.val().multipleLocations === true){
         // temporary location until user chooses the right location of their company
         this.SignUpService.userPlace = snapshot.val().zones[0]
@@ -188,6 +199,7 @@ export class FindridePage {
   this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/'+this.user).once('value').then((snap)=>{
     this.userInfo = snap.val();
     console.log(this.userInfo);
+    this.autocompleteMyDest.input=this.userInfo.fixedLocation.name;
     
     let lat=this.userInfo.fixedLocation.coordinates.lat
     console.log(this.lat);
@@ -195,21 +207,24 @@ export class FindridePage {
     let lng=this.userInfo.fixedLocation.coordinates.lng
     this.positionDest = {lat,lng};
     console.log(this.positionDest);
-   
     
+    const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
+    inputs2[0].disabled=true;
 
     if(this.userInfo.toggleStatus === 'online'){
       // this.checked = true;
       this.isConected = true;
       this.isDisconected = false;
       this.changeColorOnline();
+      this.disable();
     }else{
       this.isConected = false;
       this.isDisconected = true;
       this.changeColorOffline();
+      this.enable();
     }
     if (this.userInfo.houseAddress === undefined || this.userInfo.houseAddress === null) {
-      this.LoadMapWithoutHouseAdress();
+      this.pushOriginPage();
 
 
     } else {
@@ -255,10 +270,7 @@ export class FindridePage {
       console.log(this.userInfo);
       
      }) 
-    })
-
-
-    
+    }) 
 
   })
 }
@@ -301,200 +313,253 @@ async getToken() {
 
 }
 
+LoadMapWithHouseAdress(positionOr){
+  this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
-
-changeColorOnline(){
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','green')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','green')
-
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','green')
-
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','transparent')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'font-color','#bfbfbf')
-
-  this.showPopup();
-}
-changeColorOffline(){
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','rgb(167, 23, 23)')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
-  this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','rgb(167, 23, 23)')
-
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','rgb(167, 23, 23)')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','transparent')
-  this.renderer.setElementStyle(this.buttonConected.nativeElement,'font-color','#bfbfbf')
-
-}
-conectDriver(){
-  if(this.userInfo.toggleStatus === 'online'){
-    const alert = this.alertCtrl.create({
-      title: '¡Ya estas conectado!',
-      subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
-      buttons: ['OK']
-    });
-    alert.present(); 
-    }else{
-      this.isConected = true;
-  this.isDisconected = false;
-  
-  if(this.currentUser.emailVerified == false){
-    const alert = this.alertCtrl.create({
-      title: 'Oops!',
-      subTitle: 'por favor verifica tu email',
-      buttons: ['OK']
-    });
-    alert.present(); 
-    this.isConected = false;
-  this.isDisconected = true;
-  this.changeColorOffline();
-  }else{
-
-    if(this.userInfo.documents){
-      if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
-        if(this.userInfo.schedule){
-          try{
-          
-            this.houseAddress = this.autocompleteMyPos.input;
-            this.placeAddress = this.userInfo.fixedLocation.name;
-            console.log(this.houseAddress);
-            
-  
-            if(this.autocompleteMyPos.input == ''){
-              this.presentAlert('No tienes toda la informacion','Por favor asegura que tengas las dirección de tu casa sea correcta','Ok');
-              this.isConected = false;
-              this.isDisconected = true;
-              this.changeColorOffline();
-              // this.clearMarkers();
-              // this.directionsDisplay.setDirections({routes: []});
-              // this.loadMap();
-            }else{
-                console.log(this.houseAddress[0]);
-                console.log(this.geocoordinatesHouse.latOr);
-                        console.log(this.autocompleteMyPos.input);
-
-                //wait to get name and coordinates for confirmPricePage when the geofire starts
-                this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/').update({
-                  name: this.houseAddress[0]
-                }).then((token)=>{
-                  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/coordinates').update({
-                    lat:this.geocoordinatesHouse.latOr,
-                    lng:this.geocoordinatesHouse.lngOr
-                  })
-                  
-                }).then((token)=>{
-                  // start modal
-                  let modal = this.modalCtrl.create('ConfirmpricePage');
-                  modal.onDidDismiss(accepted => {
-                    if(accepted){
-                      this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
-                      this.changeColorOnline();
-                   
-                      console.log("estoy true")
-                      this.disable();
-                      console.log(this.userInfo.fixedLocation.name);                 
-                    }else{
-                      this.presentAlert('Información incompleta','Por favor escribe toda la información para conectarte','OK')
-  
-                    }         
-                  })
-               modal.present();    
-                  
-                })
-               
-            }
-          }catch(error){
-            console.log(error);
-            
-          }
-        }else{
-          let alert = this.alertCtrl.create({
-            title: 'No tienes ningún horario',
-            subTitle: 'Por favor arma tu horario o mandanos foto del horario',
-           buttons: [
-            { 
-              text: 'Mandar mi horario',
-              handler: () => {
-                this.navCtrl.push('SchedulePage');
-              }
-            },
-              {
-                text: 'Cancelar',
-                role: 'cancel',
-                handler: () => {
-               
+    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    console.log(latLng);
+     this.positionOrMarker = new google.maps.LatLng(positionOr.latOr,positionOr.lngOr);
+    let mapOptions = {
+        center: latLng,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels.icon',
+              stylers: [
+                {
+                  visibility: 'off'
                 }
-              }
-            ],
-            cssClass: 'alertDanger'
+              ]
+            }
+          ]
+      }
+  //creates the map and give options
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+      
+    this.markerGeolocation = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.positionOrMarker,
+      draggable:true,
+      icon: {         url: "assets/imgs/house.png",
+      scaledSize: new google.maps.Size(70, 70)    
+
+    }
+    });
+    this.markersOr.push(this.markerGeolocation);
+    this.geocoordinatesHouse = positionOr;
+
+    //allow the marker to be draged and changed the position
+    this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos);
+    //to reverse-geocode position
+    this.geocodeLatLng(this.positionOrMarker,this.autocompleteMyPos);
+    console.log(this.userInfo.fixedLocation.name);
+
+     this.markerDest = new google.maps.Marker({
+            position: this.positionDest,
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+               icon: {         url: "assets/imgs/workbuilding.png",
+            scaledSize: new google.maps.Size(250, 250)    
+             }})
+             this.markersDest.push(this.markerDest);       
+             this.positionDest = new google.maps.LatLng(this.positionDest.lat,this.positionDest.lng);
+
+             this.calculateRoute(this.positionOrMarker,this.positionDest);
+             this.directionsDisplay.setMap(this.map);
+    },(err) => {
+    console.log(err);    
+   });
+ }
+
+ conectDriver() {
+console.log(  this.positionDest.lat,
+  );
+  this.showList = false;
+
+  if (this.userInfo.toggleStatus === 'online') {
+      const alert = this.alertCtrl.create({
+          title: '¡Ya estas conectado!',
+          subTitle: 'Si deseas cambiar el precio de tus viajes, desconectate y vuelvete a conectar',
+          buttons: ['OK']
+      });
+      alert.present();
+  } else {
+      this.isConected = true;
+      this.isDisconected = false;
+
+      if (this.currentUser.emailVerified == false) {
+          const alert = this.alertCtrl.create({
+              title: 'Oops!',
+              subTitle: 'por favor verifica tu email',
+              buttons: ['OK']
           });
           alert.present();
           this.isConected = false;
-        this.isDisconected = true;
-        this.changeColorOffline();
-        }
-        
+          this.isDisconected = true;
+          this.changeColorOffline();
+      } else {
+
+          if (this.userInfo.documents) {
+              if (this.userInfo.documents.license == true && this.userInfo.documents.id == true) {
+                  if (this.userInfo.schedule) {
+                      try {
+
+                          this.houseAddress = this.autocompleteMyPos.input;
+                          this.placeAddress = this.autocompleteMyDest.input;
+                          console.log(this.houseAddress);
+                          console.log(this.placeAddress);
+                          console.log(this.userInfo);
+                          // use the same format of coordinates as the beggining
+                          if (this.userInfo.fixedLocation.name == this.placeAddress ) {
+                            this.positionDest = {lat:this.userInfo.fixedLocation.coordinates.lat,lng:this.userInfo.fixedLocation.coordinates.lng};
+                          } else {
+                       
+                            console.log(this.geocoordinatesDest);
+                            
+                          }
+                          if (this.autocompleteMyPos.input == '' || this.autocompleteMyDest.input == '' ) {
+                              this.presentAlert('No tienes toda la informacion', 'Por favor asegura que tengas las dirección de tu casa y oficina sea correcta', 'Ok');
+                              this.isConected = false;
+                              this.isDisconected = true;
+                              this.changeColorOffline();
+                              // this.clearMarkers();
+                              // this.directionsDisplay.setDirections({routes: []});
+                              // this.loadMap();
+                          } else {
+                              console.log(this.houseAddress[0]);
+                              console.log(this.geocoordinatesHouse.latOr);
+                              console.log(this.autocompleteMyPos.input);
+
+                              //wait to get name and coordinates for confirmPricePage when the geofire starts
+                              this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/').update({
+                                  name: this.houseAddress[0]
+                              }).then((token) => {
+                                  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/coordinates').update({
+                                      lat: this.geocoordinatesHouse.latOr,
+                                      lng: this.geocoordinatesHouse.lngOr
+                                  });
+                                  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/fixedLocation/coordinates').update({
+                                    lat: this.positionDest.lat,
+                                    lng: this.positionDest.lng
+                                }); 
+                                this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/fixedLocation/').update({
+                                  name: this.placeAddress
+                              });
+                              }).then((token) => {
+                                  // start modal
+                                  let modal = this.modalCtrl.create('ConfirmpricePage');
+                                  modal.onDidDismiss(accepted => {
+                                      if (accepted) {
+                                          this.instancesService.ToggleStatusOnline(this.SignUpService.userPlace, this.user);
+                                          this.changeColorOnline();
+
+                                          console.log("estoy true")
+                                          this.disable();
+                                          console.log(this.userInfo.fixedLocation.name);
+                                      } else {
+                                          this.presentAlert('Información incompleta', 'Por favor escribe toda la información para conectarte', 'OK')
+
+                                      }
+                                  })
+                                  modal.present();
+
+                              })
+
+                          }
+                      } catch (error) {
+                          console.log(error);
+
+                      }
+                  } else {
+                      let alert = this.alertCtrl.create({
+                          title: 'No tienes ningún horario',
+                          subTitle: 'Por favor arma tu horario o mandanos foto del horario',
+                          buttons: [{
+                                  text: 'Mandar mi horario',
+                                  handler: () => {
+                                      this.navCtrl.push('SchedulePage');
+                                  }
+                              },
+                              {
+                                  text: 'Cancelar',
+                                  role: 'cancel',
+                                  handler: () => {
+
+                                  }
+                              }
+                          ],
+                          cssClass: 'alertDanger'
+                      });
+                      alert.present();
+                      this.isConected = false;
+                      this.isDisconected = true;
+                      this.changeColorOffline();
+                  }
 
 
-      }else{
-          let alert = this.alertCtrl.create({
-            title: '¡oh-uh!',
-            subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-           buttons: [
-            { 
-              text: 'Subir mis documentos',
-              handler: () => {
-                this.navCtrl.push('CarRegistrationPage');
+
+              } else {
+                  let alert = this.alertCtrl.create({
+                      title: '¡oh-uh!',
+                      subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+                      buttons: [{
+                              text: 'Subir mis documentos',
+                              handler: () => {
+                                  this.navCtrl.push('CarRegistrationPage');
+                              }
+                          },
+                          {
+                              text: 'Cancelar',
+                              role: 'cancel',
+                              handler: () => {
+
+                              }
+                          }
+                      ],
+                      cssClass: 'alertDanger'
+                  });
+                  alert.present();
               }
-            },
-              {
-                text: 'Cancelar',
-                role: 'cancel',
-                handler: () => {
-               
-                }
-              }
-            ],
-            cssClass: 'alertDanger'
-          });
-          alert.present();
-        }
-        this.isConected = false;
-        this.isDisconected = true;
-        this.changeColorOffline();
-    }else{
-      let alert = this.alertCtrl.create({
-        title: '¡oh-oh!',
-        subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-       buttons: [
-        { 
-          text: 'Subir mis documentos',
-          handler: () => {
-            this.navCtrl.push('CarRegistrationPage');
+              this.isConected = false;
+              this.isDisconected = true;
+              this.changeColorOffline();
+          } else {
+              let alert = this.alertCtrl.create({
+                  title: '¡oh-oh!',
+                  subTitle: 'faltan documentos por subir, dirigete al menú, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
+                  buttons: [{
+                          text: 'Subir mis documentos',
+                          handler: () => {
+                              this.navCtrl.push('CarRegistrationPage');
+                          }
+                      },
+                      {
+                          text: 'Cancelar',
+                          role: 'cancel',
+                          handler: () => {
+
+                          }
+                      }
+                  ],
+                  cssClass: 'alertDanger'
+              });
+              alert.present();
+              this.isConected = false;
+              this.isDisconected = true;
+              this.changeColorOffline();
           }
-        },
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: () => {
-           
-            }
-          }
-        ],
-        cssClass: 'alertDanger'
-      });
-      alert.present();
-      this.isConected = false;
-        this.isDisconected = true;
-        this.changeColorOffline();
-     }
-    }
-  
+      }
+
   }
 
 }
@@ -525,6 +590,7 @@ disconectDriver(){
         this.changeColorOffline();
         this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
         this.enable();
+        // this.autocompleteMyDest.input = '';
       }else{
         let obj = this.driverReserves;
       Object.getOwnPropertyNames(obj).forEach((key)=>{
@@ -554,11 +620,15 @@ disconectDriver(){
         this.changeColorOffline();
         this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
         this.enable();
+        // this.autocompleteMyDest.input = '';
+
       }else{
         if( this.fullReserves.length === 0 ||  this.fullReserves.length === undefined ){
           this.isConected = false;
         this.isDisconected = true;
         this.changeColorOffline();
+        // this.autocompleteMyDest.input = '';
+
         this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
                         
           console.log(snap.val()); 
@@ -576,7 +646,8 @@ disconectDriver(){
         })
         this.instancesService.ToggleStatusOffline(this.SignUpService.userPlace, this.user);
         this.enable();
-      
+        // this.autocompleteMyDest.input = '';
+
         }else{
           this.alertOffline();
         }
@@ -626,83 +697,6 @@ disconectDriver(){
   }
  }
  
-
- 
-  loadMap(){
-    //check if user have houseAddress
-    if(this.houseAddress === undefined){
- // this gets current position and set the camera of the map and put a marker in your location
- this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
-
-  let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  console.log(latLng);
-
-  let mapOptions = {
-      center: latLng,
-      zoom: 17,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false,
-        styles: [
-          {
-            featureType: 'poi',
-            elementType: 'labels.icon',
-            stylers: [
-              {
-                visibility: 'off'
-              }
-            ]
-          }
-        ]
-    }
-//creates the map and give options
-  this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-  this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
-    
-  this.markerGeolocation = new google.maps.Marker({
-    map: this.map,
-    animation: google.maps.Animation.DROP,
-    position: latLng,
-    draggable:true,
-    icon: {         url: "assets/imgs/house.png",
-    scaledSize: new google.maps.Size(70, 70)    
-
-  }
-  });
-  this.markers.push(this.markerGeolocation);
-  this.geocoordinatesHouse = {lat: position.coords.latitude , lng: position.coords.longitude};
-
-  //allow the marker to be draged and changed the position
-  this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos);
-  //to reverse-geocode position
-  this.geocodeLatLng(latLng,this.autocompleteMyPos);
-console.log(this.userInfo.fixedLocation.name);
-
-   this.markerDest = new google.maps.Marker({
-          position: this.positionDest,
-          map: this.map,
-          animation: google.maps.Animation.DROP,
-             icon: {         url: "assets/imgs/workbuilding.png",
-          scaledSize: new google.maps.Size(250, 250)    
-           }})
-          
-
-           this.calculateRoute(latLng,this.positionDest);
-            this.directionsDisplay.setMap(this.map);
- 
-  },(err) => {
-  console.log(err);    
- });
-    }else{
-
-    }
- 
-
-  }
   
    calculateRoute(positionOr,positionDest){
     //tutorial ngclassroom https://blog.ng-classroom.com/blog/ionic2/directions-google-js-ionic/
@@ -710,7 +704,6 @@ console.log(this.userInfo.fixedLocation.name);
     console.log("LO LOGREEEEEEEEEEEE");
     
 
-    this.bounds.extend(this.myLatLng);
 
     
   
@@ -718,7 +711,7 @@ console.log(this.userInfo.fixedLocation.name);
     
     this.directionsService.route({
      origin: positionOr,
-      destination: this.positionDest,
+      destination:  positionDest,
       travelMode: google.maps.TravelMode.DRIVING,
       avoidTolls: true
     }, (response, status)=> {
@@ -754,12 +747,20 @@ updateSearchResultsMyPos(){
       }
   });
 }
+ ////show destinations
+ updateSearchResultsMyDest(){
+  if (this.userInfo.toggleStatus === 'online') {
+    this.presentAlert('Información','No se puede cambiar el lugar mientras estas conectado.','OK')
+  } else if(this.userInfo.toggleStatus === 'offline'){
+    this.showList = true;
+  }
+}
 
   ////select result of my position searchbar
-selectSearchResultMyPos(item){
+selectSearchResultMyPos(item){ 
   this.autocompleteItems=[];
 
-  this.clearMarkers();
+  this.clearMarkersOr();
 
   this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
     if(status === 'OK' && results[0]){
@@ -781,16 +782,26 @@ selectSearchResultMyPos(item){
       animation: google.maps.Animation.DROP,
 
       });
+      this.positionOrMarker = results[0].geometry.location;
       this.geocoordinatesHouse = {latOr: results[0].geometry.location.lat(), lngOr: results[0].geometry.location.lng()}
       console.log(this.geocoordinatesHouse);
+      console.log(this.positionDest);
       
       this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos)
-      this.markers.push( this.markerGeolocation);
+      this.markersOr.push(this.markerGeolocation);
+
       this.map.setCenter(results[0].geometry.location);
       console.log(results[0].geometry.location);
+      console.log(this.positionDest);
+      
       this.autocompleteMyPos.input=[item.description];
       this.calculateRoute(results[0].geometry.location,this.positionDest);
       // this.directionsDisplay.setMap(null)
+      // this.bounds.extend(this.geocoordinatesHouse);
+
+    
+  
+      // this.map.fitBounds(this.bounds);
     }
   })
   
@@ -799,43 +810,57 @@ selectSearchResultMyPos(item){
 
   ////select result of my destination searchbar
 
-showMyDest(item){
-
-  // this.geocoder.geocode({'placeId': item}, (results, status) => {
-  //   if(status === 'OK' && results[0]){
-
-  //     // let position = {
-  //     //   latitude: results[0].geometry.location.lat,
-  //     //   longitude: results[0].geometry.location.lng
-  //     // };
-  //       let position = new google.maps.LatLng( results[0].geometry.location.lat,
-  //        results[0].geometry.location.lng)
-  //         console.log(position)
-  //      this.markerDest = new google.maps.Marker({
-  //       position: results[0].geometry.location,
-  //       map: this.map,
-  //       animation: google.maps.Animation.DROP,
-  //       draggable:true,
-  //          icon: {         url: "assets/imgs/marker-destination2.png",
-  //       scaledSize: new google.maps.Size(90, 90)    
-  //        }})
-  //     }
-  //   })
+  selectSearchResultMyDest(item){
+    if (this.userInfo.toggleStatus === 'online') {
+      this.presentAlert('Información','No se puede cambiar el lugar mientras estas conectado.','OK')
+    } else if(this.userInfo.toggleStatus === 'offline'){
+      this.clearMarkersDest();
+      this.positionDest = new google.maps.LatLng(item.lat,item.lng);
+      this.geocoordinatesDest = {lat:item.lat,lng:item.lng};
+      this.geocoordinatesDestName = item.name;
+      this.markerDest = new google.maps.Marker({
+        position: this.positionDest,
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+           icon: {         url: "assets/imgs/workbuilding.png",
+        scaledSize: new google.maps.Size(250, 250)    
+         }})       
+      this.markersDest.push( this.markerDest);
+      this.autocompleteMyDest.input=[item.name];
+      this.showList = false;
+      this.calculateRoute(this.positionOrMarker,this.positionDest);
+      this.directionsDisplay.setMap(this.map);
+      this.positionDest = {lat:item.lat,lng:item.lng};
+      this.SignUpService.userPlace = item.zone;
+    }
+   
   }  
 ////////Markers
-clearMarkers(){
-    for (var i = 0; i < this.markers.length; i++) {
+clearMarkersDest(){
+    for (var i = 0; i < this.markersDest.length; i++) {
       
-      this.markers[i].setMap(null);
+      this.markersDest[i].setMap(null);
     }
-    this.markers = [];
+    this.markersDest = [];
   }
   
- 
+  clearMarkersOr(){
+    for (var i = 0; i < this.markersOr.length; i++) {
+      
+      this.markersOr[i].setMap(null);
+    }
+    this.markersOr = [];
+  } 
 dragMarkerOr(marker,inputName){
-     //allow origin marker to be draged and calculate route with the new position
+  //if online the user does not have permision to move the marker
+ 
 
   google.maps.event.addListener(marker, 'dragend',  (evt) => {
+    if (this.userInfo.toggleStatus== 'online') {
+      this.presentAlert('Error','No se puede mover el marcador mientras estas en modo ONLINE, recomendamos volver a iniciar la app para un mejor funcionamiento ','OK')
+      
+    } else if(this.userInfo.toggleStatus== 'offline'){
+         //allow origin marker to be draged and calculate route with the new position
     let lat = marker.getPosition().lat()
     let lng = marker.getPosition().lng()
     let latOr = marker.getPosition().lat()
@@ -846,11 +871,14 @@ dragMarkerOr(marker,inputName){
    console.log(latLng);
    
     this.geocodeLatLng(latLng,inputName)
+    console.log(this.positionDest);
     
     this.calculateRoute(latLng,this.positionDest);
     this.geocoordinatesHouse = latLngOr;
-    
+    } 
 })
+  
+  
 }
 centerMap(){
 
@@ -874,119 +902,6 @@ geocodeLatLng(latLng,inputName) {
 
 
   
-
-  listride(){
-    if(this.currentUser.emailVerified == false){
-      const alert = this.alertCtrl.create({
-        title: 'Oops!',
-        subTitle: 'por favor verifica tu email',
-        buttons: ['OK']
-      });
-      alert.present();  
-    }else{
-      if(this.userInfo.documents){
-        if(this.userInfo.documents.license == true && this.userInfo.documents.id == true){
-          try {
-            this.orFirebase=[this.autocompleteMyPos.input]
-            this.desFirebase=[this.userInfo.fixedLocation.name]   
-
-
-            console.log(this.orFirebase);
-          if( this.autocompleteMyPos.input==''){
-                this.presentAlert('No tienes toda la informacion','Por favor asegurate de que la dirección de tu casa sea la correcta','Ok');
-                this.clearMarkers();
-                
-                this.directionsDisplay.setDirections({routes: []});
-                this.loadMap();
-               } else {
-                 
-                this.sendCoordsService.pushcoordinatesDrivers(this.SignUpService.userPlace, this.user,this.desFirebase,this.orFirebase)
-       
-                this.geoInfo1 = this.myLatLng;
-                console.log(this.geoInfo1);
-               
-
-
-      
-              //   this.geoInfo2 = {
-              //     lat: this.myLatLngDest.lat(),
-              //     lng: this.myLatLngDest.lng()
-              //   }
-               
-
-                console.log("AQUIIIIIIIIIIIIIII")
-                console.log(this.geoInfo2.lat);
-                //turn on geoquery university to determine wether the user is in university
-                this.geofireService.setGeofirePlace(this.SignUpService.userPlace, 0.56, this.myLatLngDest.lat(), this.myLatLngDest.lng(), this.user);
-               //
-                this.confirmPrice(this.geoInfo1, this.geoInfo2);
-                      
-              }
-            
-             }
-             
-          catch(error) {
-            // console.log(error);
-            // if(this.geoInfo2.lat === null || this.geoInfo2.lat === undefined ){
-            //   //this is to tell the user to select a place before publishing a trip
-            //   this.presentAlert('Información Incompleta','no puedes publicar un viaje sin antes seleccionar un lugar de la lista.','Ok') 
-            // }else {
-            //   this.presentAlert('Hay un error en la aplicación','Lo sentimos, por favor para solucionar este problema porfavor envianos un correo a soporte@waypool.com,¡lo solucionaremos!.','Ok') 
-
-            // }
-            }
-      
-            console.log(this.orFirebase);
-        }else{
-          let alert = this.alertCtrl.create({
-            title: '¡oh-uh!',
-            subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-           buttons: [
-            { 
-              text: 'Subir mis documentos',
-              handler: () => {
-                this.navCtrl.push('CarRegistrationPage');
-              }
-            },
-              {
-                text: 'Cancelar',
-                role: 'cancel',
-                handler: () => {
-               
-                }
-              }
-            ],
-            cssClass: 'alertDanger'
-          });
-          alert.present();
-        }
-      }else{
-        let alert = this.alertCtrl.create({
-          title: '¡oh-oh!',
-          subTitle: 'faltan documentos por subir, dirigete a perfil, luego a tus documentos y completa el envío. Si ya los subiste, espera a que el equipo de Waypool te verifique.',
-         buttons: [
-          { 
-            text: 'Subir mis documentos',
-            handler: () => {
-              this.navCtrl.push('CarRegistrationPage');
-            }
-          },
-            {
-              text: 'Cancelar',
-              role: 'cancel',
-              handler: () => {
-             
-              }
-            }
-          ],
-          cssClass: 'alertDanger'
-        });
-        alert.present();
-      }
-    }
-  
-
-}
 
 
     presentAlert(title,text,button) {
@@ -1030,153 +945,19 @@ geocodeLatLng(latLng,inputName) {
 
 
 
-        enable() {
-          const inputs: any = document.getElementById("input").getElementsByTagName("INPUT");
-          inputs[0].disabled=false;
-          // const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
-          // inputs2[0].disabled=false;
-          //     }
+   enable() {
+     const inputs: any = document.getElementById("input").getElementsByTagName("INPUT");
+     inputs[0].disabled=false;
+     // const inputs2: any = document.getElementById("input2").getElementsByTagName("INPUT");
+     // inputs2[0].disabled=false;
+     //     }
   }  
   showPopup() {
     let profileModal = this.modalCtrl.create('SuccessNotificationPage');
     profileModal.present();
 
   }
-  LoadMapWithoutHouseAdress(){
-    // this gets current position and set the camera of the map and put a marker in your location
-  this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
 
-    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    console.log(latLng);
-
-    let mapOptions = {
-        center: latLng,
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false,
-          styles: [
-            {
-              featureType: 'poi',
-              elementType: 'labels.icon',
-              stylers: [
-                {
-                  visibility: 'off'
-                }
-              ]
-            }
-          ]
-      }
-  //creates the map and give options
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
-      
-    this.markerGeolocation = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: latLng,
-      draggable:true,
-      icon: {         url: "assets/imgs/house.png",
-      scaledSize: new google.maps.Size(70, 70)    
-
-    }
-    });
-    this.markers.push(this.markerGeolocation);
-    this.geocoordinatesHouse = {latOr: position.coords.latitude , lngOr: position.coords.longitude};
-
-    //allow the marker to be draged and changed the position
-    this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos);
-    //to reverse-geocode position
-    this.geocodeLatLng(latLng,this.autocompleteMyPos);
-console.log(this.userInfo.fixedLocation.name);
-
-     this.markerDest = new google.maps.Marker({
-            position: this.positionDest,
-            map: this.map,
-            animation: google.maps.Animation.DROP,
-               icon: {         url: "assets/imgs/workbuilding.png",
-            scaledSize: new google.maps.Size(250, 250)    
-             }})
-            
-
-             this.calculateRoute(latLng,this.positionDest);
-              this.directionsDisplay.setMap(this.map);
-   
-    },(err) => {
-    console.log(err);    
-   });
-  }
- LoadMapWithHouseAdress(positionOr){
-  this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
-
-    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    console.log(latLng);
-   let  positionOrMarker = new google.maps.LatLng(positionOr.latOr,positionOr.lngOr);
-    let mapOptions = {
-        center: latLng,
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false,
-          styles: [
-            {
-              featureType: 'poi',
-              elementType: 'labels.icon',
-              stylers: [
-                {
-                  visibility: 'off'
-                }
-              ]
-            }
-          ]
-      }
-  //creates the map and give options
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.myLatLng = {lat: position.coords.latitude , lng: position.coords.longitude};
-      
-    this.markerGeolocation = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: positionOrMarker,
-      draggable:true,
-      icon: {         url: "assets/imgs/house.png",
-      scaledSize: new google.maps.Size(70, 70)    
-
-    }
-    });
-    this.markers.push(this.markerGeolocation);
-    this.geocoordinatesHouse = positionOr;
-
-    //allow the marker to be draged and changed the position
-    this.dragMarkerOr(this.markerGeolocation,this.autocompleteMyPos);
-    //to reverse-geocode position
-    this.geocodeLatLng(positionOrMarker,this.autocompleteMyPos);
-    console.log(this.userInfo.fixedLocation.name);
-
-     this.markerDest = new google.maps.Marker({
-            position: this.positionDest,
-            map: this.map,
-            animation: google.maps.Animation.DROP,
-               icon: {         url: "assets/imgs/workbuilding.png",
-            scaledSize: new google.maps.Size(250, 250)    
-             }})
-            
-
-             this.calculateRoute(positionOrMarker,this.positionDest);
-              this.directionsDisplay.setMap(this.map);
-   
-    },(err) => {
-    console.log(err);    
-   });
- }
 
 
 
@@ -1199,6 +980,8 @@ console.log(this.userInfo.fixedLocation.name);
               this.isConected = false;
               this.isDisconected = true;
               this.changeColorOffline();
+              this.autocompleteMyDest.input = '';
+
               this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/' + this.user).once('value').then(snap => {
                               
                 console.log(snap.val()); 
@@ -1223,5 +1006,36 @@ console.log(this.userInfo.fixedLocation.name);
       alert.present();
     }
 
+    changeColorOnline(){
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','green')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','green')
+    
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','green')
+    
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','transparent')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'font-color','#bfbfbf')
+    
+      this.showPopup();
+    }
+    changeColorOffline(){
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-width','2px')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'background-color','rgb(167, 23, 23)')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-style','solid')
+      this.renderer.setElementStyle(this.buttonDisconected.nativeElement,'border-color','rgb(167, 23, 23)')
+    
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-width','2px')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-style','solid')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'border-color','rgb(167, 23, 23)')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'background-color','transparent')
+      this.renderer.setElementStyle(this.buttonConected.nativeElement,'font-color','#bfbfbf')
+
+    }
+    pushOriginPage(){
+      this.navCtrl.push('SpecifyOriginPage')
+    }
 
 }

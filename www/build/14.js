@@ -1,14 +1,14 @@
 webpackJsonp([14],{
 
-/***/ 647:
+/***/ 650:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicProfilePageModule", function() { return PublicProfilePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RemoveSchedulePageModule", function() { return RemoveSchedulePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__public_profile__ = __webpack_require__(808);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__remove_schedule__ = __webpack_require__(813);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,41 +18,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PublicProfilePageModule = /** @class */ (function () {
-    function PublicProfilePageModule() {
+var RemoveSchedulePageModule = /** @class */ (function () {
+    function RemoveSchedulePageModule() {
     }
-    PublicProfilePageModule = __decorate([
+    RemoveSchedulePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */],
+                __WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__remove_schedule__["a" /* RemoveSchedulePage */]),
             ],
-            exports: [
-                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]
-            ]
         })
-    ], PublicProfilePageModule);
-    return PublicProfilePageModule;
+    ], RemoveSchedulePageModule);
+    return RemoveSchedulePageModule;
 }());
 
-//# sourceMappingURL=public-profile.module.js.map
+//# sourceMappingURL=remove-schedule.module.js.map
 
 /***/ }),
 
-/***/ 808:
+/***/ 813:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicProfilePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RemoveSchedulePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,37 +64,55 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-/**
- * Generated class for the PublicProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicProfilePage = /** @class */ (function () {
-    function PublicProfilePage(navCtrl, modalCtrl, toastCtrl, alertCtrl, AngularFireAuth, authenticationService, SignupService, navParams) {
+var RemoveSchedulePage = /** @class */ (function () {
+    function RemoveSchedulePage(navCtrl, navParams, viewCtrl, alertCtrl, signUpService, angularFireAuth, afDB) {
+        var _this = this;
         this.navCtrl = navCtrl;
-        this.modalCtrl = modalCtrl;
-        this.toastCtrl = toastCtrl;
-        this.alertCtrl = alertCtrl;
-        this.AngularFireAuth = AngularFireAuth;
-        this.authenticationService = authenticationService;
-        this.SignupService = SignupService;
         this.navParams = navParams;
-        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_5_rxjs__["Subject"];
-        this.passenger = this.navParams.get('passenger');
-        console.log(this.passenger);
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.signUpService = signUpService;
+        this.angularFireAuth = angularFireAuth;
+        this.afDB = afDB;
+        this.schedule = this.navParams.get('schedule');
+        console.log(this.schedule);
+        this.userId = this.angularFireAuth.auth.currentUser.uid;
+        this.startHour = this.schedule.hour;
+        this.picToView = this.schedule.image;
+        this.textMessage = this.schedule.description;
+        this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then(function (snap) {
+            _this.userInfo = snap.val();
+        });
     }
-    PublicProfilePage = __decorate([
+    RemoveSchedulePage.prototype.dismiss = function () {
+        this.viewCtrl.dismiss(this.accepted);
+    };
+    RemoveSchedulePage.prototype.remove = function () {
+        var _this = this;
+        this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then(function (snap) {
+            var obj = snap.val();
+            Object.getOwnPropertyNames(obj).forEach(function (key) {
+                if (obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10) {
+                }
+                else {
+                    _this.signUpService.removeSchedule(obj[key], _this.userId, _this.schedule.key);
+                }
+            });
+        }).then(function () {
+            _this.afDB.database.ref('allSchedules/' + _this.userId + '/' + _this.schedule.key).remove();
+            _this.dismiss();
+        });
+    };
+    RemoveSchedulePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-public-profile',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/public-profile/public-profile.html"*/'<ion-header class="bg-theme">\n  <ion-navbar>\n      <ion-title>PERFIL DE {{passenger.name | uppercase}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg-light">\n<!-- <ion-row>\n        <ion-item style="position: relative;z-index: 2;">\n                <ion-avatar item-start>\n                    <img class="image" src="assets/imgs/userPicture.png">\n                </ion-avatar>\n            </ion-item>\n</ion-row> -->\n<ion-row>\n    <ion-item>\n            <div class="name">\n                    <h1> \n                        {{passenger.name |titlecase}} {{passenger.lastname |titlecase}}\n                    </h1>\n                    \n                </div>\n    </ion-item>\n \n</ion-row>\n  \n  <div class="textBox">\n      <ion-list>   \n          <div class="bg-white" padding>\n              <ion-list no-lines>\n                  <ion-item>\n                      <ion-label stacked>Número Telefónico</ion-label>\n                      <ion-input type="text" [(ngModel)]="passenger.phone" readonly></ion-input>\n                    </ion-item>\n                    <!-- PROBLEM WITH DISPLAYING THE EMAIL -->\n                  <!-- <ion-item>\n                      <ion-label stacked>Email</ion-label>\n                      <ion-input type="text" [(ngModel)]="email" readonly></ion-input>                        <ion-input type="text" [(ngModel)]="user.name" readonly></ion-input>\n                  </ion-item> -->\n                  <ion-item>\n                      <ion-label stacked >Sobre {{passenger.name}}</ion-label>\n                      <ion-input type="text" [(ngModel)]="passenger.about" readonly></ion-input>\n                    </ion-item>\n                  <ion-item>\n                      <ion-label stacked>URL de interés</ion-label>\n                      <ion-input type="text" [(ngModel)]="passenger.url" readonly></ion-input>\n                  </ion-item>\n                 \n              </ion-list>\n          </div>\n      </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/public-profile/public-profile.html"*/,
+            selector: 'page-remove-schedule',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/'<ion-content>\n\n    <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n    <ion-card>\n  \n        <ion-card-content>\n            <ion-row style="margin-top: 14px;    display: flex;\n            justify-content: center">\n                <ion-list>\n                    <ion-item>\n                        <ion-label>Hora:</ion-label>\n                <ion-datetime  displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="startHour" ></ion-datetime>\n                </ion-item>\n                </ion-list>                    \n            </ion-row>\n    </ion-card-content>\n\n    <br>\n    <h2 text-center>A esta hora vas a tu:</h2>\n     <h1 text-center class="texto1">{{textMessage}}</h1>\n      <ion-row>\n          <ion-col class="col1">\n              <img [src]="picToView" height="100px" width="100%"/>\n          </ion-col>\n      </ion-row>\n  \n        <ion-card-content>\n            <div class="seats">           \n                <ion-row style="margin-top: 14px;    display: flex;\n                justify-content: center">\n                   \n                    <ion-col col-8>\n                        <button class="btn bg-red text-white rounded" style="width: 100%;font-size: .95rem;" (click)="remove()">Eliminar este horario</button>\n                    </ion-col>\n                </ion-row>\n            </div>\n        </ion-card-content>\n    </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/remove-schedule/remove-schedule.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]])
-    ], PublicProfilePage);
-    return PublicProfilePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]])
+    ], RemoveSchedulePage);
+    return RemoveSchedulePage;
 }());
 
-//# sourceMappingURL=public-profile.js.map
+//# sourceMappingURL=remove-schedule.js.map
 
 /***/ })
 
