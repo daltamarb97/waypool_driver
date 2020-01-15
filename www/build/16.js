@@ -1,14 +1,14 @@
 webpackJsonp([16],{
 
-/***/ 646:
+/***/ 648:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PaymentsInfoPageModule", function() { return PaymentsInfoPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicProfilePageModule", function() { return PublicProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__payments_info__ = __webpack_require__(807);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__public_profile__ = __webpack_require__(811);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PaymentsInfoPageModule = /** @class */ (function () {
-    function PaymentsInfoPageModule() {
+var PublicProfilePageModule = /** @class */ (function () {
+    function PublicProfilePageModule() {
     }
-    PaymentsInfoPageModule = __decorate([
+    PublicProfilePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__payments_info__["a" /* PaymentsInfoPage */],
+                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__payments_info__["a" /* PaymentsInfoPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]),
             ],
+            exports: [
+                __WEBPACK_IMPORTED_MODULE_2__public_profile__["a" /* PublicProfilePage */]
+            ]
         })
-    ], PaymentsInfoPageModule);
-    return PaymentsInfoPageModule;
+    ], PublicProfilePageModule);
+    return PublicProfilePageModule;
 }());
 
-//# sourceMappingURL=payments-info.module.js.map
+//# sourceMappingURL=public-profile.module.js.map
 
 /***/ }),
 
-/***/ 807:
+/***/ 811:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaymentsInfoPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_price_service__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_signup_service__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,81 +69,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 /**
- * Generated class for the PaymentsInfoPage page.
+ * Generated class for the PublicProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var PaymentsInfoPage = /** @class */ (function () {
-    function PaymentsInfoPage(navCtrl, navParams, afDB, viewCtrl, alertCtrl, priceServices, signUpServices, angularFireAuth) {
-        var _this = this;
+var PublicProfilePage = /** @class */ (function () {
+    function PublicProfilePage(navCtrl, modalCtrl, toastCtrl, alertCtrl, AngularFireAuth, authenticationService, SignupService, navParams) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.afDB = afDB;
-        this.viewCtrl = viewCtrl;
+        this.modalCtrl = modalCtrl;
+        this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
-        this.priceServices = priceServices;
-        this.signUpServices = signUpServices;
-        this.angularFireAuth = angularFireAuth;
-        this.bankList = [];
-        this.showOther = false;
-        this.afDB.database.ref('/bankList/').once('value').then(function (snap) {
-            console.log(snap.val());
-            _this.bankList = snap.val();
-        });
-        this.driverId = this.angularFireAuth.auth.currentUser.uid;
+        this.AngularFireAuth = AngularFireAuth;
+        this.authenticationService = authenticationService;
+        this.SignupService = SignupService;
+        this.navParams = navParams;
+        this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_5_rxjs__["Subject"];
+        this.passenger = this.navParams.get('passenger');
+        console.log(this.passenger);
     }
-    PaymentsInfoPage.prototype.onChange = function () {
-        if (this.bankEntity === 'Otro') {
-            this.showOther = true;
-        }
-        else {
-            this.showOther = false;
-        }
-    };
-    PaymentsInfoPage.prototype.setPaymentInfo = function () {
-        if (this.bankEntity === 'Otro') {
-            if (this.id === null || this.id === undefined || this.bankEntityOther === null || this.bankEntityOther === undefined || this.bankAccount === null || this.bankAccount === undefined) {
-                var alert_1 = this.alertCtrl.create({
-                    title: 'Informacion Incompleta',
-                    subTitle: 'Por favor revisa que pusiste toda la información correctamente',
-                    buttons: ['OK']
-                });
-                alert_1.present();
-            }
-            else {
-                this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntityOther);
-                this.dismiss();
-            }
-        }
-        else {
-            if (this.id === null || this.id === undefined || this.bankEntity === null || this.bankEntity === undefined || this.bankAccount === null || this.bankAccount === undefined) {
-                var alert_2 = this.alertCtrl.create({
-                    title: 'Informacion Incompleta',
-                    subTitle: 'Por favor revisa que pusiste toda la información correctamente',
-                    buttons: ['OK']
-                });
-                alert_2.present();
-            }
-            else {
-                this.priceServices.sendPaymentInfo(this.signUpServices.userPlace, this.driverId, this.id, this.bankAccount, this.bankEntity);
-                this.dismiss();
-            }
-        }
-    };
-    PaymentsInfoPage.prototype.dismiss = function () {
-        this.viewCtrl.dismiss();
-    };
-    PaymentsInfoPage = __decorate([
+    PublicProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-payments-info',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/payments-info/payments-info.html"*/'<ion-content>\n  <ion-icon name="md-close" class="close-icon text-white" (click)="dismiss()"></ion-icon>\n  <ion-card>\n      <ion-card-content>\n          <h2>INFORMACIÓN PARA RECIBIR DINERO</h2>\n          <div class="ride-detail">\n              <ion-item class="form">\n                  <ion-label floating>Tu cédula</ion-label>\n                  <ion-input type="number" [(ngModel)]="id"></ion-input>\n                </ion-item>                \n          </div>\n      </ion-card-content>\n      <ion-card-content>\n        <div class="ride-detail">\n          <ion-list>\n            <ion-item class="form">\n              <ion-label floating>Tu número de cuenta</ion-label>\n              <ion-input type="number" [(ngModel)]="bankAccount"></ion-input>\n            </ion-item>\n          </ion-list>               \n        </div>\n    </ion-card-content>\n\n    <ion-card-content>\n        <ion-row style="margin-top: 14px;    display: flex;\n              justify-content: center">\n                 <ion-list>\n                      <ion-item>\n                        <ion-label>Tu banco</ion-label>\n                        <ion-select [(ngModel)]="bankEntity" (ionChange)="onChange()">\n                          <ion-option *ngFor="let bank of bankList" >{{bank}}</ion-option>\n                        </ion-select>\n                      </ion-item>\n                      <ion-item *ngIf=\'showOther\'>\n                          <ion-label floating>Nombre de tu banco</ion-label>\n                          <ion-input  [(ngModel)]="bankEntityOther"></ion-input>\n                      </ion-item>\n                  </ion-list>\n              </ion-row>\n    </ion-card-content>\n    <br/>\n      <ion-card-content>\n          <div class="ride-detail no-before">\n              <p>Esta información es necesaria para que puedas recibir el dinero que ganaste por compartir tu carro.</p>      \n              <br/>\n              <p>Recuerda que esta información es tuya y por lo tanto nos tomamos enserio su protección. Tus datos estan protegidos bajo las normas de nuestra politica de  privacidad de datos. <a href="https://waypooltech.wordpress.com/" style="color: #0081ad">Más Información</a></p>\n          </div>\n              \n             \n     \n          <div class="seats">\n              \n              <ion-row style="margin-top: 14px;    display: flex;\n              justify-content: center">\n                 \n                  <ion-col col-8>\n                      <button class="btn bg-theme text-white rounded" style="width: 100%;font-size: 1.2rem;" (click)="setPaymentInfo()">Listo</button>\n                  </ion-col>\n              </ion-row>\n             \n\n          </div>\n      </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/payments-info/payments-info.html"*/,
+            selector: 'page-public-profile',template:/*ion-inline-start:"C:\Users\Daniel\Documents\waypool\prod\latest\new\waypool_driver\src\pages\public-profile\public-profile.html"*/'<ion-header class="bg-theme">\n\n  <ion-navbar>\n\n      <ion-title>PERFIL DE {{passenger.name | uppercase}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="bg-light">\n\n<!-- <ion-row>\n\n        <ion-item style="position: relative;z-index: 2;">\n\n                <ion-avatar item-start>\n\n                    <img class="image" src="assets/imgs/userPicture.png">\n\n                </ion-avatar>\n\n            </ion-item>\n\n</ion-row> -->\n\n<ion-row>\n\n    <ion-item>\n\n            <div class="name">\n\n                    <h1> \n\n                        {{passenger.name |titlecase}} {{passenger.lastname |titlecase}}\n\n                    </h1>\n\n                    \n\n                </div>\n\n    </ion-item>\n\n \n\n</ion-row>\n\n  \n\n  <div class="textBox">\n\n      <ion-list>   \n\n          <div class="bg-white" padding>\n\n              <ion-list no-lines>\n\n                  <ion-item>\n\n                      <ion-label stacked>Número Telefónico</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.phone" readonly></ion-input>\n\n                    </ion-item>\n\n                    <!-- PROBLEM WITH DISPLAYING THE EMAIL -->\n\n                  <!-- <ion-item>\n\n                      <ion-label stacked>Email</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="email" readonly></ion-input>                        <ion-input type="text" [(ngModel)]="user.name" readonly></ion-input>\n\n                  </ion-item> -->\n\n                  <ion-item>\n\n                      <ion-label stacked >Sobre {{passenger.name}}</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.about" readonly></ion-input>\n\n                    </ion-item>\n\n                  <ion-item>\n\n                      <ion-label stacked>URL de interés</ion-label>\n\n                      <ion-input type="text" [(ngModel)]="passenger.url" readonly></ion-input>\n\n                  </ion-item>\n\n                 \n\n              </ion-list>\n\n          </div>\n\n      </ion-list>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Documents\waypool\prod\latest\new\waypool_driver\src\pages\public-profile\public-profile.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__services_price_service__["a" /* priceService */], __WEBPACK_IMPORTED_MODULE_4__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]])
-    ], PaymentsInfoPage);
-    return PaymentsInfoPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_driverauthentication_service__["a" /* authenticationService */], __WEBPACK_IMPORTED_MODULE_3__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]])
+    ], PublicProfilePage);
+    return PublicProfilePage;
 }());
 
-//# sourceMappingURL=payments-info.js.map
+//# sourceMappingURL=public-profile.js.map
 
 /***/ })
 

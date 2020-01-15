@@ -3,10 +3,10 @@
     <ion-navbar  >
         <button ion-button menuToggle>
             <ion-icon name="menu" style="color: white;"></ion-icon>
-           
+          
           </button>
           <!-- <ion-avatar ion-button menuToggle>
-            <img style="height:60px; width:60px" src="assets/imgs/menuIcon2.png">
+            <img style="height:100%; width:100%" src="assets/imgs/menu.png">
         </ion-avatar> -->
           <ion-buttons style="display: flex; justify-content: center;"> 
               <ion-item style="background-color: transparent;">
@@ -38,7 +38,7 @@
 
       <ion-card class="search" >
           <ion-card-content>
-              <span style=" z-index: 1;position: relative;" class="text-theme search-text">Tu casa &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>
+              <span style=" z-index: 1;position: relative;" class="text-light search-text">Casa &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>
 
               <span class="dot bg-theme"></span>
               <ion-searchbar required [(ngModel)]="autocompleteMyPos.input" id="input" [animated]=true (ionInput)="updateSearchResultsMyPos()"  placeholder="Cóloca la dirección de tu casa"></ion-searchbar>
@@ -50,19 +50,21 @@
                 </ion-list>
                 <!-- <ion-icon name="md-locate" (click)="getPositionAndMarker()" class="text-black"></ion-icon> -->
           </ion-card-content>
-          <!-- <ion-card-content>
+
+          <ion-card-content>
+            <span style=" z-index: 1;position: relative;" class="text-light search-text">Oficina &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>
+
               <span class="dot bg-yellow"></span>           
-             <ion-searchbar required [(ngModel)]="autocompleteMyDest.input"  id="input2" (ionInput)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>
+             <ion-searchbar  [(ngModel)]="autocompleteMyDest.input"  id="input2" (click)="updateSearchResultsMyDest()" placeholder="Cóloca tu destino"></ion-searchbar>
   
   
-              <ion-list   [hidden]="autocompleteItems2.length == 0">
-              <ion-item class="item" *ngFor="let item of autocompleteItems2" tappable (click)="selectSearchResultMyDest(item)">
-                {{ item.description }}
+              <ion-list   *ngIf="showList">
+              <ion-item class="item" *ngFor="let item of multipleDestinations" tappable (click)="selectSearchResultMyDest(item)">
+                {{ item.name }}
               </ion-item>
             </ion-list>
-              <span class="text-light search-text">Office &nbsp;<ion-icon name="ios-arrow-down" class="text-light"></ion-icon></span>
   
-          <!- </ion-card-content> -->
+           </ion-card-content>
            
       </ion-card>
       <!-- <ion-avatar item-end>

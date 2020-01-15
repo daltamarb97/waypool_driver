@@ -22,17 +22,15 @@ export class MyApp {
   token:any;
   pages:any=[];
   driverUninorte = [];
-  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
+  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen,private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
     console.log('se cargo')
     this.pages = [
-      {title:'Mi viajes',component:'ReservetripPage'},
-      {title: 'Mi Billetera', component:'WalletPage'},
-      {title: 'Mi horario', component:'SchedulePage'}, 
-      {title:'Mi perfil',component:'ProfilePage'},
-      {title:'Mis documentos',component:'CarRegistrationPage'},
-      {title:'Mis vehículos',component:'ShowInfoCarPage'},
-      {title: 'Soporte', component:'HelpPage'},
-      {title: 'Terminos y Condiciones', component:'TermsPage'}
+      {title:'Mis viajes',component:'ReservetripPage', icon:'md-paper'},
+      {title: 'Billetera', component:'WalletPage',icon:'card'},
+      {title: 'Horario', component:'SchedulePage',icon:'time'}, 
+      {title:'Mi perfil',component:'MorePage',icon:'person'},
+      {title:'Instrucciones',component:'WalkthroughPage',icon:'alert'},
+
     
 
     ]
@@ -108,4 +106,8 @@ export class MyApp {
   openPage(page){
     this.nav.push(page.component)
   }
+  goAsPassenger(){
+    this.nav.setRoot('FindridePassPage')
+  }
+
 }

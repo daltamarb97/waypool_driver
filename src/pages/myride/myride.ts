@@ -214,47 +214,33 @@ tripState:any;
 						text: 'Si',
 						handler: () => {
 
-							moment.locale('es'); //to make the date be in spanish  
+						
+									//set time
+									moment.locale('es'); //to make the date be in spanish  
 
-							// this.geofireServices.cancelGeoqueryOr()
-
-							// this.geofireServices.cancelGeoqueryDest()
-
-							let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
-							this.TripsService.timeFinishedTrip(this.SignUpService.userPlace,this.userDriver.keyTrip, this.driverUid, today);
-							console.log(this.trip)
-							// this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
-							console.log("praise the sun")
-							console.log(this.trip)
-							
-
-							console.log(this.trip)
-							// this.TripsService.saveTripUser(this.SignUpService.userPlace,this.driverUid, this.userDriver.keyTrip);
-
-							setTimeout(() => {
-								console.log("MIRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-								this.unSubscribeServices();
-							this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
-							this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
-							this.pickedUpUsers.forEach(user => {
-								this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
-
-								this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);
-
-								this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
-
-
-							});
-							this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
-							this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
-							
-							this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
-
-							this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
-							this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
-							
-							this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
-							}, 3000);
+									let today = moment().format('MMMM Do YYYY, h:mm:ss a'); //set actual date
+									this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+ this.driverUid+'/'+ this.userDriver.keyTrip).update({
+									  DestinationTime:today
+									}).then((snap)=>{
+										this.unSubscribeServices();
+										this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
+										this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
+										this.pickedUpUsers.forEach(user => {
+											this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
+											this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);			
+											this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
+										});
+										this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
+										this.TripsService.saveTripOnRecords(this.SignUpService.userPlace,this.driverUid, this.trip);
+										
+										this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
+			
+										this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+										this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
+										
+										this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);										
+								    })
+									
 							this.navCtrl.pop();
 							//TO-DO: AQUI FALTA RATETRIPPAGE
 							this.navCtrl.push('RatetripPage',{user:this.userDriver, trip:this.trip});
