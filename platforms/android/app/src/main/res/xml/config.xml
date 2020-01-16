@@ -2,7 +2,7 @@
 <widget id="com.waypoolsas.waypoolcars" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WaypoolCars</name>
     <description>Waypool for students with car</description>
-    <author email="waypooltec@gmail.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
+    <author email="team@waypooltech.com" href="https://waypooltech.wordpress.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

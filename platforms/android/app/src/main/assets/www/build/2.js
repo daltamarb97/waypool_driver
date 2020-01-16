@@ -17469,7 +17469,7 @@ var MyridePage = /** @class */ (function () {
             .catch(function (err) {
             var alert = _this.alertCtrl.create({
                 title: 'error de llamada',
-                subTitle: 'hubo un error en la llamada, si persiste el problema envíanos un correo a waypooltec@gmail.com',
+                subTitle: 'hubo un error en la llamada, si persiste el problema envíanos un correo a team@waypooltech.com',
                 buttons: ['OK']
             });
             alert.present();

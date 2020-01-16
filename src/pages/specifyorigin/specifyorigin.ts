@@ -105,7 +105,8 @@ export class SpecifyOriginPage {
   isDisconected:boolean;
   driverReserves: any;
   fullReserves = [];
-
+  city:any;
+  company:any;
   
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer ) {
 
@@ -135,8 +136,9 @@ export class SpecifyOriginPage {
  ionViewDidLoad(){
 
       
-  this.afDB.database.ref('allUsers/' + this.user).once('value').then((snap)=>{
-    this.SignUpService.userPlace = snap.val().place;
+  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user).once('value').then((snap)=>{
+    this.city = snap.val().city;
+    this.company = snap.val().company;
     console.log(this.SignUpService.userPlace);
 
 
@@ -144,6 +146,7 @@ export class SpecifyOriginPage {
 
   
   })
+
 
  }
 
@@ -332,16 +335,28 @@ geocodeLatLng(latLng,inputName) {
 
 sendLocation(){
   this.houseAddress = this.autocompleteMyPos.input;
+  this.afDB.database.ref('allCities/' + this.city + '/allPlaces/' + this.company + '/zones').once('value').then((snap)=>{
+    let obj = snap.val();
+    console.log(obj);
+    Object.getOwnPropertyNames(obj).forEach((key)=>{
+        if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
 
-  this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/').update({
-    name: this.houseAddress[0]
-  }).then((data)=>{
-    this.afDB.database.ref(this.SignUpService.userPlace + '/drivers/' + this.user + '/houseAddress/coordinates').update({
-      lat:this.geocoordinatesHouse.latOr,
-      lng:this.geocoordinatesHouse.lngOr
-     });
-     this.navCtrl.setRoot('FindridePage')
-   })
+        }else{
+          this.afDB.database.ref(obj[key] + '/drivers/' + this.user + '/houseAddress/').update({
+            name: this.houseAddress[0]
+          }).then((data)=>{
+            this.afDB.database.ref(obj[key] + '/drivers/' + this.user + '/houseAddress/coordinates').update({
+              lat:this.geocoordinatesHouse.latOr,
+              lng:this.geocoordinatesHouse.lngOr
+             });
+           })
+        }
+    })
+    
+  }).then(()=>{
+    this.navCtrl.setRoot('FindridePage')
+  })
+  
  }
 } 
 

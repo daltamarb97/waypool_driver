@@ -123,24 +123,27 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
             text: 'Eliminar',
             handler: () => {
              
-              
-              this.SignupService.deleteAccount(this.SignupService.userPlace, this.userUid)
-              this.AngularFireAuth.auth.currentUser.delete().then(()=>{
-                console.log('user has been deleted');
-              }).catch((error)=>{
-                console.log('error:', error)
-              })
-              
-              this.navCtrl.setRoot('LoginPage')
+              this.afDB.database.ref('allCities/' + this.user.city + '/allPlaces/' + this.user.company + '/zones').once('value').then((snap)=>{
+                let obj = snap.val();
+                Object.getOwnPropertyNames(obj).forEach((key)=>{
+                  this.SignupService.deleteAccount(obj[key], this.userUid)
+                })
+              }).then(()=>{
+                this.AngularFireAuth.auth.currentUser.delete().then(()=>{
+                  console.log('user has been deleted');
+                }).catch((error)=>{
+                  console.log('error:', error)
+                })
+              }).then(()=>{
+                this.navCtrl.setRoot('LoginPage')
 
-              const toast = this.toastCtrl.create({
-                message: `Acabas de eliminar esta cuenta, si deseas volver a ser parte de la comunidad por favor regístrate de nuevo`,
-                showCloseButton: true,
-                closeButtonText: 'Ok'
-              });
-              toast.present();
-      
-  
+                const toast = this.toastCtrl.create({
+                  message: `Acabas de eliminar esta cuenta, si deseas volver a ser parte de la comunidad por favor regístrate de nuevo`,
+                  showCloseButton: true,
+                  closeButtonText: 'Ok'
+                });
+                toast.present();
+              })
             }
           }
         ]

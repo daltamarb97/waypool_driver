@@ -313,12 +313,12 @@ var CarRegistrationLoginPage = /** @class */ (function () {
     };
     ;
     CarRegistrationLoginPage.prototype.skip = function () {
-        this.app.getRootNav().push('SchedulePage');
+        this.app.getRootNav().push('SchedulePage', { defaultZone: this.defaultZone });
     };
     CarRegistrationLoginPage.prototype.goSchedulePage = function () {
         var _this = this;
         if (this.licenceWasUploaded === false) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Puedes continuar pero aún te falta subir una foto de tu licencia',
                 subTitle: 'Puedes subir esta foto en otro momento, pero tardará más tu aprobación de documentos',
                 buttons: [
@@ -335,10 +335,10 @@ var CarRegistrationLoginPage = /** @class */ (function () {
                     }
                 ]
             });
-            alert_1.present();
+            alert.present();
         }
         else if (this.idWasUploaded === false) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Puedes continuar pero aún te falta subir una foto de tu cédula',
                 subTitle: 'Puedes subir esta foto en otro momento, pero tardará más tu aprobación de documentos',
                 buttons: [
@@ -355,7 +355,7 @@ var CarRegistrationLoginPage = /** @class */ (function () {
                     }
                 ]
             });
-            alert_2.present();
+            alert.present();
         }
         else {
             this.skip();
@@ -365,9 +365,10 @@ var CarRegistrationLoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-car-registration-login',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration-login/car-registration-login.html"*/'<!--\n  Generated template for the CarRegistrationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-theme">\n        <ion-navbar hideBackButton>\n            <ion-title>SUBIR DOCUMENTOS\n                <!--           <ion-icon name="md-search" class="text-white" style="margin-left: auto;float: right;"></ion-icon>-->\n            </ion-title>\n        </ion-navbar>\n    </ion-header>\n    \n    <ion-content padding-right padding-left>\n        <p text-center padding-top margin-top>{{description}}</p>\n        <h2 text-center>{{namePicture}}</h2>\n    \n        <ion-row>\n            <ion-col col-4 text-center>\n                <img  [src]="picToViewLicense" (click)="changeNamePicture1()">\n            </ion-col>\n            <ion-col col-4 text-center>\n                <img   [src]="picToViewId" (click)="changeNamePicture2()">\n            </ion-col>\n        </ion-row>\n    \n        <div text-center class="verifiy">\n            <img [src]="picToView">\n        </div>\n        <ion-row>\n            <ion-col>\n                <p padding-top class="btn-box" *ngIf = \'showLicense\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraLicense()">Subir Foto de Licencia</button></p>\n                <p padding-top class="btn-box" *ngIf = \'showId\'><button class="btn text-white bg-theme rounded" style="width: 80%;" (click)="usageCameraId()">Subir Foto de Cédula</button></p>\n            </ion-col>\n        </ion-row>\n        <ion-row *ngIf= \'showContinue\'>\n                <ion-col>\n                    <p padding-top class="btn-box"><button class="btn text-white bg-yellow rounded" style="width: 80%;" (click)="goSchedulePage()">Continuar</button></p>\n                </ion-col>\n            </ion-row>\n        <ion-row>\n                <p justify-content-center align-items-center class="skiptext"><strong  (click)="skip()">No lo quiero terminar ahora</strong></p>\n        </ion-row>\n    </ion-content>\n    \n    '/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/car-registration-login/car-registration-login.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_7_angularfire2_database__["AngularFireDatabase"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["AngularFireAuth"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_7_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7_angularfire2_database__["AngularFireDatabase"]) === "function" && _k || Object])
     ], CarRegistrationLoginPage);
     return CarRegistrationLoginPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 }());
 
 //# sourceMappingURL=car-registration-login.js.map

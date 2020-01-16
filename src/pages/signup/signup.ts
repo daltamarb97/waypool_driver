@@ -107,7 +107,7 @@ noCompanyIdentified(numberToExecute){
         if(this.companyIdentified === false){
             const alert = this.alertCtrl.create({
                 title: 'El correo que ingresaste no concuerda con el de ninguna empresa de la red de Waypool',
-                subTitle: 'Revisa si escribiste el correo bien o si tu empresa no está en Waypool, envianos un correo a waypooltec@gmail.com',
+                subTitle: 'Revisa si escribiste el correo bien o si tu empresa no está en Waypool, envianos un correo a team@waypooltech.com',
                 buttons: ['OK']
               });
               alert.present(); 
@@ -210,6 +210,7 @@ noCompanyIdentified(numberToExecute){
                                             
                                                 this.zones.forEach(zone => {
                                                     this.SignUpService.saveUser(zone, this.user);
+
                                                 })
                                             
                                            
@@ -257,7 +258,7 @@ noCompanyIdentified(numberToExecute){
                                                         handler: () => {
                                                             
                                                                 this.afDB.database.ref('allCities/'+ this.cityVar + '/allPlaces/' + this.company + '/zones').once('value').then((snap)=>{
-                                                                    this.app.getRootNav().push('CarRegistrationLoginPage', {defaultZone: snap.val()[0]});  
+                                                                    this.app.getRootNav().push('CarRegistrationLoginPage', {defaultZone: snap.val()[0] });  
                                                                 })
                                                             
                                                         }

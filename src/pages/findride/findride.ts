@@ -108,6 +108,7 @@ export class FindridePage {
   destName: any;
   multipleLocations:boolean;
   zonesToIterate:any;
+
   constructor( private geofireService: geofireService,public TripsService:TripsService, public afDB: AngularFireDatabase, public navCtrl: NavController,public SignUpService:SignUpService,public modalCtrl: ModalController,private authenticationService: authenticationService, public geolocation: Geolocation,public zone: NgZone, public sendCoordsService: sendCoordsService, private AngularFireAuth: AngularFireAuth, public alertCtrl: AlertController, private toastCtrl: ToastController, private app: App, private sendUsersService: sendUsersService, public instancesService: instancesService, public firebaseNative: Firebase, private platform: Platform, private fcm: FCM, public loadingCtrl: LoadingController, public renderer: Renderer ) {
 
     
@@ -143,6 +144,7 @@ export class FindridePage {
       console.log(snapshot.val().multipleLocations);
       this.zonesToIterate = snapshot.val().zones;
       this.multipleDestinations = snapshot.val().location;
+      console.log(this.multipleDestinations);
       
 
       if(snapshot.val().multipleLocations === true){
@@ -751,7 +753,7 @@ updateSearchResultsMyPos(){
  updateSearchResultsMyDest(){
   if (this.userInfo.toggleStatus === 'online') {
     this.presentAlert('Información','No se puede cambiar el lugar mientras estas conectado.','OK')
-  } else if(this.userInfo.toggleStatus === 'offline'){
+  } else {
     this.showList = true;
   }
 }
@@ -813,7 +815,7 @@ selectSearchResultMyPos(item){
   selectSearchResultMyDest(item){
     if (this.userInfo.toggleStatus === 'online') {
       this.presentAlert('Información','No se puede cambiar el lugar mientras estas conectado.','OK')
-    } else if(this.userInfo.toggleStatus === 'offline'){
+    } else{
       this.clearMarkersDest();
       this.positionDest = new google.maps.LatLng(item.lat,item.lng);
       this.geocoordinatesDest = {lat:item.lat,lng:item.lng};

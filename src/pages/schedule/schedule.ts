@@ -29,7 +29,7 @@ export class SchedulePage {
   description:any;
   showButtonWorkSchedule:boolean = false;
   userInfo:any;
-
+  defaultZone:any;
   optionsCamera:CameraOptions = {
     quality: 100,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -43,7 +43,7 @@ export class SchedulePage {
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
   };
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public signUpService: SignUpService, private angularFireAuth: AngularFireAuth, public app: App, public alertCtrl: AlertController, private camera: Camera, public loadingCtrl: LoadingController, private instances: instancesService, private afDB: AngularFireDatabase) {
-  
+    this.defaultZone = this.navParams.get('defaultZone');
     this.userId = this.angularFireAuth.auth.currentUser.uid;
 
         this.afDB.database.ref(this.signUpService.userPlace + '/drivers/' + this.userId).once('value').then((snap)=>{
@@ -89,7 +89,7 @@ export class SchedulePage {
   }
 
   skipSchedule(){
-    this.app.getRootNav().push('FindridePage');
+    this.app.getRootNav().push('SpecifyOriginPage'); 
   }
 
   removeTime(sche){
@@ -250,7 +250,7 @@ export class SchedulePage {
 
 
   goFindride(){
-    this.navCtrl.setRoot('FindridePage');
+    this.navCtrl.setRoot('SpecifyOriginPage');
 
     this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
       let obj = snap.val();

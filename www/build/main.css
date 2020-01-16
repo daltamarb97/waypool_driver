@@ -31250,13 +31250,13 @@ page-signup .col-car {
   border-color: red;
 }
 
-.md page-specificorigin .search {
+.md page-specifyorigin .search {
   border-radius: 10px;
   margin: 10px 0;
   width: 100%;
 }
 
-.md page-specificorigin .search .card-content {
+.md page-specifyorigin .search .card-content {
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
@@ -31264,24 +31264,24 @@ page-signup .col-car {
   padding: 0px 15px;
 }
 
-.md page-specificorigin .search .card-content .searchbar-search-icon {
+.md page-specifyorigin .search .card-content .searchbar-search-icon {
   display: none;
 }
 
-.md page-specificorigin .search .card-content .searchbar-input {
+.md page-specifyorigin .search .card-content .searchbar-input {
   padding: 17px  !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   font-size: 1.25rem;
 }
 
-.md page-specificorigin .search .card-content .searchbar {
+.md page-specifyorigin .search .card-content .searchbar {
   padding: 0 !important;
   background: transparent !important;
   border: none !important;
 }
 
-.md page-specificorigin .search .card-content .dot {
+.md page-specifyorigin .search .card-content .dot {
   min-width: 10px;
   min-height: 10px;
   display: -webkit-box;
@@ -31297,30 +31297,30 @@ page-signup .col-car {
   z-index: 1;
 }
 
-.md page-specificorigin .search .card-content .dot.icons {
+.md page-specifyorigin .search .card-content .dot.icons {
   border-radius: 0;
 }
 
-.md page-specificorigin .search .ion-list {
+.md page-specifyorigin .search .ion-list {
   margin: 0;
   font-size: 130rem;
 }
 
-.md page-specificorigin .search .item-ios {
+.md page-specifyorigin .search .item-ios {
   font-size: 1.25rem;
 }
 
-.md page-specificorigin .search span.search-text {
+.md page-specifyorigin .search span.search-text {
   width: 140px;
   font-size: 1.3rem;
   text-align: right;
 }
 
-.md page-specificorigin .scroll {
+.md page-specifyorigin .scroll {
   height: 100%;
 }
 
-.md page-specificorigin #map {
+.md page-specifyorigin #map {
   z-index: -1;
   width: 100%;
   height: 100%;
@@ -31330,24 +31330,24 @@ page-signup .col-car {
   top: 0px;
 }
 
-.md page-specificorigin .findRideText {
+.md page-specifyorigin .findRideText {
   text-align: center;
 }
 
-.md page-specificorigin .alert {
+.md page-specifyorigin .alert {
   font-weight: bold;
 }
 
-.md page-specificorigin .btn-left {
+.md page-specifyorigin .btn-left {
   margin-right: 5px;
   width: 49%;
 }
 
-.md page-specificorigin .btn-right {
+.md page-specifyorigin .btn-right {
   width: 49%;
 }
 
-.md page-specificorigin .rowOfButtons {
+.md page-specifyorigin .rowOfButtons {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31359,7 +31359,7 @@ page-signup .col-car {
   flex-direction: row;
 }
 
-.md page-specificorigin ion-header[transparent] .toolbar-background {
+.md page-specifyorigin ion-header[transparent] .toolbar-background {
   background: transparent;
 }
 

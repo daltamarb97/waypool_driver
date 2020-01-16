@@ -189,6 +189,7 @@ var FindridePage = /** @class */ (function () {
                 console.log(snapshot.val().multipleLocations);
                 _this.zonesToIterate = snapshot.val().zones;
                 _this.multipleDestinations = snapshot.val().location;
+                console.log(_this.multipleDestinations);
                 if (snapshot.val().multipleLocations === true) {
                     // temporary location until user chooses the right location of their company
                     _this.SignUpService.userPlace = snapshot.val().zones[0];
@@ -726,7 +727,7 @@ var FindridePage = /** @class */ (function () {
         if (this.userInfo.toggleStatus === 'online') {
             this.presentAlert('Información', 'No se puede cambiar el lugar mientras estas conectado.', 'OK');
         }
-        else if (this.userInfo.toggleStatus === 'offline') {
+        else {
             this.showList = true;
         }
     };
@@ -772,7 +773,7 @@ var FindridePage = /** @class */ (function () {
         if (this.userInfo.toggleStatus === 'online') {
             this.presentAlert('Información', 'No se puede cambiar el lugar mientras estas conectado.', 'OK');
         }
-        else if (this.userInfo.toggleStatus === 'offline') {
+        else {
             this.clearMarkersDest();
             this.positionDest = new google.maps.LatLng(item.lat, item.lng);
             this.geocoordinatesDest = { lat: item.lat, lng: item.lng };
