@@ -109,12 +109,17 @@ public ToggleStatusOnline (place, userId){
     this.afDB.database.ref(place + '/drivers/' + userId).update({
         toggleStatus: 'online'
     })
+    this.afDB.database.ref('allUsers/' + userId).update({
+        toggleOnline: place
+    })
 }
 
 public ToggleStatusOffline (place, userId){
     this.afDB.database.ref(place + '/drivers/' + userId).update({
         toggleStatus: 'offline'
     })
+
+    this.afDB.database.ref('allUsers/' + userId + '/toggleOnline/').remove();
 }
 
 }

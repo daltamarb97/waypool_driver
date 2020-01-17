@@ -107,6 +107,8 @@ export class ConfirmpricePage {
       this.driverInfo.userId = this.driver.userId
       this.driverInfo.verifiedPerson = this.driver.verifiedPerson
       this.driverInfo.place = this.driver.place
+      this.driverInfo.company = this.driver.company,
+      this.driverInfo.city = this.driver.city
 
       console.log('got info here');
  })
@@ -149,9 +151,10 @@ export class ConfirmpricePage {
                       price:this.precio,
                       startHour: obj[key].hour,
                       type: obj[key].type,
+                       
               
-                  }).then((snap)=>{
-                    const key1 = snap.key;
+                  }).then((snap1)=>{
+                    const key1 = snap1.key;
                     // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
             
                    // set geofireOrkey 
@@ -162,7 +165,7 @@ export class ConfirmpricePage {
                    console.log('executed geofire Or');
                   
                       this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid + '/' + key1).update({
-                          keyTrip: key 
+                          keyTrip: key1 
                       }) 
 
                       this.accepted = true;
@@ -181,8 +184,8 @@ export class ConfirmpricePage {
                       startHour: obj[key].hour,
                       type: obj[key].type,
               
-                  }).then((snap)=>{
-                    const key2 = snap.key;
+                  }).then((snap2)=>{
+                    const key2 = snap2.key;
                     // this.MetricsService.createdReserves(this.SignUpService.userPlace,this.driverInfo,this.car,this.navParams.data.houseAddr[0],this.navParams.data.placeAddr,this.precio, sche.,this.typeOfReserve);
             
                    // set geofireOrkey 
@@ -195,7 +198,7 @@ export class ConfirmpricePage {
               
               
                       this.afDB.database.ref(this.SignUpService.userPlace + '/reserves/'+ this.userDriverUid + '/' + key2).update({
-                          keyTrip: key 
+                          keyTrip: key2 
                       }) 
                       this.accepted = true;
                       this.unsubscribe.next();

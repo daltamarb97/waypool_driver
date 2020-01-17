@@ -15,9 +15,9 @@
                    <div class="name">
                        <h2>{{passenger.name |titlecase}} {{passenger.lastname | slice:0:1 | titlecase}}.
                          <ion-icon *ngIf='passenger.verifiedPerson' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>
-         
                        </h2>
-                       <p>{{passenger.place}}</p>
+
+                         <ion-badge class="bg-yellow" style="margin:0px 3px 13px;"> {{passenger.company}}</ion-badge>
                     </div>
                    <div class="more" item-end>
                            <ion-icon name="md-more"  (click)="presentActionSheet(passenger.userId,passenger.name)"></ion-icon>

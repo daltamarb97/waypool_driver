@@ -89,7 +89,11 @@ export class SchedulePage {
   }
 
   skipSchedule(){
-    this.app.getRootNav().push('SpecifyOriginPage'); 
+    if(!this.userInfo.houseAddress){
+      this.app.getRootNav().push('SpecifyOriginPage'); 
+    }else{
+      this.app.getRootNav().push('FindridePage'); 
+    }
   }
 
   removeTime(sche){
@@ -250,7 +254,7 @@ export class SchedulePage {
 
 
   goFindride(){
-    this.navCtrl.setRoot('SpecifyOriginPage');
+    this.skipSchedule();
 
     this.afDB.database.ref('allCities/' + this.userInfo.city + '/allPlaces/' + this.userInfo.company + '/zones').once('value').then((snap)=>{
       let obj = snap.val();

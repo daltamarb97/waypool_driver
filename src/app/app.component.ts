@@ -22,7 +22,9 @@ export class MyApp {
   token:any;
   pages:any=[];
   driverUninorte = [];
-  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen,private signUpService: SignUpService, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {
+  count:any;
+  stop:boolean = false;
+  constructor(public alertCtrl: AlertController, statusBar: StatusBar, splashScreen: SplashScreen, private geolocation: Geolocation, private platform: Platform, private fcm: FCM, public toastCtrl: ToastController, private firebase: Firebase, public toastController: ToastController, public afDB: AngularFireDatabase, private angularFireAuth: AngularFireAuth, private signUpService: SignUpService) {
     console.log('se cargo')
     this.pages = [
       {title:'Mis viajes',component:'ReservetripPage', icon:'md-paper'},
@@ -42,6 +44,10 @@ export class MyApp {
     }).catch((error)=>{
       console.log(error);
     }) 
+
+
+
+    
     
     console.log('esta notificacion la queria ver');
 
@@ -91,7 +97,7 @@ export class MyApp {
           }
         }
       })
-    }, 2500);
+    }, 1500);
 
 
     firebaseFirst.auth().onAuthStateChanged((user)=>{
@@ -99,7 +105,7 @@ export class MyApp {
         if(user.emailVerified == false){
           this.rootPage = 'LoginPage';
         }else{
-          this.rootPage = 'FindridePage';
+          this.rootPage = 'FindridePage'; 
         }
       }else{
         this.rootPage = 'LoginPage';

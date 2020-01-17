@@ -53,11 +53,11 @@ var FindridePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(203);
@@ -168,6 +168,8 @@ var FindridePage = /** @class */ (function () {
         this.multipleDestinations = [];
         this.markersOr = [];
         this.markersDest = [];
+        console.log(this.user);
+        console.log(this.currentUser);
         this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
         this.geocoder = new google.maps.Geocoder;
         this.autocompleteMyPos = { input: '' };
@@ -185,109 +187,216 @@ var FindridePage = /** @class */ (function () {
     FindridePage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.afDB.database.ref('allUsers/' + this.user).once('value').then(function (snap) {
-            _this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then(function (snapshot) {
-                console.log(snapshot.val().multipleLocations);
-                _this.zonesToIterate = snapshot.val().zones;
-                _this.multipleDestinations = snapshot.val().location;
-                console.log(_this.multipleDestinations);
-                if (snapshot.val().multipleLocations === true) {
-                    // temporary location until user chooses the right location of their company
-                    _this.SignUpService.userPlace = snapshot.val().zones[0];
-                    _this.multipleLocations = true;
-                    //user get their check sign of verficiation here
-                    var objVerifiedPerson_1 = snapshot.val().zones;
-                    Object.getOwnPropertyNames(objVerifiedPerson_1).forEach(function (key) {
-                        if (objVerifiedPerson_1[key] === 2 || objVerifiedPerson_1[key] === 3 || objVerifiedPerson_1[key] === 4 || objVerifiedPerson_1[key] === 5 || objVerifiedPerson_1[key] === 6 || objVerifiedPerson_1[key] === 1 || objVerifiedPerson_1[key] === 7 || objVerifiedPerson_1[key] === 8 || objVerifiedPerson_1[key] === 9 || objVerifiedPerson_1[key] === 10) {
-                        }
-                        else {
-                            _this.instancesService.isVerifiedPerson(objVerifiedPerson_1[key], _this.user);
-                        }
-                    });
-                }
-                else {
-                    _this.SignUpService.userPlace = snapshot.val().zones[0];
-                    _this.multipleLocations = false;
-                    //user get their check sign of verficiation here
-                    _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
-                }
-            }).then(function () {
-                console.log(_this.zonesToIterate);
-                _this.platform.ready().then(function () {
-                    // this.getToken();
-                    console.log('aqui cogi el token');
-                    _this.token = _this.fcm.getToken().then(function (token) {
-                        console.log('this is the token ' + token);
-                        Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
-                            if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+            if (snap.val().toggleOnline) {
+                _this.SignUpService.userPlace = snap.val().toggleOnline;
+                _this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then(function (snapshot) {
+                    console.log(snapshot.val().multipleLocations);
+                    _this.zonesToIterate = snapshot.val().zones;
+                    _this.multipleDestinations = snapshot.val().location;
+                    console.log(_this.multipleDestinations);
+                    if (snapshot.val().multipleLocations === true) {
+                        _this.multipleLocations = true;
+                        //user get their check sign of verficiation here
+                        var objVerifiedPerson_1 = snapshot.val().zones;
+                        Object.getOwnPropertyNames(objVerifiedPerson_1).forEach(function (key) {
+                            if (objVerifiedPerson_1[key] === 2 || objVerifiedPerson_1[key] === 3 || objVerifiedPerson_1[key] === 4 || objVerifiedPerson_1[key] === 5 || objVerifiedPerson_1[key] === 6 || objVerifiedPerson_1[key] === 1 || objVerifiedPerson_1[key] === 7 || objVerifiedPerson_1[key] === 8 || objVerifiedPerson_1[key] === 9 || objVerifiedPerson_1[key] === 10) {
                             }
                             else {
-                                _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
-                                    token: token
-                                });
+                                _this.instancesService.isVerifiedPerson(objVerifiedPerson_1[key], _this.user);
                             }
                         });
+                    }
+                    else {
+                        _this.multipleLocations = false;
+                        //user get their check sign of verficiation here
+                        _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
+                    }
+                }).then(function () {
+                    console.log(_this.zonesToIterate);
+                    _this.platform.ready().then(function () {
+                        // this.getToken();
+                        console.log('aqui cogi el token');
+                        _this.token = _this.fcm.getToken().then(function (token) {
+                            console.log('this is the token ' + token);
+                            Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                                if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                                }
+                                else {
+                                    _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
+                                        token: token
+                                    });
+                                }
+                            });
+                        });
+                    });
+                    console.log(_this.SignUpService.userPlace);
+                    _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user).once('value').then(function (snap) {
+                        _this.userInfo = snap.val();
+                        console.log(_this.userInfo);
+                        _this.autocompleteMyDest.input = _this.userInfo.fixedLocation.name;
+                        var lat = _this.userInfo.fixedLocation.coordinates.lat;
+                        console.log(_this.lat);
+                        var lng = _this.userInfo.fixedLocation.coordinates.lng;
+                        _this.positionDest = { lat: lat, lng: lng };
+                        console.log(_this.positionDest);
+                        var inputs2 = document.getElementById("input2").getElementsByTagName("INPUT");
+                        inputs2[0].disabled = true;
+                        if (_this.userInfo.toggleStatus === 'online') {
+                            // this.checked = true;
+                            _this.isConected = true;
+                            _this.isDisconected = false;
+                            _this.changeColorOnline();
+                            _this.disable();
+                        }
+                        else {
+                            _this.isConected = false;
+                            _this.isDisconected = true;
+                            _this.changeColorOffline();
+                            _this.enable();
+                        }
+                        if (_this.userInfo.houseAddress === undefined || _this.userInfo.houseAddress === null) {
+                            _this.pushOriginPage();
+                        }
+                        else {
+                            var latOr = _this.userInfo.houseAddress.coordinates.lat;
+                            var lngOr = _this.userInfo.houseAddress.coordinates.lng;
+                            _this.positionOr = { latOr: latOr, lngOr: lngOr };
+                            console.log(_this.positionOr);
+                            _this.LoadMapWithHouseAdress(_this.positionOr);
+                        }
+                    });
+                    //search keyTrip
+                    //search keyTrip
+                    _this.TripsService.getKeyTrip(_this.SignUpService.userPlace, _this.user)
+                        .subscribe(function (keyTrip) {
+                        _this.keyTrip = keyTrip;
+                        console.log(_this.user);
+                        console.log(_this.keyTrip);
+                        //if key its deleted don't show VIAJE EN CURSO  
+                        if (_this.keyTrip === undefined || _this.keyTrip === null) {
+                            _this.onTrip = false;
+                            //  this.TripsService.eraseKeyTrip(this.user);
+                            //  this.TripsService.setOnTripFalse(this.user);
+                            console.log("llegue adonde era");
+                        }
+                        else {
+                            //confirm that trip exist and get it
+                            _this.getTrip();
+                        }
+                    });
+                    console.log(_this.SignUpService.userPlace);
+                    _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
+                        _this.userInfo = user;
+                        console.log(_this.userInfo);
                     });
                 });
-                _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user).once('value').then(function (snap) {
-                    _this.userInfo = snap.val();
-                    console.log(_this.userInfo);
-                    _this.autocompleteMyDest.input = _this.userInfo.fixedLocation.name;
-                    var lat = _this.userInfo.fixedLocation.coordinates.lat;
-                    console.log(_this.lat);
-                    var lng = _this.userInfo.fixedLocation.coordinates.lng;
-                    _this.positionDest = { lat: lat, lng: lng };
-                    console.log(_this.positionDest);
-                    var inputs2 = document.getElementById("input2").getElementsByTagName("INPUT");
-                    inputs2[0].disabled = true;
-                    if (_this.userInfo.toggleStatus === 'online') {
-                        // this.checked = true;
-                        _this.isConected = true;
-                        _this.isDisconected = false;
-                        _this.changeColorOnline();
-                        _this.disable();
+            }
+            else {
+                _this.afDB.database.ref('allCities/' + snap.val().city + '/allPlaces/' + snap.val().place).once('value').then(function (snapshot) {
+                    console.log(snapshot.val().multipleLocations);
+                    _this.zonesToIterate = snapshot.val().zones;
+                    _this.multipleDestinations = snapshot.val().location;
+                    console.log(_this.multipleDestinations);
+                    if (snapshot.val().multipleLocations === true) {
+                        // temporary location until user chooses the right location of their company
+                        _this.SignUpService.userPlace = snapshot.val().zones[0];
+                        _this.multipleLocations = true;
+                        //user get their check sign of verficiation here
+                        var objVerifiedPerson_2 = snapshot.val().zones;
+                        Object.getOwnPropertyNames(objVerifiedPerson_2).forEach(function (key) {
+                            if (objVerifiedPerson_2[key] === 2 || objVerifiedPerson_2[key] === 3 || objVerifiedPerson_2[key] === 4 || objVerifiedPerson_2[key] === 5 || objVerifiedPerson_2[key] === 6 || objVerifiedPerson_2[key] === 1 || objVerifiedPerson_2[key] === 7 || objVerifiedPerson_2[key] === 8 || objVerifiedPerson_2[key] === 9 || objVerifiedPerson_2[key] === 10) {
+                            }
+                            else {
+                                _this.instancesService.isVerifiedPerson(objVerifiedPerson_2[key], _this.user);
+                            }
+                        });
                     }
                     else {
-                        _this.isConected = false;
-                        _this.isDisconected = true;
-                        _this.changeColorOffline();
-                        _this.enable();
+                        _this.SignUpService.userPlace = snapshot.val().zones[0];
+                        _this.multipleLocations = false;
+                        //user get their check sign of verficiation here
+                        _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
                     }
-                    if (_this.userInfo.houseAddress === undefined || _this.userInfo.houseAddress === null) {
-                        _this.pushOriginPage();
-                    }
-                    else {
-                        var latOr = _this.userInfo.houseAddress.coordinates.lat;
-                        var lngOr = _this.userInfo.houseAddress.coordinates.lng;
-                        _this.positionOr = { latOr: latOr, lngOr: lngOr };
-                        console.log(_this.positionOr);
-                        _this.LoadMapWithHouseAdress(_this.positionOr);
-                    }
+                }).then(function () {
+                    console.log(_this.zonesToIterate);
+                    _this.platform.ready().then(function () {
+                        // this.getToken();
+                        console.log('aqui cogi el token');
+                        _this.token = _this.fcm.getToken().then(function (token) {
+                            console.log('this is the token ' + token);
+                            Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                                if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                                }
+                                else {
+                                    _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user + '/devices/').update({
+                                        token: token
+                                    });
+                                }
+                            });
+                        });
+                    });
+                    console.log(_this.SignUpService.userPlace);
+                    _this.afDB.database.ref(_this.SignUpService.userPlace + '/drivers/' + _this.user).once('value').then(function (snap) {
+                        _this.userInfo = snap.val();
+                        console.log(_this.userInfo);
+                        _this.autocompleteMyDest.input = _this.userInfo.fixedLocation.name;
+                        var lat = _this.userInfo.fixedLocation.coordinates.lat;
+                        console.log(_this.lat);
+                        var lng = _this.userInfo.fixedLocation.coordinates.lng;
+                        _this.positionDest = { lat: lat, lng: lng };
+                        console.log(_this.positionDest);
+                        var inputs2 = document.getElementById("input2").getElementsByTagName("INPUT");
+                        inputs2[0].disabled = true;
+                        if (_this.userInfo.toggleStatus === 'online') {
+                            // this.checked = true;
+                            _this.isConected = true;
+                            _this.isDisconected = false;
+                            _this.changeColorOnline();
+                            _this.disable();
+                        }
+                        else {
+                            _this.isConected = false;
+                            _this.isDisconected = true;
+                            _this.changeColorOffline();
+                            _this.enable();
+                        }
+                        if (_this.userInfo.houseAddress === undefined || _this.userInfo.houseAddress === null) {
+                            _this.pushOriginPage();
+                        }
+                        else {
+                            var latOr = _this.userInfo.houseAddress.coordinates.lat;
+                            var lngOr = _this.userInfo.houseAddress.coordinates.lng;
+                            _this.positionOr = { latOr: latOr, lngOr: lngOr };
+                            console.log(_this.positionOr);
+                            _this.LoadMapWithHouseAdress(_this.positionOr);
+                        }
+                    });
+                    //search keyTrip
+                    //search keyTrip
+                    _this.TripsService.getKeyTrip(_this.SignUpService.userPlace, _this.user)
+                        .subscribe(function (keyTrip) {
+                        _this.keyTrip = keyTrip;
+                        console.log(_this.user);
+                        console.log(_this.keyTrip);
+                        //if key its deleted don't show VIAJE EN CURSO  
+                        if (_this.keyTrip === undefined || _this.keyTrip === null) {
+                            _this.onTrip = false;
+                            //  this.TripsService.eraseKeyTrip(this.user);
+                            //  this.TripsService.setOnTripFalse(this.user);
+                            console.log("llegue adonde era");
+                        }
+                        else {
+                            //confirm that trip exist and get it
+                            _this.getTrip();
+                        }
+                    });
+                    console.log(_this.SignUpService.userPlace);
+                    _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
+                        _this.userInfo = user;
+                        console.log(_this.userInfo);
+                    });
                 });
-                //search keyTrip
-                //search keyTrip
-                _this.TripsService.getKeyTrip(_this.SignUpService.userPlace, _this.user)
-                    .subscribe(function (keyTrip) {
-                    _this.keyTrip = keyTrip;
-                    console.log(_this.user);
-                    console.log(_this.keyTrip);
-                    //if key its deleted don't show VIAJE EN CURSO  
-                    if (_this.keyTrip === undefined || _this.keyTrip === null) {
-                        _this.onTrip = false;
-                        //  this.TripsService.eraseKeyTrip(this.user);
-                        //  this.TripsService.setOnTripFalse(this.user);
-                        console.log("llegue adonde era");
-                    }
-                    else {
-                        //confirm that trip exist and get it
-                        _this.getTrip();
-                    }
-                });
-                console.log(_this.SignUpService.userPlace);
-                _this.SignUpService.getMyInfo(_this.SignUpService.userPlace, _this.user).subscribe(function (user) {
-                    _this.userInfo = user;
-                    console.log(_this.userInfo);
-                });
-            });
+            }
         });
     };
     FindridePage.prototype.getToken = function () {
@@ -439,7 +548,8 @@ var FindridePage = /** @class */ (function () {
                                 console.log(this.placeAddress);
                                 console.log(this.userInfo);
                                 // use the same format of coordinates as the beggining
-                                if (this.userInfo.fixedLocation.name == this.placeAddress) {
+                                if (this.userInfo.fixedLocation.name[0] === this.placeAddress[0]) {
+                                    console.log('si se ejecuto lo que jd necesitaba');
                                     this.positionDest = { lat: this.userInfo.fixedLocation.coordinates.lat, lng: this.userInfo.fixedLocation.coordinates.lng };
                                 }
                                 else {
@@ -725,7 +835,7 @@ var FindridePage = /** @class */ (function () {
     ////show destinations
     FindridePage.prototype.updateSearchResultsMyDest = function () {
         if (this.userInfo.toggleStatus === 'online') {
-            this.presentAlert('Información', 'No se puede cambiar el lugar mientras estas conectado.', 'OK');
+            this.presentAlert('No es posible cambiar tu lugar de trabajo mientras estás conectado.', '', 'OK');
         }
         else {
             this.showList = true;

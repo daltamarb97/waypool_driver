@@ -37,6 +37,7 @@ userDriver:any;
 unsubscribe = new Subject;
 lastMinuteUsers:any =[];
 tripState:any;
+clearToDeleteDriver:boolean = false;
   constructor(public navCtrl: NavController,public SignUpService:SignUpService,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService,public modalCtrl: ModalController,public toastCtrl: ToastController,public alertCtrl:AlertController,public navParams: NavParams,private callNumber: CallNumber,public sendCoordsService: sendCoordsService,private AngularFireAuth: AngularFireAuth, public sendUsersService: sendUsersService, public geofireServices: geofireService, private afDB: AngularFireDatabase) {
 		//get driver information to get the keyTrip
 		this.SignUpService.getMyInfoDriver(this.SignUpService.userPlace, this.driverUid).takeUntil(this.unsubscribe)
@@ -92,6 +93,9 @@ tripState:any;
 				}
 			});			
 	}
+
+
+
 	getTrip( keyTrip, driverUid) {
 		// this.getLastMinuteUsers(this.userDriver.keyTrip, this.userDriver.userId);
 		this.getLastMinuteUsers(keyTrip, driverUid);
@@ -108,6 +112,8 @@ tripState:any;
 				// after getting trip from node, get pending and pickedUp arrays
 					this.getPendingAndPickedUpUsers( keyTrip, driverUid);
 				}
+
+				
 
 			});
 
@@ -258,12 +264,15 @@ tripState:any;
 											})							 
 											///////////
 
-										this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
+
+											this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
 			
-										this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
-										this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
-										
-										this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);										
+											this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+											this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
+																		
+											this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);													
+											
+																			
 								    })
 									
 							this.navCtrl.pop();
@@ -313,7 +322,7 @@ tripState:any;
 
 		let alert = this.alertCtrl.create({
 			title: 'Eliminar Usuario',
-			message: `¿Estas que deseas eliminar a este a ${nameUser} de tu viaje?,borrar muchos usuarios por día/semana esta en contra de nuestras políticas`,
+			message: `¿Estas que deseas eliminar a este a ${nameUser} de tu viaje?, cancelar muchos usuarios por día/semana evitará que logres el objetivo de cambiar la movilidad de tu empresa`,
 			buttons: [{
 					text: 'Cancelar',
 					role: 'cancel',
