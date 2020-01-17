@@ -53,11 +53,11 @@ var FindridePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendCoords_service__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_driverauthentication_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_sendUsers_service__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_instances_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_firebase__ = __webpack_require__(203);
@@ -317,6 +317,24 @@ var FindridePage = /** @class */ (function () {
                         //user get their check sign of verficiation here
                         _this.instancesService.isVerifiedPerson(_this.SignUpService.userPlace, _this.user);
                     }
+                    //logica de instrucciones 
+                    _this.afDB.database.ref(snapshot.val().zones[0] + '/drivers/' + _this.user).once('value').then(function (snapWalkthr) {
+                        if (snapWalkthr.val().shownInstructions === true) {
+                            console.log('ya lo mostre');
+                        }
+                        else {
+                            _this.app.getRootNav().push('WalkthroughPage');
+                            Object.getOwnPropertyNames(_this.zonesToIterate).forEach(function (key) {
+                                if (_this.zonesToIterate[key] === 2 || _this.zonesToIterate[key] === 3 || _this.zonesToIterate[key] === 4 || _this.zonesToIterate[key] === 5 || _this.zonesToIterate[key] === 6 || _this.zonesToIterate[key] === 1 || _this.zonesToIterate[key] === 7 || _this.zonesToIterate[key] === 8 || _this.zonesToIterate[key] === 9 || _this.zonesToIterate[key] === 10) {
+                                }
+                                else {
+                                    _this.afDB.database.ref(_this.zonesToIterate[key] + '/drivers/' + _this.user).update({
+                                        shownInstructions: true
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }).then(function () {
                     console.log(_this.zonesToIterate);
                     _this.platform.ready().then(function () {
