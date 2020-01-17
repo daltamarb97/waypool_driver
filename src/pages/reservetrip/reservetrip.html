@@ -19,8 +19,33 @@
     <ion-card  *ngFor = "let trip of tripsReserves">
 
         <ng-container *ngIf="trip.pendingUsers === undefined;else showReserveBlock">
-              
-              </ng-container>     
+
+            <ion-item>
+                                                 
+            <div class="name">
+
+                <h2>                     <ion-badge  class="badge bg-darkblue">Viaje vacío</ion-badge>                                  
+                    Hora: {{trip.startHour}}            
+                </h2>
+            </div>
+            <div class="more">                              
+                            <h2 class="text text-theme">                        
+                                $ {{trip.price}}                          
+                            </h2>                       
+                     
+            </div>
+        </ion-item>
+        <ion-card-content>
+            <div class="ride-detail">
+                <p  >
+                    <span class="icon-location bg-theme"></span>{{trip.houseAddr}}</p>
+                <p > 
+                    <span class="icon-location bg-yellow"></span>{{trip.placeAddr}}</p>
+            </div>
+          
+        </ion-card-content>
+              </ng-container>    
+               <!-- //////////////////////////////////////////// -->
               <ng-template #showReserveBlock>
                     <ng-container *ngIf="trip.isLate; else noLateBlock">
                             <ion-item>
