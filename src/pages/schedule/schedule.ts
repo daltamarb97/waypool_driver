@@ -92,7 +92,7 @@ export class SchedulePage {
     if(!this.userInfo.houseAddress){
       this.app.getRootNav().push('SpecifyOriginPage'); 
     }else{
-      this.app.getRootNav().push('FindridePage'); 
+      this.navCtrl.setRoot('FindridePage'); 
     }
   }
 

@@ -12,6 +12,7 @@ import { geofireService } from '../../services/geofire.services';
 import { instancesService } from '../../services/instances.service';
 import { Subject } from 'rxjs';
 import { TripsService } from '../../services/trips.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 @IonicPage()
@@ -22,7 +23,7 @@ import { TripsService } from '../../services/trips.service';
 })
 export class DetailsReservePage {
   
-
+ 
 	reserveKey:any;
 	reserve:any;
   	userDriver:any ;
@@ -32,7 +33,7 @@ export class DetailsReservePage {
 	unsubscribe = new Subject;
 	reserves:any = [];
 	passengers: any =[];
-  constructor(public navCtrl: NavController,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController, public app: App ) {
+  constructor(public navCtrl: NavController,public actionSheetCtrl: ActionSheetController,public TripsService:TripsService, public SignUpService: SignUpService, public sendCoordsService: sendCoordsService,public modalCtrl: ModalController, private AngularFireAuth: AngularFireAuth, public viewCtrl:ViewController,public navParams: NavParams, public geoFireService: geofireService, public instances: instancesService, public toastCtrl: ToastController, public alertCtrl: AlertController, public app: App, private afDB: AngularFireDatabase ) {
 	
       this.reserveKey= this.navParams.get('reserveKey') 
 console.log(this.reserveKey)
@@ -59,15 +60,11 @@ ionViewDidLeave(){
  		}
   
 		 cancelReserve(){
-
-			// //HERE IT IS NECESSARY TO SET A PUSH NOT NOTICING USERS IN THE RESERVE THAT IT HAS BEEN REMOVED
-			// if(typeOfReserve == 'origin'){
-			//   this.geofireService.cancelGeoqueryOr(geofireKey);
-			// }else if(typeOfReserve == 'destination'){
-			//   this.geofireService.cancelGeoqueryDest(geofireKey);
-			// }
 			this.geoFireService.deleteUserGeofireDest(this.SignUpService.userPlace, this.reserveKey);
 			this.geoFireService.deleteUserGeofireOr(this.SignUpService.userPlace, this.reserveKey);
+			this.passengers.forEach(user => {
+				this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+user.userId+'/myReserves/'+ this.reserveKey).remove();
+			});
 
 			this.TripsService.cancelReserve(this.SignUpService.userPlace, this.userUid,this.reserveKey);
 			this.dismiss();
@@ -94,7 +91,10 @@ ionViewDidLeave(){
 			  ]
 			});
 			actionSheet.present();
-		  }
+			}
+			
+
+
 		  deleteUser(userId, nameUser) {
 
 			let alert = this.alertCtrl.create({
@@ -110,7 +110,15 @@ ionViewDidLeave(){
 					{
 						text: 'Eliminar',
 						handler: () => {
+							this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+userId+'/myReserves/'+ this.reserveKey).remove().then(()=>{
+								console.log('se borro user con 3 puntos');
+								
+							}).catch((error)=>{
+								console.log('hubo este esrror: ' + error);
+								
+							})
 							this.sendCoordsService.eraseUser(this.SignUpService.userPlace, userId,this.userUid,this.reserveKey );
+							this.navCtrl.setRoot('FindridePage');
 							this.presentToast(`Haz eliminado a ${nameUser} de tu viaje`, 3000, 'bottom')
 						 
 						}

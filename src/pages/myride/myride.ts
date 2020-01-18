@@ -245,7 +245,19 @@ clearToDeleteDriver:boolean = false;
 											this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
 											this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);			
 											this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
+											this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + user.company + '/zones').once('value').then((snapUser)=>{
+												let obj = snapUser.val();
+												Object.getOwnPropertyNames(obj).forEach((key)=>{
+										
+												if(obj[key] === 2 || obj[key] === 3 || obj[key] === 4 || obj[key] === 5 || obj[key] === 6 || obj[key] === 1 || obj[key] === 7 || obj[key] === 8 || obj[key] === 9 || obj[key] === 10){
+													
+												}else{
+													this.TripsService.saveTripOnRecordsUser(obj[key], user.userId, this.trip, this.userDriver.keyTrip);
+												}
+												}) 
+											})
 										});
+
 										this.TripsService.allTrips(this.SignUpService.userPlace,this.driverUid,this.userDriver.keyTrip,this.trip);
 
 										// here I have to save the trip for this driver in every zone he is, it doesnt matter if the user is not operating in certain zone in the moment
@@ -257,23 +269,25 @@ clearToDeleteDriver:boolean = false;
 													
 												}else{
 
-													this.TripsService.saveTripOnRecords(obj[key],this.driverUid, this.trip);
+													this.TripsService.saveTripOnRecords(obj[key],this.driverUid, this.trip, this.userDriver.keyTrip);
 
 												}
 												}) 
 											})							 
-											///////////
-
-
-											this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
-			
-											this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
-											this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
-																		
-											this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);													
-											
+											///////////																									
 																			
-								    })
+								    }).then(()=>{
+										setTimeout(() => {
+											this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid);
+		
+											this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+																		
+											this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);	
+											
+											this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
+
+										}, 6000);
+									})
 									
 							this.navCtrl.pop();
 							//TO-DO: AQUI FALTA RATETRIPPAGE

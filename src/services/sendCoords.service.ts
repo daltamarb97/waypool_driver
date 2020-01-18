@@ -26,6 +26,15 @@ constructor(public afDB: AngularFireDatabase){
     public eraseUser(place, userId,DriverUid,pushKey){
         this.afDB.database.ref(place + '/reserves/' + DriverUid+'/'+ pushKey+'/pendingUsers/'+userId).remove()
     }
+
+
+    public saveTripOnRecords(place, userUid,trip){
+        //save trip in recordTrips
+        
+      this.afDB.database.ref(place + '/users/'+userUid+'/recordTrips/'+trip.keyTrip).update(trip);
+ 
+     }
+     
     public getDestination(place, user){
         return  this.afDB.list(place+ '/drivers/'+ user +'/trips/destination').valueChanges();
     } 

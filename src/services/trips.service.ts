@@ -180,6 +180,17 @@ export class TripsService {
             onTrip:false
           });  
         }
+
+
+
+        public saveTripOnRecordsUser(place, userUid, trip, keyTrip){
+          //save trip in recordTrips
+          
+        this.afDB.database.ref(place + '/users/'+userUid+'/recordTrips/' + keyTrip).update(trip);
+   
+       }
+
+
         public setOnTrip(place, driverUid){           
           // set false to onTrip instance in driver's node
           this.afDB.database.ref(place + '/drivers/'+driverUid).update({
@@ -228,10 +239,10 @@ export class TripsService {
           this.afDB.database.ref(place + '/trips/'+driverUid+'/'+ keyTrip +'/pendingUsers/'+userId).remove();  
           
         }
-        public saveTripOnRecords(place, driverUid,trip){
+        public saveTripOnRecords(place, driverUid,trip, keyTrip){
           //save trip in recordTrips
           
-        this.afDB.database.ref(place + '/drivers/'+driverUid+'/recordTrips/').push(trip);
+        this.afDB.database.ref(place + '/drivers/'+driverUid+'/recordTrips/' + keyTrip).update(trip);
    
        }
 
