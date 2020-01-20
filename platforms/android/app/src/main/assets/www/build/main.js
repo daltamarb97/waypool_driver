@@ -1,4 +1,4 @@
-webpackJsonp([31],{
+webpackJsonp([33],{
 
 /***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -73,6 +73,9 @@ var SignUpService = /** @class */ (function () {
     SignUpService.prototype.getAllPlaces = function () {
         return this.afDB.list('allPlaces/').valueChanges();
     };
+    SignUpService.prototype.getAllCities = function () {
+        return this.afDB.list('allCities/').valueChanges();
+    };
     SignUpService.prototype.getEmails = function (enterprise) {
         return this.afDB.list('allPlaces/' + enterprise + '/emails').valueChanges();
     };
@@ -122,19 +125,27 @@ var SignUpService = /** @class */ (function () {
             });
         });
     };
-    SignUpService.prototype.saveUserInAllUsers = function (place, user) {
+    SignUpService.prototype.saveUserInAllUsers = function (place, user, city) {
         this.afDB.database.ref('/allUsers/' + user).update({
-            place: place
+            place: place,
+            city: city
         });
     };
     SignUpService.prototype.setFixedLocationCoordinates = function (place, user, lat, lng) {
         this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation/coordinates').update({
             lat: lat,
-            lng: lng
+            lng: lng,
+        });
+        this.afDB.database.ref(place + '/users/' + user + '/fixedLocation/coordinates').update({
+            lat: lat,
+            lng: lng,
         });
     };
     SignUpService.prototype.setFixedLocationName = function (place, user, name) {
         this.afDB.database.ref(place + '/drivers/' + user + '/fixedLocation').update({
+            name: name
+        });
+        this.afDB.database.ref(place + '/users/' + user + '/fixedLocation').update({
             name: name
         });
     };
@@ -181,6 +192,10 @@ var SignUpService = /** @class */ (function () {
     };
     SignUpService.prototype.addCarProfile = function (place, userUid, car) {
         this.afDB.database.ref(place + '/drivers/' + userUid + '/cars/').push(car);
+    };
+    SignUpService.prototype.addPlaceZone = function (place, userUid) {
+        this.afDB.database.ref(place + '/drivers/' + userUid).update({ place: place });
+        this.afDB.database.ref(place + '/users/' + userUid).update({ place: place });
     };
     SignUpService.prototype.getCar = function (place, userId) {
         return this.afDB.list(place + '/drivers/' + userId + '/cars').valueChanges();
@@ -238,121 +253,129 @@ webpackEmptyAsyncContext.id = 237;
 var map = {
 	"../pages/add-schedule/add-schedule.module": [
 		636,
-		30
+		32
 	],
 	"../pages/canceltrip/canceltrip.module": [
 		637,
-		29
+		31
 	],
 	"../pages/car-registration-login/car-registration-login.module": [
-		660,
-		28
+		661,
+		30
 	],
 	"../pages/car-registration/car-registration.module": [
-		661,
-		27
+		662,
+		29
 	],
 	"../pages/chats/chats.module": [
 		638,
-		26
+		28
 	],
 	"../pages/chatting/chatting.module": [
 		639,
-		25
+		27
 	],
 	"../pages/confirmprice/confirmprice.module": [
 		659,
-		24
+		26
 	],
 	"../pages/confirmreserve/confirmreserve.module": [
 		640,
-		23
+		25
 	],
 	"../pages/confirmtrip/confirmtrip.module": [
 		641,
-		22
+		24
 	],
 	"../pages/detailsreserve/detailsreserve.module": [
 		642,
-		21
+		23
 	],
 	"../pages/findride/findride.module": [
-		666,
-		20
+		668,
+		22
 	],
 	"../pages/help/help.module": [
-		644,
-		19
+		643,
+		21
 	],
 	"../pages/login/login.module": [
-		643,
-		18
+		644,
+		20
 	],
 	"../pages/more/more.module": [
 		645,
-		17
+		19
 	],
 	"../pages/myride/myride.module": [
-		662,
+		660,
 		2
 	],
 	"../pages/payments-info/payments-info.module": [
 		646,
-		16
+		18
 	],
 	"../pages/pickup/pickup.module": [
-		663,
+		667,
 		1
 	],
 	"../pages/profile/profile.module": [
 		648,
-		15
+		17
 	],
 	"../pages/public-profile/public-profile.module": [
 		647,
-		14
+		16
 	],
 	"../pages/ratetrip/ratetrip.module": [
 		649,
-		13
+		15
 	],
 	"../pages/remove-schedule/remove-schedule.module": [
 		650,
-		12
+		14
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		664,
+		665,
 		0
 	],
 	"../pages/schedule/schedule.module": [
-		651,
-		11
+		664,
+		13
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		655,
-		10
+		651,
+		12
 	],
 	"../pages/signup/signup.module": [
-		665,
-		9
+		663,
+		11
+	],
+	"../pages/specifyorigin/specifyorigin.module": [
+		666,
+		10
 	],
 	"../pages/successnotification/successnotification.module": [
 		652,
 		3
 	],
 	"../pages/support/support.module": [
+		653,
+		9
+	],
+	"../pages/terms/terms.module": [
 		654,
 		8
 	],
-	"../pages/terms/terms.module": [
-		653,
+	"../pages/verification-images/verification-images.module": [
+		655,
 		7
 	],
-	"../pages/verification-images/verification-images.module": [
+	"../pages/verification-number/verification-number.module": [
 		656,
 		6
 	],
-	"../pages/verification-number/verification-number.module": [
+	"../pages/walkthrough/walkthrough.module": [
 		657,
 		5
 	],
@@ -414,6 +437,10 @@ var sendCoordsService = /** @class */ (function () {
     };
     sendCoordsService.prototype.eraseUser = function (place, userId, DriverUid, pushKey) {
         this.afDB.database.ref(place + '/reserves/' + DriverUid + '/' + pushKey + '/pendingUsers/' + userId).remove();
+    };
+    sendCoordsService.prototype.saveTripOnRecords = function (place, userUid, trip) {
+        //save trip in recordTrips
+        this.afDB.database.ref(place + '/users/' + userUid + '/recordTrips/' + trip.keyTrip).update(trip);
     };
     sendCoordsService.prototype.getDestination = function (place, user) {
         return this.afDB.list(place + '/drivers/' + user + '/trips/destination').valueChanges();
@@ -757,11 +784,15 @@ var instancesService = /** @class */ (function () {
         this.afDB.database.ref(place + '/drivers/' + userId).update({
             toggleStatus: 'online'
         });
+        this.afDB.database.ref('allUsers/' + userId).update({
+            toggleOnline: place
+        });
     };
     instancesService.prototype.ToggleStatusOffline = function (place, userId) {
         this.afDB.database.ref(place + '/drivers/' + userId).update({
             toggleStatus: 'offline'
         });
+        this.afDB.database.ref('allUsers/' + userId + '/toggleOnline/').remove();
     };
     instancesService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
@@ -1298,6 +1329,16 @@ var TripsService = /** @class */ (function () {
         // add the driver to pickedUpUsers 
         this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
     };
+    TripsService.prototype.addSavedKMGlobal = function (place, savedKM) {
+        this.afDB.database.ref('/data/allTrips' + place).update({
+            savedKM: savedKM
+        });
+    };
+    TripsService.prototype.addSavedKMGlobalPassengers = function (place, savedKM) {
+        this.afDB.database.ref('/data/kmsSavedByPassengers/' + place).update({
+            savedKM: savedKM
+        });
+    };
     TripsService.prototype.createTripState = function (place, keyTrip, driverUid) {
         this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
             saveTrip: false,
@@ -1328,6 +1369,10 @@ var TripsService = /** @class */ (function () {
         this.afDB.database.ref(place + '/users/' + userId).update({
             onTrip: false
         });
+    };
+    TripsService.prototype.saveTripOnRecordsUser = function (place, userUid, trip, keyTrip) {
+        //save trip in recordTrips
+        this.afDB.database.ref(place + '/users/' + userUid + '/recordTrips/' + keyTrip).update(trip);
     };
     TripsService.prototype.setOnTrip = function (place, driverUid) {
         // set false to onTrip instance in driver's node
@@ -1367,9 +1412,9 @@ var TripsService = /** @class */ (function () {
         //eliminate the user from pendingUsers
         this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
     };
-    TripsService.prototype.saveTripOnRecords = function (place, driverUid, trip) {
+    TripsService.prototype.saveTripOnRecords = function (place, driverUid, trip, keyTrip) {
         //save trip in recordTrips
-        this.afDB.database.ref(place + '/drivers/' + driverUid + '/recordTrips/').push(trip);
+        this.afDB.database.ref(place + '/drivers/' + driverUid + '/recordTrips/' + keyTrip).update(trip);
     };
     TripsService.prototype.sendPaymentInfoOfTrip = function (place, driverId, amount) {
         this.afDB.database.ref(place + '/drivers/' + driverId).update({
@@ -1379,6 +1424,16 @@ var TripsService = /** @class */ (function () {
     TripsService.prototype.sendPaymentInfoOfTripForUser = function (place, userId, amount) {
         this.afDB.database.ref(place + '/users/' + userId).update({
             pendingToPay: amount
+        });
+    };
+    TripsService.prototype.reduceNumberPersonalFreeRides = function (place, userId, remainingRides) {
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            personalFreeRides: remainingRides
+        });
+    };
+    TripsService.prototype.reduceNumberCompanyFreeRides = function (city, userCompany, remainingRides) {
+        this.afDB.database.ref('allCities/' + city + '/allPlaces/' + userCompany).update({
+            freeRidesNumber: remainingRides
         });
     };
     TripsService.prototype.cancelReserve = function (place, driverUid, keyTrip) {
@@ -1403,6 +1458,7 @@ var TripsService = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendFeedbackService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(89);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1414,21 +1470,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var sendFeedbackService = /** @class */ (function () {
-    function sendFeedbackService(afDB) {
+    function sendFeedbackService(afDB, alertCtrl) {
         this.afDB = afDB;
+        this.alertCtrl = alertCtrl;
     }
     sendFeedbackService.prototype.sendFeedback = function (place, title, info, name, lastname, number, userId) {
+        var _this = this;
         this.afDB.database.ref(place + '/feedback/' + title + '/drivers/' + userId).set({
             info: info,
             name: name,
             lastname: lastname,
             number: number
+        }).then(function () {
+            var alert = _this.alertCtrl.create({
+                title: 'Hemos recibido tu mensaje',
+                subTitle: 'Revisaremos tu inquietud y nos pondremos en contácto contigo lo antes posible',
+                buttons: ['OK'],
+            });
+            alert.present();
         });
     };
     sendFeedbackService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */]])
     ], sendFeedbackService);
     return sendFeedbackService;
 }());
@@ -1448,7 +1514,7 @@ var sendFeedbackService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(89);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1701,7 +1767,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(623);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(345);
@@ -1805,29 +1871,31 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detailsreserve/detailsreserve.module#DetailsReservePagePageModule', name: 'DetailsReservePage', segment: 'detailsreserve', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/payments-info/payments-info.module#PaymentsInfoPageModule', name: 'PaymentsInfoPage', segment: 'payments-info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ratetrip/ratetrip.module#RatetripPageModule', name: 'RatetripPage', segment: 'ratetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/remove-schedule/remove-schedule.module#RemoveSchedulePageModule', name: 'RemoveSchedulePage', segment: 'remove-schedule', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/showinfocar/showinfocar.module#ShowInfoCarPageModule', name: 'ShowInfoCarPage', segment: 'showinfocar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/successnotification/successnotification.module#SuccessNotificationPageModule', name: 'SuccessNotificationPage', segment: 'successnotification', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/support/support.module#SupportPageModule', name: 'SupportPage', segment: 'support', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-images/verification-images.module#VerificationImagesPageModule', name: 'VerificationImagesPage', segment: 'verification-images', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/walkthrough/walkthrough.module#WalkthroughPageModule', name: 'WalkthroughPage', segment: 'walkthrough', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/specifyorigin/specifyorigin.module#SpecifyOriginPageModule', name: 'SpecifyOriginPage', segment: 'specifyorigin', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -1885,7 +1953,7 @@ var AppModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(345);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(123);
@@ -1919,10 +1987,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var MyApp = /** @class */ (function () {
-    function MyApp(alertCtrl, statusBar, splashScreen, signUpService, geolocation, platform, fcm, toastCtrl, firebase, toastController, afDB, angularFireAuth) {
+    function MyApp(alertCtrl, statusBar, splashScreen, geolocation, platform, fcm, toastCtrl, firebase, toastController, afDB, angularFireAuth, signUpService) {
         var _this = this;
         this.alertCtrl = alertCtrl;
-        this.signUpService = signUpService;
         this.geolocation = geolocation;
         this.platform = platform;
         this.fcm = fcm;
@@ -1931,19 +1998,18 @@ var MyApp = /** @class */ (function () {
         this.toastController = toastController;
         this.afDB = afDB;
         this.angularFireAuth = angularFireAuth;
+        this.signUpService = signUpService;
         this.rootPage = 'LoginPage';
         this.pages = [];
         this.driverUninorte = [];
+        this.stop = false;
         console.log('se cargo');
         this.pages = [
-            { title: 'Mi viajes', component: 'ReservetripPage' },
-            { title: 'Mi Billetera', component: 'WalletPage' },
-            { title: 'Mi horario', component: 'SchedulePage' },
-            { title: 'Mi perfil', component: 'ProfilePage' },
-            { title: 'Mis documentos', component: 'CarRegistrationPage' },
-            { title: 'Mis vehículos', component: 'ShowInfoCarPage' },
-            { title: 'Soporte', component: 'HelpPage' },
-            { title: 'Terminos y Condiciones', component: 'TermsPage' }
+            { title: 'Mis viajes', component: 'ReservetripPage', icon: 'md-paper' },
+            { title: 'Billetera', component: 'WalletPage', icon: 'card' },
+            { title: 'Horario', component: 'SchedulePage', icon: 'time' },
+            { title: 'Mi perfil', component: 'MorePage', icon: 'person' },
+            { title: 'Instrucciones', component: 'WalkthroughPage', icon: 'alert' },
         ];
         statusBar.backgroundColorByHexString('#ffffff');
         splashScreen.hide();
@@ -1993,7 +2059,7 @@ var MyApp = /** @class */ (function () {
                     }
                 }
             });
-        }, 2500);
+        }, 1500);
         __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified == false) {
@@ -2011,17 +2077,19 @@ var MyApp = /** @class */ (function () {
     MyApp.prototype.openPage = function (page) {
         this.nav.push(page.component);
     };
+    MyApp.prototype.goAsPassenger = function () {
+        this.nav.setRoot('FindridePassPage');
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/'<ion-menu [content]="content">\n        <ion-header>\n          <ion-toolbar>\n            <ion-title>Menu</ion-title>\n          </ion-toolbar>\n        </ion-header>\n        <ion-content>\n          <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              {{p.title}}                \n            </button>\n          \n          </ion-list>\n        </ion-content>\n      </ion-menu>\n      \n      <ion-nav  #content [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/'<ion-menu [content]="content">\n        <ion-header>\n          <ion-toolbar>\n            <ion-title>Menu</ion-title>\n          </ion-toolbar>\n        </ion-header>\n        <ion-content>\n          <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon style="margin-right: 10px; font-size: 26px;" name={{p.icon}}></ion-icon>      \n\n              {{p.title}}                \n            </button>\n          \n          </ion-list>\n\n        </ion-content>\n      </ion-menu>\n      \n      <ion-nav  #content [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Platform */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__["a" /* FCM */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__["a" /* FCM */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_native_firebase__["a" /* Firebase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_native_firebase__["a" /* Firebase */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__["AngularFireDatabase"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__["AngularFireDatabase"]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__["AngularFireAuth"]) === "function" && _o || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Platform */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__["a" /* FCM */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_firebase__["a" /* Firebase */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 }());
 
 //# sourceMappingURL=app.component.js.map

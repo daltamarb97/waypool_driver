@@ -7,8 +7,8 @@ webpackJsonp([4],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletPageModule", function() { return WalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(823);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet__ = __webpack_require__(825);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,13 +41,13 @@ var WalletPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 823:
+/***/ 825:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WalletPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_sendCoords_service__ = __webpack_require__(346);
@@ -92,35 +92,19 @@ var WalletPage = /** @class */ (function () {
         this.pickedUpUsers = [];
         this.newNumber = 0;
         this.unsubscribe = new __WEBPACK_IMPORTED_MODULE_6_rxjs__["Subject"];
+        this.afDB.database.ref(this.signupService.userPlace + '/drivers/' + this.userUid).once('value').then(function (snap) {
+            _this.userInfo = snap.val();
+        });
         this.sendUsersService.getRecordTrips(this.signupService.userPlace, this.userUid)
             .subscribe(function (user) {
             _this.recordTrips = user;
             console.log(_this.recordTrips);
-            _this.hola();
+            _this.calculationOfTotalAmount();
         });
         console.log(this.total);
     }
-    WalletPage.prototype.hola = function () {
-        var _this = this;
-        this.newNumber = 0;
-        this.total = 0;
-        console.log(this.total);
-        this.recordTrips.forEach(function (trip) {
-            _this.trip = trip;
-            _this.pickedUpUsers = Object.keys(_this.trip.pickedUpUsers);
-            _this.totalTrip = _this.pickedUpUsers.length * _this.trip.price;
-            console.log(_this.newNumber);
-            _this.newNumber = _this.newNumber + _this.totalTrip;
-        });
-        this.afDB.database.ref('/allPlaces/' + this.signupService.userPlace).once('value').then(function (snap) {
-            var amountToCharge = snap.val().feeAmount;
-            if (snap.val().feeActive === true) {
-                _this.total = (parseInt(_this.total) + parseInt(_this.newNumber)) - ((parseInt(_this.total) + parseInt(_this.newNumber)) * amountToCharge);
-            }
-            else {
-                _this.total = _this.total + _this.newNumber;
-            }
-        });
+    WalletPage.prototype.calculationOfTotalAmount = function () {
+        this.total = this.userInfo.pendingToReceive;
     };
     WalletPage.prototype.help = function () {
         var toast = this.toastCtrl.create({
@@ -132,7 +116,7 @@ var WalletPage = /** @class */ (function () {
         toast.present();
     };
     WalletPage.prototype.goPaymentInfo = function () {
-        var modal = this.modalCtrl.create('PaymentsInfoPage');
+        var modal = this.modalCtrl.create('PaymentsInfoPage', { userInfo: this.userInfo });
         modal.present();
     };
     WalletPage = __decorate([
