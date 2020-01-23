@@ -144,8 +144,6 @@ clearToDeleteDriver:boolean = false;
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
 			// erase trip because driver decide to cancel
 			this.unSubscribeServices();
-			this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid)
-			this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
 			this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 			this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 			this.navCtrl.pop();
@@ -155,6 +153,7 @@ clearToDeleteDriver:boolean = false;
 			this.afDB.database.ref(this.SignUpService.userPlace + '/trips/'+this.driverUid+'/'+ this.userDriver.keyTrip).remove().then(()=>{
 				this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid)
 			})
+			this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
 
 		
 			// this.navCtrl.setRoot(this.navCtrl.getActive().component);
@@ -167,13 +166,13 @@ clearToDeleteDriver:boolean = false;
 		if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
 		// erase trip because there is no one to picked Up
 		this.unSubscribeServices();
-		this.TripsService.eliminateTripState(this.SignUpService.userPlace,this.userDriver.keyTrip,this.driverUid)
+		this.TripsService.endTrip(this.SignUpService.userPlace,this.userDriver.keyTrip, this.driverUid);
+
 		this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 		this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
 		this.TripsService.eraseKeyTrip(this.SignUpService.userPlace,this.driverUid);
 		this.TripsService.setOnTripFalse(this.SignUpService.userPlace,this.driverUid);
-		this.TripsService.endTrip(this.SignUpService.userPlace,this.userDriver.keyTrip, this.driverUid);
-		
+
 		this.navCtrl.pop();
 		console.log("me reproduci 2")
 
@@ -244,7 +243,9 @@ clearToDeleteDriver:boolean = false;
 										this.pickedUpUsers.forEach(user => {
 											this.TripsService.sentTripUser(this.SignUpService.userPlace,user.userId,this.trip)
 											this.TripsService.endTripForUsers(this.SignUpService.userPlace,user.userId);			
-											this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId)
+											this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,user.userId);
+											this.TripsService.eliminateKeyTripUser(this.SignUpService.userPlace,user.userId);
+
 											this.afDB.database.ref('allCities/' + this.userDriver.city + '/allPlaces/' + user.company + '/zones').once('value').then((snapUser)=>{
 												let obj = snapUser.val();
 												Object.getOwnPropertyNames(obj).forEach((key)=>{
@@ -348,6 +349,8 @@ clearToDeleteDriver:boolean = false;
 					text: 'Eliminar',
 					handler: () => {
 						this.TripsService.cancelUserFromTrip(this.SignUpService.userPlace, this.driverUid, this.trip.keyTrip, userId);
+						this.TripsService.setOnTripFalseUser(this.SignUpService.userPlace,userId);
+						this.TripsService.eliminateKeyTripUser(this.SignUpService.userPlace,userId);
 						this.presentToast(`Haz eliminado a ${nameUser} de tu viaje`, 3000, 'bottom')
 					 
 					}

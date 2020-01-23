@@ -63,7 +63,9 @@ ionViewDidLeave(){
 			this.geoFireService.deleteUserGeofireDest(this.SignUpService.userPlace, this.reserveKey);
 			this.geoFireService.deleteUserGeofireOr(this.SignUpService.userPlace, this.reserveKey);
 			this.passengers.forEach(user => {
-				this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+user.userId+'/myReserves/'+ this.reserveKey).remove();
+				this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+user.userId+'/myReserves/'+ this.reserveKey).update({
+					cancelReserve:true
+				});
 			});
 
 			this.TripsService.cancelReserve(this.SignUpService.userPlace, this.userUid,this.reserveKey);
@@ -110,15 +112,12 @@ ionViewDidLeave(){
 					{
 						text: 'Eliminar',
 						handler: () => {
-							this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+userId+'/myReserves/'+ this.reserveKey).remove().then(()=>{
-								console.log('se borro user con 3 puntos');
-								
-							}).catch((error)=>{
-								console.log('hubo este esrror: ' + error);
-								
-							})
+							this.afDB.database.ref(this.SignUpService.userPlace + '/users/'+userId+'/myReserves/'+ this.reserveKey).update({
+								cancelReserve:true
+							});
 							this.sendCoordsService.eraseUser(this.SignUpService.userPlace, userId,this.userUid,this.reserveKey );
-							this.navCtrl.setRoot('FindridePage');
+							
+							this.dismiss();
 							this.presentToast(`Haz eliminado a ${nameUser} de tu viaje`, 3000, 'bottom')
 						 
 						}
