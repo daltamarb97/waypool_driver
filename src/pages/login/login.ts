@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, AlertController, NavParams, IonicPage, Platform } from 'ionic-angular';
+import { NavController, AlertController, NavParams, IonicPage, Platform, LoadingController } from 'ionic-angular';
 
 
 import { authenticationService } from '../../services/driverauthentication.service';
@@ -27,7 +27,7 @@ export class LoginPage {
     driverInfo:any;
     // userFirebase = this.AngularFireAuth.auth.currentUser;
     
-  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService,  public platform: Platform) {
+  constructor(public navCtrl: NavController, private authenticationService: authenticationService, public alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, private formBuilder: FormBuilder, public SignUpService: SignUpService,  public platform: Platform, public loadingCtrl: LoadingController) {
     this.loginGroup = this.formBuilder.group({
         email: ["", Validators.required],
         password: ["", Validators.required]
@@ -68,7 +68,15 @@ export class LoginPage {
          }; 
     };
     
-    logIn(){      
+    logIn(){ 
+        let loading = this.loadingCtrl.create({
+            spinner: 'crescent',
+            content: `
+              <div class="custom-spinner-container">
+                <div class="custom-spinner-box"></div>
+              </div>`
+              });
+          loading.present();     
         this.receivedUser = this.navParams.data;
 
         let email = this.loginGroup.controls['email'].value;
@@ -77,6 +85,7 @@ export class LoginPage {
             this.authenticationService.loginWithEmail(email, password).then((data) => {
                 console.log(data);
                 if(data.user.emailVerified == false){
+                    loading.dismiss();
                     const alert = this.alertCtrl.create({
                         title: 'Oops!',
                         subTitle: 'por favor verifica tu email',
@@ -103,9 +112,11 @@ export class LoginPage {
                     // }
                         setTimeout(()=>{
                             if(this.navCtrl.getActive().id === 'LoginPage'){
+                                loading.dismiss();
                                 this.navCtrl.setRoot('FindridePage');
 
                             }else{
+                                loading.dismiss();
                                 console.log('actuo el abservable')
                             }
                         }, 500) 
@@ -113,6 +124,7 @@ export class LoginPage {
                     this.authenticationService.getStatus;  
                 };
             }).catch((error) => {
+                loading.dismiss();
                 const alert = this.alertCtrl.create({
                     title: 'Oops!',
                     subTitle: 'El usuario o la contraseña están incorrectas',
