@@ -280,14 +280,13 @@ export class ReservetripPage{
 
   
   help(){
-    // const toast = this.toastCtrl.create({
-    //   message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
-    //   showCloseButton:true,
-    //   closeButtonText: 'OK',
-    //   position:'top'
-    //      });
-    // toast.present();
-    this.navCtrl.push('WalkthroughPage');
+    const toast = this.toastCtrl.create({
+      message: 'Aquí se mostrarán los viajes que hayas registrados en tu horario, estos se generaran automáticamente después de presionar el botón conectado.',
+      showCloseButton:true,
+      closeButtonText: 'OK',
+      position:'top'
+         });
+    toast.present();
     
   }
   presentLoadingCustom() {

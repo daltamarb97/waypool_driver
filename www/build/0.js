@@ -17301,7 +17301,7 @@ webpackContext.id = 797;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(668);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_metrics_service__ = __webpack_require__(356);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_metrics_service__ = __webpack_require__(355);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17544,14 +17544,13 @@ var ReservetripPage = /** @class */ (function () {
         // this.subscribe.unsubscribe();
     };
     ReservetripPage.prototype.help = function () {
-        // const toast = this.toastCtrl.create({
-        //   message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
-        //   showCloseButton:true,
-        //   closeButtonText: 'OK',
-        //   position:'top'
-        //      });
-        // toast.present();
-        this.navCtrl.push('WalkthroughPage');
+        var toast = this.toastCtrl.create({
+            message: 'Aquí se mostrarán los viajes que hayas registrados en tu horario, estos se generaran automáticamente después de presionar el botón conectado.',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
     };
     ReservetripPage.prototype.presentLoadingCustom = function () {
         var _this = this;

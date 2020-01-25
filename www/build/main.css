@@ -27674,6 +27674,8 @@ page-detailsreserve .card ion-item .name h2 ion-icon {
 }
 
 page-detailsreserve .card ion-item .more {
+  text-align: center;
+  font-size: 21px;
   width: 65px;
   display: inline-block;
 }
@@ -28368,6 +28370,8 @@ page-myride .card ion-item .name h2 ion-icon {
 page-myride .card ion-item .more {
   width: 65px;
   display: inline-block;
+  text-align: end;
+  font-size: 21px;
 }
 
 page-myride .card ion-item .more .badge {
