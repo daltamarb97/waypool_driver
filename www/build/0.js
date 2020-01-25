@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 663:
+/***/ 661:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservetripPageModule", function() { return ReservetripPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(829);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reservetrip__ = __webpack_require__(827);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17282,7 +17282,7 @@ webpackContext.id = 797;
 
 /***/ }),
 
-/***/ 829:
+/***/ 827:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17544,14 +17544,13 @@ var ReservetripPage = /** @class */ (function () {
         // this.subscribe.unsubscribe();
     };
     ReservetripPage.prototype.help = function () {
-        // const toast = this.toastCtrl.create({
-        //   message: 'Aquí se mostrarán las reservas cuando tengas al menos un pasajero, no te preocupes, hacemos nuestro más grande esfuerzo por conectarte con tus compañeros.',
-        //   showCloseButton:true,
-        //   closeButtonText: 'OK',
-        //   position:'top'
-        //      });
-        // toast.present();
-        this.navCtrl.push('WalkthroughPage');
+        var toast = this.toastCtrl.create({
+            message: 'Aquí se mostrarán los viajes que hayas registrados en tu horario, estos se generaran automáticamente después de presionar el botón conectado.',
+            showCloseButton: true,
+            closeButtonText: 'OK',
+            position: 'top'
+        });
+        toast.present();
     };
     ReservetripPage.prototype.presentLoadingCustom = function () {
         var _this = this;
