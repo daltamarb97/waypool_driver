@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypoolcars" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <feature name="FCMPlugin">
-        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
-        <param name="onload" value="true" />
-    </feature>
+<widget id="com.waypoolsas.waypoolcars" version="3.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WaypoolCars</name>
     <description>Waypool for students with car</description>
     <author email="team@waypooltech.com" href="https://waypooltech.com/">Ionic Framework Team</author>
@@ -66,20 +62,25 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="30000" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="loadUrlTimeoutValue" value="700000" />
+    <feature name="FCMPlugin">
+        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="CallNumber">
         <param name="android-package" value="com.rohithvaranasi.callnumber.CFCallNumber" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
     </feature>
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
     </feature>
 </widget>

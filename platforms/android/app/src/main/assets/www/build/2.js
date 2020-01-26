@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 660:
+/***/ 661:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41,7 +41,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 669:
+/***/ 668:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -1896,7 +1896,7 @@ var MyridePageModule = /** @class */ (function () {
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(798)("./" + name);
+                __webpack_require__(797)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4647,17 +4647,17 @@ var MyridePageModule = /** @class */ (function () {
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(797)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(796)(module)))
 
 /***/ }),
 
-/***/ 670:
+/***/ 669:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4729,13 +4729,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 671:
+/***/ 670:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4869,13 +4869,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 672:
+/***/ 671:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4933,13 +4933,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 673:
+/***/ 672:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4997,13 +4997,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 674:
+/***/ 673:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5124,13 +5124,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 675:
+/***/ 674:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5188,13 +5188,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 676:
+/***/ 675:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5297,13 +5297,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 677:
+/***/ 676:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5361,13 +5361,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 678:
+/***/ 677:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5471,13 +5471,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 679:
+/***/ 678:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5608,13 +5608,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 680:
+/***/ 679:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5703,13 +5703,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 681:
+/***/ 680:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5766,13 +5766,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 682:
+/***/ 681:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5890,13 +5890,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 683:
+/***/ 682:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6014,13 +6014,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 684:
+/***/ 683:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6127,13 +6127,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 685:
+/***/ 684:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6283,13 +6283,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 686:
+/***/ 685:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6376,13 +6376,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 687:
+/***/ 686:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6553,13 +6553,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 688:
+/***/ 687:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6621,13 +6621,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 689:
+/***/ 688:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6706,13 +6706,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 690:
+/***/ 689:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6771,13 +6771,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 691:
+/***/ 690:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6852,13 +6852,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 692:
+/***/ 691:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6933,13 +6933,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 693:
+/***/ 692:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7014,13 +7014,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 694:
+/***/ 693:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7118,13 +7118,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 695:
+/***/ 694:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7223,13 +7223,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 696:
+/***/ 695:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7295,13 +7295,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 697:
+/***/ 696:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7367,13 +7367,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 698:
+/***/ 697:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7435,13 +7435,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 699:
+/***/ 698:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7507,13 +7507,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 700:
+/***/ 699:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7579,13 +7579,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 701:
+/***/ 700:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7646,13 +7646,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 702:
+/***/ 701:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7718,13 +7718,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 703:
+/***/ 702:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7794,13 +7794,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 704:
+/***/ 703:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7891,13 +7891,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 705:
+/***/ 704:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7988,13 +7988,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 706:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8085,13 +8085,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 707:
+/***/ 706:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8170,13 +8170,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 708:
+/***/ 707:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8241,13 +8241,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 709:
+/***/ 708:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8352,13 +8352,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 710:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8466,13 +8466,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 711:
+/***/ 710:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8531,13 +8531,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 712:
+/***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8619,13 +8619,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 713:
+/***/ 712:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8698,13 +8698,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 714:
+/***/ 713:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8781,13 +8781,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 715:
+/***/ 714:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8861,13 +8861,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 716:
+/***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8943,13 +8943,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 717:
+/***/ 716:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9024,13 +9024,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 718:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9106,13 +9106,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 719:
+/***/ 718:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9234,13 +9234,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 720:
+/***/ 719:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9363,13 +9363,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 721:
+/***/ 720:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9465,13 +9465,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 722:
+/***/ 721:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9594,13 +9594,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 723:
+/***/ 722:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9753,13 +9753,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 724:
+/***/ 723:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9868,13 +9868,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 725:
+/***/ 724:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9968,13 +9968,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 726:
+/***/ 725:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10055,13 +10055,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 727:
+/***/ 726:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10192,13 +10192,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 728:
+/***/ 727:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10266,13 +10266,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 729:
+/***/ 728:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10340,13 +10340,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 730:
+/***/ 729:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10437,13 +10437,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 731:
+/***/ 730:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10524,13 +10524,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 732:
+/***/ 731:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10618,13 +10618,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 733:
+/***/ 732:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10710,13 +10710,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 734:
+/***/ 733:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10825,13 +10825,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 735:
+/***/ 734:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10956,13 +10956,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 736:
+/***/ 735:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11042,13 +11042,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 737:
+/***/ 736:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11166,13 +11166,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 738:
+/***/ 737:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11258,13 +11258,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 739:
+/***/ 738:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11399,13 +11399,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 740:
+/***/ 739:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11474,13 +11474,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 741:
+/***/ 740:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11597,13 +11597,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 742:
+/***/ 741:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11699,13 +11699,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 743:
+/***/ 742:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11816,13 +11816,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 744:
+/***/ 743:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11885,13 +11885,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 745:
+/***/ 744:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11980,13 +11980,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 746:
+/***/ 745:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12066,13 +12066,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 747:
+/***/ 746:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12175,13 +12175,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 748:
+/***/ 747:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12340,13 +12340,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 749:
+/***/ 748:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12427,13 +12427,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 750:
+/***/ 749:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12514,13 +12514,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 751:
+/***/ 750:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12579,13 +12579,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 752:
+/***/ 751:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12677,13 +12677,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 753:
+/***/ 752:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12744,13 +12744,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 754:
+/***/ 753:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12872,13 +12872,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 755:
+/***/ 754:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12964,13 +12964,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 756:
+/***/ 755:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13056,13 +13056,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 757:
+/***/ 756:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13121,13 +13121,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 758:
+/***/ 757:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13250,13 +13250,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 759:
+/***/ 758:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13381,13 +13381,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 760:
+/***/ 759:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13451,13 +13451,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 761:
+/***/ 760:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13517,13 +13517,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 762:
+/***/ 761:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13597,13 +13597,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 763:
+/***/ 762:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13784,13 +13784,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 764:
+/***/ 763:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13887,13 +13887,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 765:
+/***/ 764:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13952,13 +13952,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 766:
+/***/ 765:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14028,13 +14028,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 767:
+/***/ 766:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14189,13 +14189,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 768:
+/***/ 767:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14367,13 +14367,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 769:
+/***/ 768:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14440,13 +14440,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 770:
+/***/ 769:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14556,13 +14556,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 771:
+/***/ 770:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14672,13 +14672,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 772:
+/***/ 771:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14765,13 +14765,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 773:
+/***/ 772:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14839,13 +14839,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 774:
+/***/ 773:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14903,13 +14903,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 775:
+/***/ 774:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15037,13 +15037,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 776:
+/***/ 775:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15131,13 +15131,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 777:
+/***/ 776:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15203,13 +15203,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 778:
+/***/ 777:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15324,13 +15324,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 779:
+/***/ 778:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15396,13 +15396,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 780:
+/***/ 779:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15463,13 +15463,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 781:
+/***/ 780:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15590,12 +15590,12 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 782:
+/***/ 781:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15689,13 +15689,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 783:
+/***/ 782:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15785,13 +15785,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 784:
+/***/ 783:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15848,13 +15848,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 785:
+/***/ 784:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15911,13 +15911,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 786:
+/***/ 785:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16035,13 +16035,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 787:
+/***/ 786:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16194,13 +16194,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 788:
+/***/ 787:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16297,13 +16297,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 789:
+/***/ 788:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16360,13 +16360,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 790:
+/***/ 789:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16423,13 +16423,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 791:
+/***/ 790:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16507,13 +16507,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 792:
+/***/ 791:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16580,13 +16580,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 793:
+/***/ 792:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16645,13 +16645,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 794:
+/***/ 793:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16760,13 +16760,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 795:
+/***/ 794:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16868,13 +16868,13 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 796:
+/***/ 795:
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(669)) :
+    true ? factory(__webpack_require__(668)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -16976,7 +16976,7 @@ var MyridePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 797:
+/***/ 796:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17005,264 +17005,264 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 798:
+/***/ 797:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 670,
-	"./af.js": 670,
-	"./ar": 671,
-	"./ar-dz": 672,
-	"./ar-dz.js": 672,
-	"./ar-kw": 673,
-	"./ar-kw.js": 673,
-	"./ar-ly": 674,
-	"./ar-ly.js": 674,
-	"./ar-ma": 675,
-	"./ar-ma.js": 675,
-	"./ar-sa": 676,
-	"./ar-sa.js": 676,
-	"./ar-tn": 677,
-	"./ar-tn.js": 677,
-	"./ar.js": 671,
-	"./az": 678,
-	"./az.js": 678,
-	"./be": 679,
-	"./be.js": 679,
-	"./bg": 680,
-	"./bg.js": 680,
-	"./bm": 681,
-	"./bm.js": 681,
-	"./bn": 682,
-	"./bn.js": 682,
-	"./bo": 683,
-	"./bo.js": 683,
-	"./br": 684,
-	"./br.js": 684,
-	"./bs": 685,
-	"./bs.js": 685,
-	"./ca": 686,
-	"./ca.js": 686,
-	"./cs": 687,
-	"./cs.js": 687,
-	"./cv": 688,
-	"./cv.js": 688,
-	"./cy": 689,
-	"./cy.js": 689,
-	"./da": 690,
-	"./da.js": 690,
-	"./de": 691,
-	"./de-at": 692,
-	"./de-at.js": 692,
-	"./de-ch": 693,
-	"./de-ch.js": 693,
-	"./de.js": 691,
-	"./dv": 694,
-	"./dv.js": 694,
-	"./el": 695,
-	"./el.js": 695,
-	"./en-SG": 696,
-	"./en-SG.js": 696,
-	"./en-au": 697,
-	"./en-au.js": 697,
-	"./en-ca": 698,
-	"./en-ca.js": 698,
-	"./en-gb": 699,
-	"./en-gb.js": 699,
-	"./en-ie": 700,
-	"./en-ie.js": 700,
-	"./en-il": 701,
-	"./en-il.js": 701,
-	"./en-nz": 702,
-	"./en-nz.js": 702,
-	"./eo": 703,
-	"./eo.js": 703,
-	"./es": 704,
-	"./es-do": 705,
-	"./es-do.js": 705,
-	"./es-us": 706,
-	"./es-us.js": 706,
-	"./es.js": 704,
-	"./et": 707,
-	"./et.js": 707,
-	"./eu": 708,
-	"./eu.js": 708,
-	"./fa": 709,
-	"./fa.js": 709,
-	"./fi": 710,
-	"./fi.js": 710,
-	"./fo": 711,
-	"./fo.js": 711,
-	"./fr": 712,
-	"./fr-ca": 713,
-	"./fr-ca.js": 713,
-	"./fr-ch": 714,
-	"./fr-ch.js": 714,
-	"./fr.js": 712,
-	"./fy": 715,
-	"./fy.js": 715,
-	"./ga": 716,
-	"./ga.js": 716,
-	"./gd": 717,
-	"./gd.js": 717,
-	"./gl": 718,
-	"./gl.js": 718,
-	"./gom-latn": 719,
-	"./gom-latn.js": 719,
-	"./gu": 720,
-	"./gu.js": 720,
-	"./he": 721,
-	"./he.js": 721,
-	"./hi": 722,
-	"./hi.js": 722,
-	"./hr": 723,
-	"./hr.js": 723,
-	"./hu": 724,
-	"./hu.js": 724,
-	"./hy-am": 725,
-	"./hy-am.js": 725,
-	"./id": 726,
-	"./id.js": 726,
-	"./is": 727,
-	"./is.js": 727,
-	"./it": 728,
-	"./it-ch": 729,
-	"./it-ch.js": 729,
-	"./it.js": 728,
-	"./ja": 730,
-	"./ja.js": 730,
-	"./jv": 731,
-	"./jv.js": 731,
-	"./ka": 732,
-	"./ka.js": 732,
-	"./kk": 733,
-	"./kk.js": 733,
-	"./km": 734,
-	"./km.js": 734,
-	"./kn": 735,
-	"./kn.js": 735,
-	"./ko": 736,
-	"./ko.js": 736,
-	"./ku": 737,
-	"./ku.js": 737,
-	"./ky": 738,
-	"./ky.js": 738,
-	"./lb": 739,
-	"./lb.js": 739,
-	"./lo": 740,
-	"./lo.js": 740,
-	"./lt": 741,
-	"./lt.js": 741,
-	"./lv": 742,
-	"./lv.js": 742,
-	"./me": 743,
-	"./me.js": 743,
-	"./mi": 744,
-	"./mi.js": 744,
-	"./mk": 745,
-	"./mk.js": 745,
-	"./ml": 746,
-	"./ml.js": 746,
-	"./mn": 747,
-	"./mn.js": 747,
-	"./mr": 748,
-	"./mr.js": 748,
-	"./ms": 749,
-	"./ms-my": 750,
-	"./ms-my.js": 750,
-	"./ms.js": 749,
-	"./mt": 751,
-	"./mt.js": 751,
-	"./my": 752,
-	"./my.js": 752,
-	"./nb": 753,
-	"./nb.js": 753,
-	"./ne": 754,
-	"./ne.js": 754,
-	"./nl": 755,
-	"./nl-be": 756,
-	"./nl-be.js": 756,
-	"./nl.js": 755,
-	"./nn": 757,
-	"./nn.js": 757,
-	"./pa-in": 758,
-	"./pa-in.js": 758,
-	"./pl": 759,
-	"./pl.js": 759,
-	"./pt": 760,
-	"./pt-br": 761,
-	"./pt-br.js": 761,
-	"./pt.js": 760,
-	"./ro": 762,
-	"./ro.js": 762,
-	"./ru": 763,
-	"./ru.js": 763,
-	"./sd": 764,
-	"./sd.js": 764,
-	"./se": 765,
-	"./se.js": 765,
-	"./si": 766,
-	"./si.js": 766,
-	"./sk": 767,
-	"./sk.js": 767,
-	"./sl": 768,
-	"./sl.js": 768,
-	"./sq": 769,
-	"./sq.js": 769,
-	"./sr": 770,
-	"./sr-cyrl": 771,
-	"./sr-cyrl.js": 771,
-	"./sr.js": 770,
-	"./ss": 772,
-	"./ss.js": 772,
-	"./sv": 773,
-	"./sv.js": 773,
-	"./sw": 774,
-	"./sw.js": 774,
-	"./ta": 775,
-	"./ta.js": 775,
-	"./te": 776,
-	"./te.js": 776,
-	"./tet": 777,
-	"./tet.js": 777,
-	"./tg": 778,
-	"./tg.js": 778,
-	"./th": 779,
-	"./th.js": 779,
-	"./tl-ph": 780,
-	"./tl-ph.js": 780,
-	"./tlh": 781,
-	"./tlh.js": 781,
-	"./tr": 782,
-	"./tr.js": 782,
-	"./tzl": 783,
-	"./tzl.js": 783,
-	"./tzm": 784,
-	"./tzm-latn": 785,
-	"./tzm-latn.js": 785,
-	"./tzm.js": 784,
-	"./ug-cn": 786,
-	"./ug-cn.js": 786,
-	"./uk": 787,
-	"./uk.js": 787,
-	"./ur": 788,
-	"./ur.js": 788,
-	"./uz": 789,
-	"./uz-latn": 790,
-	"./uz-latn.js": 790,
-	"./uz.js": 789,
-	"./vi": 791,
-	"./vi.js": 791,
-	"./x-pseudo": 792,
-	"./x-pseudo.js": 792,
-	"./yo": 793,
-	"./yo.js": 793,
-	"./zh-cn": 794,
-	"./zh-cn.js": 794,
-	"./zh-hk": 795,
-	"./zh-hk.js": 795,
-	"./zh-tw": 796,
-	"./zh-tw.js": 796
+	"./af": 669,
+	"./af.js": 669,
+	"./ar": 670,
+	"./ar-dz": 671,
+	"./ar-dz.js": 671,
+	"./ar-kw": 672,
+	"./ar-kw.js": 672,
+	"./ar-ly": 673,
+	"./ar-ly.js": 673,
+	"./ar-ma": 674,
+	"./ar-ma.js": 674,
+	"./ar-sa": 675,
+	"./ar-sa.js": 675,
+	"./ar-tn": 676,
+	"./ar-tn.js": 676,
+	"./ar.js": 670,
+	"./az": 677,
+	"./az.js": 677,
+	"./be": 678,
+	"./be.js": 678,
+	"./bg": 679,
+	"./bg.js": 679,
+	"./bm": 680,
+	"./bm.js": 680,
+	"./bn": 681,
+	"./bn.js": 681,
+	"./bo": 682,
+	"./bo.js": 682,
+	"./br": 683,
+	"./br.js": 683,
+	"./bs": 684,
+	"./bs.js": 684,
+	"./ca": 685,
+	"./ca.js": 685,
+	"./cs": 686,
+	"./cs.js": 686,
+	"./cv": 687,
+	"./cv.js": 687,
+	"./cy": 688,
+	"./cy.js": 688,
+	"./da": 689,
+	"./da.js": 689,
+	"./de": 690,
+	"./de-at": 691,
+	"./de-at.js": 691,
+	"./de-ch": 692,
+	"./de-ch.js": 692,
+	"./de.js": 690,
+	"./dv": 693,
+	"./dv.js": 693,
+	"./el": 694,
+	"./el.js": 694,
+	"./en-SG": 695,
+	"./en-SG.js": 695,
+	"./en-au": 696,
+	"./en-au.js": 696,
+	"./en-ca": 697,
+	"./en-ca.js": 697,
+	"./en-gb": 698,
+	"./en-gb.js": 698,
+	"./en-ie": 699,
+	"./en-ie.js": 699,
+	"./en-il": 700,
+	"./en-il.js": 700,
+	"./en-nz": 701,
+	"./en-nz.js": 701,
+	"./eo": 702,
+	"./eo.js": 702,
+	"./es": 703,
+	"./es-do": 704,
+	"./es-do.js": 704,
+	"./es-us": 705,
+	"./es-us.js": 705,
+	"./es.js": 703,
+	"./et": 706,
+	"./et.js": 706,
+	"./eu": 707,
+	"./eu.js": 707,
+	"./fa": 708,
+	"./fa.js": 708,
+	"./fi": 709,
+	"./fi.js": 709,
+	"./fo": 710,
+	"./fo.js": 710,
+	"./fr": 711,
+	"./fr-ca": 712,
+	"./fr-ca.js": 712,
+	"./fr-ch": 713,
+	"./fr-ch.js": 713,
+	"./fr.js": 711,
+	"./fy": 714,
+	"./fy.js": 714,
+	"./ga": 715,
+	"./ga.js": 715,
+	"./gd": 716,
+	"./gd.js": 716,
+	"./gl": 717,
+	"./gl.js": 717,
+	"./gom-latn": 718,
+	"./gom-latn.js": 718,
+	"./gu": 719,
+	"./gu.js": 719,
+	"./he": 720,
+	"./he.js": 720,
+	"./hi": 721,
+	"./hi.js": 721,
+	"./hr": 722,
+	"./hr.js": 722,
+	"./hu": 723,
+	"./hu.js": 723,
+	"./hy-am": 724,
+	"./hy-am.js": 724,
+	"./id": 725,
+	"./id.js": 725,
+	"./is": 726,
+	"./is.js": 726,
+	"./it": 727,
+	"./it-ch": 728,
+	"./it-ch.js": 728,
+	"./it.js": 727,
+	"./ja": 729,
+	"./ja.js": 729,
+	"./jv": 730,
+	"./jv.js": 730,
+	"./ka": 731,
+	"./ka.js": 731,
+	"./kk": 732,
+	"./kk.js": 732,
+	"./km": 733,
+	"./km.js": 733,
+	"./kn": 734,
+	"./kn.js": 734,
+	"./ko": 735,
+	"./ko.js": 735,
+	"./ku": 736,
+	"./ku.js": 736,
+	"./ky": 737,
+	"./ky.js": 737,
+	"./lb": 738,
+	"./lb.js": 738,
+	"./lo": 739,
+	"./lo.js": 739,
+	"./lt": 740,
+	"./lt.js": 740,
+	"./lv": 741,
+	"./lv.js": 741,
+	"./me": 742,
+	"./me.js": 742,
+	"./mi": 743,
+	"./mi.js": 743,
+	"./mk": 744,
+	"./mk.js": 744,
+	"./ml": 745,
+	"./ml.js": 745,
+	"./mn": 746,
+	"./mn.js": 746,
+	"./mr": 747,
+	"./mr.js": 747,
+	"./ms": 748,
+	"./ms-my": 749,
+	"./ms-my.js": 749,
+	"./ms.js": 748,
+	"./mt": 750,
+	"./mt.js": 750,
+	"./my": 751,
+	"./my.js": 751,
+	"./nb": 752,
+	"./nb.js": 752,
+	"./ne": 753,
+	"./ne.js": 753,
+	"./nl": 754,
+	"./nl-be": 755,
+	"./nl-be.js": 755,
+	"./nl.js": 754,
+	"./nn": 756,
+	"./nn.js": 756,
+	"./pa-in": 757,
+	"./pa-in.js": 757,
+	"./pl": 758,
+	"./pl.js": 758,
+	"./pt": 759,
+	"./pt-br": 760,
+	"./pt-br.js": 760,
+	"./pt.js": 759,
+	"./ro": 761,
+	"./ro.js": 761,
+	"./ru": 762,
+	"./ru.js": 762,
+	"./sd": 763,
+	"./sd.js": 763,
+	"./se": 764,
+	"./se.js": 764,
+	"./si": 765,
+	"./si.js": 765,
+	"./sk": 766,
+	"./sk.js": 766,
+	"./sl": 767,
+	"./sl.js": 767,
+	"./sq": 768,
+	"./sq.js": 768,
+	"./sr": 769,
+	"./sr-cyrl": 770,
+	"./sr-cyrl.js": 770,
+	"./sr.js": 769,
+	"./ss": 771,
+	"./ss.js": 771,
+	"./sv": 772,
+	"./sv.js": 772,
+	"./sw": 773,
+	"./sw.js": 773,
+	"./ta": 774,
+	"./ta.js": 774,
+	"./te": 775,
+	"./te.js": 775,
+	"./tet": 776,
+	"./tet.js": 776,
+	"./tg": 777,
+	"./tg.js": 777,
+	"./th": 778,
+	"./th.js": 778,
+	"./tl-ph": 779,
+	"./tl-ph.js": 779,
+	"./tlh": 780,
+	"./tlh.js": 780,
+	"./tr": 781,
+	"./tr.js": 781,
+	"./tzl": 782,
+	"./tzl.js": 782,
+	"./tzm": 783,
+	"./tzm-latn": 784,
+	"./tzm-latn.js": 784,
+	"./tzm.js": 783,
+	"./ug-cn": 785,
+	"./ug-cn.js": 785,
+	"./uk": 786,
+	"./uk.js": 786,
+	"./ur": 787,
+	"./ur.js": 787,
+	"./uz": 788,
+	"./uz-latn": 789,
+	"./uz-latn.js": 789,
+	"./uz.js": 788,
+	"./vi": 790,
+	"./vi.js": 790,
+	"./x-pseudo": 791,
+	"./x-pseudo.js": 791,
+	"./yo": 792,
+	"./yo.js": 792,
+	"./zh-cn": 793,
+	"./zh-cn.js": 793,
+	"./zh-hk": 794,
+	"./zh-hk.js": 794,
+	"./zh-tw": 795,
+	"./zh-tw.js": 795
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -17278,7 +17278,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 798;
+webpackContext.id = 797;
 
 /***/ }),
 
@@ -17289,16 +17289,16 @@ webpackContext.id = 798;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyridePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(669);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(668);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angularfire2_database__);
@@ -17437,8 +17437,6 @@ var MyridePage = /** @class */ (function () {
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers === undefined) {
             // erase trip because driver decide to cancel
             this.unSubscribeServices();
-            this.TripsService.eliminateTripState(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
-            this.TripsService.setOnTripFalse(this.SignUpService.userPlace, this.driverUid);
             this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
             this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
             this.navCtrl.pop();
@@ -17447,6 +17445,7 @@ var MyridePage = /** @class */ (function () {
             this.afDB.database.ref(this.SignUpService.userPlace + '/trips/' + this.driverUid + '/' + this.userDriver.keyTrip).remove().then(function () {
                 _this.TripsService.eraseKeyTrip(_this.SignUpService.userPlace, _this.driverUid);
             });
+            this.TripsService.setOnTripFalse(this.SignUpService.userPlace, this.driverUid);
             // this.navCtrl.setRoot(this.navCtrl.getActive().component);
             var modal = this.modalCtrl.create('CanceltripPage');
             modal.present();
@@ -17455,12 +17454,11 @@ var MyridePage = /** @class */ (function () {
         if (this.trip.pendingUsers === undefined && this.trip.pickedUpUsers === undefined && this.trip.cancelUsers !== undefined) {
             // erase trip because there is no one to picked Up
             this.unSubscribeServices();
-            this.TripsService.eliminateTripState(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
+            this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
             this.geofireServices.deleteUserGeofireOrTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
             this.geofireServices.deleteUserGeofireDestTrip(this.SignUpService.userPlace, this.userDriver.keyTrip);
             this.TripsService.eraseKeyTrip(this.SignUpService.userPlace, this.driverUid);
             this.TripsService.setOnTripFalse(this.SignUpService.userPlace, this.driverUid);
-            this.TripsService.endTrip(this.SignUpService.userPlace, this.userDriver.keyTrip, this.driverUid);
             this.navCtrl.pop();
             console.log("me reproduci 2");
             var modal = this.modalCtrl.create('CanceltripPage');
@@ -17520,6 +17518,7 @@ var MyridePage = /** @class */ (function () {
                                     _this.TripsService.sentTripUser(_this.SignUpService.userPlace, user.userId, _this.trip);
                                     _this.TripsService.endTripForUsers(_this.SignUpService.userPlace, user.userId);
                                     _this.TripsService.setOnTripFalseUser(_this.SignUpService.userPlace, user.userId);
+                                    _this.TripsService.eliminateKeyTripUser(_this.SignUpService.userPlace, user.userId);
                                     _this.afDB.database.ref('allCities/' + _this.userDriver.city + '/allPlaces/' + user.company + '/zones').once('value').then(function (snapUser) {
                                         var obj = snapUser.val();
                                         Object.getOwnPropertyNames(obj).forEach(function (key) {
@@ -17605,6 +17604,8 @@ var MyridePage = /** @class */ (function () {
                     text: 'Eliminar',
                     handler: function () {
                         _this.TripsService.cancelUserFromTrip(_this.SignUpService.userPlace, _this.driverUid, _this.trip.keyTrip, userId);
+                        _this.TripsService.setOnTripFalseUser(_this.SignUpService.userPlace, userId);
+                        _this.TripsService.eliminateKeyTripUser(_this.SignUpService.userPlace, userId);
                         _this.presentToast("Haz eliminado a " + nameUser + " de tu viaje", 3000, 'bottom');
                     }
                 }
@@ -17646,7 +17647,7 @@ var MyridePage = /** @class */ (function () {
     };
     MyridePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-myride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/myride/myride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">VIAJE EN CURSO\n           \n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n        </ion-title>\n\n    </ion-navbar>\n    \n</ion-header>\n\n<ion-content class="bg-light"> \n        <p class="important">¡IMPORTANTE!: No cierres la app mientras estas haciendo un viaje. </p> \n       \n      \n        <ion-list >\n            <ion-card *ngFor = "let user of pendingUsers">\n                <ion-item>\n                    <ion-avatar item-start>\n                        <img src="assets/imgs/userPicture.png">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                          <ion-icon *ngIf=\'user.verifiedPerson\' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>\n                          <ion-badge class="bg-yellow" style="margin:0px 3px 13px;"> {{trip.driver.company}}</ion-badge>\n\n\n                        </h2>\n                    </div>\n                    <div class="more">\n                            <ion-icon name="md-more" (click)="presentActionSheet(user.userId,user.name)"></ion-icon>\n\n                    </div>\n                </ion-item>\n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p><small></small>\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                        <p><small></small>\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                    </div>\n                    <ion-row>\n                        \n                                <ion-col class="detail-text">\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n            \n                                    </ion-col>\n                        <ion-col col-5>\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Ir a Recoger/Dejar</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>         \n\n                \n            </ion-card>\n            \n            \n            \n            <ion-card *ngFor = "let user of pickedUpUsers">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2 >{{user.name |titlecase}} {{user.lastname | slice:0:1 | titlecase}}.\n                            </h2>\n                            <p>{{user.company}}</p>\n\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge bg-darkblue">RECOGIDO</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>\n                   \n        \n                    \n                </ion-card> \n\n            \n                <ion-row class="rowOfButtons" >                                 \n                \n                    <ion-col class="detail-text">\n                        <button class="btn bg-darkblue rounded full text-white" style="width: 90%;margin-top: 14px;margin-left: 9px;" (click)="enterChat()">Chat</button>\n                    </ion-col>\n                    <ion-col class="detail-text">\n                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 93%;margin-top: 14px;margin-left: 9px; margin-right: 9px;">Finalizar Viaje</button>\n                    </ion-col>\n               \n                </ion-row>\n        </ion-list>\n        \n\n\n\n            \n            \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/myride/myride.html"*/
+            selector: 'page-myride',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/pages/myride/myride.html"*/'<ion-header class="bg-theme">\n    <ion-navbar>\n        <ion-title class="text-center">VIAJE EN CURSO\n           \n            <ion-icon name="help-circle-outline" class="text-white" (click)="help() " style="margin-left: auto;float: right;"></ion-icon> \n        </ion-title>\n\n    </ion-navbar>\n    \n</ion-header>\n\n<ion-content class="bg-light"> \n        <p class="important">No se intercambia efectivo durante el viaje </p> \n       \n      \n        <ion-list >\n            <ion-card *ngFor = "let user of pendingUsers">\n                <ion-item>\n                    <ion-avatar item-start>\n                        <img src="assets/imgs/userPicture.png">\n                    </ion-avatar>\n                    <div class="name">\n                        <h2>{{user.name |titlecase}} {{user.lastname | titlecase}}.\n                          <ion-icon *ngIf=\'user.verifiedPerson\' name="ios-checkmark-circle" class="text-darkblue"></ion-icon>\n                          <ion-badge class="bg-yellow" style="margin:0px 3px 13px;"> {{trip.driver.company}}</ion-badge>\n\n\n                        </h2>\n                    </div>\n                    <div class="more">\n                            <ion-icon name="md-more" (click)="presentActionSheet(user.userId,user.name)"></ion-icon>\n\n                    </div>\n                </ion-item>\n                <ion-card-content>\n                    <div class="ride-detail">\n                        <p><small></small>\n                            <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                        <p><small></small>\n                            <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                    </div>\n                    <ion-row>\n                        \n                                <ion-col class="detail-text">\n                                        <button class="btn bg-yellow rounded full text-white"(click)="callUser(user.phone)"><ion-icon name="ios-call" class="text-white"></ion-icon></button>\n            \n                                    </ion-col>\n                        <ion-col col-5>\n                            <button class="btn bg-theme rounded full text-white" (click)="goToRide(user)">Ir a Recoger/Dejar</button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card-content>         \n\n                \n            </ion-card>\n            \n            \n            \n            <ion-card *ngFor = "let user of pickedUpUsers">\n                    <ion-item>\n                        <ion-avatar item-start>\n                            <img src="assets/imgs/userPicture.png">\n                        </ion-avatar>\n                        <div class="name">\n                            <h2 >{{user.name |titlecase}} {{user.lastname | titlecase}}.\n                            </h2>\n                            <p>{{user.company}}</p>\n\n                        </div>\n                        <div class="more">                       \n                                <ion-badge  class="badge bg-darkblue">RECOGIDO</ion-badge>                                  \n                                    \n                        </div>\n                    </ion-item>\n                    <ion-card-content>\n                        <div class="ride-detail">\n                            <p>\n                                <span class="icon-location bg-theme"></span>{{user.origin}}</p>\n                            <p>\n                                <span class="icon-location bg-yellow"></span>{{user.destination}}</p>\n                        </div>\n                       \n                    </ion-card-content>\n                   \n        \n                    \n                </ion-card> \n\n            \n                <ion-row class="rowOfButtons" >                                 \n                \n                    <ion-col class="detail-text">\n                        <button class="btn bg-darkblue rounded full text-white" style="width: 90%;margin-top: 14px;margin-left: 9px;" (click)="enterChat()">Chat</button>\n                    </ion-col>\n                    <ion-col class="detail-text">\n                        <button class="btn bg-theme text-white rounded"  (click)="endTrip()" style="width: 93%;margin-top: 14px;margin-left: 9px; margin-right: 9px;">Finalizar Viaje</button>\n                    </ion-col>\n               \n                </ion-row>\n        </ion-list>\n        \n\n\n\n            \n            \n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/pages/myride/myride.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_7__services_signup_service__["a" /* SignUpService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_9__services_trips_service__["a" /* TripsService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_call_number__["a" /* CallNumber */], __WEBPACK_IMPORTED_MODULE_2__services_sendCoords_service__["a" /* sendCoordsService */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_4__services_sendUsers_service__["a" /* sendUsersService */], __WEBPACK_IMPORTED_MODULE_6__services_geofire_services__["a" /* geofireService */], __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__["AngularFireDatabase"]])
     ], MyridePage);

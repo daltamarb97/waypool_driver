@@ -1,4 +1,4 @@
-webpackJsonp([33],{
+webpackJsonp([32],{
 
 /***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -253,50 +253,46 @@ webpackEmptyAsyncContext.id = 237;
 var map = {
 	"../pages/add-schedule/add-schedule.module": [
 		636,
-		32
+		31
 	],
 	"../pages/canceltrip/canceltrip.module": [
 		637,
-		31
-	],
-	"../pages/car-registration-login/car-registration-login.module": [
-		661,
 		30
 	],
-	"../pages/car-registration/car-registration.module": [
-		662,
+	"../pages/car-registration-login/car-registration-login.module": [
+		658,
 		29
+	],
+	"../pages/car-registration/car-registration.module": [
+		660,
+		28
 	],
 	"../pages/chats/chats.module": [
 		638,
-		28
+		27
 	],
 	"../pages/chatting/chatting.module": [
 		639,
-		27
+		26
 	],
 	"../pages/confirmprice/confirmprice.module": [
 		659,
-		26
-	],
-	"../pages/confirmreserve/confirmreserve.module": [
-		640,
 		25
 	],
 	"../pages/confirmtrip/confirmtrip.module": [
-		641,
+		640,
 		24
 	],
 	"../pages/detailsreserve/detailsreserve.module": [
-		642,
+		641,
 		23
 	],
 	"../pages/findride/findride.module": [
-		668,
+		667,
 		22
 	],
 	"../pages/help/help.module": [
-		643,
+		642,
 		21
 	],
 	"../pages/login/login.module": [
@@ -304,83 +300,83 @@ var map = {
 		20
 	],
 	"../pages/more/more.module": [
-		645,
+		643,
 		19
 	],
 	"../pages/myride/myride.module": [
-		660,
+		661,
 		2
 	],
 	"../pages/payments-info/payments-info.module": [
-		646,
+		645,
 		18
 	],
 	"../pages/pickup/pickup.module": [
-		667,
+		666,
 		1
 	],
 	"../pages/profile/profile.module": [
-		648,
+		647,
 		17
 	],
 	"../pages/public-profile/public-profile.module": [
-		647,
+		646,
 		16
 	],
 	"../pages/ratetrip/ratetrip.module": [
-		649,
+		648,
 		15
 	],
 	"../pages/remove-schedule/remove-schedule.module": [
-		650,
+		649,
 		14
 	],
 	"../pages/reservetrip/reservetrip.module": [
-		665,
+		662,
 		0
 	],
 	"../pages/schedule/schedule.module": [
-		664,
+		663,
 		13
 	],
 	"../pages/showinfocar/showinfocar.module": [
-		651,
+		650,
 		12
 	],
 	"../pages/signup/signup.module": [
-		663,
+		665,
 		11
 	],
 	"../pages/specifyorigin/specifyorigin.module": [
-		666,
+		664,
 		10
 	],
 	"../pages/successnotification/successnotification.module": [
-		652,
+		651,
 		3
 	],
 	"../pages/support/support.module": [
-		653,
+		652,
 		9
 	],
 	"../pages/terms/terms.module": [
-		654,
+		653,
 		8
 	],
 	"../pages/verification-images/verification-images.module": [
-		655,
+		654,
 		7
 	],
 	"../pages/verification-number/verification-number.module": [
-		656,
+		655,
 		6
 	],
 	"../pages/walkthrough/walkthrough.module": [
-		657,
+		656,
 		5
 	],
 	"../pages/wallet/wallet.module": [
-		658,
+		657,
 		4
 	]
 };
@@ -401,6 +397,85 @@ module.exports = webpackAsyncContext;
 /***/ }),
 
 /***/ 346:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var authenticationService = /** @class */ (function () {
+    function authenticationService(angularFireAuth, afDB) {
+        this.angularFireAuth = angularFireAuth;
+        this.afDB = afDB;
+    }
+    authenticationService.prototype.loginWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.sendVerificationCodeToFirebase = function (place, userId, code) {
+        this.afDB.database.ref(place + '/drivers/' + userId).update({
+            verificationCode: code
+        });
+    };
+    authenticationService.prototype.deleteVerificationCode = function (place, userId) {
+        this.afDB.database.ref(place + '/drivers/' + userId + '/verificationCode/').remove();
+    };
+    authenticationService.prototype.resendVerificationCode = function (place, userId) {
+        this.afDB.database.ref(place + '/drivers/' + userId).update({
+            resendVerificationCode: true
+        });
+    };
+    authenticationService.prototype.deleteverificationCodeApproval = function (place, userId) {
+        this.afDB.database.ref(place + '/drivers/' + userId + '/verificationCodeApproval/').remove();
+    };
+    authenticationService.prototype.deleteResendCode = function (place, userId) {
+        this.afDB.database.ref(place + '/drivers/' + userId + '/resendVerificationCode/').remove();
+    };
+    authenticationService.prototype.registerWithEmail = function (email, password) {
+        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
+    };
+    authenticationService.prototype.getStatus = function () {
+        return this.angularFireAuth.authState;
+    };
+    authenticationService.prototype.logOut = function () {
+        return this.angularFireAuth.auth.signOut();
+    };
+    authenticationService.prototype.resetPassword = function (email) {
+        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
+        return auth.sendPasswordResetEmail(email)
+            .then(function () { return console.log("email sent"); })
+            .catch(function (error) { return console.log(error); });
+    };
+    ;
+    authenticationService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]])
+    ], authenticationService);
+    return authenticationService;
+}());
+
+//# sourceMappingURL=driverauthentication.service.js.map
+
+/***/ }),
+
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -592,18 +667,13 @@ var sendCoordsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 347:
+/***/ 348:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return authenticationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_database__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendUsersService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -615,63 +685,108 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-var authenticationService = /** @class */ (function () {
-    function authenticationService(angularFireAuth, afDB) {
-        this.angularFireAuth = angularFireAuth;
+// import { UrlSerializer } from "ionic-angular";
+// import { useAnimation } from "@angular/core/src/animation/dsl";
+// import * as firebase from 'firebase';
+// import { AngularFireAuth } from "angularfire2/auth";
+var sendUsersService = /** @class */ (function () {
+    function sendUsersService(afDB) {
         this.afDB = afDB;
     }
-    authenticationService.prototype.loginWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    sendUsersService.prototype.getUsersOnListRide = function (userUid) {
+        // Get all the students from the usersListRide
+        return this.afDB.list('/drivers/' + userUid + '/trips/usersListRide').valueChanges();
     };
-    authenticationService.prototype.sendVerificationCodeToFirebase = function (place, userId, code) {
-        this.afDB.database.ref(place + '/drivers/' + userId).update({
-            verificationCode: code
+    sendUsersService.prototype.getTripsOfReserves = function (place, userUid) {
+        // Get all the trips the driver have reserve
+        return this.afDB.list(place + '/reserves/' + userUid).valueChanges();
+    };
+    sendUsersService.prototype.getUsersOnTrip = function (place, userUid) {
+        // Get all the students the driver acepts in myListRidePage to be send to the students
+        return this.afDB.list(place + '/drivers/' + userUid + '/trips/pickingUsers').valueChanges();
+    };
+    sendUsersService.prototype.getPickUpUsers = function (place, userUid) {
+        //get all the users from the pickUpUsers []
+        return this.afDB.list(place + '/drivers/' + userUid + '/trips/pickedUpUsers').valueChanges();
+    };
+    sendUsersService.prototype.removeReserve = function (driverId, keyReserve) {
+        //remove the reserve done
+        this.afDB.database.ref('/reserves/' + driverId + '/' + keyReserve).remove();
+    };
+    sendUsersService.prototype.removeUsersOnListRideTotal = function (place, userUid) {
+        //send the information of every student the driver acepts in myRide
+        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/usersListRide/').remove();
+    };
+    sendUsersService.prototype.removeUsersOnPickingUsers = function (place, userUid, userId) {
+        //send the information of every student the driver acepts in myRide
+        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/pickingUsers/' + userId).remove();
+        this.afDB.database.ref(place + '/users/' + userId + '/trips/pickingUsers/driver/' + userUid).remove();
+    };
+    sendUsersService.prototype.pushPickingUpUsersOnDrivers = function (place, userUid, userId, origin, destination, name, lastname, phone, about) {
+        //send the information of every student the driver acepts in myRide
+        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/pickingUsers/' + userId).update({
+            origin: origin,
+            destination: destination,
+            name: name,
+            lastname: lastname,
+            phone: phone,
+            userId: userId,
+            about: about
         });
     };
-    authenticationService.prototype.deleteVerificationCode = function (place, userId) {
-        this.afDB.database.ref(place + '/drivers/' + userId + '/verificationCode/').remove();
-    };
-    authenticationService.prototype.resendVerificationCode = function (place, userId) {
-        this.afDB.database.ref(place + '/drivers/' + userId).update({
-            resendVerificationCode: true
+    sendUsersService.prototype.pushDriverOnUsers = function (place, userUid, userId, origin, destination, name, lastname, phone, price, car, about) {
+        //send the driver information to the students
+        this.afDB.database.ref(place + '/users/' + userId + '/trips/pickingUsers/driver/' + userUid).update({
+            origin: origin,
+            destination: destination,
+            name: name,
+            lastname: lastname,
+            phone: phone,
+            userId: userUid,
+            car: car,
+            price: price,
+            about: about
         });
     };
-    authenticationService.prototype.deleteverificationCodeApproval = function (place, userId) {
-        this.afDB.database.ref(place + '/drivers/' + userId + '/verificationCodeApproval/').remove();
+    sendUsersService.prototype.pushTripOnRecordDriver = function (userUid) {
+        //historial
+        this.afDB.database.ref('/drivers/' + userUid + '/trips').push();
     };
-    authenticationService.prototype.deleteResendCode = function (place, userId) {
-        this.afDB.database.ref(place + '/drivers/' + userId + '/resendVerificationCode/').remove();
+    sendUsersService.prototype.getRecordTrips = function (place, userUid) {
+        return this.afDB.list(place + '/drivers/' + userUid + '/recordTrips/').valueChanges();
     };
-    authenticationService.prototype.registerWithEmail = function (email, password) {
-        return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
+    sendUsersService.prototype.badgeTrue = function (userUid) {
+        this.afDB.database.ref('/drivers/' + userUid).update({
+            badgePicking: true
+        });
     };
-    authenticationService.prototype.getStatus = function () {
-        return this.angularFireAuth.authState;
+    sendUsersService.prototype.badgeFalse = function (userUid) {
+        this.afDB.database.ref('/drivers/' + userUid).update({
+            badgePicking: false
+        });
     };
-    authenticationService.prototype.logOut = function () {
-        return this.angularFireAuth.auth.signOut();
+    sendUsersService.prototype.badgeTrueOntrip = function (userUid) {
+        this.afDB.database.ref('/drivers/' + userUid).update({
+            badgeOntrip: true
+        });
     };
-    authenticationService.prototype.resetPassword = function (email) {
-        var auth = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]();
-        return auth.sendPasswordResetEmail(email)
-            .then(function () { return console.log("email sent"); })
-            .catch(function (error) { return console.log(error); });
+    sendUsersService.prototype.badgeFalseOntrip = function (userUid) {
+        this.afDB.database.ref('/drivers/' + userUid).update({
+            badgeOntrip: false
+        });
     };
-    ;
-    authenticationService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["AngularFireDatabase"]])
-    ], authenticationService);
-    return authenticationService;
+    sendUsersService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
+    ], sendUsersService);
+    return sendUsersService;
 }());
 
-//# sourceMappingURL=driverauthentication.service.js.map
+//# sourceMappingURL=sendUsers.service.js.map
 
 /***/ }),
 
-/***/ 348:
+/***/ 349:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -805,13 +920,15 @@ var instancesService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 349:
+/***/ 350:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendUsersService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -823,108 +940,244 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// import { UrlSerializer } from "ionic-angular";
-// import { useAnimation } from "@angular/core/src/animation/dsl";
-// import * as firebase from 'firebase';
-// import { AngularFireAuth } from "angularfire2/auth";
-var sendUsersService = /** @class */ (function () {
-    function sendUsersService(afDB) {
+
+var TripsService = /** @class */ (function () {
+    function TripsService(afDB, AngularFireAuth) {
         this.afDB = afDB;
+        this.AngularFireAuth = AngularFireAuth;
     }
-    sendUsersService.prototype.getUsersOnListRide = function (userUid) {
-        // Get all the students from the usersListRide
-        return this.afDB.list('/drivers/' + userUid + '/trips/usersListRide').valueChanges();
+    TripsService.prototype.getTrip = function (place, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.object(place + '/trips/' + driverUid + '/' + keyTrip).valueChanges();
     };
-    sendUsersService.prototype.getTripsOfReserves = function (place, userUid) {
-        // Get all the trips the driver have reserve
-        return this.afDB.list(place + '/reserves/' + userUid).valueChanges();
+    TripsService.prototype.getPendingUsers = function (place, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
     };
-    sendUsersService.prototype.getUsersOnTrip = function (place, userUid) {
-        // Get all the students the driver acepts in myListRidePage to be send to the students
-        return this.afDB.list(place + '/drivers/' + userUid + '/trips/pickingUsers').valueChanges();
+    TripsService.prototype.getKeyTrip = function (place, driverUid) {
+        //get key of driver's trip
+        return this.afDB.object(place + '/drivers/' + driverUid + '/keyTrip').valueChanges();
     };
-    sendUsersService.prototype.getPickUpUsers = function (place, userUid) {
-        //get all the users from the pickUpUsers []
-        return this.afDB.list(place + '/drivers/' + userUid + '/trips/pickedUpUsers').valueChanges();
+    TripsService.prototype.getOnTrip = function (place, userUid) {
+        return this.afDB.object(place + '/drivers/' + userUid + '/onTrip').valueChanges();
     };
-    sendUsersService.prototype.removeReserve = function (driverId, keyReserve) {
-        //remove the reserve done
-        this.afDB.database.ref('/reserves/' + driverId + '/' + keyReserve).remove();
+    TripsService.prototype.getSpecificUser = function (place, keyTrip, driverUid, userId) {
+        //get trip in Trip's node
+        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).valueChanges();
     };
-    sendUsersService.prototype.removeUsersOnListRideTotal = function (place, userUid) {
-        //send the information of every student the driver acepts in myRide
-        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/usersListRide/').remove();
+    TripsService.prototype.getReserveUsers = function (place, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(place + '/reserves/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
     };
-    sendUsersService.prototype.removeUsersOnPickingUsers = function (place, userUid, userId) {
-        //send the information of every student the driver acepts in myRide
-        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/pickingUsers/' + userId).remove();
-        this.afDB.database.ref(place + '/users/' + userId + '/trips/pickingUsers/driver/' + userUid).remove();
+    TripsService.prototype.getLastMinuteUsers = function (place, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers').valueChanges();
     };
-    sendUsersService.prototype.pushPickingUpUsersOnDrivers = function (place, userUid, userId, origin, destination, name, lastname, phone, about) {
-        //send the information of every student the driver acepts in myRide
-        this.afDB.database.ref(place + '/drivers/' + userUid + '/trips/pickingUsers/' + userId).update({
-            origin: origin,
-            destination: destination,
-            name: name,
-            lastname: lastname,
-            phone: phone,
-            userId: userId,
-            about: about
+    TripsService.prototype.getPickedUpUsers = function (place, keyTrip, driverUid) {
+        //get trip in Trip's node
+        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
+    };
+    TripsService.prototype.startTripForUsers = function (place, keyTrip, userId, driverId) {
+        //create a trip in Trip's node in database     
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            onTrip: true
+        });
+        this.afDB.database.ref(place + '/users/' + userId + '/keyTrip').update({
+            keyTrip: keyTrip,
+            driverId: driverId
         });
     };
-    sendUsersService.prototype.pushDriverOnUsers = function (place, userUid, userId, origin, destination, name, lastname, phone, price, car, about) {
-        //send the driver information to the students
-        this.afDB.database.ref(place + '/users/' + userId + '/trips/pickingUsers/driver/' + userUid).update({
-            origin: origin,
-            destination: destination,
-            name: name,
-            lastname: lastname,
-            phone: phone,
-            userId: userUid,
-            car: car,
-            price: price,
-            about: about
+    TripsService.prototype.startTrip = function (place, keyTrip, driverUid, trip) {
+        //create a trip in Trip's node in database
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.cancelTrip = function (place, keyTrip, driverUid, trip) {
+        //create a trip in Trip's node in database
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.acceptLastMinute = function (place, driverUid, keyTrip, user) {
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + user.userId).update(user);
+    };
+    TripsService.prototype.noRepeatLMU = function (place, driverUid, keyTrip, userId) {
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).update({
+            noRepeat: true
         });
     };
-    sendUsersService.prototype.pushTripOnRecordDriver = function (userUid) {
-        //historial
-        this.afDB.database.ref('/drivers/' + userUid + '/trips').push();
+    TripsService.prototype.eliminateLastMinuteUser = function (place, driverUid, keyTrip, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).remove();
     };
-    sendUsersService.prototype.getRecordTrips = function (place, userUid) {
-        return this.afDB.list(place + '/drivers/' + userUid + '/recordTrips/').valueChanges();
+    TripsService.prototype.deleteReserve = function (place, keyTrip, driverUid) {
+        this.afDB.database.ref(place + '/reserves/' + driverUid + '/' + keyTrip).remove();
     };
-    sendUsersService.prototype.badgeTrue = function (userUid) {
-        this.afDB.database.ref('/drivers/' + userUid).update({
-            badgePicking: true
+    TripsService.prototype.deleteAllReserves = function (place, driverUid) {
+        this.afDB.database.ref(place + '/reserves/' + driverUid).remove();
+    };
+    TripsService.prototype.notifyLMUitsBeenRejected = function (place, userId) {
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            cancelModalLMU: true
+        }).then(function () {
+            console.log('se notifico');
         });
     };
-    sendUsersService.prototype.badgeFalse = function (userUid) {
-        this.afDB.database.ref('/drivers/' + userUid).update({
-            badgePicking: false
+    TripsService.prototype.pushKeyInDriver = function (place, keyTrip, DriverUid) {
+        //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
+        this.afDB.database.ref(place + '/drivers/' + DriverUid).update({
+            keyTrip: keyTrip
         });
     };
-    sendUsersService.prototype.badgeTrueOntrip = function (userUid) {
-        this.afDB.database.ref('/drivers/' + userUid).update({
-            badgeOntrip: true
+    TripsService.prototype.pushOnTripInDriver = function (place, DriverUid) {
+        //push a onTrip in Driver's node
+        this.afDB.database.ref(place + '/drivers/' + DriverUid).update({
+            onTrip: true
         });
     };
-    sendUsersService.prototype.badgeFalseOntrip = function (userUid) {
-        this.afDB.database.ref('/drivers/' + userUid).update({
-            badgeOntrip: false
+    TripsService.prototype.eliminatePendingUsers = function (place, keyTrip, driverUid, userId) {
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.pickUp = function (place, keyTrip, driverUid, userId, user) {
+        // add the driver to pickedUpUsers 
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
+    };
+    TripsService.prototype.addSavedKMGlobal = function (place, savedKM) {
+        this.afDB.database.ref('/data/allTrips' + place).update({
+            savedKM: savedKM
         });
     };
-    sendUsersService = __decorate([
+    TripsService.prototype.addSavedKMGlobalPassengers = function (place, savedKM) {
+        this.afDB.database.ref('/data/kmsSavedByPassengers/' + place).update({
+            savedKM: savedKM
+        });
+    };
+    TripsService.prototype.createTripState = function (place, keyTrip, driverUid) {
+        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
+            saveTrip: false,
+            canceledTrip: false
+        });
+    };
+    TripsService.prototype.eliminateTripState = function (place, keyTrip, driverUid) {
+        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.timeFinishedTrip = function (place, keyTrip, driverUid, date) {
+        //set time when driver go to destination 
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).update({
+            DestinationTime: date
+        });
+    };
+    TripsService.prototype.endTrip = function (place, keyTrip, driverUid) {
+        //erase trip in trip's node
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).remove();
+    };
+    TripsService.prototype.setOnTripFalse = function (place, driverUid) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(place + '/drivers/' + driverUid).update({
+            onTrip: false
+        });
+    };
+    TripsService.prototype.setOnTripFalseUser = function (place, userId) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            onTrip: false
+        });
+    };
+    TripsService.prototype.eliminateKeyTripUser = function (place, userId) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(place + '/users/' + userId + '/keyTrip').remove();
+    };
+    TripsService.prototype.eliminateKeyUser = function (place, userId, reserveId) {
+        //eliminate keyTrip from user's node to eliminate access to that reserve
+        this.afDB.database.ref(place + '/users/' + userId + '/myReserves/' + reserveId).remove();
+    };
+    TripsService.prototype.saveTripOnRecordsUser = function (place, userUid, trip, keyTrip) {
+        //save trip in recordTrips
+        this.afDB.database.ref(place + '/users/' + userUid + '/recordTrips/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.cancelUserFromReserve = function (place, driverUid, keyTrip, userId) {
+        this.afDB.database.ref(place + '/users/' + userId + '/cancelReserve/').update({
+            cancelReserve: true,
+            driverId: driverUid,
+            keyTrip: keyTrip
+        });
+    };
+    TripsService.prototype.setOnTrip = function (place, driverUid) {
+        // set false to onTrip instance in driver's node
+        this.afDB.database.ref(place + '/drivers/' + driverUid).update({
+            onTrip: true
+        });
+    };
+    TripsService.prototype.endTripForUsers = function (place, userId) {
+        this.afDB.database.ref(place + '/users/' + userId + '/').update({
+            saveTrip: true
+        });
+    };
+    TripsService.prototype.sentTripUser = function (place, userId, trip) {
+        this.afDB.database.ref(place + '/users/' + userId + '/trip').update(trip);
+    };
+    TripsService.prototype.saveTripUser = function (place, driverUid, keyTrip) {
+        // this instance allows the user to save the trip in his records
+        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
+            saveTrip: true
+        });
+    };
+    TripsService.prototype.allTrips = function (place, driverUid, keyTrip, trip) {
+        // this instance allows the user to save the trip in his records
+        this.afDB.database.ref('data/allTrips/' + place + '/' + driverUid + '/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.getTripState = function (place, reserveId, driverId) {
+        return this.afDB.object(place + '/tripsState/' + driverId + '/' + reserveId + '/').valueChanges();
+    };
+    TripsService.prototype.eraseKeyTrip = function (place, driverUid) {
+        // erase keyTrip in driver's node
+        this.afDB.database.ref(place + '/drivers/' + driverUid + '/keyTrip').remove();
+    };
+    TripsService.prototype.cancelUserFromTrip = function (place, driverUid, keyTrip, userId) {
+        this.afDB.database.ref(place + '/users/' + userId + '/').update({
+            cancelTrip: true
+        });
+        //eliminate the user from pendingUsers
+        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
+    };
+    TripsService.prototype.saveTripOnRecords = function (place, driverUid, trip, keyTrip) {
+        //save trip in recordTrips
+        this.afDB.database.ref(place + '/drivers/' + driverUid + '/recordTrips/' + keyTrip).update(trip);
+    };
+    TripsService.prototype.sendPaymentInfoOfTrip = function (place, driverId, amount) {
+        this.afDB.database.ref(place + '/drivers/' + driverId).update({
+            pendingToReceive: amount
+        });
+    };
+    TripsService.prototype.sendPaymentInfoOfTripForUser = function (place, userId, amount) {
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            pendingToPay: amount
+        });
+    };
+    TripsService.prototype.reduceNumberPersonalFreeRides = function (place, userId, remainingRides) {
+        this.afDB.database.ref(place + '/users/' + userId).update({
+            personalFreeRides: remainingRides
+        });
+    };
+    TripsService.prototype.reduceNumberCompanyFreeRides = function (city, userCompany, remainingRides) {
+        this.afDB.database.ref('allCities/' + city + '/allPlaces/' + userCompany).update({
+            freeRidesNumber: remainingRides
+        });
+    };
+    TripsService.prototype.cancelReserve = function (place, driverUid, keyTrip) {
+        this.afDB.database.ref(place + '/reserves/' + driverUid + '/' + keyTrip).remove();
+        console.log("hola");
+    };
+    TripsService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"]])
-    ], sendUsersService);
-    return sendUsersService;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
+    ], TripsService);
+    return TripsService;
 }());
 
-//# sourceMappingURL=sendUsers.service.js.map
+//# sourceMappingURL=trips.service.js.map
 
 /***/ }),
 
-/***/ 350:
+/***/ 351:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1210,244 +1463,6 @@ var geofireService = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=geofire.services.js.map
-
-/***/ }),
-
-/***/ 351:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_fire_database__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var TripsService = /** @class */ (function () {
-    function TripsService(afDB, AngularFireAuth) {
-        this.afDB = afDB;
-        this.AngularFireAuth = AngularFireAuth;
-    }
-    TripsService.prototype.getTrip = function (place, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.object(place + '/trips/' + driverUid + '/' + keyTrip).valueChanges();
-    };
-    TripsService.prototype.getPendingUsers = function (place, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
-    };
-    TripsService.prototype.getKeyTrip = function (place, driverUid) {
-        //get key of driver's trip
-        return this.afDB.object(place + '/drivers/' + driverUid + '/keyTrip').valueChanges();
-    };
-    TripsService.prototype.getOnTrip = function (place, userUid) {
-        return this.afDB.object(place + '/drivers/' + userUid + '/onTrip').valueChanges();
-    };
-    TripsService.prototype.getSpecificUser = function (place, keyTrip, driverUid, userId) {
-        //get trip in Trip's node
-        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).valueChanges();
-    };
-    TripsService.prototype.getReserveUsers = function (place, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(place + '/reserves/' + driverUid + '/' + keyTrip + '/pendingUsers').valueChanges();
-    };
-    TripsService.prototype.getLastMinuteUsers = function (place, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers').valueChanges();
-    };
-    TripsService.prototype.getPickedUpUsers = function (place, keyTrip, driverUid) {
-        //get trip in Trip's node
-        return this.afDB.list(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers').valueChanges();
-    };
-    TripsService.prototype.startTripForUsers = function (place, keyTrip, userId, driverId) {
-        //create a trip in Trip's node in database     
-        this.afDB.database.ref(place + '/users/' + userId).update({
-            onTrip: true
-        });
-        this.afDB.database.ref(place + '/users/' + userId + '/keyTrip').update({
-            keyTrip: keyTrip,
-            driverId: driverId
-        });
-    };
-    TripsService.prototype.startTrip = function (place, keyTrip, driverUid, trip) {
-        //create a trip in Trip's node in database
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).update(trip);
-    };
-    TripsService.prototype.acceptLastMinute = function (place, driverUid, keyTrip, user) {
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + user.userId).update(user);
-    };
-    TripsService.prototype.noRepeatLMU = function (place, driverUid, keyTrip, userId) {
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).update({
-            noRepeat: true
-        });
-    };
-    TripsService.prototype.eliminateLastMinuteUser = function (place, driverUid, keyTrip, userId) {
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/lastMinuteUsers/' + userId).remove();
-    };
-    TripsService.prototype.deleteReserve = function (place, keyTrip, driverUid) {
-        this.afDB.database.ref(place + '/reserves/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.deleteAllReserves = function (place, driverUid) {
-        this.afDB.database.ref(place + '/reserves/' + driverUid).remove();
-    };
-    TripsService.prototype.notifyLMUitsBeenRejected = function (place, userId) {
-        this.afDB.database.ref(place + '/users/' + userId).update({
-            cancelModalLMU: true
-        }).then(function () {
-            console.log('se notifico');
-        });
-    };
-    TripsService.prototype.pushKeyInDriver = function (place, keyTrip, DriverUid) {
-        //push a key of the trip to the driver, in this way the driver can acces the trip in Trip's node
-        this.afDB.database.ref(place + '/drivers/' + DriverUid).update({
-            keyTrip: keyTrip
-        });
-    };
-    TripsService.prototype.pushOnTripInDriver = function (place, DriverUid) {
-        //push a onTrip in Driver's node
-        this.afDB.database.ref(place + '/drivers/' + DriverUid).update({
-            onTrip: true
-        });
-    };
-    TripsService.prototype.eliminatePendingUsers = function (place, keyTrip, driverUid, userId) {
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
-    };
-    TripsService.prototype.pickUp = function (place, keyTrip, driverUid, userId, user) {
-        // add the driver to pickedUpUsers 
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pickedUpUsers/' + userId).update(user);
-    };
-    TripsService.prototype.addSavedKMGlobal = function (place, savedKM) {
-        this.afDB.database.ref('/data/allTrips' + place).update({
-            savedKM: savedKM
-        });
-    };
-    TripsService.prototype.addSavedKMGlobalPassengers = function (place, savedKM) {
-        this.afDB.database.ref('/data/kmsSavedByPassengers/' + place).update({
-            savedKM: savedKM
-        });
-    };
-    TripsService.prototype.createTripState = function (place, keyTrip, driverUid) {
-        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
-            saveTrip: false,
-            canceledTrip: false
-        });
-    };
-    TripsService.prototype.eliminateTripState = function (place, keyTrip, driverUid) {
-        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.timeFinishedTrip = function (place, keyTrip, driverUid, date) {
-        //set time when driver go to destination 
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).update({
-            DestinationTime: date
-        });
-    };
-    TripsService.prototype.endTrip = function (place, keyTrip, driverUid) {
-        //erase trip in trip's node
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip).remove();
-    };
-    TripsService.prototype.setOnTripFalse = function (place, driverUid) {
-        // set false to onTrip instance in driver's node
-        this.afDB.database.ref(place + '/drivers/' + driverUid).update({
-            onTrip: false
-        });
-    };
-    TripsService.prototype.setOnTripFalseUser = function (place, userId) {
-        // set false to onTrip instance in driver's node
-        this.afDB.database.ref(place + '/users/' + userId).update({
-            onTrip: false
-        });
-    };
-    TripsService.prototype.saveTripOnRecordsUser = function (place, userUid, trip, keyTrip) {
-        //save trip in recordTrips
-        this.afDB.database.ref(place + '/users/' + userUid + '/recordTrips/' + keyTrip).update(trip);
-    };
-    TripsService.prototype.setOnTrip = function (place, driverUid) {
-        // set false to onTrip instance in driver's node
-        this.afDB.database.ref(place + '/drivers/' + driverUid).update({
-            onTrip: true
-        });
-    };
-    TripsService.prototype.endTripForUsers = function (place, userId) {
-        this.afDB.database.ref(place + '/users/' + userId + '/saveTrip').update({
-            saveTrip: true
-        });
-    };
-    TripsService.prototype.sentTripUser = function (place, userId, trip) {
-        this.afDB.database.ref(place + '/users/' + userId + '/trip').update(trip);
-    };
-    TripsService.prototype.saveTripUser = function (place, driverUid, keyTrip) {
-        // this instance allows the user to save the trip in his records
-        this.afDB.database.ref(place + '/tripsState/' + driverUid + '/' + keyTrip).update({
-            saveTrip: true
-        });
-    };
-    TripsService.prototype.allTrips = function (place, driverUid, keyTrip, trip) {
-        // this instance allows the user to save the trip in his records
-        this.afDB.database.ref('data/allTrips/' + place + '/' + driverUid + '/' + keyTrip).update(trip);
-    };
-    TripsService.prototype.getTripState = function (place, reserveId, driverId) {
-        return this.afDB.object(place + '/tripsState/' + driverId + '/' + reserveId + '/').valueChanges();
-    };
-    TripsService.prototype.eraseKeyTrip = function (place, driverUid) {
-        // erase keyTrip in driver's node
-        this.afDB.database.ref(place + '/drivers/' + driverUid + '/keyTrip').remove();
-    };
-    TripsService.prototype.cancelUserFromTrip = function (place, driverUid, keyTrip, userId) {
-        this.afDB.database.ref(place + '/users/' + userId + '/' + '/cancelTrip/').update({
-            cancelTrip: true
-        });
-        //eliminate the user from pendingUsers
-        this.afDB.database.ref(place + '/trips/' + driverUid + '/' + keyTrip + '/pendingUsers/' + userId).remove();
-    };
-    TripsService.prototype.saveTripOnRecords = function (place, driverUid, trip, keyTrip) {
-        //save trip in recordTrips
-        this.afDB.database.ref(place + '/drivers/' + driverUid + '/recordTrips/' + keyTrip).update(trip);
-    };
-    TripsService.prototype.sendPaymentInfoOfTrip = function (place, driverId, amount) {
-        this.afDB.database.ref(place + '/drivers/' + driverId).update({
-            pendingToReceive: amount
-        });
-    };
-    TripsService.prototype.sendPaymentInfoOfTripForUser = function (place, userId, amount) {
-        this.afDB.database.ref(place + '/users/' + userId).update({
-            pendingToPay: amount
-        });
-    };
-    TripsService.prototype.reduceNumberPersonalFreeRides = function (place, userId, remainingRides) {
-        this.afDB.database.ref(place + '/users/' + userId).update({
-            personalFreeRides: remainingRides
-        });
-    };
-    TripsService.prototype.reduceNumberCompanyFreeRides = function (city, userCompany, remainingRides) {
-        this.afDB.database.ref('allCities/' + city + '/allPlaces/' + userCompany).update({
-            freeRidesNumber: remainingRides
-        });
-    };
-    TripsService.prototype.cancelReserve = function (place, driverUid, keyTrip) {
-        this.afDB.database.ref(place + '/reserves/' + driverUid + '/' + keyTrip).remove();
-        console.log("hola");
-    };
-    TripsService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_fire_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["AngularFireAuth"]])
-    ], TripsService);
-    return TripsService;
-}());
-
-//# sourceMappingURL=trips.service.js.map
 
 /***/ }),
 
@@ -1775,13 +1790,13 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_fire_database__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_fire_auth__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_signup_service__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_sendCoords_service__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendUsers_service__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_driverauthentication_service__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_sendCoords_service__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_sendUsers_service__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_camera__ = __webpack_require__(352);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_geofence__ = __webpack_require__(624);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_geofire_services__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_instances_service__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_geofire_services__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_instances_service__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_call_number__ = __webpack_require__(356);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_price_service__ = __webpack_require__(354);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(625);
@@ -1789,7 +1804,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_email_composer_ngx__ = __webpack_require__(633);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_sendFeedback_service__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_chat_service__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_trips_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_trips_service__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__mobiscroll_angular_lite__ = __webpack_require__(634);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_window_service__ = __webpack_require__(358);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_metrics_service__ = __webpack_require__(355);
@@ -1868,12 +1883,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/canceltrip/canceltrip.module#CanceltripPageModule', name: 'CanceltripPage', segment: 'canceltrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chats/chats.module#ChatsPageModule', name: 'ChatsPage', segment: 'chats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/chatting/chatting.module#ChattingPageModule', name: 'ChattingPage', segment: 'chatting', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmreserve/confirmreserve.module#ConfirmreservationPageModule', name: 'ConfirmreservationPage', segment: 'confirmreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/confirmtrip/confirmtrip.module#ConfirmtripPageModule', name: 'ConfirmtripPage', segment: 'confirmtrip', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detailsreserve/detailsreserve.module#DetailsReservePagePageModule', name: 'DetailsReservePage', segment: 'detailsreserve', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/more/more.module#MorePageModule', name: 'MorePage', segment: 'more', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/payments-info/payments-info.module#PaymentsInfoPageModule', name: 'PaymentsInfoPage', segment: 'payments-info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/public-profile/public-profile.module#PublicProfilePageModule', name: 'PublicProfilePage', segment: 'public-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
@@ -1887,14 +1901,14 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/verification-number/verification-number.module#VerificationNumberPageModule', name: 'VerificationNumberPage', segment: 'verification-number', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/walkthrough/walkthrough.module#WalkthroughPageModule', name: 'WalkthroughPage', segment: 'walkthrough', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/wallet/wallet.module#WalletPageModule', name: 'WalletPage', segment: 'wallet', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration-login/car-registration-login.module#CarRegistrationPageModule', name: 'CarRegistrationLoginPage', segment: 'car-registration-login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/confirmprice/confirmprice.module#ConfirmpricePageModule', name: 'ConfirmpricePage', segment: 'confirmprice', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/car-registration/car-registration.module#CarRegistrationPageModule', name: 'CarRegistrationPage', segment: 'car-registration', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/myride/myride.module#MyridePageModule', name: 'MyridePage', segment: 'myride', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reservetrip/reservetrip.module#ReservetripPageModule', name: 'ReservetripPage', segment: 'reservetrip', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/specifyorigin/specifyorigin.module#SpecifyOriginPageModule', name: 'SpecifyOriginPage', segment: 'specifyorigin', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pickup/pickup.module#PickupPageModule', name: 'PickupPage', segment: 'pickup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/findride/findride.module#FindridePageModule', name: 'FindridePage', segment: 'findride', priority: 'low', defaultHistory: [] }
                     ]
@@ -2085,7 +2099,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/'<ion-menu [content]="content">\n        <ion-header>\n          <ion-toolbar>\n            <ion-title>Menu</ion-title>\n          </ion-toolbar>\n        </ion-header>\n        <ion-content>\n          <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon style="margin-right: 10px; font-size: 26px;" name={{p.icon}}></ion-icon>      \n\n              {{p.title}}                \n            </button>\n          \n          </ion-list>\n\n        </ion-content>\n      </ion-menu>\n      \n      <ion-nav  #content [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/app/app.html"*/'<ion-menu [content]="content">\n        <ion-header>\n          <ion-toolbar>\n            <ion-title>Menu</ion-title>\n          </ion-toolbar>\n        </ion-header>\n        <ion-content>\n          <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon style="margin-right: 10px; font-size: 26px;" name={{p.icon}}></ion-icon>      \n\n              {{p.title}}                \n            </button>\n          \n          </ion-list>\n\n        </ion-content>\n      </ion-menu>\n      \n      <ion-nav  #content [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation___["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Platform */], __WEBPACK_IMPORTED_MODULE_7__ionic_native_fcm__["a" /* FCM */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_firebase__["a" /* Firebase */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__["AngularFireDatabase"], __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_5__services_signup_service__["a" /* SignUpService */]])
     ], MyApp);

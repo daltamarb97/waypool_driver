@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waypoolsas.waypoolcars" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waypoolsas.waypoolcars" version="3.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WaypoolCars</name>
     <description>Waypool for students with car</description>
     <author email="team@waypooltech.com" href="https://waypooltech.com/">Ionic Framework Team</author>
@@ -18,7 +18,8 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="30000" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <platform name="android">
         <preference name="loadUrlTimeoutValue" value="700000" />
@@ -112,9 +113,8 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^3.2.0" />
-    <plugin name="cordova-plugin-firebasex" spec="^7.0.1" />
-    <plugin name="cordova-plugin-firebase" spec="^2.0.5" />
-    <engine name="ios" spec="4.5.5" />
+    <plugin name="cordova-plugin-add-swift-support" spec="1.7.2" />
+    <engine name="ios" spec="5.0.0" />
     <plugin name="cordova-plugin-fcm-with-dependecy-updated" spec="4.1.1">
         <variable name="FCM_CORE_VERSION" value="16.0.9" />
         <variable name="FCM_VERSION" value="18.0.0" />
@@ -122,9 +122,9 @@
         <variable name="GOOGLE_SERVICES_VERSION" value="4.2.0" />
     </plugin>
     <plugin name="call-number" spec="^1.0.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
     <plugin name="cordova-plugin-camera" spec="4.1.0">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
-    <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
 </widget>

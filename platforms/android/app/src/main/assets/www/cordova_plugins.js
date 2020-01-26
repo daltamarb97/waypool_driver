@@ -66,8 +66,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports.metadata = {
     "cordova-plugin-fcm-with-dependecy-updated": "4.1.1",
     "call-number": "0.0.2",
+    "cordova-plugin-whitelist": "1.3.4",
     "cordova-plugin-geolocation": "4.0.2",
-    "cordova-plugin-camera": "4.1.0",
-    "cordova-plugin-whitelist": "1.3.4"
+    "cordova-plugin-camera": "4.1.0"
   };
 });

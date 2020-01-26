@@ -17,14 +17,14 @@
     "call-number": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
+    },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     },
     "cordova-plugin-camera": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
-    },
-    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.waypoolsas.waypoolcars"
     }
   },

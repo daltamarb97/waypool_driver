@@ -34,7 +34,7 @@
           "NSLocationWhenInUseUsageDescription": [
             {
               "xml": "<string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>",
-              "count": 10
+              "count": 3
             }
           ],
           "LSApplicationQueriesSchemes": [
@@ -69,7 +69,7 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"FirebasePlugin\"><param name=\"ios-package\" value=\"FirebasePlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
               "count": 1
             },
             {
@@ -139,40 +139,43 @@
   },
   "installed_plugins": {
     "call-number": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-email-composer": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
-    "cordova-plugin-firebase": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+    "cordova-plugin-fcm-with-dependecy-updated": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-sqlite-storage": {
-      "PACKAGE_NAME": "com.waypoolsas.waypooldriver2"
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {},
@@ -234,11 +237,11 @@
       ]
     },
     {
-      "id": "cordova-plugin-firebase.FirebasePlugin",
-      "file": "plugins/cordova-plugin-firebase/www/firebase.js",
-      "pluginId": "cordova-plugin-firebase",
+      "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
+      "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
+      "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
       "clobbers": [
-        "FirebasePlugin"
+        "FCMPlugin"
       ]
     },
     {
@@ -316,10 +319,11 @@
   ],
   "plugin_metadata": {
     "call-number": "0.0.2",
+    "cordova-plugin-add-swift-support": "1.7.2",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-device": "2.0.3",
     "cordova-plugin-email-composer": "0.9.2",
-    "cordova-plugin-firebase": "2.0.5",
+    "cordova-plugin-fcm-with-dependecy-updated": "4.1.1",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "1.2.1",

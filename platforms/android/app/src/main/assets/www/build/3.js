@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 652:
+/***/ 651:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,8 +8,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SuccessNotificationPageModule", function() { return SuccessNotificationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__successnotification__ = __webpack_require__(815);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_lottie__ = __webpack_require__(816);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__successnotification__ = __webpack_require__(813);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_lottie__ = __webpack_require__(814);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var SuccessNotificationPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 815:
+/***/ 813:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var SuccessNotificationPage = /** @class */ (function () {
     };
     SuccessNotificationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-successnotification',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/successnotification/successnotification.html"*/'<!--\n  Generated template for the PopupPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n\n<ion-content>\n    <div class="overlay" (click)="dismiss()"></div>\n  <div class="icontent">\n      <lottie-animation-view\n      [options]="lottieConfig"\n      [width]="300"\n      [height]="240"\n      (animCreated)="handleAnimation($event)">\n      \n</lottie-animation-view>\n\n<div class="details" text-center padding>\n  <h1>¡Conectado!</h1>\n  <h2>Te estaremos enviando notificaciones cuando alguien se haya unido a alguno de tus viajes.</h2>\n  <button  class="btn bg-theme rounded full text-white" style="width: 28%;" (click)="dismiss()">OK</button>\n\n</div>\n\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL/waypool_driver/src/pages/successnotification/successnotification.html"*/,
+            selector: 'page-successnotification',template:/*ion-inline-start:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/pages/successnotification/successnotification.html"*/'<!--\n  Generated template for the PopupPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n\n<ion-content>\n    <div class="overlay" (click)="dismiss()"></div>\n  <div class="icontent">\n      <lottie-animation-view\n      [options]="lottieConfig"\n      [width]="300"\n      [height]="240"\n      (animCreated)="handleAnimation($event)">\n      \n</lottie-animation-view>\n\n<div class="details" text-center padding>\n  <h1>¡Conectado!</h1>\n  <h2>Te estaremos enviando notificaciones cuando alguien se haya unido a alguno de tus viajes.</h2>\n  <button  class="btn bg-theme rounded full text-white" style="width: 28%;" (click)="dismiss()">OK</button>\n\n</div>\n\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/juandavidjaramillo/Documents/WAYPOOL_OFICIAL2/waypool_driver/src/pages/successnotification/successnotification.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* MenuController */]])
     ], SuccessNotificationPage);
@@ -100,25 +100,25 @@ var SuccessNotificationPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 816:
+/***/ 814:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__ = __webpack_require__(817);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__ = __webpack_require__(815);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__lottieAnimationView_module__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 817:
+/***/ 815:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LottieAnimationViewModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lottieAnimationView_component__ = __webpack_require__(818);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lottieAnimationView_component__ = __webpack_require__(816);
 
 
 
@@ -148,7 +148,7 @@ LottieAnimationViewModule.ctorParameters = function () { return []; };
 
 /***/ }),
 
-/***/ 818:
+/***/ 816:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -157,7 +157,7 @@ LottieAnimationViewModule.ctorParameters = function () { return []; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(54);
 
 
-var lottie = __webpack_require__(819);
+var lottie = __webpack_require__(817);
 var LottieAnimationViewComponent = (function () {
     function LottieAnimationViewComponent(platformId) {
         this.platformId = platformId;
@@ -206,7 +206,7 @@ LottieAnimationViewComponent.propDecorators = {
 
 /***/ }),
 
-/***/ 819:
+/***/ 817:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;(typeof navigator !== "undefined") && (function(root, factory) {
