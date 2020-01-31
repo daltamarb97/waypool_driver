@@ -58,7 +58,7 @@
   "call-number": {
     "source": {
       "type": "registry",
-      "id": "call-number@^1.0.1"
+      "id": "mx.ferreyra.callnumber@0.0.2"
     },
     "is_top_level": true,
     "variables": {}
