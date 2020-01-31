@@ -163,7 +163,7 @@ noCompanyIdentified(numberToExecute){
                 }).then(()=>{
 
                     if(!this.signupGroup.controls['isChecked'].value === true ){
-
+                        loading.dismiss();
                         const alert = this.alertCtrl.create({
                             title: 'No aceptaste nuestros términos y condiciones',
                             subTitle: 'Debes estar de acuerdo con nustros términos y condiciones para usar Waypool',
@@ -290,6 +290,7 @@ noCompanyIdentified(numberToExecute){
                                     }
                                 }) 
                             }).catch((error)=>{
+                                loading.dismiss();
                                 if(error.code === "auth/email-already-in-use"){
                                     const alert = this.alertCtrl.create({
                                         title: 'ya existe una cuenta con este correo',
@@ -301,6 +302,7 @@ noCompanyIdentified(numberToExecute){
                             })
                                
                         }else{
+                            loading.dismiss();
                             const alert = this.alertCtrl.create({
                                 title: 'Oops!',
                                 subTitle: 'las contraseñas no coinciden, intenta de nuevo',
@@ -313,6 +315,7 @@ noCompanyIdentified(numberToExecute){
                 })
                 
             }
+            loading.dismiss();
             this.noCompanyIdentified(count);        
         }
  }

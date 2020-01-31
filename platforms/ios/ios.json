@@ -34,7 +34,7 @@
           "NSLocationWhenInUseUsageDescription": [
             {
               "xml": "<string>Usado para conectarte con otros usuarios de Waypool y asi brindarte un mejor servicio</string>",
-              "count": 3
+              "count": 4
             }
           ],
           "LSApplicationQueriesSchemes": [
