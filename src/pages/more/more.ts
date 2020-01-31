@@ -13,7 +13,7 @@ import { SignUpService } from '../../services/signup.service';
 @Component({
   selector: 'page-more',
   templateUrl: 'more.html'
-})
+}) 
 export class MorePage {
      userUid=this.AngularFireAuth.auth.currentUser.uid;
      user:any={};
@@ -54,10 +54,10 @@ export class MorePage {
           this.SignupService.userPlace = undefined;
           this.navCtrl.setRoot('LoginPage');
     }
-         docs(){
-    this.app.getRootNav().push('CarRegistrationPage');
+    //      docs(){
+    // this.app.getRootNav().push('CarRegistrationPage');
 
-    }
+    // }
 
    
 

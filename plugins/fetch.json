@@ -89,14 +89,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-fcm-with-dependecy-updated": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-fcm-with-dependecy-updated@4.1.1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-add-swift-support": {
     "source": {
       "type": "registry",
@@ -105,10 +97,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-firebase": {
+  "cordova-plugin-fcm-with-dependecy-updated": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-firebase@2.0.5"
+      "id": "cordova-plugin-fcm-with-dependecy-updated"
     },
     "is_top_level": true,
     "variables": {}

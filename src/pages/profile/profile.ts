@@ -129,6 +129,7 @@ constructor(public navCtrl: NavController, public modalCtrl: ModalController,pub
                   this.SignupService.deleteAccount(obj[key], this.userUid)
                 })
               }).then(()=>{
+                //for next build, user has to have a recent login in order to delete account//
                 this.AngularFireAuth.auth.currentUser.delete().then(()=>{
                   console.log('user has been deleted');
                 }).catch((error)=>{

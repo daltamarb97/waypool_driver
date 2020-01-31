@@ -2,7 +2,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 
-import { NavController, NavParams, IonicPage, App } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, App, LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 // import { VerificationPage } from '../verification/verification';
 
@@ -55,7 +55,7 @@ export class SignupPage {
     forLoopsCompleted:any = 0;
     companyIdentified:boolean = false;
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App, private afDB: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private authenticationService: authenticationService, private SignUpService: SignUpService, public  alertCtrl: AlertController, private AngularFireAuth: AngularFireAuth, public navParams: NavParams, public windowService: WindowService, private app: App, private afDB: AngularFireDatabase, public loadingCtrl: LoadingController) {
     this.signupGroup = this.formBuilder.group({
         name: ["", Validators.required],
         lastname: ["", Validators.required],
@@ -127,6 +127,15 @@ noCompanyIdentified(numberToExecute){
     }
      
     verification(){
+        //put this loading in user as well in next update//
+        let loading = this.loadingCtrl.create({
+            spinner: 'crescent',
+            content: `
+              <div class="custom-spinner-container">
+                <div class="custom-spinner-box"></div>
+              </div>`
+              });
+          loading.present();  
         this.forLoopsCompleted = 0;
         this.companyIdentified = false;
         var count = this.arrayEmails.length;
@@ -188,7 +197,12 @@ noCompanyIdentified(numberToExecute){
                                 phone: '+57'+userPhone,
                                 createdBy: 'driver',
                                 company: this.company,
-                                city: this.cityVar
+                                city: this.cityVar,
+                                //this sets documents true by default//
+                                documents:{
+                                    license: true,
+                                    id: true
+                                }
                             };
                             
                             
@@ -249,6 +263,7 @@ noCompanyIdentified(numberToExecute){
                                     if(user){
                                         if(user.emailVerified == false){
                                             user.sendEmailVerification();
+                                            loading.dismiss();
                                             const alert = this.alertCtrl.create({
                                                 title: '¡REGISTRO EXITOSO!',
                                                 subTitle: 'En los próximos minutos te enviaremos un link de verificación a tu email',
@@ -258,7 +273,7 @@ noCompanyIdentified(numberToExecute){
                                                         handler: () => {
                                                             
                                                                 this.afDB.database.ref('allCities/'+ this.cityVar + '/allPlaces/' + this.company + '/zones').once('value').then((snap)=>{
-                                                                    this.app.getRootNav().push('CarRegistrationLoginPage', {defaultZone: snap.val()[0] });  
+                                                                    this.app.getRootNav().push('SchedulePage', {defaultZone: snap.val()[0] });  
                                                                 })
                                                             
                                                         }
@@ -306,7 +321,7 @@ noCompanyIdentified(numberToExecute){
 
  
     sendVerificationCode(userId){
-            this.navCtrl.push('VerificationNumberPage', {userId: userId});
+            this.navCtrl.push('SchedulePage', {userId: userId});
     }
 
    
